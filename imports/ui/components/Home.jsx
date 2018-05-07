@@ -27,10 +27,12 @@ export class Home extends Component {
   }
 
 componentWillMount(){
-  if (!localStorage.getItem('beenhere')) {
-    localStorage.setItem('beenhere', true);
-    FlowRouter.go('/home');
-  }
+ const users = Meteor.users.find({}).fetch();
+ if (!users || users.length === 0 ) {
+   FlowRouter.go('/setup');
+ } else if(!Config.set){
+   FlowRouter.go('/setup');
+ }
 }
 
   showCourses(year) {
