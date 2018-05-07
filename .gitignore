@@ -1,0 +1,9 @@
+node_modules/
+.uploads/
+uploads/
+upload/
+public/uploads/
+.idea/
+.vscode/
+.DS_Store
+public/

@@ -1,0 +1,645 @@
+/*dashboard side nav styles*/
+.side-list {
+  display: block;
+  /*border-bottom:1px solid rgba(0, 0, 0, 0.26);*/
+  width: auto;
+  margin-left: 15px;
+  color: #00838f;
+}
+
+/*breadcrumbs*/
+.crumbs {
+  margin-left: 300px;
+  width: 76.5%;
+}
+.wrapper {
+  background: #82c5d9;
+  padding-left: 10px;
+}
+
+.breadcrumb::before {
+  content: "\f054";
+  font-family: FontAwesome !important;
+  font-size: 15px;
+  color: white;
+  margin-right: 20px;
+}
+/*style for topic viewing page and resource files under the topic*/
+.selected_resouce_container {
+  padding-top: 100px;
+  margin-left: 300px;
+}
+.topic-side-nav {
+  margin-top: 18.7%;
+  width: 300px !important;
+  background-color: #dee8ec !important;
+}
+#unitName {
+  text-align: center;
+  color: white;
+  margin-top: 30px;
+  text-transform: capitalize;
+}
+.unitContainer {
+  height: 157px;
+  width: 100%;
+  background-color: #0893d2;
+  margin-top: -4%;
+  position: fixed;
+  z-index: 1;
+}
+.sideNavHeading {
+  margin-left: 107px;
+  font-weight: bold;
+  font-size: larger;
+  margin-top: 15px;
+  color: #5d5d5d;
+  position: absolute;
+  top: -9px;
+}
+.sideNavHeadingUnderline {
+  height: 41px;
+  border-bottom: 1px solid lightsteelblue;
+  width: 312px;
+  position: relative;
+}
+.topicName {
+  text-transform: capitalize;
+  font-weight: 500;
+  color: #ffffff;
+  background: #0893d2b3;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 0px;
+  text-align: center;
+}
+.cardListItem {
+  color: #4b4d4e;
+  font-weight: 400;
+  font-size: 17px;
+  /* padding: 11.5px 4px; */
+}
+#selectedTopic {
+  padding-left: 15px;
+}
+.sidenav > ul {
+  padding-left: 10px;
+  padding-top: 40px;
+}
+.sidenav > ul > li > a {
+  font-size: 20px;
+  color: #fff;
+}
+/*todo: remove class*/
+.active-item,
+.link {
+  /*color: #0893d2;*/
+  text-align: left;
+}
+.customAtag {
+  color: #4b4d4e;
+  font-weight: 400;
+  font-size: 17px !important;
+  text-transform: capitalize !important;
+  line-height: 55px !important;
+  height: 55px !important;
+}
+.active-item,
+.active-topic {
+  border-right: solid 3px blue;
+  height: 55px;
+  font-weight: 400;
+  font-size: 17px;
+  color: #0893d2;
+  text-transform: capitalize;
+}
+.active-item-color {
+  color: #0893d2 !important;
+}
+.link,
+.link-section:hover {
+  cursor: pointer;
+}
+
+.side-nav li {
+  float: none;
+  /*padding: 0 15px;*/
+  line-height: 55px;
+}
+
+/*styles for resource file display page */
+.fileViewer {
+  margin-left: 300px !important;
+}
+.resource-side-nav {
+  margin-top: 9.66%;
+  width: 300px !important;
+  background-color: #dee8ec !important;
+  height: 100vh !important;
+}
+.videoViewer {
+  width: 79%;
+  height: auto;
+  margin-left: 10%;
+}
+.videoViewerContainer {
+  width: 100%;
+  background: black;
+}
+#backButtonLink {
+  position: absolute;
+  top: 9px;
+  left: 44px;
+}
+.pdfViewer {
+  width: 100%;
+  height: 100vh;
+}
+.fileResourceViewer {
+  background: #ced2d5;
+}
+
+/*=====END WORKING CSS*/
+
+/*HOME PAGE CUSTOM CSS*/
+.danger-bg {
+  background-color: #ef5350;
+  padding-left: 7px;
+  margin-left: -12px;
+  padding-right: 7px;
+  padding-bottom: 2px;
+  border-style: none;
+  margin-bottom: 10px;
+  position: relative;
+  top: -15px;
+  left: -2px;
+  border-radius: 50%;
+  padding-top: 3px;
+}
+/*END HOME PAGE CUSTOM CSS*/
+
+.slider {
+  /*margin-top: 36px;*/
+  margin-bottom: 150px;
+}
+#dashtweek {
+  padding-bottom: 75px;
+  padding-top: 25px;
+  background-color: #1e4847;
+  margin-top: 10px;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  font-weight: 500;
+  border: none;
+  width: auto;
+  padding-right: 20px;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url(/fonts/Roboto/Roboto-Light.woff) format("woff");
+}
+body {
+  font-weight: 300;
+}
+.badge {
+  right: 0px;
+  top: 23px;
+}
+.notification-item {
+  color: #0893d2;
+  padding: 10px;
+}
+.notification-date {
+  color: grey;
+}
+#notification-page {
+  width: 65%;
+}
+/*New Notification*/
+#newNote a {
+  color: #0893d2;
+}
+#forward {
+  display: none;
+}
+#note-page {
+  height: auto;
+  z-index: 1;
+}
+.notify {
+  width: 400px;
+}
+.side-bar {
+  margin-left: -25px !important;
+  width: 200px;
+  max-width: 187px;
+
+  top: 10px;
+  overflow: auto;
+  height: 300px;
+}
+
+/*feedback Page*/
+.collection .collection-item.avatar .title {
+  font-size: 20px;
+}
+.collection .collection-item.avatar p {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#menu-list {
+  margin-top: 15px;
+  /*position: relative;*/
+}
+.icon {
+  margin-top: 11px;
+}
+/*For accountsWrapper and general Resource*/
+.navItem:hover {
+  border-bottom: solid 1px rgb(110, 197, 236);
+}
+
+@media only screen and (max-width: 1866px) {
+  #dropdown1 {
+    /*left: 70% !important;*/
+    right: 0;
+  }
+
+  #dashbars {
+    margin-top: 120px;
+    margin-left: 115px;
+  }
+  .fa-home:before {
+    margin-left: 2px;
+    font-size: 0px;
+  }
+}
+
+/*STYLE FOR THE NAV BAR TOP end*/
+
+@media screen and (max-width: 990px) {
+  .searchAnim {
+    background-color: #3b5355 !important;
+    padding-left: 18px !important;
+    border: none !important;
+    border-radius: 25px !important;
+    -webkit-transition: all 0.3s ease-in-out !important;
+    -moz-transition: all 0.3s ease-in-out !important;
+    transition: all 0.3s ease-in-out !important;
+    /* float: right !important; */
+    width: 90px !important;
+    height: 35px !important;
+    margin-top: -65px !important;
+    margin-right: 35px !important;
+  }
+  .searchAnim:focus {
+    color: #333 !important;
+    background: #fff !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    /* width: 70% !important; */
+  }
+
+  .searchIconAndField {
+    position: absolute;
+    right: 0px;
+    width: 100%;
+  }
+  .searchIcon {
+    position: relative;
+    right: 55px;
+    top: -85px;
+    float: right;
+  }
+  .searchField {
+    position: relative;
+  }
+
+  .fa-search:before {
+    content: "\f002";
+    font-size: 22px;
+  }
+}
+
+nav ul a:hover {
+  background-color: transparent;
+}
+
+/* limit the height of the cards in case the text is longer */
+.homeCardColor {
+  /* background-color: #0893d2; */
+  margin-top: 20px;
+  height: 160px;
+}
+.feedback {
+  width: auto;
+  /*height: 30px;*/
+}
+
+#cardListTitle {
+  color: #fff;
+  font-size: 90%;
+}
+
+.slides > li > img {
+  height: 546px !important;
+  width: 100% !important;
+  background-size: cover !important;
+  background-position: initial !important;
+}
+.slider .slides {
+  height: 546px !important;
+}
+.cardList {
+  list-style: none;
+}
+.dash {
+  overflow-y: scroll;
+}
+
+#backButton {
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+}
+
+#backButton > a {
+  color: white;
+}
+
+/*Second Page*/
+/* this is for the sidenav list on the third page*/
+
+.resourceName {
+  padding-left: 15px;
+}
+/* This affect both the video and the pdf views dont use classes*/
+.viewer {
+  background-color: transparent;
+  margin-top: -10px;
+}
+
+.resource-item {
+  font-family: FontAwesome;
+  font-size: 20px;
+  padding-top: 14px;
+  padding-right: 10px;
+  color: #545d55;
+}
+
+.active-indicator {
+  margin-left: -50px;
+}
+/*Search input field*/
+/* .searchAnim{
+        display: none;
+    } */
+#search {
+  background-color: #00bcd4;
+  padding-left: 8px;
+  border: none;
+  border-radius: 4px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  float: right;
+  width: 190px;
+  height: 40px;
+  margin-top: 10px;
+}
+#search:focus {
+  color: #333;
+  background: #fff;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  width: 600px;
+}
+/*end search*/
+
+#dropdown1 {
+  width: 300px !important;
+  top: 58px !important;
+}
+#accName {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 15px;
+  text-transform: capitalize;
+}
+#userEmail {
+  display: block;
+  font-weight: 400;
+  text-transform: lowercase;
+}
+#uiWrapper {
+  display: block;
+  font-weight: 400;
+}
+#accounts-button {
+  text-transform: capitalize;
+}
+
+#usrIcon {
+  height: 31px;
+}
+.btn-flat {
+  background-color: #1d9fd9;
+  color: white;
+  margin-top: 6px;
+}
+
+#dashStylesDrop {
+  border-top: solid 1px rgba(104, 113, 119, 0.49);
+}
+
+.dropdown-content li:hover {
+  background-color: transparent;
+}
+#dropBody {
+  height: 150px;
+}
+#dropFooter {
+  background-color: lavender;
+  /*font-weight: bold;*/
+}
+#notificationBellContainer {
+  position: relative;
+}
+/*end dropdown user info*/
+
+#login-buttons a,
+.accounts-dialog a {
+  color: #0893d2;
+  text-decoration: none;
+}
+#login-buttons .login-button,
+.accounts-dialog .login-button {
+  background-color: #0893d2;
+}
+.login-button:hover {
+  background-color: #2bbbad;
+}
+.dash {
+  height: 100%;
+}
+
+.resultPage {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+.results:visited {
+  outline-color: orange;
+  /* visited links have an orange outline */
+  color: #609;
+  /* visited links have yellow colored text */
+  background-color: green;
+  /* visited links have a green background */
+}
+
+/** 404***/
+
+.notFound {
+  margin-top: 50px;
+  /*margin-bottom:auto;*/
+  text-align: center;
+}
+
+.notFoundHead {
+  text-align: center;
+  margin-top: 60px;
+}
+@media only screen and (min-width: 601px){
+  .row .col.m1 {
+      width: 6.5%;
+      margin-left: auto;
+      left: auto;
+      right: auto;
+    }
+  }
+
+/*Mobile responsive styles*/
+@media only screen and (max-width: 600px) {
+  .slider {
+    margin-top: -21px;
+  }
+
+  .searchAnim {
+    background-color: #3b5355 !important;
+    padding-left: 18px !important;
+    border: none !important;
+    border-radius: 25px !important;
+    -webkit-transition: all 0.3s ease-in-out !important;
+    -moz-transition: all 0.3s ease-in-out !important;
+    transition: all 0.3s ease-in-out !important;
+    /* float: right !important; */
+    width: 90px !important;
+    height: 40px !important;
+    margin-top: -50px !important;
+    margin-right: -95px !important;
+    width: 70% !important;
+  }
+  .searchAnim:focus {
+    color: #333 !important;
+    background: #fff !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+  }
+
+  .searchIconAndField {
+    position: absolute;
+    right: 0px;
+    width: 100%;
+  }
+  .searchIcon {
+    position: relative;
+    right: 55px;
+    top: -85px;
+    float: right;
+  }
+  .searchField {
+    position: relative;
+  }
+
+  .fa-search:before {
+    content: "\f002";
+    font-size: 22px;
+  }
+}
+
+/*amazone fire OS 7' width is 1024*/
+
+@media only screen and (max-width: 995px) {
+  .searchAnim:focus {
+    color: #333 !important;
+    background: #fff !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    width: 70% !important;
+  }
+
+  .searchIconAndField {
+    position: absolute;
+    right: 0px;
+    width: 100%;
+  }
+  .searchIcon {
+    position: relative;
+    right: 55px;
+    top: -85px;
+    float: right;
+  }
+  .searchField {
+    position: relative;
+  }
+
+  .fa-search:before {
+    content: "\f002";
+    font-size: 22px;
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1001px) {
+  #dropdown1 {
+    /*left: 50% !important;*/
+    right: 0;
+  }
+
+  .fa-bars:before {
+    margin-left: 1px;
+    font-size: 30px;
+  }
+
+  .searchAnim {
+    background-color: green !important;
+    padding-left: 18px !important;
+    border: none !important;
+    border-radius: 25px !important;
+    -webkit-transition: all 0.3s ease-in-out !important;
+    -moz-transition: all 0.3s ease-in-out !important;
+    transition: all 0.3s ease-in-out !important;
+    /* float: right !important; */
+    width: 90px !important;
+    height: 35px !important;
+    margin-top: -65px !important;
+    margin-right: 35px !important;
+  }
+  .searchAnim:focus {
+    color: #333 !important;
+    background: #fff !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    width: 70% !important;
+  }
+}
+
+/* toast */
+.error-toast {
+  background-color: #f44336;
+}
+.success-toast {
+  background-color: #4caf50;
+}

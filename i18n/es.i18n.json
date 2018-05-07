@@ -1,0 +1,16 @@
+{
+  "_locale": "es-ES",
+  "_namespace": "common",
+  "accounts": {
+    "userName": "Nombre",
+    "Language": "Idioma",
+    "enUS": "English - U.S.",
+    "esES": "Spanish - SP",
+    "frFr": "French - FR",
+    "Register": "Registro",
+    "Login": "iniciar sesión",
+    "Logout": "cerrar sesión",
+    "Password": "contraseña",
+    "Email": "correo electrónico"
+  }
+}

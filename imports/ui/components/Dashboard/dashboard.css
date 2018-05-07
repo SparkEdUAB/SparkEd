@@ -1,0 +1,5 @@
+/* TODO: This is a simple example of how we could change the active link in the sidenav  */
+
+.active {
+  color: #00c853;
+}

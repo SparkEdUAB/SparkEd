@@ -1,0 +1,82 @@
+# enable ES6
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+  ecmaFeatures:
+    jsx: true # enable React's JSX
+
+# register plugins
+plugins:
+  - meteor
+
+# use the rules of eslint-config-airbnb
+# and the recommended rules of eslint-plugin-meteor
+extends:
+  - airbnb/base
+  - plugin:meteor/recommended
+  - plugin:react/recommended
+
+# registerenvironments
+env:
+  meteor: true
+  browser: true
+  node: true
+  
+  
+
+rules:
+  # overwrite some rules  
+  semi: 'error'
+  no-unexpected-multiline: 2
+  no-throw-literal: 0
+  no-underscore-dangle: 0
+  import/no-named-as-default: 0
+  no-nested-ternary: 0
+  
+  # eslint-plugin-meteor
+  meteor/no-session: [0] # allow Session
+  meteor/prefer-session-equals: [2] # prefer Session.equals instead
+  import/no-extraneous-dependencies: off
+  react/require-extension: off
+  import/extensions:
+    - off
+    - never
+  import/prefer-default-export: ['off']
+  react/jsx-uses-vars: 1
+  consistent-return: off #turn off the function return type error
+  one-var: [error, never]
+  rules: {
+    class-methods-use-this: [2, {
+      exceptMethods: [
+        render,
+        getInitialState,
+        getDefaultProps,
+        getChildContext,
+        componentWillMount,
+        componentDidMount,
+        componentWillReceiveProps,
+        shouldComponentUpdate,
+        componentWillUpdate,
+        componentDidUpdate,
+        componentWillUnmount,
+      ],
+    }],
+  }
+  no-unused-expressions: ["error", { allowShortCircuit: true, allowTernary: true }]
+
+globals:
+  # collections
+  Foo: false
+  Bar: false
+  fs: false
+  FS: false
+  Materialize: false
+  Roles: false
+  exportcsv: false
+  require: false
+  # packages
+  FlowRouter: false # kadira:flow-router
+  moment: false # momentjs:moment
+settings:
+  import/core-modules: [meteor/meteor]
+  import/resolver: meteor

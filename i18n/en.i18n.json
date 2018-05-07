@@ -1,0 +1,17 @@
+{
+  "_locale": "en-US",
+  "_namespace": "common",
+  "accounts": {
+    "userName": "User name",
+    "Language": "Language",
+    "enUS": "English - U.S.",
+    "esES": "Spanish - SP",
+    "frFr": "French - FR",
+    "Subjects": "Subjects",
+    "Register": "Register",
+    "Login": "LogIn",
+    "Logout": "Logout",
+    "Password": "Password",
+    "Email": "Email Address"
+  }
+}

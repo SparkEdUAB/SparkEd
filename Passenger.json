@@ -1,0 +1,13 @@
+{
+  "app_type": "node",
+  "startup_file": "main.js",
+  "envvars": {
+    "MONGO_URL": "mongodb://localhost:27017/sparkedb",
+    "ROOT_URL": "http://127.0.0.1"
+  },
+  "log_file": "../passenger.log",
+  "pid_file": "../passenger.pid",
+  "environment": "production",
+  "port": 80,
+  "daemonize": true
+}

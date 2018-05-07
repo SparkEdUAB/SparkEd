@@ -1,0 +1,55 @@
+
+#notifications {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(0,0,0,0.3);
+  padding: 50px;
+  z-index: 99;
+  overflow: auto;
+}
+
+#notificationsStyle {
+  background-color: #fff;
+  border-radius: 5px;
+  max-width: 66%;
+  min-height: 214px;
+  margin: auto 19% auto 24%;
+  padding: 30px;
+}
+
+#notificationBody {
+
+}
+
+@media only screen and (max-width: 600px) {
+
+#notifications {
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 99;
+}
+
+#notificationBody {
+  /*position: fixed;*/
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 99;
+}
+
+#notificationsStyle {
+  background-color: #fff;
+  border-radius: 3px;
+  max-width: 466%;
+  min-height: 214px;
+  margin: auto;
+  /*padding: 30px;*/
+}
+}
