@@ -55,15 +55,15 @@ export class ViewResourceApp extends Component {
     if (resourceObj === null) {
       return null;
     }
-
     const resources = resourceObj;
     const resource = {
       type: resources.type,
       ext: resources.ext,
       name: resources.name,
+      urlLink: resourceObj.link(),
       _id: resources._id,
     };
-    return <ResourceRender resource={resource} />;
+    return <ResourceRender resource={resource}  Link={resourceObj.link()}/>;
   }
 
   fetchResources() {
@@ -115,6 +115,9 @@ export class ViewResourceApp extends Component {
       <ErrorBoundary>
         <div className="row">
           <div className="col s12 m8 l9">{this.renderResource()}</div>
+          
+           {/* <img src={"http://localhost:3000/cdn/storage/Resources/7A7FqFTZH9fgspsEC/original/7A7FqFTZH9fgspsEC.png"}
+           /> */}
 
           <div className="col s12 m4 l3 ">
             <ViewFrame resources={this.props.resources} />

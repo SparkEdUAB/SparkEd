@@ -3,11 +3,12 @@ import { PropTypes } from 'prop-types';
 
 export default class PDF extends Component {
   render() {
-    const name = `${this.props.pdf._id}.${this.props.pdf.ext}`;
+    // const name = `${this.props.pdf._id}.${this.props.pdf.ext}`;
+    const  { link } = this.props;
     return (
       <>
-        <object className="pdfViewer" data={`/uploads/resources/${name}`} type="application/pdf">
-          <iframe src={`/uploads/resources/${name}`} />
+        <object className="pdfViewer" data={link} type="application/pdf">
+          <iframe src={link} />
         </object>
       </>
     );
@@ -15,5 +16,5 @@ export default class PDF extends Component {
 }
 
 PDF.propTypes = {
-  pdf: PropTypes.object.isRequired,
+  link: PropTypes.string.isRequired,
 };

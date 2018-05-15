@@ -11,7 +11,7 @@ export default class IMG extends Component {
       <div className="">
         <img
           className="materialboxed responsive-img"
-          src={`/uploads/resources/${this.props.img._id}.${this.props.img.ext}`}
+          src={this.props.link}
           data-caption={this.props.img.name}
         />
       </div>
@@ -21,4 +21,5 @@ export default class IMG extends Component {
 
 IMG.propTypes = {
   img: PropTypes.object.isRequired,
+  link: PropTypes.string.isRequired,
 };
