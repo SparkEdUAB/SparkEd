@@ -1,0 +1,117 @@
+[
+  {
+    "_id": { "$oid": "5afac1666ea5a7484b8db760" },
+    "filename":
+      "Information_Communicatsions_Technology_Asociation_Zambia_Bill.pdf",
+    "contentType": "binary/octet-stream",
+    "length": 488187,
+    "chunkSize": 261120,
+    "uploadDate": { "$date": "2018-05-15T11:15:50.607Z" },
+    "metadata": {
+      "versionName": "original",
+      "fileId": "nYN7MqxqzztSbqobm",
+      "storedAt": { "$date": "2018-05-15T11:15:50.275Z" }
+    },
+    "md5": "cb0907ab52d19e9aa63297e155b0d73b"
+  },
+  {
+    "_id": { "$oid": "5afac3b1d5f12049dc97ae71" },
+    "filename": "library.jpg",
+    "contentType": "binary/octet-stream",
+    "length": 2403209,
+    "chunkSize": 261120,
+    "uploadDate": { "$date": "2018-05-15T11:25:37.868Z" },
+    "metadata": {
+      "versionName": "original",
+      "fileId": "Qr4oH4fCGREhH78B2",
+      "storedAt": { "$date": "2018-05-15T11:25:37.700Z" }
+    },
+    "md5": "23df090707bda2cf70792694e9ea5d25"
+  },
+  {
+    "_id": { "$oid": "5afac46b84b9564a4b5c4426" },
+    "filename":
+      "Information_Communicatsions_Technology_Asociation_Zambia_Bill.pdf",
+    "contentType": "binary/octet-stream",
+    "length": 488187,
+    "chunkSize": 261120,
+    "uploadDate": { "$date": "2018-05-15T11:28:43.539Z" },
+    "metadata": {
+      "versionName": "original",
+      "fileId": "bbQCvHQeq7zMxuAmh",
+      "storedAt": { "$date": "2018-05-15T11:28:43.496Z" }
+    },
+    "md5": "cb0907ab52d19e9aa63297e155b0d73b"
+  },
+  {
+    "_id": { "$oid": "5afacc13bffe2d4d0bee5d38" },
+    "filename": "sparked.png",
+    "contentType": "binary/octet-stream",
+    "length": 64131,
+    "chunkSize": 261120,
+    "uploadDate": { "$date": "2018-05-15T12:01:23.660Z" },
+    "metadata": {
+      "versionName": "original",
+      "fileId": "7A7FqFTZH9fgspsEC",
+      "storedAt": { "$date": "2018-05-15T12:01:23.625Z" }
+    },
+    "md5": "e70c7a321e89d1501bf9f0a98f538f51"
+  },
+  {
+    "_id": { "$oid": "5afad7b1ac6ec24fecec65a9" },
+    "filename":
+      "Information_Communicatsions_Technology_Asociation_Zambia_Bill.pdf",
+    "contentType": "binary/octet-stream",
+    "length": 488187,
+    "chunkSize": 261120,
+    "uploadDate": { "$date": "2018-05-15T12:50:58.020Z" },
+    "metadata": {
+      "versionName": "original",
+      "fileId": "FYm7zcrxEbB8Adxq6",
+      "storedAt": { "$date": "2018-05-15T12:50:57.923Z" }
+    },
+    "md5": "cb0907ab52d19e9aa63297e155b0d73b"
+  },
+  {
+    "_id": { "$oid": "5afad82ff65bd650317e076e" },
+    "filename": "git.png",
+    "contentType": "binary/octet-stream",
+    "length": 323094,
+    "chunkSize": 261120,
+    "uploadDate": { "$date": "2018-05-15T12:53:03.372Z" },
+    "metadata": {
+      "versionName": "original",
+      "fileId": "JvNiPJS9YnHsnN5e3",
+      "storedAt": { "$date": "2018-05-15T12:53:03.334Z" }
+    },
+    "md5": "90ebdec05ba2e84e15cf79f174baa61f"
+  },
+  {
+    "_id": { "$oid": "5afad9aed0d8f9515b1049b5" },
+    "filename": "React VR Demo - Getting Started with React VR.mp4",
+    "contentType": "binary/octet-stream",
+    "length": 83526143,
+    "chunkSize": 261120,
+    "uploadDate": { "$date": "2018-05-15T12:59:28.826Z" },
+    "metadata": {
+      "versionName": "original",
+      "fileId": "Q3Seub4QEBvDGqdDt",
+      "storedAt": { "$date": "2018-05-15T12:59:26.763Z" }
+    },
+    "md5": "052a58981e1d53481cc4e73e44765c0a"
+  },
+  {
+    "_id": { "$oid": "5afad9d2d0d8f9515b104af6" },
+    "filename": "01 Selah.mp3",
+    "contentType": "binary/octet-stream",
+    "length": 4184614,
+    "chunkSize": 261120,
+    "uploadDate": { "$date": "2018-05-15T13:00:02.250Z" },
+    "metadata": {
+      "versionName": "original",
+      "fileId": "bcSdzBn6DhHcSihJL",
+      "storedAt": { "$date": "2018-05-15T13:00:02.057Z" }
+    },
+    "md5": "4a73bb2264bed00085da8c79cb8787e2"
+  }
+]

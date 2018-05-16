@@ -566,14 +566,15 @@ Picker.route('/stats/', function(params, req, res, next) {
 });
 
 //receive users accounts
-Picker.route('/users', function(params, req, res, next) {
+Picker.route('/userss', function(params, req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.writeHead(200);
   var users = req.body.users;
   var sch = req.body.sch;
   //console.log('mmmmmmmmmmmmm');
 
-  var users = EJSON.parse(users);
+  // var users = EJSON.parse(users);
+  var users = JSON.stringify(users)
   //console.log(users);
   if (users == undefined) {
     res.end('request undefined');
