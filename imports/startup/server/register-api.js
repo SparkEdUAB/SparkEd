@@ -33,3 +33,4 @@ import '../../api/Deleted/methods';
 import '../../api/Deleted/server/publications';
 import '../../api/externallink/methods';
 import '../../api/externallink/server/publications';
+import '../../api/sync/endpoint';

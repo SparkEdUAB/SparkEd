@@ -232,6 +232,7 @@ Meteor.methods({
     var emails = data.emails;
     var profile = data.profile;
     profile['sch'] = sch;
+    profile.createdAt = new Date();
 
     Meteor.users.update(
       { _id: id },
