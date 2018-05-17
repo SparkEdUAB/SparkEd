@@ -37,7 +37,7 @@ import Sidenav from '../imports/ui/components/Dashboard/Sidenav';
 import SetUp from '../imports/ui/components/WalkThrough/Setup';
 import ExternalLinks from '../imports/ui/components/ExternalLink/ExternalLinks.jsx';
 import ExternalLinksPage from '../imports/ui/components/ExternalLink/ListExternalLinkPage.jsx';
-
+import SyncUpdates from '../imports/ui/components/Dashboard/SyncUpdates';
 const config = require('../config.json');
 
 const exposed = FlowRouter.group({});
