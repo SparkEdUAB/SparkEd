@@ -64,7 +64,7 @@ const adminRoutes = FlowRouter.group({
   ],
 });
 
-export default function setConfig() {
+export default function isAuthRequired() {
   if (config.userAuth) {
     return loggedIn;
   }
@@ -78,7 +78,7 @@ adminRoutes.route('/setup', {
   },
 });
 
-setConfig().route('/', {
+isAuthRequired().route('/', {
   name: 'Home',
   action() {
     mount(Home, {});
@@ -99,21 +99,21 @@ exposed.route('/login', {
   },
 });
 
-setConfig().route('/view_resource/:_id', {
+isAuthRequired().route('/view_resource/:_id', {
   name: 'Home',
   action(params, queryParams) {
     mount(AppWrapper, { yield: <ViewResourceApp /> });
   },
 });
 
-setConfig().route('/extra/view_resource/:_id', {
+isAuthRequired().route('/extra/view_resource/:_id', {
   name: 'ViewExtraResource',
   action(queryParams) {
     mount(AppWrapper, { yield: <DisplayResource /> });
   },
 });
 
-setConfig().route('/contents/:_id', {
+isAuthRequired().route('/contents/:_id', {
   name: 'Contents',
   action(params, queryParams) {
     mount(AppWrapper, { yield: <ContentsApp /> });
@@ -121,42 +121,42 @@ setConfig().route('/contents/:_id', {
   },
 });
 
-setConfig().route('/contents/', {
+isAuthRequired().route('/contents/', {
   name: 'Contents',
   action(params, queryParams) {
     mount(AppWrapper, { yield: <ContentsApp /> });
   },
 });
 
-setConfig().route('/course_content/:_id', {
+isAuthRequired().route('/course_content/:_id', {
   name: 'CourseContent',
   action(params, queryParams) {
     mount(AppWrapper, { yield: <CourseContent /> });
   },
 });
 
-setConfig().route('/course_content/', {
+isAuthRequired().route('/course_content/', {
   name: 'CourseContent',
   action(params, queryParams) {
     mount(AppWrapper, { yield: <CourseContent /> });
   },
 });
 
-setConfig().route('/results', {
+isAuthRequired().route('/results', {
   name: 'Results',
   action() {
     mount(SearchResults, {});
   },
 });
 
-setConfig().route('/sync', {
+isAuthRequired().route('/sync', {
   name: 'Sync',
   action() {
     mount(AutoSync, {});
   },
 });
 
-setConfig().route('/request', {
+isAuthRequired().route('/request', {
   name: 'Request',
   action() {
     mount(ProcessRequest, {});
@@ -203,7 +203,7 @@ adminRoutes.route('/dashboard/units/prog/:_id', {
   },
 });
 
-setConfig().route('/dashboard/units/', {
+isAuthRequired().route('/dashboard/units/', {
   name: 'SearchUnits',
   action(params, queryParams) {
     mount(Sidenav, { children: <ManageUnits /> });
@@ -235,7 +235,7 @@ adminRoutes.route('/dashboard/overview', {
   },
 });
 
-setConfig().route('/dashboard/feedback', {
+isAuthRequired().route('/dashboard/feedback', {
   name: 'Feedback',
   action() {
     mount(Sidenav, { children: <Feedback /> });
@@ -298,24 +298,31 @@ adminRoutes.route('/dashboard/view_resource/:_id', {
   },
 });
 
-setConfig().route('/dashboard/slides', {
+isAuthRequired().route('/dashboard/slides', {
   name: 'Slides',
   action() {
     mount(Sidenav, { children: <ManageSlides /> });
   },
 });
 
-setConfig().route('/externallinks', {
+isAuthRequired().route('/externallinks', {
   name: 'External',
   action() {
-    mount(Sidenav, {children: <ExternalLinks />})
+    mount(Sidenav, { children: <ExternalLinks /> });
   },
 });
 
-setConfig().route('/user_details/:_id', {
+isAuthRequired().route('/user_details/:_id', {
   name: 'UserStatistics',
   action() {
     mount(Sidenav, { children: <UserStatistics /> });
+  },
+});
+
+isAuthRequired().route('/dashboard/updates', {
+  name: 'Sync Updates',
+  action() {
+    mount(Sidenav, { children: <SyncUpdates /> });
   },
 });
 
@@ -325,7 +332,7 @@ FlowRouter.notFound = {
   },
 };
 
-setConfig().route('/reference', {
+isAuthRequired().route('/reference', {
   name: 'ReferenceLibrary',
   action() {
     mount(ReferenceLibrary, {});
@@ -342,12 +349,11 @@ loggedIn.route('/notifications', {
 loggedIn.route('/externallinkpages', {
   name: 'ExternalLinksPage',
   action() {
-    mount(AppWrapper, {yield: <ExternalLinksPage />})
+    mount(AppWrapper, { yield: <ExternalLinksPage /> });
   },
-})
+});
 
-
-setConfig().route('/reference/:_id', {
+isAuthRequired().route('/reference/:_id', {
   name: 'ReferenceLibrary',
   action(queryParams) {
     mount(ReferenceLibrary, {});

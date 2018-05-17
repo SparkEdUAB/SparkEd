@@ -31,22 +31,22 @@ export default class Sidenav extends Component {
                 {/* Display  Courses if School doesn't exist */}
                 {config.sch ? (
                   <Fragment>
-                  <li>
-                    <a href="/dashboard/school" className={`  side-list ${this.props.school}`}>
-                      <i className={`fa fa-book fa-lg `} />
-                      <span className="hide-on-small-only">&nbsp;School</span>
-                    </a>
-                  </li>
-                        <li>
-                        <a
-                          href="/dashboard/list_topics"
-                          className={`  side-list ${this.props.topics}`}
-                        >
-                          <i className={`fa fa-text-width fa-lg `} />
-                          <span className="hide-on-small-only">&nbsp; All Topics</span>
-                        </a>
-                      </li>
-                      </Fragment>
+                    <li>
+                      <a href="/dashboard/school" className={`  side-list ${this.props.school}`}>
+                        <i className={`fa fa-book fa-lg `} />
+                        <span className="hide-on-small-only">&nbsp;School</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/dashboard/list_topics"
+                        className={`  side-list ${this.props.topics}`}
+                      >
+                        <i className={`fa fa-text-width fa-lg `} />
+                        <span className="hide-on-small-only">&nbsp; All Topics</span>
+                      </a>
+                    </li>
+                  </Fragment>
                 ) : config.sec ? (
                   <li>
                     <a href="/dashboard/course" className={`  side-list ${this.props.course}`}>
@@ -114,9 +114,12 @@ export default class Sidenav extends Component {
                         <span className="hide-on-small-only">&nbsp; Change Slides</span>
                       </a>
                     </li>
-
-
-                  
+                    <li>
+                      <a href="/dashboard/updates" className={`  side-list ${this.props.slides}`}>
+                        <i className={`fa fa-picture-o `} />
+                        <span className="hide-on-small-only">&nbsp; Updates</span>
+                      </a>
+                    </li>
                   </>
                 ) : (
                   <span />

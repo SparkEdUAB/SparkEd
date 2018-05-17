@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { HTTP } from 'meteor/http';
 import { Resources } from '../resources/resources';
 import { References } from '../resources/resources';
 import { _Courses } from '../courses/courses';
@@ -9,9 +10,16 @@ import { _Statistics } from '../statistics/statistics';
 import { Titles } from '../settings/titles';
 import { _Topics } from '../topics/topics';
 import { _Units } from '../units/units';
+import bodyParser from 'body-parser';
+
+Picker.middleware(bodyParser.json());
+Picker.middleware(bodyParser.urlencoded({ extended: false }));
 
 Picker.route('/coll', (params, req, res, next) => {
   const collName = params.query.name;
+
+  res.setHeader('Content-Type', 'application/json');
+  res.statusCode = 200;
   switch (collName) {
     case 'users': {
       const users = Meteor.users.find({}).fetch();
@@ -80,3 +88,56 @@ Picker.route('/coll', (params, req, res, next) => {
       break;
   }
 });
+
+// Global configuration
+Api = new Restivus({
+  useDefaultAuth: false,
+  prettyJson: true,
+});
+// Generates: GET/POST on /api/v1/users, and GET/PUT/DELETE on /api/v1/users/:id
+// for Meteor.users collection (works on any Mongo collection)
+Api.addCollection(_Courses, {
+  routeOptions: {
+    authRequired: false,
+  },
+  endpoints: {
+    get: {
+      authRequired: false,
+    },
+  },
+});
+
+Api.addCollection(Meteor.users, {
+  excludedEndpoints: ['get', 'put'],
+  routeOptions: {
+    authRequired: false,
+  },
+  endpoints: {
+    get: {
+      authRequired: false,
+    },
+  },
+});
+// Api.addCollection(Resources);
+// That's it! Many more options are available if needed...
+
+// Maps to: POST /api/v1/articles/:id
+Api.addRoute(
+  'name',
+  { authRequired: true },
+  {
+    get: {
+      action: function() {
+        // var article = Articles.findOne(this.urlParams.id);
+        const courses = _Courses.find({}).fetch();
+        if (courses) {
+          return { status: 'success', data: courses };
+        }
+        return {
+          statusCode: 400,
+          body: { status: 'fail', message: 'get me thsi' },
+        };
+      },
+    },
+  },
+);

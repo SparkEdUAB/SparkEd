@@ -4,7 +4,7 @@
   "scripts": {
     "start": "meteor",
     "lint": "eslint .",
-    "pretest": "npm run lint --silent"
+    "test": "jest"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.44",
@@ -46,20 +46,16 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-meteor": "^4.1.4",
-    "eslint-plugin-react": "^7.6.1"
+    "eslint-plugin-react": "^7.6.1",
+    "jest": "^22.4.3"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
     "parserOptions": {
       "allowImportExportEverywhere": true
     },
-    "plugins": [
-      "meteor"
-    ],
-    "extends": [
-      "airbnb",
-      "plugin:meteor/recommended"
-    ],
+    "plugins": ["meteor"],
+    "extends": ["airbnb", "plugin:meteor/recommended"],
     "settings": {
       "import/resolver": "meteor"
     }
