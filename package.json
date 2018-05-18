@@ -1,5 +1,5 @@
 {
-  "name": "ManoAp-V2",
+  "name": "SparkEd",
   "private": true,
   "scripts": {
     "start": "meteor",
@@ -25,18 +25,19 @@
     "simpl-schema": "^1.4.2"
   },
   "version": "1.0.0",
-  "description": "Content Platfrom",
+  "description":
+    "Software for organizing and presenting educational and training content for delivery on most platforms.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hackersguild/ManoAp-V2.git"
+    "url": "git+https://github.com/SparkEdUAB/SparkEd.git"
   },
-  "author": "Hackers Guild",
+  "author": "SparkEd Team",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hackersguild/ManoAp-V2/issues"
+    "url": "https://github.com/SparkEdUAB/SparkEd/issues"
   },
-  "homepage": "https://github.com/hackersguild/ManoAp-V2#readme",
+  "homepage": "https://github.com/SparkEdUAB/SparkEd#readme",
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "^1.0.5",
     "babel-eslint": "^8.2.1",
