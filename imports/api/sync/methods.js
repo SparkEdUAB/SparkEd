@@ -27,6 +27,17 @@ Meteor.methods({
       },
     });
   },
+  // authenticated call to courses collection
+  getCourses: (token, userId) => {
+    check(token, String);
+    check(userId, String);
+    return HTTP.get('http://localhost:3000/api/course/', {
+      headers: {
+        'X-Auth-Token': token,
+        'X-User-Id': userId,
+      },
+    });
+  },
 });
 
 // application/x-www-form-urlencoded

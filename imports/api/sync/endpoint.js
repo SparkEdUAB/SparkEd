@@ -21,11 +21,11 @@ const Api = new Restivus({
 Api.addCollection(References, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: false,
+    authRequired: true,
   },
   endpoints: {
     get: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 });
@@ -33,11 +33,11 @@ Api.addCollection(References, {
 // Api.addCollection(Resources, {
 //   excludedEndpoints: ['put', 'post', 'delete'],
 //   routeOptions: {
-//     authRequired: false,
+//     authRequired: true,
 //   },
 //   endpoints: {
 //     get: {
-//       authRequired: false,
+//       authRequired: true,
 //     },
 //   },
 // });
@@ -46,11 +46,11 @@ Api.addCollection(References, {
 Api.addCollection(_SearchData, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: false,
+    authRequired: true,
   },
   endpoints: {
     get: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 });
@@ -60,11 +60,11 @@ Api.addCollection(_SearchData, {
 Api.addCollection(_Statistics, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: false,
+    authRequired: true,
   },
   endpoints: {
     get: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 });
@@ -73,11 +73,11 @@ Api.addCollection(_Statistics, {
 Api.addCollection(Titles, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: false,
+    authRequired: true,
   },
   endpoints: {
     get: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 });
@@ -86,11 +86,11 @@ Api.addCollection(Titles, {
 Api.addCollection(_Topics, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: false,
+    authRequired: true,
   },
   endpoints: {
     get: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 });
@@ -98,11 +98,11 @@ Api.addCollection(_Topics, {
 Api.addCollection(_Units, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: false,
+    authRequired: true,
   },
   endpoints: {
     get: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 });
@@ -110,11 +110,11 @@ Api.addCollection(_Units, {
 Api.addCollection(_Courses, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: false,
+    authRequired: true,
   },
   endpoints: {
     get: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 });
@@ -122,18 +122,18 @@ Api.addCollection(_Courses, {
 Api.addCollection(Meteor.users, {
   excludedEndpoints: ['put', 'post'],
   routeOptions: {
-    authRequired: false,
+    authRequired: true,
   },
   endpoints: {
     get: {
-      authRequired: false,
+      authRequired: true,
     },
   },
 });
 
 Api.addRoute(
   'resources',
-  { authRequired: false },
+  { authRequired: true },
   {
     get: {
       action: function() {
@@ -153,7 +153,7 @@ Api.addRoute(
 
 Api.addRoute(
   'references',
-  { authRequired: false },
+  { authRequired: true },
   {
     get: {
       action: function() {

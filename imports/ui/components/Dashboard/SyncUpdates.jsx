@@ -32,9 +32,16 @@ export class SyncUpdates extends Component {
   componentDidMount() {
     this.checkInternet();
     Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
-      err ? console.log(err.reason) : console.log(res);
+      err ? console.log(err.reason) : Session.set('data', res.data.data);
     });
   }
+  getCourses = () => {
+    const data = Session.get('data');
+    const { authToken, userId } = data;
+    Meteor.call('getCourses', authToken, userId, (err, courses) => {
+      err ? console.log(err.reason) : console.log(courses.data.data);
+    });
+  };
 
   // clear the interval when leaving
   componentWillUnmount() {
@@ -51,6 +58,7 @@ export class SyncUpdates extends Component {
             Server Collections
             <h5>{isOnline.toString()}</h5>
           </div>
+          <button onClick={this.getCourses}>Get Them</button>
         </div>
       </>
     );
