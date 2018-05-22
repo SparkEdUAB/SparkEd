@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.44",
+    "axios": "^0.18.0",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
@@ -25,8 +26,7 @@
     "simpl-schema": "^1.4.2"
   },
   "version": "1.0.0",
-  "description":
-    "Software for organizing and presenting educational and training content for delivery on most platforms.",
+  "description": "Software for organizing and presenting educational and training content for delivery on most platforms.",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -55,8 +55,13 @@
     "parserOptions": {
       "allowImportExportEverywhere": true
     },
-    "plugins": ["meteor"],
-    "extends": ["airbnb", "plugin:meteor/recommended"],
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended"
+    ],
     "settings": {
       "import/resolver": "meteor"
     }

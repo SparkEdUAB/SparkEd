@@ -13,7 +13,7 @@ import { _Units } from '../units/units';
 import { Restivus } from 'meteor/mrest:restivus';
 
 const Api = new Restivus({
-  useDefaultAuth: false,
+  useDefaultAuth: true,
   prettyJson: true,
 });
 

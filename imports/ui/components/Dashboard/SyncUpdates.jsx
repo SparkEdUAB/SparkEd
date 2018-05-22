@@ -31,7 +31,11 @@ export class SyncUpdates extends Component {
   }
   componentDidMount() {
     this.checkInternet();
+    Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
+      err ? console.log(err.reason) : console.log(res);
+    });
   }
+
   // clear the interval when leaving
   componentWillUnmount() {
     clearInterval(this.inCheck);
