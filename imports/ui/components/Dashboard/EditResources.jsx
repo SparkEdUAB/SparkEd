@@ -112,9 +112,9 @@ export class EditResources extends Component {
     if (config.isHighScool) {
       FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseId')}`);
     } else {
-      FlowRouter.go(`/dashboard/edit_unit/${'d9ee6fd932517fc757040ed3'}`);
+      FlowRouter.go(`/dashboard/edit_unit/${Session.get('unitId')}`);
     }
-  }
+  };
 
   // callback for the modal ( When it is add, save or Yes )
   handleSubmit(event) {
@@ -306,8 +306,7 @@ export class EditResources extends Component {
           </div>
           <div className="row ">
             <div className="col s4 m3">
-              <button className="btn grey darken-3 fa fa-angle-left" 
-              onClick={this.getBack}>
+              <button className="btn grey darken-3 fa fa-angle-left" onClick={this.getBack}>
                 {' '}
                 {config.isHighScool ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
               </button>
