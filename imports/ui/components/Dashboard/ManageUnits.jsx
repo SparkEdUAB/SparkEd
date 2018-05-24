@@ -433,8 +433,8 @@ export class ManageUnits extends Component {
 export class Unit extends Component {
   handleUrl(id) {
     // id => unit_id
-    if (config.sec) {
-      FlowRouter.go(`/dashboard/sec/edit_unit/${id}`);
+    if (config.isHighScool) {
+      FlowRouter.go(`/dashboard/isHighScool/edit_unit/${id}`);
     } else {
       FlowRouter.go(`/dashboard/edit_unit/${id}`);
     }

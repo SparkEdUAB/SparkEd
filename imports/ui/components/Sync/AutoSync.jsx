@@ -23,8 +23,8 @@ export class AutoSync extends Component {
 
     this._SCHOOL = 'kijabe'; // config
 
-    // this.url = 'http://192.168.8.150:3000/syncApp?sch='+this._SCHOOL+'&file=';
-    this.url = `http://52.42.16.134/syncApp?sch=${this._SCHOOL}&file=`;
+    // this.url = 'http://192.168.8.150:3000/syncApp?isSchool='+this._SCHOOL+'&file=';
+    this.url = `http://52.42.16.134/syncApp?isSchool=${this._SCHOOL}&file=`;
 
     self = this;
     Session.set('syncedStats', false);

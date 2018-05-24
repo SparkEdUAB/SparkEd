@@ -36,7 +36,7 @@ export class FileUploadComponent extends Component {
         switch (route) {
           case 'EditResources':
             let unitId, topicId;
-            if (config.sec) {
+            if (config.isHighScool) {
               unitId = FlowRouter.getParam('_id');
               topicId = '';
             } else {
@@ -163,7 +163,7 @@ export class FileUploadComponent extends Component {
               case 'EditResources':
                 const topic_id = FlowRouter.getParam('_id');
                 const _topic = _Topics.findOne({ _id: topic_id });
-                const unit_id = config.sec ? topic_id : _topic.unitId;
+                const unit_id = config.isHighScool ? topic_id : _topic.unitId;
               
                 const msg = `new resource ${fileObj.name.replace(/\.[^/.]+$/, '')} was uploaded`;
                 Session.set('ids', { topic_id, filess: fileObj._id});
@@ -265,10 +265,10 @@ export class FileUploadComponent extends Component {
                 const instName = Session.get('name');
                 const tag = Session.get('tag');
                 const auth = Session.get('auth');
-                const sch = Session.get('sch');
-                const sec = Session.get('sec');
+                const isSchool = Session.get('isSchool');
+                const isHighScool = Session.get('isHighScool');
 
-                Meteor.call('addConfig', instName, tag, auth, true, sch, sec, err => {
+                Meteor.call('addConfig', instName, tag, auth, true, isSchool, isHighScool, err => {
                   err
                     ? Materialize.toast(err.reason, 4000, 'error-toast')
                     : Materialize.toast(

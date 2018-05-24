@@ -25,8 +25,8 @@ export class Institution extends Component {
     if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
       const name = $('#Iname').val();
       const sub = $('#Tname').val();
-      const userAuth = $('#loginCheck').val();
-      Session.set({ name, sub, userAuth });
+      const isUserAuth = $('#loginCheck').val();
+      Session.set({ name, sub, isUserAuth });
       $('.clear').val('');
       $('#modal-upload').modal('open');
     } else {
@@ -37,7 +37,7 @@ export class Institution extends Component {
     }
   }
 
-  static changeUserAuth(event) {
+  static changeisUserAuth(event) {
     event.preventDefault();
     if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
       const auth = $('#auth').val();
@@ -93,11 +93,11 @@ export class Institution extends Component {
             </div>
             <div className="col m1" />
             <div className="col m4 ">
-              <form className="m6" onSubmit={Institution.changeUserAuth.bind(this)}>
+              <form className="m6" onSubmit={Institution.changeisUserAuth.bind(this)}>
                 <h5 className="blue-text lighten-2">User Authentication method</h5>
                 <span>Are users required to login to access a resource?</span>
                 <div className="input-field">
-                  <select id="auth" required="true" defaultValue={Config.userAuth}>
+                  <select id="auth" required="true" defaultValue={Config.isUserAuth}>
                     <option value="true">Users need to login</option>
                     <option value="false">Users are not required to login</option>
                   </select>

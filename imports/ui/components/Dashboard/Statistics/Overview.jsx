@@ -69,13 +69,13 @@ OverView.propTypes = {
 };
 
 export function getSch() {
-  const sch = FlowRouter.getQueryParam('sch');
+  const isSchool = FlowRouter.getQueryParam('isSchool');
   const query = { 'profile.stats': 1 };
 
-  if (sch === undefined || sch == null) {
+  if (isSchool === undefined || isSchool == null) {
     return query;
   }
-  query['profile.sch'] = sch;
+  query['profile.isSchool'] = isSchool;
 
   return query;
 }

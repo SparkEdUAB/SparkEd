@@ -29,7 +29,7 @@ export default class Sidenav extends Component {
                 </li>
 
                 {/* Display  Courses if School doesn't exist */}
-                {config.sch ? (
+                {config.isSchool ? (
                   <Fragment>
                     <li>
                       <a href="/dashboard/school" className={`  side-list ${this.props.school}`}>
@@ -47,7 +47,7 @@ export default class Sidenav extends Component {
                       </a>
                     </li>
                   </Fragment>
-                ) : config.sec ? (
+                ) : config.isHighScool ? (
                   <li>
                     <a href="/dashboard/course" className={`  side-list ${this.props.course}`}>
                       <i className={`fa fa-book fa-lg `} />

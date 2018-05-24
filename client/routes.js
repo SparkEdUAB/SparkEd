@@ -65,7 +65,7 @@ const adminRoutes = FlowRouter.group({
 });
 
 export default function isAuthRequired() {
-  if (config.userAuth) {
+  if (config.isUserAuth) {
     return loggedIn;
   }
   return exposed;
@@ -168,7 +168,7 @@ adminRoutes.route('/dashboard/edit_resources/:_id', {
     mount(Sidenav, { children: <EditResources /> });
   },
 });
-adminRoutes.route('/dashboard/sec/edit_unit/:_id', {
+adminRoutes.route('/dashboard/isHighScool/edit_unit/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
     mount(Sidenav, { children: <EditResources /> });

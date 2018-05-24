@@ -111,7 +111,7 @@ Resourcesss.propTypes = {
 export default withTracker(params => {
   Meteor.subscribe('topics');
   Meteor.subscribe('resourcess');
-  if (config.sec) {
+  if (config.isHighScool) {
     return {
       resourcess: Resources.find(
         {
