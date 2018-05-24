@@ -265,6 +265,7 @@ export class EditResources extends Component {
   }
   render() {
     const { isOpen, title, confirm, reject, modalType, name } = this.state;
+    const limit = Session.get('limit');
     return (
       <>
         {modalType === 'upload' ? (
@@ -333,13 +334,13 @@ export class EditResources extends Component {
               Resources displayed
               <div className="row">
                 <a className="col s2 link" onClick={e => this.getEntriesCount(e, 5)}>
-                  <u>{Session.get('limit') === 5 ? <b>5</b> : 5}</u>
+                  <u>{limit === 5 ? <b>5</b> : 5}</u>
                 </a>
                 <a className="col s2 link" onClick={e => this.getEntriesCount(e, 10)}>
-                  <u>{Session.get('limit') === 10 ? <b>10</b> : 10}</u>
+                  <u>{limit === 10 ? <b>10</b> : 10}</u>
                 </a>
                 <a className="col s2 link" onClick={e => this.getEntriesCount(e, 20)}>
-                  <u>{Session.get('limit') === 20 ? <b>20</b> : 20}</u>
+                  <u>{limit === 20 ? <b>20</b> : 20}</u>
                 </a>
               </div>
             </div>
