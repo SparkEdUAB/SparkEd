@@ -56,30 +56,24 @@ export default class SetUp extends Component {
   saveConfig = e => {
     e.preventDefault();
     const { name, tag, structure, auth } = this.state;
-    let isSchool, isHighScool;
+    let isHighScool;
     const isSet = config.set;
     switch (structure) {
-      case 'school':
-        isSchool = true;
-        isHighScool = false;
-        break;
       case 'course':
-        isSchool = false;
         isHighScool = false;
         break;
       case 'isHighScool':
         isHighScool = true;
-        isSchool = false;
         break;
       default:
         break;
     }
-    if (!name || name.length === 0) {
+    if (!name || !name.trim().length) {
       this.setState({
         error: 'Please Enter the Institution name',
       });
       return;
-    } else if (!tag || tag.length === 0) {
+    } else if (!tag || !tag.trim().length) {
       this.setState({
         error: 'Please Enter Institution Tag or Motto',
       });
@@ -95,7 +89,6 @@ export default class SetUp extends Component {
       name,
       tag,
       auth,
-      isSchool,
       isHighScool,
     });
     // open the upload modal
@@ -165,15 +158,6 @@ export default class SetUp extends Component {
                       <span className="red-text">*</span>
                       <div className="row">
                         <div className="col s12" onChange={e => this.saveChange(e, 'structure')}>
-                          <p className="gender-male">
-                            <input name="struct" type="radio" id="school" value="school" required />
-                            <label
-                              htmlFor="school"
-                              title="Different Schools with programs and courses"
-                            >
-                              School{' '}
-                            </label>
-                          </p>
                           <p className="gender-female">
                             <input
                               name="struct"

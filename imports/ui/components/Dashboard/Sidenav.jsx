@@ -28,26 +28,7 @@ export default class Sidenav extends Component {
                   </a>
                 </li>
 
-                {/* Display  Courses if School doesn't exist */}
-                {config.isSchool ? (
-                  <Fragment>
-                    <li>
-                      <a href="/dashboard/school" className={`  side-list ${this.props.school}`}>
-                        <i className={`fa fa-book fa-lg `} />
-                        <span className="hide-on-small-only">&nbsp;School</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="/dashboard/list_topics"
-                        className={`  side-list ${this.props.topics}`}
-                      >
-                        <i className={`fa fa-text-width fa-lg `} />
-                        <span className="hide-on-small-only">&nbsp; All Topics</span>
-                      </a>
-                    </li>
-                  </Fragment>
-                ) : config.isHighScool ? (
+                {config.isHighScool ? (
                   <li>
                     <a href="/dashboard/course" className={`  side-list ${this.props.course}`}>
                       <i className={`fa fa-book fa-lg `} />
@@ -143,7 +124,6 @@ export default class Sidenav extends Component {
 }
 Sidenav.propTypes = {
   accounts: PropTypes.string,
-  school: PropTypes.string,
   extra: PropTypes.string,
   stats: PropTypes.string,
   feedback: PropTypes.string,
