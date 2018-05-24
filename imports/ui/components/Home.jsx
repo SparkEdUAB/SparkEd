@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import Header from './layouts/Header.jsx';
 import { _Courses } from '../../api/courses/courses';
@@ -39,16 +39,13 @@ export class Home extends Component {
     const { courseReady } = this.props;
     return (
       <ErrorBoundary>
-        <div className="home-main">
-          <div>
-            <Header />
-          </div>
+        <Fragment>
           <div>{<ImgSlider />}</div>
           <div className="container ">
             <div className="row ">{courseReady ? this.renderCourses() : <Loader />}</div>
             <FloatingButton />
           </div>
-        </div>
+        </Fragment>
       </ErrorBoundary>
     );
   }

@@ -81,7 +81,7 @@ adminRoutes.route('/setup', {
 isAuthRequired().route('/', {
   name: 'Home',
   action() {
-    mount(Home, {});
+    mount(AppWrapper, { yield: <Home /> });
   },
 });
 
