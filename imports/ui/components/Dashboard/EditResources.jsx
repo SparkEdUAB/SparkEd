@@ -165,8 +165,6 @@ export class EditResources extends Component {
             // });
           });
         });
-        // const name = count > 1 ? 'resources' : 'resource';
-
         break;
     }
     // close the modal when done submitting
@@ -176,14 +174,14 @@ export class EditResources extends Component {
   renderResources() {
     const { topic, resources } = this.props;
 
-    if (topic === undefined && !resources) {
+    if (!topic && !resources) {
       return null;
     }
-    if (resources === undefined || resources.length === 0) {
+    if (!resources || resources.length === 0) {
       return null;
     }
     let count = 1;
-    return this.props.resources.map(resource => (
+    return resources.map(resource => (
       <tr key={resource._id}>
         <td>{count++}</td>
         <td>{resource.name.replace(/\.[^/.]+$/, '')}</td>
@@ -266,32 +264,33 @@ export class EditResources extends Component {
     );
   }
   render() {
+    const { isOpen, title, confirm, reject, modalType, name } = this.state;
     return (
       <>
-        {this.state.modalType === 'upload' ? (
+        {modalType === 'upload' ? (
           <UploadWrapper
-            show={this.state.isOpen}
+            show={isOpen}
             close={this.closeModal}
-            title={this.state.title}
+            title={title}
             submit={this.submitFile}
           />
         ) : (
           <MainModal
-            show={this.state.isOpen}
+            show={isOpen}
             onClose={this.closeModal}
             subFunc={this.handleSubmit}
-            title={this.state.title}
-            confirm={this.state.confirm}
-            reject={this.state.reject}
+            title={title}
+            confirm={confirm}
+            reject={reject}
           >
-            {this.state.modalType === 'del' ? (
+            {modalType === 'del' ? (
               ''
             ) : (
               <div className="input-field">
                 <input
                   placeholder="Name of Resource"
                   type="text"
-                  defaultValue={this.state.name}
+                  defaultValue={name}
                   className="validate clear"
                   required
                   name="resource"
