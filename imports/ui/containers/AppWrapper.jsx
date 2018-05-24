@@ -10,12 +10,12 @@ export default class AppWrapper extends Component {
     return (
       <Fragment>
         <Header />
-        <Fragment>{this.props.yield}</Fragment>
+        <Fragment>{this.props.children}</Fragment>
       </Fragment>
     );
   }
 }
 
 AppWrapper.propTypes = {
-  yield: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };

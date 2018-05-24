@@ -1,3 +1,13 @@
+/* for the index.html */
+
+.loader-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+}
+
 /*dashboard side nav styles*/
 .side-list {
   display: block;
@@ -511,14 +521,14 @@ nav ul a:hover {
   text-align: center;
   margin-top: 60px;
 }
-@media only screen and (min-width: 601px){
+@media only screen and (min-width: 601px) {
   .row .col.m1 {
-      width: 6.5%;
-      margin-left: auto;
-      left: auto;
-      right: auto;
-    }
+    width: 6.5%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
   }
+}
 
 /*Mobile responsive styles*/
 @media only screen and (max-width: 600px) {

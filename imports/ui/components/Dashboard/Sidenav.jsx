@@ -3,14 +3,14 @@ import { PropTypes } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import * as config from '../../../../config.json';
 import Header from '../layouts/Header';
-
+import AppWrapper from '../../containers/AppWrapper';
 // currently disabled the sync and sync settings as they need to be tested and thoroughly reviewed
 //  The code can remain here as both will be updated in the later release
+
 export default class Sidenav extends Component {
   render() {
     return (
-      <Fragment>
-        <Header />
+      <AppWrapper>
         <div className="row">
           <Fragment>
             <div className="col m3 s1 menu_simple">
@@ -135,9 +135,9 @@ export default class Sidenav extends Component {
               {/* end list (ul) */}
             </div>
           </Fragment>
-          <Fragment>{this.props.children}</Fragment>
+          <Fragment>{this.props.yield}</Fragment>
         </div>
-      </Fragment>
+      </AppWrapper>
     );
   }
 }
