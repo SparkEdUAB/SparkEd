@@ -20,9 +20,7 @@ import UserStatistics from '../imports/ui/components/Dashboard/Statistics/UserSt
 import AllTopics from '../imports/ui/components/Dashboard/AllTopics.jsx';
 import AllResources from '../imports/ui/components/Dashboard/AllResources.jsx';
 import Feedback from '../imports/ui/components/Dashboard/Feedback.jsx';
-import School from '../imports/ui/components/Dashboard/School.jsx';
 import Additional from '../imports/ui/components/Dashboard/Additional.jsx';
-import Program from '../imports/ui/components/Dashboard/Program.jsx';
 import Courses from '../imports/ui/components/Dashboard/Courses.jsx';
 import DisplayResource from '../imports/ui/components/Dashboard/DisplayResource.jsx';
 import Institution from '../imports/ui/components/Dashboard/Settings/Institution.jsx';
@@ -253,20 +251,6 @@ adminRoutes.route('/dashboard/list_resources', {
   name: 'AllResources',
   action() {
     mount(Sidenav, { yield: <AllResources /> });
-  },
-});
-
-adminRoutes.route('/dashboard/school', {
-  name: 'School',
-  action() {
-    mount(Sidenav, { yield: <School /> });
-  },
-});
-
-adminRoutes.route('/dashboard/program/:_id', {
-  name: 'Program',
-  action(params) {
-    mount(Sidenav, { yield: <Program /> });
   },
 });
 
