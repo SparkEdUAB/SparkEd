@@ -25,7 +25,7 @@ export class Courses extends Component {
 
   static redirectToUnits(id, event) {
     event.preventDefault();
-    if (config.sec) {
+    if (config.isHighScool) {
       FlowRouter.go(`/contents/${id}?ref=home`);
     } else {
       FlowRouter.go(`/course_content/${id}?ref=home`);

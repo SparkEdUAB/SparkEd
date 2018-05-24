@@ -109,7 +109,7 @@ export class EditResources extends Component {
   getBack = e => {
     // event.preventDefault();
     const unitId = Session.get('unitId');
-    if (config.sec) {
+    if (config.isHighScool) {
       FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseId')}`);
     } else {
       FlowRouter.go(`/dashboard/edit_unit/${'d9ee6fd932517fc757040ed3'}`);
@@ -309,7 +309,7 @@ export class EditResources extends Component {
               <button className="btn grey darken-3 fa fa-angle-left" 
               onClick={this.getBack}>
                 {' '}
-                {config.sec ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
+                {config.isHighScool ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
               </button>
             </div>
             <div className="col s4 m3">
@@ -376,8 +376,8 @@ export function getId() {
 }
 export default withTracker(() => {
   Meteor.subscribe('resourcess');
-  if (config.sec) {
-    Meteor.subscribe('sec.units', getId());
+  if (config.isHighScool) {
+    Meteor.subscribe('isHighScool.units', getId());
     return {
       resources: Resources.find(
         { 'meta.unitId': getId() },

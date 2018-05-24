@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
 
-// methods
 // check internet connection
 Meteor.methods({
   checkNetwork: () => {
@@ -39,5 +38,3 @@ Meteor.methods({
     });
   },
 });
-
-// application/x-www-form-urlencoded

@@ -4,8 +4,8 @@ import * as Config from '../../../config.json';
 
 export const Conf = new Mongo.Collection('config', { idGeneration: 'STRING' });
 
-const { userAuth } = Config;
+const { isUserAuth } = Config;
 
 export function isAuthRequired() {
-  return userAuth ? !!Meteor.user() : true;
+  return isUserAuth ? !!Meteor.user() : true;
 }

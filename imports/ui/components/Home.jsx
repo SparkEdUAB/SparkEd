@@ -113,7 +113,7 @@ componentWillMount(){
           <div>{<ImgSlider />}</div>
           <div className="container ">
             <div className="row ">
-              {Config.sch === true ? (
+              {Config.isSchool === true ? (
                 <>
                   <div className="col m6 s6">{this.getDataList('school', 'School')}</div>
 
@@ -151,7 +151,7 @@ export function getQuery() {
   let query = {};
   const schoolId = Session.get('schId');
   const programId = Session.get('progId');
-  const config = Config.sch;
+  const config = Config.isSchool;
 
   if (config && schoolId && !programId) {
     return {
@@ -175,11 +175,11 @@ export default withTracker(() => {
   Meteor.subscribe('schools');
   Meteor.subscribe('titles');
 
-  if (!Config.sch) {
+  if (!Config.isSchool) {
     return {
       courses: _Courses.find({}).fetch(),
     };
-  } else if (Config.sec) {
+  } else if (Config.isHighScool) {
     return {
       courses: _Courses.find({}).fetch(),
     };

@@ -157,7 +157,7 @@ ViewResourceApp.propTypes = {
 
 export default withTracker(() => {
   const handle = Meteor.subscribe('resourcess');
-  if (config.sec) {
+  if (config.isHighScool) {
     return {
       subsReady: handle.ready(),
       resources: Resources.find(

@@ -132,7 +132,7 @@ export class Courses extends Component {
     const { target } = e;
     const { modalType, modalIdentifier, ids, owner, table_title, sub_title } = this.state;
 
-    if (config.sch) {
+    if (config.isSchool) {
       details = { schoolId, programId, year };
     } else {
       details = {};
@@ -144,7 +144,7 @@ export class Courses extends Component {
         courseCode = target.courseCode.value;
         year = target.year.value;
         details = { schoolId, programId, year };
-        const reference = config.sec ? 'subject' : 'course';
+        const reference = config.isHighScool ? 'subject' : 'course';
         const courseId = new Meteor.Collection.ObjectID().valueOf();
         Meteor.call('course.add', courseId, course, courseCode, details, (err, res) => {
           err
@@ -400,7 +400,7 @@ export class Courses extends Component {
             <h4>Manage {new_title}</h4> {/* Add */}
           </div>
           <div className="row">
-            {config.sch === true ? (
+            {config.isSchool === true ? (
               <div className="col m3">
                 <button
                   className="btn grey darken-3 fa fa-angle-left"

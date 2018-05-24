@@ -20,7 +20,7 @@ Meteor.publish('units', function getAllUnits() {
 
 // publish unit name
 
-Meteor.publish('sec.units', function getSecUnit(id) {
+Meteor.publish('isHighScool.units', function getSecUnit(id) {
   check(id, String);
   if (isAuthRequired()) {
     this.ready();

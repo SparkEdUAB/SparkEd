@@ -91,7 +91,7 @@ export class ContentsApp extends Component {
         </div>
         <div className="row">
           <div className="col s12 m4 l3 topics-container">
-            <h6 className="center">{config.sec ? title : 'Topics'}</h6>
+            <h6 className="center">{config.isHighScool ? title : 'Topics'}</h6>
             <Topics unitId={getUnitId()} />
           </div>
           <div className="col s12 m8 l9">
@@ -115,9 +115,9 @@ export function getUnitId() {
   return FlowRouter.getParam('_id');
 }
 
-// in high-sec grab the unitId
+// in high-isHighScool grab the unitId
 export function getTopicId() {
-  if (config.sec) {
+  if (config.isHighScool) {
     topicId = FlowRouter.getQueryParam('rs');
     topics = _Units.findOne({ 'details.courseId': FlowRouter.getParam('_id') });
   } else {
@@ -138,7 +138,7 @@ export default withTracker(() => {
   Meteor.subscribe('resourcess');
   Meteor.subscribe('topics');
   Meteor.subscribe('titles');
-  if (config.sec) {
+  if (config.isHighScool) {
     return {
       unit: _Units.findOne({ _id: getTopicId() }),
       titles: Titles.findOne({}),

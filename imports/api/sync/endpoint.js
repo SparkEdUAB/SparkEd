@@ -110,11 +110,11 @@ Api.addCollection(_Units, {
 Api.addCollection(_Courses, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: true,
+    authRequired: false,
   },
   endpoints: {
     get: {
-      authRequired: true,
+      authRequired: false,
     },
   },
 });

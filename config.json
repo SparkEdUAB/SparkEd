@@ -1,8 +1,8 @@
 {
   "name": "Sparkman Center For Global Health",
   "tag": "efdf",
-  "userAuth": false,
-  "sch": false,
-  "sec": false,
+  "isUserAuth": false,
+  "isSchool": false,
+  "isHighScool": true,
   "set": true
 }
