@@ -465,18 +465,13 @@ export class Unit extends Component {
     );
   }
 }
-export function getCourseId() {
-  let initId = FlowRouter.getQueryParam('cs');
-  return initId;
-}
-
 export default withTracker(params => {
-  Meteor.subscribe('searchUnits', Session.get('courseIde') || Session.get('courseId'));
+  Meteor.subscribe('searchUnits', Session.get('courseIde'));
   Meteor.subscribe('courses');
   Meteor.subscribe('deleted');
   Meteor.subscribe('titles');
   return {
-    course: _Courses.findOne({ _id: Session.get('courseId') }),
+    course: _Courses.findOne({ _id: Session.get('courseIde') }),
     titles: Titles.findOne({}),
     Units: [],
   };
