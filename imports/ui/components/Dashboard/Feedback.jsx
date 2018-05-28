@@ -14,25 +14,24 @@ export class Feedback extends Component {
   }
 
   renderComments() {
-    const comments = this.props.feedback;
-    if (this.props.feedback === undefined) {
-      return null;
+    const { feeds } = this.props;
+    if (!feeds || !feeds.length) {
+      return <span className="center">You have not received any feedback yet</span>;
     }
 
-    return comments.map(feedback => (
-      <ul key={feedback._id} className="collapsible popout" data-collapsible="accordion">
+    return feeds.map(feed => (
+      <ul key={feed._id} className="collapsible popout" data-collapsible="accordion">
         <li>
           <div className="collapsible-header">
             <i className="fa fa-user " />
-            <span style={{ marginRight: '2%' }}>{feedback.createdBy}</span>
-            <span style={{ marginRight: '40%' }}>Title: {feedback.title}</span>
-            <a href={feedback.link} className="blue-text right">
+            <span style={{ marginRight: '2%' }}>{feed.createdBy}</span>
+            <span style={{ marginRight: '40%' }}>Title: {feed.title}</span>
+            <a href={feed.link} className="blue-text right">
               Source
             </a>
           </div>
           <div className="collapsible-body">
-            {/* Yet to include the "flow-text" to make the text more responsive and larger */}
-            <p className="flow-text">{feedback.feedback}</p>
+            <p className="flow-text">{feed.feedback}</p>
           </div>
         </li>
       </ul>
@@ -53,13 +52,13 @@ export class Feedback extends Component {
   }
 }
 Feedback.propTypes = {
-  feedback: PropTypes.array.isRequired,
+  feeds: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
   Meteor.subscribe('feedbacks');
   return {
-    feedback: _Feedback
+    feeds: _Feedback
       .find(
         {},
         {

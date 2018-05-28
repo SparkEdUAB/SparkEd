@@ -230,11 +230,6 @@ export class ManageUnits extends Component {
       case 'field':
         const name = target.course.value;
         const title_id = Session.get('title_id');
-      // Meteor.call('insert.title', table_title, sub_title, err => {
-      //   err
-      //     ? Materialize.toast(err.reason, 3000, 'error-toast')
-      //     : Materialize.toast('Successfully updated the titles', 3000, 'success-toast');
-      // });
     }
 
     // close the modal when done;
