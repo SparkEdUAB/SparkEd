@@ -46,8 +46,7 @@ export class Unit extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const programId = FlowRouter.getParam('_id');
-    const courseId = FlowRouter.getQueryParam('cs');
+    const courseId = FlowRouter.getParam('_id');
     const year = FlowRouter.getQueryParam('y');
     const user = Meteor.userId();
     const unitId = new Meteor.Collection.ObjectID().valueOf();
@@ -56,7 +55,6 @@ export class Unit extends Component {
     let details = {};
     const { topics, description, unitName } = this.state;
     details = {
-      programId: programId === 'prog' ? null : programId,
       year,
       courseId,
     };

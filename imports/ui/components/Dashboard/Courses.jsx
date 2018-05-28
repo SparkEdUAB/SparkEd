@@ -126,6 +126,7 @@ export class Courses extends Component {
     let course;
     let courseCode;
     let year;
+    let details;
     const { target } = e;
     const { modalType, modalIdentifier, ids, owner, table_title, sub_title } = this.state;
 
@@ -134,6 +135,7 @@ export class Courses extends Component {
         course = target.course.value;
         courseCode = target.courseCode.value;
         year = target.year.value;
+        details = { year };
         const reference = config.isHighScool ? 'subject' : 'course';
         const courseId = new Meteor.Collection.ObjectID().valueOf();
         Meteor.call('course.add', courseId, course, courseCode, details, (err, res) => {
@@ -255,9 +257,7 @@ export class Courses extends Component {
         </td>
         <td>
           <a
-            href={`/dashboard/units/${course.details.programId}?cs=${course._id}&y=${
-              course.details.year
-            }`}
+            href={`/dashboard/units/${course._id}&y=${course.details.year}`}
             className="fa fa-pencil"
           />
         </td>

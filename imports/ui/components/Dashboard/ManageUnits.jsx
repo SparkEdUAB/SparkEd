@@ -277,7 +277,7 @@ export class ManageUnits extends Component {
       sub_title,
       description,
     } = this.state;
-    let schoolId, programId, courseId, new_title, new_sub_title, year;
+    let courseId, new_title, new_sub_title, year;
     courseName = null;
     if (course) {
       courseId = course._id;
