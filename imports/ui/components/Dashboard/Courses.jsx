@@ -117,7 +117,7 @@ export class Courses extends Component {
   static handleUrl(id, year, event) {
     event.preventDefault();
     Session.set('courseIde', id);
-    FlowRouter.go(`/dashboard/units/${id}&y=${year}`);
+    FlowRouter.go(`/dashboard/units/${id}?y=${year}`);
   }
 
   // Adding new Course

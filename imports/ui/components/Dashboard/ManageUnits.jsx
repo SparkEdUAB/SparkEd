@@ -259,13 +259,10 @@ export class ManageUnits extends Component {
     );
   }
 
-  routeToCourses(schoolId, programId, event) {
-    event.preventDefault();
-    if (!schoolId) {
-      return FlowRouter.go('/dashboard/course');
-    }
-    return FlowRouter.go(`/dashboard/course/${schoolId}?cs=${programId}`);
-  }
+  routeToCourses = e => {
+    e.preventDefault();
+    return FlowRouter.go('/dashboard/course');
+  };
 
   render() {
     let { course, titles } = this.props;
@@ -280,16 +277,11 @@ export class ManageUnits extends Component {
       sub_title,
       description,
     } = this.state;
-    let schoolId,
-      programId,
-      courseId,
-      new_title,
-      new_sub_title,
-      courseName = null;
+    let schoolId, programId, courseId, new_title, new_sub_title, year;
+    courseName = null;
     if (course) {
-      programId = course.details.programId || 'prog';
       courseId = course._id;
-      schoolId = course.details.schoolId;
+      year = course.details.year;
       courseName = course.name;
       Session.set('courseName', courseName);
     }
@@ -350,7 +342,7 @@ export class ManageUnits extends Component {
         <div className="col m9 s11">
           <div className="row">
             <div className="">
-              <h4>Units for {` ${courseName}`} </h4>
+              <h4>{`${Session.get('sub_unit_title')} for ${courseName}`} </h4>
             </div>
             <div className="col m8 ">
               <SearchField
@@ -366,7 +358,7 @@ export class ManageUnits extends Component {
             <div className="col m3">
               <button
                 className="btn grey darken-3 fa fa-angle-left"
-                onClick={this.routeToCourses.bind(this, schoolId, programId)}
+                onClick={e => this.routeToCourses(e)}
               >
                 <a href={''} className="white-text">
                   {` ${new_title}`}
@@ -383,10 +375,7 @@ export class ManageUnits extends Component {
               </button>
             </div>
             <div className="col m2">
-              <a
-                href={`/dashboard/unit/${programId ||
-                  'prog'}?cs=${courseId}&y=${FlowRouter.getQueryParam('y')}`}
-              >
+              <a href={`/dashboard/unit/${courseId}?y=${year}`}>
                 <button className="btn grey fa fa-plus"> New</button>
               </a>
             </div>

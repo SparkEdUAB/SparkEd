@@ -115,7 +115,7 @@ export class Unit extends Component {
   };
   backToUnits = e => {
     e.preventDefault();
-    return FlowRouter.go(`/dashboard/units/prog?cs=${FlowRouter.getQueryParam('cs')}`);
+    return FlowRouter.go(`/dashboard/units/${FlowRouter.getParam('_id')}`);
   };
   render() {
     const { topics, description, unitName } = this.state;
@@ -127,13 +127,9 @@ export class Unit extends Component {
             <div className="card-panel">
               <div className="">
                 <button className="btn fa fa-arrow-left" onClick={this.backToUnits}>
-                  {
-                    ` ${name}`
-                  }
+                  {` ${name}`}
                 </button>
-                <h5 className="center large">
-                {`Add New ${name}`}
-                </h5>
+                <h5 className="center large">{`Add New ${name}`}</h5>
               </div>
 
               <form className="new-topic" name="new-topic" onSubmit={e => this.handleSubmit(e)}>
