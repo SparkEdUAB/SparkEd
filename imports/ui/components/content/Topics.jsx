@@ -39,7 +39,7 @@ export class Topics extends Component {
   };
   renderPagination() {
     const { count } = this.props;
-    if (!!count && count <= Session.get('limit')) {
+    if (!count || !count <= Session.get('limit')) {
       return <span />;
     }
     return (
