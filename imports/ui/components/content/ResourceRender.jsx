@@ -9,20 +9,30 @@ import Download from './Download.jsx';
 export default class ResourceRender extends Component {
   render() {
     // resource ====== file;
-    const { resource } = this.props;
-    if (resource.type === 'video' || resource.ext === 'mp4' || resource.ext === 'webm' || resource.ext === 'ogg') {
-      return <Video video={resource} link={this.props.Link}/>;
+    const { resource, Link } = this.props;
+    if (
+      resource.type === 'video' ||
+      resource.ext === 'mp4' ||
+      resource.ext === 'webm' ||
+      resource.ext === 'ogg'
+    ) {
+      return <Video video={resource} link={Link} />;
     } else if (resource.ext === 'pdf') {
-      return <PDF pdf={resource} link={this.props.Link} />;
+      return <PDF pdf={resource} link={Link} />;
     } else if (
       resource.ext === 'image' ||
       resource.ext === 'jpeg' ||
       resource.ext === 'jpg' ||
       resource.ext === 'png'
     ) {
-      return <IMG img={resource} link={this.props.Link}/>;
-    } else if (resource.ext === 'mp3' || resource.ext === 'ogg' || resource.ext === 'webm' || 'wav') {
-      return <Audio audio={resource} link={this.props.Link}/>;
+      return <IMG img={resource} link={Link} />;
+    } else if (
+      resource.ext === 'mp3' ||
+      resource.ext === 'ogg' ||
+      resource.ext === 'webm' ||
+      'wav'
+    ) {
+      return <Audio audio={resource} link={Link} />;
     }
     // if the filetype isn't known avoid crashing the application
     return <Download download={resource} />;

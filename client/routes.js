@@ -166,7 +166,7 @@ adminRoutes.route('/dashboard/edit_resources/:_id', {
     mount(Sidenav, { yield: <EditResources /> });
   },
 });
-adminRoutes.route('/dashboard/isHighScool/edit_unit/:_id', {
+adminRoutes.route('/dashboard/isHighSchool/edit_unit/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
     mount(Sidenav, { yield: <EditResources /> });

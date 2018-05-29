@@ -63,7 +63,7 @@ export class ViewResourceApp extends Component {
       urlLink: resourceObj.link(),
       _id: resources._id,
     };
-    return <ResourceRender resource={resource}  Link={resourceObj.link()}/>;
+    return <ResourceRender resource={resource} Link={resourceObj.link()} />;
   }
 
   fetchResources() {
@@ -115,8 +115,8 @@ export class ViewResourceApp extends Component {
       <ErrorBoundary>
         <div className="row">
           <div className="col s12 m8 l9">{this.renderResource()}</div>
-          
-           {/* <img src={"http://localhost:3000/cdn/storage/Resources/7A7FqFTZH9fgspsEC/original/7A7FqFTZH9fgspsEC.png"}
+
+          {/* <img src={"http://localhost:3000/cdn/storage/Resources/7A7FqFTZH9fgspsEC/original/7A7FqFTZH9fgspsEC.png"}
            /> */}
 
           <div className="col s12 m4 l3 ">
@@ -157,7 +157,7 @@ ViewResourceApp.propTypes = {
 
 export default withTracker(() => {
   const handle = Meteor.subscribe('resourcess');
-  if (config.isHighScool) {
+  if (config.isHighSchool) {
     return {
       subsReady: handle.ready(),
       resources: Resources.find(
