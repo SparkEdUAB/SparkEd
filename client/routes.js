@@ -18,7 +18,6 @@ import NotFound from '../imports/ui/components/layouts/NotFound';
 import OverView from '../imports/ui/components/Dashboard/Statistics/Overview.jsx';
 import UserStatistics from '../imports/ui/components/Dashboard/Statistics/UserStatistics';
 import AllTopics from '../imports/ui/components/Dashboard/AllTopics.jsx';
-import AllResources from '../imports/ui/components/Dashboard/AllResources.jsx';
 import Feedback from '../imports/ui/components/Dashboard/Feedback.jsx';
 import Additional from '../imports/ui/components/Dashboard/Additional.jsx';
 import Courses from '../imports/ui/components/Dashboard/Courses.jsx';
@@ -244,13 +243,6 @@ adminRoutes.route('/dashboard/list_topics', {
   name: 'AllTopics',
   action() {
     mount(Sidenav, { yield: <AllTopics /> });
-  },
-});
-
-adminRoutes.route('/dashboard/list_resources', {
-  name: 'AllResources',
-  action() {
-    mount(Sidenav, { yield: <AllResources /> });
   },
 });
 
