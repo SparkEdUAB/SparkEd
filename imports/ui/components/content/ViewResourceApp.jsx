@@ -44,7 +44,7 @@ export class ViewResourceApp extends Component {
 
   fetchResource() {
     let { resource } = this.props;
-    if (resource === undefined) {
+    if (!resource) {
       resource = null;
     }
     return resource;
@@ -55,7 +55,6 @@ export class ViewResourceApp extends Component {
     if (!resourceObj) {
       return null;
     }
-    console.log(resourceObj);
     const resources = resourceObj;
     const resource = {
       type: resources.type,
@@ -73,7 +72,7 @@ export class ViewResourceApp extends Component {
       return null;
     }
     let data = query;
-    if (query === undefined) {
+    if (!query) {
       data = [
         {
           id: 0,
@@ -89,6 +88,7 @@ export class ViewResourceApp extends Component {
     }
 
     if (data.length === 0) {
+      // !data.length
       data = [
         {
           id: 0,
@@ -116,15 +116,10 @@ export class ViewResourceApp extends Component {
       <ErrorBoundary>
         <div className="row">
           <div className="col s12 m8 l9">{this.renderResource()}</div>
-
-          {/* <img src={"http://localhost:3000/cdn/storage/Resources/7A7FqFTZH9fgspsEC/original/7A7FqFTZH9fgspsEC.png"}
-           /> */}
-
           <div className="col s12 m4 l3 ">
             <ViewFrame resources={this.props.resources} />
           </div>
         </div>
-
         <div className="">
           <FloatingButton className="left" />{' '}
         </div>
@@ -134,7 +129,7 @@ export class ViewResourceApp extends Component {
 }
 
 export function getResourceWithId(coll) {
-  if (coll === undefined) {
+  if (!coll) {
     return 'null';
   }
   const resourceArray = coll.resources;
