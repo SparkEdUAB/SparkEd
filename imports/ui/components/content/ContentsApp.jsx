@@ -20,7 +20,7 @@ export class ContentsApp extends Component {
 
   saveUsage() {
     const ref = FlowRouter.getQueryParam('ref');
-    if (!ref || this.props.unit === undefined) {
+    if (!ref || !this.props.unit) {
       return;
     }
     if (!Meteor.user()) {
@@ -96,8 +96,6 @@ export class ContentsApp extends Component {
         </div>
         <div className="row">
           <div className="col s12 m4 l3 topics-container">
-            {/* <h6 className="center"></h6>
-              */}
             <div className="sideNavHeadingUnderline">
               <a
                 title="Go back to Topics"
@@ -142,9 +140,9 @@ export function getTopicId() {
     topics = _Topics.findOne({ unitId: FlowRouter.getParam('_id') });
   }
 
-  if (topicId === undefined && topics !== undefined) {
+  if (!topicId && topics !== undefined) {
     return topics._id;
-  } else if (topics === undefined) {
+  } else if (!topics) {
     return '1';
   }
   return topicId;
