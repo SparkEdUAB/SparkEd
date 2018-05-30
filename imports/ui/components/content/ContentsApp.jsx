@@ -68,6 +68,11 @@ export class ContentsApp extends Component {
     window.scrollTo(0, 0);
   }
 
+  getBack = e => {
+    const courseId = Session.get('courseId');
+    return FlowRouter.go(`/course_content/${courseId}?ref=home`);
+  };
+
   render() {
     let unitName = '';
     let topicName = '';
@@ -91,7 +96,19 @@ export class ContentsApp extends Component {
         </div>
         <div className="row">
           <div className="col s12 m4 l3 topics-container">
-            <h6 className="center">{config.isHighScool ? title : 'Topics'}</h6>
+            {/* <h6 className="center"></h6>
+              */}
+            <div className="sideNavHeadingUnderline">
+              <a
+                title="Go back to Topics"
+                id="backButtonLink"
+                href={''}
+                onClick={e => this.getBack(e)}
+              >
+                <i className="fa fa-chevron-circle-left fa-lg" />
+              </a>
+              <p className="sideNavHeading">{config.isHighScool ? title : 'Topics'}</p>
+            </div>
             <Topics unitId={getUnitId()} />
           </div>
           <div className="col s12 m8 l9">
