@@ -41,5 +41,5 @@ export default class ResourceRender extends Component {
 
 ResourceRender.propTypes = {
   resource: PropTypes.object.isRequired,
-  Link: PropTypes.string.isRequired,
+  Link: PropTypes.string,
 };

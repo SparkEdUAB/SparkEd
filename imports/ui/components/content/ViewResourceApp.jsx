@@ -52,9 +52,10 @@ export class ViewResourceApp extends Component {
 
   renderResource() {
     const resourceObj = this.fetchResource();
-    if (resourceObj === null) {
+    if (!resourceObj) {
       return null;
     }
+    console.log(resourceObj);
     const resources = resourceObj;
     const resource = {
       type: resources.type,

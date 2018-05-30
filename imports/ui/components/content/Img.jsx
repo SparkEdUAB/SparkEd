@@ -21,5 +21,5 @@ export default class IMG extends Component {
 
 IMG.propTypes = {
   img: PropTypes.object.isRequired,
-  link: PropTypes.string.isRequired,
+  link: PropTypes.string,
 };
