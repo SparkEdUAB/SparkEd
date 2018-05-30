@@ -8,7 +8,7 @@ import { _Topics } from '../../../api/topics/topics';
 export class Unit extends Component {
   countTopics() {
     const { topics } = this.props;
-    if (topics === undefined) {
+    if (!topics) {
       return null;
     }
     return topics;
@@ -16,32 +16,37 @@ export class Unit extends Component {
 
   courseName() {
     const { courses } = this.props;
-    if (courses === undefined) {
+    if (!courses) {
       return null;
     }
     return courses.name;
   }
 
   render() {
-    const { details: { courseId, year, programId } } = this.props.unit;
+    const {
+      details: { courseId, year, programId },
+      name,
+      _id,
+    } = this.props.unit;
+    const { topics } = this.props;
     return (
       <div
         className={`col m6 s12 l4 cse-unit ${courseId}yr${year}${programId}`}
-        id={`r${this.props.unit._id}`}
-        name={this.props.topics}
+        id={`r${_id}`}
+        name={topics}
       >
         <div className="card blue darken-2 homeCardColor">
           <div className="card-content">
             {/* if the screen size is smaller then redirect to small view components */}
             <span className={'card-title '}>
               <h5>
-                <a href={`/contents/${this.props.unit._id}?ref=home`} id="cardListTitle">
-                  {this.props.unit.name}
+                <a href={`/contents/${_id}?ref=home`} id="cardListTitle">
+                  {name}
                 </a>
               </h5>
             </span>
 
-            {checkPermissions() === undefined ? (
+            {!checkPermissions() ? (
               <span>
                 <span className="">
                   <h6>
@@ -73,7 +78,7 @@ export class Unit extends Component {
                   </h6>
                 </span>
                 <span className="">
-                  <a href={`/dashBoard/edit_unit/${this.props.unit._id}`} id="cardListTitle">
+                  <a href={`/dashBoard/edit_unit/${_id}`} id="cardListTitle">
                     {' '}
                     &#8667; # of Topics : {this.countTopics()}{' '}
                   </a>
@@ -89,32 +94,26 @@ export class Unit extends Component {
 
 // consider moving this component elsewhere and make the whole card clickable
 export class ExtraResource extends Component {
-  // make the whole card clickable
   static handleClickCard(courseId, resourceId, event) {
     event.preventDefault();
     FlowRouter.go(`/extra/view_resource/${courseId}?rs=${resourceId}`);
-
     return false;
   }
   render() {
+    const {
+      courseId, resourceId, name, fileType,
+    } = this.props;
     return (
       <div
         className={'col m6 s12 l4 homeCards cse-unit link-unit '}
-        title={this.props.fileType}
-        onClick={ExtraResource.handleClickCard.bind(
-          this,
-          this.props.courseId,
-          this.props.resourceId,
-        )}
+        title={fileType}
+        onClick={ExtraResource.handleClickCard.bind(this, courseId, resourceId)}
       >
         <div className="card-panel homeCardColor-2 green lighten">
           <span className={'card-title '}>
             <h5>
-              <a
-                href={`/extra/view_resource/${this.props.courseId}?rs=${this.props.resourceId}`}
-                id="cardListTitle"
-              >
-                {this.props.name}
+              <a href={`/extra/view_resource/${courseId}?rs=${resourceId}`} id="cardListTitle">
+                {name}
               </a>
             </h5>
           </span>
@@ -122,7 +121,7 @@ export class ExtraResource extends Component {
           <span className="">
             <a href="" id="cardListTitle">
               {' '}
-              &#8667; Type : {this.props.fileType}{' '}
+              &#8667; Type : {fileType}{' '}
             </a>
           </span>
         </div>
@@ -141,7 +140,14 @@ Unit.propTypes = {
   courses: PropTypes.object,
 };
 
-export default withTracker(params => {
+ExtraResource.propTypes = {
+  courseId: PropTypes.string.isRequired,
+  resourceId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  fileType: PropTypes.string.isRequired,
+};
+
+export default withTracker((params) => {
   Meteor.subscribe('topics');
   Meteor.subscribe('courses');
 
