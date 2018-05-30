@@ -14,7 +14,7 @@ Meteor.methods({
     check(isHighSchool, Match.OneOf(Boolean, null));
     check(set, Boolean);
 
-    const isSet = config.set;
+    const isSet = config.isConfigured;
     let newConfig;
     if (isSet) {
       newConfig = {
@@ -22,7 +22,7 @@ Meteor.methods({
         tag,
         isUserAuth: auth,
         isHighSchool: config.isHighSchool,
-        set: true,
+        isConfigured: true,
       };
     } else {
       newConfig = {
@@ -30,7 +30,7 @@ Meteor.methods({
         tag,
         isUserAuth: auth,
         isHighSchool,
-        set,
+        isConfigured,
       };
     }
 

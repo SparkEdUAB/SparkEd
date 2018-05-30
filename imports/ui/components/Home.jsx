@@ -19,7 +19,7 @@ export class Home extends Component {
     const users = Meteor.users.find({}).fetch();
     if (!users || !users.length) {
       FlowRouter.go('/setup');
-    } else if (!Config.set) {
+    } else if (!Config.isConfigured) {
       FlowRouter.go('/setup');
     }
   }

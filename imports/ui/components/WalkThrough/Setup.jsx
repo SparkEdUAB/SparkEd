@@ -57,7 +57,7 @@ export default class SetUp extends Component {
     e.preventDefault();
     const { name, tag, structure, auth } = this.state;
     let isHighScool;
-    const isSet = config.set;
+    const isSet = config.isConfigured;
     switch (structure) {
       case 'course':
         isHighScool = false;
@@ -96,7 +96,7 @@ export default class SetUp extends Component {
   };
   render() {
     const { isOpen, confirm, reject, error, name } = this.state;
-    const isSet = config.set;
+    const isSet = config.isConfigured;
     return (
       <Fragment>
         <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} />

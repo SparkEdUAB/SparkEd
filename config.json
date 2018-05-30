@@ -3,5 +3,6 @@
   "tag": "Delivering Education Contents in style",
   "isUserAuth": false,
   "isHighSchool": false,
-  "set": true
+  "set": true,
+  "isConfigured": true
 }
