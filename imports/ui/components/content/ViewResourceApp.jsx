@@ -63,6 +63,7 @@ export class ViewResourceApp extends Component {
       urlLink: resourceObj.link(),
       _id: resources._id,
     };
+    console.log(resource);
     return <ResourceRender resource={resource} Link={resourceObj.link()} />;
   }
 

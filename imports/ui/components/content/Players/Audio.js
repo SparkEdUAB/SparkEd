@@ -3,13 +3,13 @@ import { PropTypes } from 'prop-types';
 
 const Audio = props => (
   <Fragment>
-    Audio File named audio {props.name} <br />
-    <audio autoPlay controls autorun="true" src={props.link} />
+    Audio File named <strong>{props.audio.name} </strong> <br />
+    <audio autoPlay controls src={props.link} />
   </Fragment>
 );
 
 Audio.propTypes = {
   link: PropTypes.string.isRequired,
-  name: PropTypes.string,
+  audio: PropTypes.object,
 };
 export default Audio;

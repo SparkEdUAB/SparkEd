@@ -11,13 +11,13 @@ if (Meteor.isServer) {
 }
 
 export const _Egranary = new Mongo.Collection('egranary', { idGeneration: 'STRING' }); // void kept for the sync
+const validTypes = ['png', 'jpg', 'jpeg', 'mp4', 'pdf', 'mp3', 'pptx', 'ppt', 'webm', 'ogg'];
 
 export const Resources = new FilesCollection({
   collectionName: 'Resources',
   allowClientCode: false, // Disallow remove files from Client
   onBeforeUpload(file) {
     // Allow upload files under 5Gb, and only in png/jpg/jpeg formats
-    const validTypes = ['png', 'jpg', 'jpeg', 'mp4', 'pdf', 'mp3', 'pptx', 'ppt', 'webm'];
     if (file.size >= 5368709120) {
       return 'Please upload files, with size equal or less than 5GB';
     } else if (!validTypes.includes(file.ext)) {
@@ -81,14 +81,13 @@ export const References = new FilesCollection({
   collectionName: 'References',
   allowClientCode: false,
   onBeforeUpload(file) {
-    // Allow upload files under 5Gb, and only in png/jpg/jpeg formats
-    if (
-      file.size <= 5368709120 &&
-      /png|jpg|jpeg|mp4|pdf|mp3|pptx|ppt|webm|/i.test(file.extension)
-    ) {
-      return true;
+    // Allow upload files under 5Gb, and only in listed formats
+    if (file.size >= 5368709120) {
+      return 'Please upload files, with size equal or less than 5GB';
+    } else if (!validTypes.includes(file.ext)) {
+      return `Please upload either one of the following formats ${validTypes.join()}`;
     }
-    return 'Please upload image, with size equal or less than 10MB';
+    return true;
   },
   onAfterUpload(file) {
     // Move file to GridFS
