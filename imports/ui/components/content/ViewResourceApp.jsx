@@ -14,6 +14,12 @@ import { Resources } from '../../../api/resources/resources';
 import * as config from '../../../../config.json';
 
 export class ViewResourceApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      download: false,
+    };
+  }
   static extractFileType(data) {
     const fileTypeData = data.split('/');
     let type = fileTypeData[0];
@@ -63,7 +69,6 @@ export class ViewResourceApp extends Component {
       urlLink: resourceObj.link(),
       _id: resources._id,
     };
-    console.log(resource);
     return <ResourceRender resource={resource} Link={resourceObj.link()} />;
   }
 
