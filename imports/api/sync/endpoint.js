@@ -3,8 +3,6 @@ import { HTTP } from 'meteor/http';
 import { Resources } from '../resources/resources';
 import { References } from '../resources/resources';
 import { _Courses } from '../courses/courses';
-import { _Programs } from '../programs/programs';
-import { _Schools } from '../schools/school';
 import { _SearchData } from '../search/search';
 import { _Statistics } from '../statistics/statistics';
 import { Titles } from '../settings/titles';
@@ -29,19 +27,6 @@ Api.addCollection(References, {
     },
   },
 });
-// GET endpoint for resources
-// Api.addCollection(Resources, {
-//   excludedEndpoints: ['put', 'post', 'delete'],
-//   routeOptions: {
-//     authRequired: true,
-//   },
-//   endpoints: {
-//     get: {
-//       authRequired: true,
-//     },
-//   },
-// });
-
 // GET endpoint for search
 Api.addCollection(_SearchData, {
   excludedEndpoints: ['put', 'post', 'delete'],

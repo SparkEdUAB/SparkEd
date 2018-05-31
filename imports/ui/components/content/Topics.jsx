@@ -86,7 +86,7 @@ export class Topics extends Component {
   renderTopic() {
     let index = 0;
     const { topics, unitId } = this.props;
-    if (topics === undefined) {
+    if (!topics) {
       return null;
     }
     return topics.map(topic => (
