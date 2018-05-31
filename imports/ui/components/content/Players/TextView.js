@@ -1,14 +1,14 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-const Audio = props => (
+const TextView = props => (
   <p>
     <iframe src={props.link} frameBorder="0" height="400" width="95%" />
   </p>
 );
 
-Audio.propTypes = {
+TextView.propTypes = {
   link: PropTypes.string.isRequired,
   name: PropTypes.string,
 };
-export default Audio;
+export default TextView;

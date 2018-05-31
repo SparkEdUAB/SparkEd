@@ -1,10 +1,12 @@
+/* eslint import/no-unresolved: 'off' */
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import Video from './Video.jsx';
-import PDF from './Pdf.jsx';
-import IMG from './Img.jsx';
-import Audio from './Audio';
-import Download from './Download';
+import Video from './Players/Video';
+import PDF from './Players/Pdf';
+import IMG from './Players/Img';
+import Audio from './Players/Audio';
+import Download from './Players/Download';
+import TextView from './Players/TextView';
 
 export default class ResourceRender extends Component {
   render() {
@@ -26,6 +28,8 @@ export default class ResourceRender extends Component {
       resource.ext === 'png'
     ) {
       return <IMG img={resource} link={Link} />;
+    } else if (resource.ext === 'txt') {
+      return <TextView text={resource} link={Link} />;
     } else if (
       resource.ext === 'mp3' ||
       resource.ext === 'ogg' ||
@@ -33,8 +37,6 @@ export default class ResourceRender extends Component {
       'wav'
     ) {
       return <Audio audio={resource} link={Link} />;
-    } else if (resource.ext === 'txt') {
-      return <TextView text={resource} link={Link} />;
     }
     // if the filetype isn't known avoid crashing the application
     return <Download download={resource} link={Link} />;
