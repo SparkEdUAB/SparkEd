@@ -23,7 +23,6 @@ export default class Download extends Component {
   };
   render() {
     const { download } = this.state;
-    const name = `${this.props.download._id}.${this.props.download.ext}`;
     const { link } = this.props;
     return (
       <div className="">

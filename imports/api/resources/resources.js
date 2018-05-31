@@ -11,7 +11,7 @@ if (Meteor.isServer) {
 }
 
 export const _Egranary = new Mongo.Collection('egranary', { idGeneration: 'STRING' }); // void kept for the sync
-const validTypes = ['png', 'jpg', 'jpeg', 'mp4', 'pdf', 'mp3', 'pptx', 'ppt', 'webm', 'ogg'];
+const validTypes = ['png', 'jpg', 'jpeg', 'mp4', 'pdf', 'mp3', 'pptx', 'ppt', 'webm', 'ogg', 'txt'];
 
 export const Resources = new FilesCollection({
   collectionName: 'Resources',
