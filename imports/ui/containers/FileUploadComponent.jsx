@@ -175,7 +175,7 @@ export class FileUploadComponent extends Component {
                   'resource',
                   err => {
                     err
-                      ? Materialize.toast(err.reason, 3000, 'error-toast')
+                      ? Materialize.toast(err.reason, 7000, 'error-toast')
                       : Meteor.call(
                           'insertNotification',
                           msg,
@@ -185,7 +185,7 @@ export class FileUploadComponent extends Component {
                           fileObj._id,
                           err => {
                             err
-                              ? Materialize.toast(err.reason, 4000, 'error-toast')
+                              ? Materialize.toast(err.reason, 7000, 'error-toast')
                               : Materialize.toast(
                                   'successfully uploaded a file',
                                   3000,
@@ -298,7 +298,7 @@ export class FileUploadComponent extends Component {
         });
 
         uploadInstance.on('error', function(error, fileObj) {
-          Materialize.toast(error, 3000, 'error-toast');
+          Materialize.toast(error, 10000, 'error-toast');
         });
 
         uploadInstance.on('progress', (progress, fileObj) => {
