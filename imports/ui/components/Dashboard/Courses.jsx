@@ -136,7 +136,7 @@ export class Courses extends Component {
         courseCode = target.courseCode.value;
         year = target.year.value;
         details = { year };
-        const reference = config.isHighScool ? 'subject' : 'course';
+        const reference = config.isHighSchool ? 'subject' : 'course';
         const courseId = new Meteor.Collection.ObjectID().valueOf();
         Meteor.call('course.add', courseId, course, courseCode, details, (err, res) => {
           err

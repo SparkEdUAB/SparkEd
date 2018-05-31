@@ -83,7 +83,7 @@ export class Unit extends Component {
                 });
           });
     });
-    if (!config.isHighScool) {
+    if (!config.isHighSchool) {
       for (topic of topics) {
         const { name } = topic;
         const _id = new Meteor.Collection.ObjectID().valueOf();
@@ -153,7 +153,7 @@ export class Unit extends Component {
                     required
                   />
                 </div>
-                {config.isHighScool ? (
+                {config.isHighSchool ? (
                   <span />
                 ) : (
                   topics.map((topic, index) => (
@@ -171,7 +171,7 @@ export class Unit extends Component {
                   ))
                 )}
 
-                {config.isHighScool ? (
+                {config.isHighSchool ? (
                   <div className="row">
                     <span className="input-group-btn">
                       <button className="btn fa fa-floppy-o pull-right s12" role="submit">

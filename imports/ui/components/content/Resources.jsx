@@ -29,16 +29,23 @@ export class Resourcesss extends Component {
     allResources.map(resource => {
       const { type, ext } = resource;
       topicId = resource.topicId;
-      if (type === 'video/mp4') {
-        videos.push(resource);
-      } else if (type === 'application/pdf') {
-        books.push(resource);
-      } else if (type === 'audio/mp3') {
-        audio.push(resource);
-      } else if (type === 'image/png' || type === 'image/jpeg' || type === 'image/jpg') {
-        images.push(resource);
-      } else if (type === ppt) {
-        presentations.push(resource);
+      switch (type) {
+        case 'video/mp4':
+          videos.push(resource);
+          break;
+        case 'application/pdf':
+          books.push(resource);
+          break;
+        case 'audio/mp3':
+          audio.push(resource);
+          break;
+        case ppt:
+          presentations.push(resource);
+          break;
+        default:
+          // any other files including images display them in the same row as images
+          images.push(resource);
+          break;
       }
     });
 
@@ -111,7 +118,7 @@ Resourcesss.propTypes = {
 export default withTracker(params => {
   Meteor.subscribe('topics');
   Meteor.subscribe('resourcess');
-  if (config.isHighScool) {
+  if (config.isHighSchool) {
     return {
       resourcess: Resources.find(
         {

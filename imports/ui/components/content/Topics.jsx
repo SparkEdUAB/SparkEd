@@ -120,7 +120,7 @@ Topics.propTypes = {
 };
 
 export default withTracker(param => {
-  if (config.isHighScool) {
+  if (config.isHighSchool) {
     Meteor.subscribe('units');
     return {
       topics: _Units

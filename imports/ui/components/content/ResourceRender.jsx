@@ -4,7 +4,7 @@ import Video from './Video.jsx';
 import PDF from './Pdf.jsx';
 import IMG from './Img.jsx';
 import Audio from './Audio';
-import Download from './Download.jsx';
+import Download from './Download';
 
 export default class ResourceRender extends Component {
   render() {
@@ -33,9 +33,11 @@ export default class ResourceRender extends Component {
       'wav'
     ) {
       return <Audio audio={resource} link={Link} />;
+    } else if (resource.ext === 'txt') {
+      return <TextView text={resource} link={Link} />;
     }
     // if the filetype isn't known avoid crashing the application
-    return <Download download={resource} />;
+    return <Download download={resource} link={Link} />;
   }
 }
 

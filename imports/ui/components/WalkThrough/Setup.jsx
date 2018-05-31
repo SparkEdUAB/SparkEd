@@ -56,14 +56,14 @@ export default class SetUp extends Component {
   saveConfig = e => {
     e.preventDefault();
     const { name, tag, structure, auth } = this.state;
-    let isHighScool;
+    let isHighSchool;
     const isSet = config.isConfigured;
     switch (structure) {
       case 'course':
-        isHighScool = false;
+        isHighSchool = false;
         break;
-      case 'isHighScool':
-        isHighScool = true;
+      case 'isHighSchool':
+        isHighSchool = true;
         break;
       default:
         break;
@@ -89,7 +89,7 @@ export default class SetUp extends Component {
       name,
       tag,
       auth,
-      isHighScool,
+      isHighSchool,
     });
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
@@ -173,7 +173,7 @@ export default class SetUp extends Component {
                               name="struct"
                               type="radio"
                               id="high-school"
-                              value="isHighScool"
+                              value="isHighSchool"
                               required
                             />
                             <label htmlFor="high-school">High School</label>

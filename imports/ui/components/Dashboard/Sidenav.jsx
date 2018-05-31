@@ -28,7 +28,7 @@ export default class Sidenav extends Component {
                   </a>
                 </li>
 
-                {config.isHighScool ? (
+                {config.isHighSchool ? (
                   <li>
                     <a href="/dashboard/course" className={`  side-list ${this.props.course}`}>
                       <i className={`fa fa-book fa-lg `} />

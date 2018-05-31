@@ -42,31 +42,21 @@ export default class ViewResource extends Component {
   render() {
     let fileType = this.props.resource.type;
     const { resource } = this.props;
-    if (fileType === null) {
+    if (!fileType) {
       fileType = '';
     } else {
       fileType = ViewResource.getIcon(fileType);
-      fileType = fileType === undefined ? ViewResource.getIcon(fileType) : fileType;
+      fileType = !fileType ? ViewResource.getIcon(fileType) : fileType;
     }
 
     return (
       <li className={`${ViewResource.setActiveItem(resource._id)} item${resource._id}`}>
-        {/* the image tag is kept for video thumbnails ==> future use
-        <img
-          src={`/uploads/media-${resource.file._id}-${resource.name}.png`}
-          alt={resource.name}
-          width={'100px'}
-          height={'auto'}
-        />
-        <br />
-        */}
         <a
           target={'_top'}
           href={''}
           onClick={e => this.changeFile(e)}
           className={`customAtag ${ViewResource.changeTextColor(resource._id)}`}
         >
-          {/* <span className={fileType} /> */}
           <span className={'resourceName truncate'}>{resource.name.replace(/\.[^/.]+$/, '')}</span>
         </a>
       </li>
