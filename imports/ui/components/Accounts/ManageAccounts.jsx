@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -16,7 +16,9 @@ import AccountEditModal from '../Utilities/Modal/EditAccounts.jsx';
 import { UserRoles } from '../Utilities/Modal/UserRoles.jsx';
 import MainModal from '../../modals/MainModal.jsx';
 import { closeModal, accountsModalStates } from '../../modals/methods';
+import * as config from '../../../../config.json';
 
+const { isUserAuth } = config;
 export class ManageAccounts extends React.Component {
   // subscribing to the Uses
   constructor(props) {
@@ -214,11 +216,6 @@ export class ManageAccounts extends React.Component {
             ''
           )}
         </MainModal>
-
-        {/* <div className="row">
-          <>
-            <Sidenav accounts={' active'} />
-          </> */}
         <div className="col m9 s11">
           <div className="row">
             <div>
@@ -243,23 +240,29 @@ export class ManageAccounts extends React.Component {
                 Delete
               </button>
             </div>
+            {isUserAuth ? (
+              <Fragment>
+                <div className="col m3 s3">
+                  <button className="btn  fa fa-check" onClick={e => this.openModal('approve', e)}>
+                    {' '}
+                    Approve
+                  </button>
+                </div>
 
-            <div className="col m3 s3">
-              <button className="btn  fa fa-check" onClick={e => this.openModal('approve', e)}>
-                {' '}
-                Approve
-              </button>
-            </div>
+                <div className="col m3 s3">
+                  <button
+                    className="btn grey darken-3 fa fa-ban"
+                    onClick={e => this.openModal('suspend', e)}
+                  >
+                    {' '}
+                    Suspend
+                  </button>
+                </div>
+              </Fragment>
+            ) : (
+              <span />
+            )}
 
-            <div className="col m3 s3">
-              <button
-                className="btn grey darken-3 fa fa-ban"
-                onClick={e => this.openModal('suspend', e)}
-              >
-                {' '}
-                Suspend
-              </button>
-            </div>
             <div className="col m3 s3">
               <button
                 className="btn green darken-3 fa fa-user"
@@ -278,7 +281,7 @@ export class ManageAccounts extends React.Component {
                 <th>Role</th>
                 <th>Email</th>
                 <th>Gender</th>
-                <th>Status</th>
+                {isUserAuth ? <th>Status</th> : null}
                 <th>Edit</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
@@ -307,9 +310,11 @@ export class ManageAccounts extends React.Component {
                     <td>{!user.roles ? 'student' : user.roles}</td>
                     <td>{email}</td>
                     <td>{user.profile.gender}</td>
-                    <td>
-                      <i className={`fa-2x fa ${statusIcon}`} />
-                    </td>
+                    {isUserAuth ? (
+                      <td>
+                        <i className={`fa-2x fa ${statusIcon}`} />
+                      </td>
+                    ) : null}
                     <td>
                       <a
                         href=""
