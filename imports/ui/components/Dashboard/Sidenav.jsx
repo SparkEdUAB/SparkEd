@@ -66,12 +66,16 @@ export default class Sidenav extends Component {
                     <span className="hide-on-small-only">&nbsp; External Link</span>
                   </a>
                 </li>
-                <li>
-                  <a href="/dashboard/overview" className={`  side-list ${this.props.stats}`}>
-                    <i className={`fa fa-bar-chart fa-lg `} />
-                    <span className="hide-on-small-only">&nbsp;Statistics</span>
-                  </a>
-                </li>
+                {config.isUserAuth ? (
+                  <li>
+                    <a href="/dashboard/overview" className={`  side-list ${this.props.stats}`}>
+                      <i className={`fa fa-bar-chart fa-lg `} />
+                      <span className="hide-on-small-only">&nbsp;Statistics</span>
+                    </a>
+                  </li>
+                ) : (
+                  <span />
+                )}
                 <li>
                   <a href="/dashboard/feedback" className={`  side-list ${this.props.feedback}`}>
                     <i className={`fa fa-comments fa-lg `} />
