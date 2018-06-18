@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { HTTP } from 'meteor/http';
+import { Restivus } from 'meteor/mrest:restivus';
 import { Resources } from '../resources/resources';
 import { References } from '../resources/resources';
 import { _Courses } from '../courses/courses';
@@ -8,7 +8,7 @@ import { _Statistics } from '../statistics/statistics';
 import { Titles } from '../settings/titles';
 import { _Topics } from '../topics/topics';
 import { _Units } from '../units/units';
-import { Restivus } from 'meteor/mrest:restivus';
+import { centers } from '../../../centers';
 
 const Api = new Restivus({
   useDefaultAuth: true,
@@ -146,6 +146,24 @@ Api.addRoute(
         const references = References.find({}).fetch();
         if (references) {
           return { status: 'success', data: references };
+        }
+        return {
+          statusCode: 400,
+          body: { status: 'fail', message: "Error happened, I couldn't fetch the data" },
+        };
+      },
+    },
+  },
+);
+
+Api.addRoute(
+  'centers',
+  { authRequired: false },
+  {
+    get: {
+      action: function() {
+        if (centers) {
+          return { status: 'success', data: centers };
         }
         return {
           statusCode: 400,
