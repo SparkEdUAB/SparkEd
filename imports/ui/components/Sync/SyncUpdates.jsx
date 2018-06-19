@@ -7,7 +7,8 @@ import { Resources, References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
-import LocalData from './LocalData';
+import DataList from './DataList';
+import RemoteData from './RemoteData';
 
 const Collections = ['courses', 'units', 'topics', 'resources', 'references'];
 
@@ -22,23 +23,17 @@ export class SyncUpdates extends Component {
       err ? console.log(err.reason) : Session.set('data', res.data.data);
     });
   }
-  getCourses = () => {
-    const data = Session.get('data');
-    const { authToken, userId } = data;
-    Meteor.call('getCourses', authToken, userId, (err, courses) => {
-      err ? console.log(err.reason) : console.log(courses.data.data);
-    });
-  };
 
   render() {
     return (
       <>
         <div className="col m9 s11">
           <div className="col m5">
-            <LocalData count={this.props} />
+            <DataList count={this.props} title={'Current Count'} />
           </div>
-          <div className="col m4">Server Collections</div>
-          <button onClick={this.getCourses}>Get Them</button>
+          <div className="col m4">
+            <RemoteData />
+          </div>
         </div>
       </>
     );

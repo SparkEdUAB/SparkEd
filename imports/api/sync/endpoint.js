@@ -161,8 +161,9 @@ Api.addRoute(
   {
     get: {
       action: function() {
+        const { query } = this.queryParams;
         if (centers) {
-          return { status: 'success', data: centers };
+          return { status: 'success', data: centers, count: centers.length };
         }
         return {
           statusCode: 400,

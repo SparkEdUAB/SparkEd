@@ -41,18 +41,48 @@ Meteor.methods({
       },
     });
   },
-
-  // Methods to return items in local collections
-  //
-  getCountPerCollection: (coll) => {
-    check(coll, String);
-    switch (coll) {
-      case 'course':
-        return _Courses.find().count();
-      case 'units':
-        return _Units.find().count();
-      default:
-        break;
-    }
+  // authenticated Units calls
+  getUnits: (token, userId) => {
+    check(token, String);
+    check(userId, String);
+    return HTTP.get('http://localhost:3000/api/unit/', {
+      headers: {
+        'X-Auth-Token': token,
+        'X-User-Id': userId,
+      },
+    });
+  },
+  // authenticated Topics calls
+  getTopics: (token, userId) => {
+    check(token, String);
+    check(userId, String);
+    return HTTP.get('http://localhost:3000/api/topic/', {
+      headers: {
+        'X-Auth-Token': token,
+        'X-User-Id': userId,
+      },
+    });
+  },
+  // authenticated getResources calls
+  getResources: (token, userId) => {
+    check(token, String);
+    check(userId, String);
+    return HTTP.get('http://localhost:3000/api/resources/', {
+      headers: {
+        'X-Auth-Token': token,
+        'X-User-Id': userId,
+      },
+    });
+  },
+  // authenticated references calls
+  getReferences: (token, userId) => {
+    check(token, String);
+    check(userId, String);
+    return HTTP.get('http://localhost:3000/api/references/', {
+      headers: {
+        'X-Auth-Token': token,
+        'X-User-Id': userId,
+      },
+    });
   },
 });

@@ -1,10 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-const LocalData = props => (
+const DataList = props => (
   <ul className="collection with-header">
     <li className="collection-header">
-      <h5> Your Collections</h5>
+      <h5> {props.title}</h5>
     </li>
     <li className="collection-item">
       <div>
@@ -44,7 +44,8 @@ const LocalData = props => (
   </ul>
 );
 
-LocalData.propTypes = {
+DataList.propTypes = {
   count: PropTypes.object,
+  title: PropTypes.string,
 };
-export default LocalData;
+export default DataList;
