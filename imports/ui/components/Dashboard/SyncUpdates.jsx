@@ -8,29 +8,10 @@ import { Resources } from '../../../api/resources/resources';
 export class SyncUpdates extends Component {
   constructor() {
     super();
-    this.state = {
-      isOnline: false,
-    };
     this.inCheck = 0;
   }
-  // check connectivity every ten seconds
-  checkInternet() {
-    this.inCheck = Meteor.setInterval(() => {
-      Meteor.call('checkNetwork', (err, isOnline) => {
-        if (isOnline) {
-          this.setState({
-            isOnline,
-          });
-        } else {
-          this.setState({
-            isOnline,
-          });
-        }
-      });
-    }, 10000);
-  }
+
   componentDidMount() {
-    this.checkInternet();
     Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
       err ? console.log(err.reason) : Session.set('data', res.data.data);
     });
@@ -43,21 +24,12 @@ export class SyncUpdates extends Component {
     });
   };
 
-  // clear the interval when leaving
-  componentWillUnmount() {
-    clearInterval(this.inCheck);
-  }
-
   render() {
-    const { isOnline } = this.state;
     return (
       <>
         <div className="col m9 s11">
           <div className="col m5">Your Collections Reference: {this.props.resources}</div>
-          <div className="col m4">
-            Server Collections
-            <h5>{isOnline.toString()}</h5>
-          </div>
+          <div className="col m4">Server Collections</div>
           <button onClick={this.getCourses}>Get Them</button>
         </div>
       </>
