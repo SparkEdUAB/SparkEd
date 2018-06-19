@@ -3,11 +3,17 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
-import { Resources } from '../../../api/resources/resources';
+import { Resources, References } from '../../../api/resources/resources';
+import { _Courses } from '../../../api/courses/courses';
+import { _Units } from '../../../api/units/units';
+import { _Topics } from '../../../api/topics/topics';
+import LocalData from './LocalData';
+
+const Collections = ['courses', 'units', 'topics', 'resources', 'references'];
 
 export class SyncUpdates extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.inCheck = 0;
   }
 
@@ -28,7 +34,9 @@ export class SyncUpdates extends Component {
     return (
       <>
         <div className="col m9 s11">
-          <div className="col m5">Your Collections Reference: {this.props.resources}</div>
+          <div className="col m5">
+            <LocalData count={this.props} />
+          </div>
           <div className="col m4">Server Collections</div>
           <button onClick={this.getCourses}>Get Them</button>
         </div>
@@ -38,7 +46,15 @@ export class SyncUpdates extends Component {
 }
 export default withTracker(() => {
   Meteor.subscribe('resourcess');
+  Meteor.subscribe('references');
+  Meteor.subscribe('courses');
+  Meteor.subscribe('units');
+  Meteor.subscribe('topics');
   return {
     resources: Resources.find().count(),
+    references: References.find().count(),
+    courses: _Courses.find().count(),
+    units: _Units.find().count(),
+    topics: _Topics.find().count(),
   };
 })(SyncUpdates);

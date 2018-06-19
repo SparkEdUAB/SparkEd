@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
+import { _Courses } from '../courses/courses';
+import { _Units } from '../units/units';
+import { _Topics } from '../topics/topics';
+import { Resources, References } from '../resources/resources';
 
 // check internet connection
 Meteor.methods({
@@ -36,5 +40,19 @@ Meteor.methods({
         'X-User-Id': userId,
       },
     });
+  },
+
+  // Methods to return items in local collections
+  //
+  getCountPerCollection: (coll) => {
+    check(coll, String);
+    switch (coll) {
+      case 'course':
+        return _Courses.find().count();
+      case 'units':
+        return _Units.find().count();
+      default:
+        break;
+    }
   },
 });

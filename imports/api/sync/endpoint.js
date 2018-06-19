@@ -122,7 +122,6 @@ Api.addRoute(
   {
     get: {
       action: function() {
-        // var article = Articles.findOne(this.urlParams.id);
         const resources = Resources.find({}).fetch();
         if (resources) {
           return { status: 'success', data: resources };
