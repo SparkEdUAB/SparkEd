@@ -1,12 +1,15 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
+import { Mongo } from 'meteor/mongo';
 import { _Courses } from '../courses/courses';
 import { _Units } from '../units/units';
 import { _Topics } from '../topics/topics';
 import { Resources, References } from '../resources/resources';
 
 // check internet connection
+export const syncCount = new Mongo.Collection('count', { idGeneration: 'STRING' });
+
 Meteor.methods({
   checkNetwork: () => {
     try {
@@ -84,5 +87,43 @@ Meteor.methods({
         'X-User-Id': userId,
       },
     });
+  },
+  // Insert Courses
+  insertremoteCourse: (token, userId) => {
+    check(token, String);
+    check(userId, String);
+    let count = 0;
+    HTTP.get(
+      'http://localhost:3000/api/course/',
+      {
+        headers: {
+          'X-Auth-Token': token,
+          'X-User-Id': userId,
+        },
+      },
+      (err, response) => {
+        if (err) {
+          console.log(err.reason);
+        }
+        const {
+          data: { data },
+        } = response;
+        console.log('##########################################');
+        data.forEach((course, index) => {
+          count = index;
+          syncCount.insert({}, { $set: { count: index } });
+          return Meteor.call(
+            'course.add',
+            course._id,
+            course.name,
+            course.code,
+            course.details,
+            course.createdAt,
+            course.createdBy,
+          );
+        });
+        console.log(count);
+      },
+    );
   },
 });
