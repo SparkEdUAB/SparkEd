@@ -23,7 +23,7 @@ Meteor.methods({
   authenticate: (email, password) => {
     check(email, String);
     check(password, String);
-    return HTTP.post('http://localhost:3000/api/login/', {
+    return HTTP.post('http://13.232.61.192/api/login/', {
       data: {
         email,
         password,
@@ -37,7 +37,7 @@ Meteor.methods({
   getCourses: (token, userId) => {
     check(token, String);
     check(userId, String);
-    return HTTP.get('http://localhost:3000/api/course/', {
+    return HTTP.get('http://13.232.61.192/api/course/', {
       headers: {
         'X-Auth-Token': token,
         'X-User-Id': userId,
@@ -48,7 +48,7 @@ Meteor.methods({
   getUnits: (token, userId) => {
     check(token, String);
     check(userId, String);
-    return HTTP.get('http://localhost:3000/api/unit/', {
+    return HTTP.get('http://13.232.61.192/api/unit/', {
       headers: {
         'X-Auth-Token': token,
         'X-User-Id': userId,
@@ -59,7 +59,7 @@ Meteor.methods({
   getTopics: (token, userId) => {
     check(token, String);
     check(userId, String);
-    return HTTP.get('http://localhost:3000/api/topic/', {
+    return HTTP.get('http://13.232.61.192/api/topic/', {
       headers: {
         'X-Auth-Token': token,
         'X-User-Id': userId,
@@ -70,7 +70,7 @@ Meteor.methods({
   getResources: (token, userId) => {
     check(token, String);
     check(userId, String);
-    return HTTP.get('http://localhost:3000/api/resources/', {
+    return HTTP.get('http://13.232.61.192/api/resources/', {
       headers: {
         'X-Auth-Token': token,
         'X-User-Id': userId,
@@ -81,7 +81,7 @@ Meteor.methods({
   getReferences: (token, userId) => {
     check(token, String);
     check(userId, String);
-    return HTTP.get('http://localhost:3000/api/references/', {
+    return HTTP.get('http://13.232.61.192/api/references/', {
       headers: {
         'X-Auth-Token': token,
         'X-User-Id': userId,
@@ -94,7 +94,7 @@ Meteor.methods({
     check(userId, String);
     let count = 0;
     HTTP.get(
-      'http://localhost:3000/api/course/',
+      'http://13.232.61.192/api/course/',
       {
         headers: {
           'X-Auth-Token': token,

@@ -24,7 +24,9 @@ export default class RemoteData extends Component {
   }
   getCounts = () => {
     const data = Session.get('data');
-    const { authToken, userId } = data;
+    // const { authToken, userId } = data;
+    const authToken = 'lUF8Da-wt8uY0TbeP6DuhRyAe_tOSwhGK8k-JCJq7ee';
+    const userId = 'jQs3tMHG5iqz7YwKt';
 
     // Courses
     Meteor.call('getCourses', authToken, userId, (err, response) => {
