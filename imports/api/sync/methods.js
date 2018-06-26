@@ -71,7 +71,6 @@ Meteor.methods({
   getAllCollections: (token, userId) => {
     check(token, String);
     check(userId, String);
-
     collections.map(coll => {
       return HTTP.get(
         `${baseUrl}/api/${coll}/`,
