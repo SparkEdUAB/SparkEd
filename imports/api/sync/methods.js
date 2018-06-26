@@ -6,7 +6,7 @@ import { syncData } from './syncData';
 // check internet connection
 
 const baseUrl = 'http://13.232.61.192';
-const collections = ['course', 'unit', 'topic', 'resource', 'reference'];
+const collections = ['course', 'unit', 'topic', 'resources', 'references'];
 
 Meteor.methods({
   checkNetwork: () => {
@@ -54,7 +54,6 @@ Meteor.methods({
         console.log('##########################################');
         data.forEach((course, index) => {
           count = index;
-          syncCount.insert({}, { $set: { count: index } });
           return Meteor.call(
             'course.add',
             course._id,
