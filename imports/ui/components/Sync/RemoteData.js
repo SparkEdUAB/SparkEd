@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import DataList from './DataList';
+import { List } from './ReSend';
+import Collection from './Collection';
 import { Resources } from '../../../api/resources/resources';
 
 export default class RemoteData extends Component {
@@ -28,45 +30,15 @@ export default class RemoteData extends Component {
     const authToken = 'lUF8Da-wt8uY0TbeP6DuhRyAe_tOSwhGK8k-JCJq7ee';
     const userId = 'jQs3tMHG5iqz7YwKt';
 
-    // Courses
-    Meteor.call('getCourses', authToken, userId, (err, response) => {
-      err
-        ? this.setState({ error: err.reason })
-        : this.setState({ courses: response.data.data.length });
-    });
-    // Units
-    Meteor.call('getUnits', authToken, userId, (err, response) => {
-      err
-        ? this.setState({ error: err.reason })
-        : this.setState({ units: response.data.data.length });
-    });
-    // Topics
-    Meteor.call('getTopics', authToken, userId, (err, response) => {
-      err
-        ? this.setState({ error: err.reason })
-        : this.setState({ topics: response.data.data.length });
-    });
-    // Resources
-    Meteor.call('getResources', authToken, userId, (err, response) => {
-      err
-        ? this.setState({ error: err.reason })
-        : this.setState({ resources: response.data.data.length });
-    });
-    // References
-    Meteor.call('getReferences', authToken, userId, (err, response) => {
-      err
-        ? this.setState({ error: err.reason })
-        : this.setState({ references: response.data.data.length });
-    });
+    Meteor.call('getAllCollections', authToken, userId);
   };
 
   render() {
     const { error } = this.state;
     return (
-      <>
-        <DataList count={this.state} title={'Server Count'} />
-        <span>{error}</span>
-      </>
+      <ul className="collection">
+        <li>Heee</li>
+      </ul>
     );
   }
 }

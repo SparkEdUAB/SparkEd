@@ -7,6 +7,7 @@ import { Resources, References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
+import { syncData } from '../../../api/sync/syncData';
 import DataList from './DataList';
 import RemoteData from './RemoteData';
 
@@ -22,6 +23,7 @@ export class SyncUpdates extends Component {
     return Meteor.call('insertremoteCourse', authToken, userId);
   };
   render() {
+    console.log(this.props.syncdata);
     return (
       <>
         <div className="col m9 s11">
@@ -47,11 +49,13 @@ export default withTracker(() => {
   Meteor.subscribe('courses');
   Meteor.subscribe('units');
   Meteor.subscribe('topics');
+  Meteor.subscribe('syncdata');
   return {
     resources: Resources.find().count(),
     references: References.find().count(),
     courses: _Courses.find().count(),
     units: _Units.find().count(),
     topics: _Topics.find().count(),
+    syncdata: syncData.find().fetch(),
   };
 })(SyncUpdates);

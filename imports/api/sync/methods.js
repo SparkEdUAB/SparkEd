@@ -1,14 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
-import { Mongo } from 'meteor/mongo';
-import { _Courses } from '../courses/courses';
-import { _Units } from '../units/units';
-import { _Topics } from '../topics/topics';
-import { Resources, References } from '../resources/resources';
+import { syncData } from './syncData';
 
 // check internet connection
-export const syncCount = new Mongo.Collection('count', { idGeneration: 'STRING' });
+
+const baseUrl = 'http://13.232.61.192';
+const collections = ['course', 'unit', 'topic', 'resource', 'reference'];
 
 Meteor.methods({
   checkNetwork: () => {
@@ -23,7 +21,7 @@ Meteor.methods({
   authenticate: (email, password) => {
     check(email, String);
     check(password, String);
-    return HTTP.post('http://13.232.61.192/api/login/', {
+    return HTTP.post(`${baseUrl}/api/login/`, {
       data: {
         email,
         password,
@@ -33,68 +31,13 @@ Meteor.methods({
       },
     });
   },
-  // authenticated call to courses collection
-  getCourses: (token, userId) => {
-    check(token, String);
-    check(userId, String);
-    return HTTP.get('http://13.232.61.192/api/course/', {
-      headers: {
-        'X-Auth-Token': token,
-        'X-User-Id': userId,
-      },
-    });
-  },
-  // authenticated Units calls
-  getUnits: (token, userId) => {
-    check(token, String);
-    check(userId, String);
-    return HTTP.get('http://13.232.61.192/api/unit/', {
-      headers: {
-        'X-Auth-Token': token,
-        'X-User-Id': userId,
-      },
-    });
-  },
-  // authenticated Topics calls
-  getTopics: (token, userId) => {
-    check(token, String);
-    check(userId, String);
-    return HTTP.get('http://13.232.61.192/api/topic/', {
-      headers: {
-        'X-Auth-Token': token,
-        'X-User-Id': userId,
-      },
-    });
-  },
-  // authenticated getResources calls
-  getResources: (token, userId) => {
-    check(token, String);
-    check(userId, String);
-    return HTTP.get('http://13.232.61.192/api/resources/', {
-      headers: {
-        'X-Auth-Token': token,
-        'X-User-Id': userId,
-      },
-    });
-  },
-  // authenticated references calls
-  getReferences: (token, userId) => {
-    check(token, String);
-    check(userId, String);
-    return HTTP.get('http://13.232.61.192/api/references/', {
-      headers: {
-        'X-Auth-Token': token,
-        'X-User-Id': userId,
-      },
-    });
-  },
   // Insert Courses
   insertremoteCourse: (token, userId) => {
     check(token, String);
     check(userId, String);
     let count = 0;
     HTTP.get(
-      'http://13.232.61.192/api/course/',
+      `${baseUrl}/api/course/`,
       {
         headers: {
           'X-Auth-Token': token,
@@ -125,5 +68,42 @@ Meteor.methods({
         console.log(count);
       },
     );
+  },
+  getAllCollections: (token, userId) => {
+    check(token, String);
+    check(userId, String);
+
+    collections.map(coll => {
+      return HTTP.get(
+        `${baseUrl}/api/${coll}/`,
+        {
+          headers: {
+            'X-Auth-Token': token,
+            'X-User-Id': userId,
+          },
+        },
+        (error, response) => {
+          if (error) {
+            console.log(error.reason);
+          }
+          if (response && response.data) {
+            const {
+              data: { data },
+            } = response;
+            syncData.update(
+              { type: coll },
+              { $set: { data, count: data.length } },
+              { upsert: true },
+              (err, res) => {
+                if (err) {
+                  console.log(err.reason);
+                }
+                console.log(res);
+              },
+            );
+          }
+        },
+      );
+    });
   },
 });
