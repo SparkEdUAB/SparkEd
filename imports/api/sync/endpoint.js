@@ -118,7 +118,7 @@ Api.addCollection(Meteor.users, {
 
 Api.addRoute(
   'resources',
-  { authRequired: true },
+  { authRequired: false }, // temp
   {
     get: {
       action: function() {

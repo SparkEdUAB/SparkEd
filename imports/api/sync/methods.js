@@ -6,7 +6,7 @@ import { syncData } from './syncData';
 // check internet connection
 
 const baseUrl = 'http://13.232.61.192';
-const collections = ['course', 'unit', 'topic', 'resources', 'references'];
+const collections = ['course', 'unit', 'topic', 'resources', 'references', 'search', 'search'];
 
 Meteor.methods({
   checkNetwork: () => {
@@ -105,3 +105,15 @@ Meteor.methods({
     });
   },
 });
+
+// SyncedCron.add({
+//   name: 'Fetching new collection data',
+//   schedule: parser => {
+//     return parser.text('every 30 seconds');
+//   },
+//   job: () => {
+//     Meteor.call('getAllCollections'); // needs a authToken and userId
+//   },
+// });
+// start the cronjob
+// SyncedCron.start();

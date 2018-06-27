@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import SimpleSchema from 'simpl-schema';
+// import SimpleSchema from 'simpl-schema';
 import { FilesCollection } from 'meteor/ostrio:files';
 import Grid from 'gridfs-stream';
 import { MongoInternals } from 'meteor/mongo';
@@ -15,7 +15,7 @@ const validTypes = ['png', 'jpg', 'jpeg', 'mp4', 'pdf', 'mp3', 'pptx', 'ppt', 'w
 
 export const Resources = new FilesCollection({
   collectionName: 'Resources',
-  allowClientCode: false, // Disallow remove files from Client
+  allowClientCode: true, // Disallow remove files from Client
   onBeforeUpload(file) {
     // Allow upload files under 5Gb, and only in png/jpg/jpeg formats
     if (file.size >= 5368709120) {

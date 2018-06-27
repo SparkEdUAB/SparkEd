@@ -31,6 +31,7 @@ export class FileUploadComponent extends Component {
     _.each(files, file => {
       let uploadInstance;
       if (file) {
+        console.log(file);
         const route = FlowRouter.getRouteName();
 
         switch (route) {

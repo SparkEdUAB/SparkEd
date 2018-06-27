@@ -24,48 +24,77 @@ export class SyncUpdates extends Component {
       switch (item.type) {
         case 'course':
           data.map(course => {
-            Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
-              err
-                ? Materialize.toast(err.reason, 3000, 'error-toast')
-                : Materialize.toast(`Successfully added ${course} `, 3000, 'success-toast');
-            });
+            // Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
+            //   err
+            //     ? Materialize.toast(err.reason, 3000, 'error-toast')
+            //     : Materialize.toast(`Successfully added ${course} `, 3000, 'success-toast');
+            // });
           });
           break;
         case 'unit':
-          data.map(unit => {
-            Meteor.call(
-              'unit.insert',
-              unit._id,
-              unit._id,
-              unit.topics,
-              unit.unitDesc,
-              unit.details,
-              err => {
-                err
-                  ? Materialize.toast(err.reason, 4000, 'error-toast')
-                  : Materialize.toast(`Synced Units successfully`, 5000, 'success-toast');
-              },
-            );
-          });
+          // data.map(unit => {
+          //   Meteor.call(
+          //     'unit.insert',
+          //     unit._id,
+          //     unit._id,
+          //     unit.topics,
+          //     unit.unitDesc,
+          //     unit.details,
+          //     err => {
+          //       err
+          //         ? Materialize.toast(err.reason, 4000, 'error-toast')
+          //         : Materialize.toast(`Synced Units successfully`, 5000, 'success-toast');
+          //     },
+          //   );
+          // });
           break;
         case 'resources':
           console.log(item);
+          data.map(resource => {
+            Resources.insert({
+              file: {
+                _id: resource._id,
+                size: resource.size,
+                type: resource.type,
+                name: resource.name,
+                ext: resource.ext,
+                extension: resource.extension,
+                extensionWithDot: resource.extensionWithDot,
+                mime: resource.mime,
+                'mime-type': resource['mime-type'],
+                userId: resource.userId,
+                path: resource.path,
+                versions: resource.versions,
+                _downloadRoute: resource._downloadRoute,
+                _collectionName: resource._collectionName,
+                isVideo: resource.isVideo,
+                isAudio: resource.isAudio,
+                isImage: resource.isImage,
+                isText: resource.isText,
+                isJSON: resource.isJSON,
+                isPDF: resource.isPDF,
+                _storagePath: resource._storagePath,
+                public: resource.public,
+              },
+              meta: resource.meta,
+            });
+          });
           break;
         case 'topic':
-          data.map(topic => {
-            Meteor.call(
-              'singletopic.insert',
-              topic._id,
-              topic.unitId,
-              topic.name,
-              topic.unit,
-              err => {
-                err
-                  ? Materialize.toast(err.reason, 4000, 'error-toast')
-                  : Materialize.toast(`Successfully synced topics`, 4000, 'success-toast');
-              },
-            );
-          });
+          // data.map(topic => {
+          //   Meteor.call(
+          //     'singletopic.insert',
+          //     topic._id,
+          //     topic.unitId,
+          //     topic.name,
+          //     topic.unit,
+          //     err => {
+          //       err
+          //         ? Materialize.toast(err.reason, 4000, 'error-toast')
+          //         : Materialize.toast(`Successfully synced topics`, 4000, 'success-toast');
+          //     },
+          //   );
+          // });
           break;
         default:
           break;
@@ -76,7 +105,8 @@ export class SyncUpdates extends Component {
     Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
       err ? this.setState({ error: err.reason }) : Session.set('data', res.data.data);
     });
-    setTimeout(() => this.getCounts(), 500); // get counts after 500ms
+    // setTimeout(() => this.getCounts(), 500); // get counts after 500ms
+    this.getCounts();
   }
   // check server collections and their counts
   getCounts = () => {
@@ -110,12 +140,12 @@ export class SyncUpdates extends Component {
       <>
         <div className="col m9 s11">
           <div className="col m5">
-            <DataList count={this.props} title={'Current Count'} />
+            <DataList count={this.props} title={'Local Collections'} />
           </div>
           <div className="col m4">
             <ul className="collection with-header">
               <li className="collection-header">
-                <h5> Server Collection</h5>
+                <h5> Server Collections</h5>
               </li>
               {this.renderSyncData()}
             </ul>
