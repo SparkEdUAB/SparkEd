@@ -48,53 +48,21 @@ export class SyncUpdates extends Component {
           //   );
           // });
           break;
-        case 'resources':
-          console.log(item);
-          data.map(resource => {
-            Resources.insert({
-              file: {
-                _id: resource._id,
-                size: resource.size,
-                type: resource.type,
-                name: resource.name,
-                ext: resource.ext,
-                extension: resource.extension,
-                extensionWithDot: resource.extensionWithDot,
-                mime: resource.mime,
-                'mime-type': resource['mime-type'],
-                userId: resource.userId,
-                path: resource.path,
-                versions: resource.versions,
-                _downloadRoute: resource._downloadRoute,
-                _collectionName: resource._collectionName,
-                isVideo: resource.isVideo,
-                isAudio: resource.isAudio,
-                isImage: resource.isImage,
-                isText: resource.isText,
-                isJSON: resource.isJSON,
-                isPDF: resource.isPDF,
-                _storagePath: resource._storagePath,
-                public: resource.public,
-              },
-              meta: resource.meta,
-            });
-          });
-          break;
         case 'topic':
-          // data.map(topic => {
-          //   Meteor.call(
-          //     'singletopic.insert',
-          //     topic._id,
-          //     topic.unitId,
-          //     topic.name,
-          //     topic.unit,
-          //     err => {
-          //       err
-          //         ? Materialize.toast(err.reason, 4000, 'error-toast')
-          //         : Materialize.toast(`Successfully synced topics`, 4000, 'success-toast');
-          //     },
-          //   );
-          // });
+          data.map(topic => {
+            Meteor.call(
+              'singletopic.insert',
+              topic._id,
+              topic.unitId,
+              topic.name,
+              topic.unit,
+              err => {
+                err
+                  ? Materialize.toast(err.reason, 4000, 'error-toast')
+                  : Materialize.toast(`Successfully synced topics`, 4000, 'success-toast');
+              },
+            );
+          });
           break;
         default:
           break;
@@ -107,7 +75,7 @@ export class SyncUpdates extends Component {
     });
     // setTimeout(() => this.getCounts(), 500); // get counts after 500ms
     this.getCounts();
-    Meteor.call('exportDbChunks');
+    // Meteor.call('exportDbChunks');
   }
   // check server collections and their counts
   getCounts = () => {

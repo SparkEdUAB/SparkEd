@@ -31,3 +31,4 @@ import '../../api/externallink/methods';
 import '../../api/externallink/server/publications';
 import '../../api/sync/endpoint';
 import '../../api/sync/server/sync';
+import '../../api/crons';

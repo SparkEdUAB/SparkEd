@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Array of collections to be exported
-colls=( fs.chunks fs.files )
+colls=( fs.chunks fs.files Resources References)
 
 if [ -d "dump" ] ; then
   # Control will enter here if $DIRECTORY doesn't exist.
@@ -9,12 +9,19 @@ if [ -d "dump" ] ; then
   sleep 1
   echo "Removing the directory"
   sleep 2
-  rm -rf dump
+  rm -rf dump dump.tar.gz # remove the dump directory and the previously decompressed dump
 fi
 
-for c in ${colls[@]} # gets all items in the array and applies to it like a normal loop
+for coll in ${colls[@]} # gets all items in the array and applies to it like a normal loop
 do
-  echo $c
-  mongodump -h 127.0.0.1:4001 -d meteor -c $c
-  # mongodump -h localhost:27017 -d sparked -c $c # for the remote main server
+  echo $coll
+  mongodump -h 127.0.0.1:4001 -d meteor -c $coll
+  # mongodump -h localhost:27017 -d sparked -c $coll # for the remote main server
 done
+
+
+#when done it should compress the file
+echo "compressing the dumped directory "
+
+# tar cvzf /var/www/sparked/bundle/public/dump.tar.gz dump/ # bundle and send to the public
+tar cvzf dump.tar.gz dump/ 
