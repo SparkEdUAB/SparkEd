@@ -11,11 +11,6 @@ import { syncData } from '../../../api/sync/syncData';
 import DataList from './DataList';
 
 export class SyncUpdates extends Component {
-  constructor(props) {
-    super(props);
-    this.inCheck = 0;
-    this.handleTimeOut = () => {};
-  }
   // Try and Sync  courseAdd(id, course, courseCode, details)
   syncContents = () => {
     const { data } = this.props;

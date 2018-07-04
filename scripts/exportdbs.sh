@@ -15,13 +15,12 @@ fi
 for coll in ${colls[@]} # gets all items in the array and applies to it like a normal loop
 do
   echo $coll
-  mongodump -h 127.0.0.1:4001 -d meteor -c $coll
-  # mongodump -h localhost:27017 -d sparked -c $coll # for the remote main server
+  # mongodump -h 127.0.0.1:4001 -d meteor -c $coll # Testing on the local server
+  mongodump -h localhost:27017 -d sparked -c $coll # for the remote main server
 done
 
 
 #when done it should compress the file
 echo "compressing the dumped directory "
 
-# tar cvzf /var/www/sparked/bundle/public/dump.tar.gz dump/ # bundle and send to the public
-tar cvzf dump.tar.gz dump/ 
+tar cvzf /var/www/sparked/bundle/public/dump.tar.gz dump/ # bundle and send to the public to be downloadable (main server)
