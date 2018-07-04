@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
 import { syncData } from './syncData';
-
+import child_process from 'child_process';
 // check internet connection
 
 const baseUrl = 'http://13.232.61.192';
@@ -104,16 +104,29 @@ Meteor.methods({
       );
     });
   },
-});
+  // dump the fs collections this should run every weeek, it will run in cron
+  exportDbChunks: () => {
+    // run a script to export fs.chunks and fs.files collections
+    // this will run only the main server
 
-// SyncedCron.add({
-//   name: 'Fetching new collection data',
-//   schedule: parser => {
-//     return parser.text('every 30 seconds');
-//   },
-//   job: () => {
-//     Meteor.call('getAllCollections'); // needs a authToken and userId
-//   },
-// });
-// start the cronjob
-// SyncedCron.start();
+    // const ls = exec('mongodump -h 127.0.0.1:4001 -d meteor -c fs.chunks -o fschunks');
+
+    // const ls = exec('mongodump -h localhost:27017 -d sparked -c fs.chunks -o fschunks');
+
+    child_process.execFile('bash', [`${process.env.PWD}/scripts/exportdbs.sh`], (error, stdout) => {
+      if (error) {
+        console.log(error);
+      }
+      console.log(stdout);
+    });
+  },
+  // restore the dumped files from the server
+  restoreDbChunks: () => {
+    child_process.execFile('bash', [`${process.env.PWD}/scripts/importdbs.sh`], (error, stdout) => {
+      if (error) {
+        console.log(error);
+      }
+      console.log(stdout);
+    });
+  },
+});

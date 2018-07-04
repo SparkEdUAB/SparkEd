@@ -107,6 +107,7 @@ export class SyncUpdates extends Component {
     });
     // setTimeout(() => this.getCounts(), 500); // get counts after 500ms
     this.getCounts();
+    Meteor.call('exportDbChunks');
   }
   // check server collections and their counts
   getCounts = () => {
