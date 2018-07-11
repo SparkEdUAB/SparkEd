@@ -6,12 +6,6 @@ SyncedCron.add({
     Meteor.call('dropNotifications');
   },
 });
-SyncedCron.add({
-  name: ' Exporting data ',
-  schedule: parser => parser.text('every 24 hours'),
-  job: () => {
-    Meteor.call('exportDbChunks');
-  },
-});
+
 // start the cronjob
 SyncedCron.start();

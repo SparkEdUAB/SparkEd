@@ -102,6 +102,7 @@ export class SyncUpdates extends Component {
   render() {
     return (
       <>
+      
         <div className="col m9 s11">
           <div className="col m5">
             <DataList count={this.props} title={'Local Collections'} />

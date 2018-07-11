@@ -9,6 +9,7 @@ import { Titles } from '../settings/titles';
 import { _Topics } from '../topics/topics';
 import { _Units } from '../units/units';
 import { centers } from '../../../centers';
+// disable user auth for GET
 
 const Api = new Restivus({
   useDefaultAuth: true,

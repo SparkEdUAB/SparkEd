@@ -5,17 +5,14 @@ import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { Titles } from '../../../api/settings/titles';
-import Header from '../layouts/Header.jsx';
 import {
   handleCheckboxChange,
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
-import Sidenav from './Sidenav.jsx';
 import MainModal from '../../../ui/modals/MainModal.jsx';
 import { closeModal } from '../../../ui/modals/methods.js';
 import * as config from '../../../../config.json';
-import { createCourse } from '../../../api/courses/methods';
 
 export class Courses extends Component {
   constructor(props) {
