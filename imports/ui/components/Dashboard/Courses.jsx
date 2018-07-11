@@ -5,17 +5,14 @@ import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { Titles } from '../../../api/settings/titles';
-import Header from '../layouts/Header.jsx';
 import {
   handleCheckboxChange,
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
-import Sidenav from './Sidenav.jsx';
 import MainModal from '../../../ui/modals/MainModal.jsx';
 import { closeModal } from '../../../ui/modals/methods.js';
 import * as config from '../../../../config.json';
-import { createCourse } from '../../../api/courses/methods';
 
 export class Courses extends Component {
   constructor(props) {
@@ -114,10 +111,10 @@ export class Courses extends Component {
   };
 
   // route to whats contained in the course
-  static handleUrl(id, pId, year, event) {
+  static handleUrl(id, year, event) {
     event.preventDefault();
     Session.set('courseIde', id);
-    FlowRouter.go(`/dashboard/units/${pId || 'prog'}?cs=${id}&y=${year}`);
+    FlowRouter.go(`/dashboard/units/${id}?y=${year}`);
   }
 
   // Adding new Course
@@ -125,26 +122,18 @@ export class Courses extends Component {
     e.preventDefault();
     let course;
     let courseCode;
-    let details;
     let year;
-    const programId = FlowRouter.getQueryParam('cs');
-    const schoolId = FlowRouter.getParam('_id');
+    let details;
     const { target } = e;
     const { modalType, modalIdentifier, ids, owner, table_title, sub_title } = this.state;
-
-    if (config.sch) {
-      details = { schoolId, programId, year };
-    } else {
-      details = {};
-    }
 
     switch (modalType) {
       case 'add':
         course = target.course.value;
         courseCode = target.courseCode.value;
         year = target.year.value;
-        details = { schoolId, programId, year };
-        const reference = config.sec ? 'subject' : 'course';
+        details = { year };
+        const reference = config.isHighSchool ? 'subject' : 'course';
         const courseId = new Meteor.Collection.ObjectID().valueOf();
         Meteor.call('course.add', courseId, course, courseCode, details, (err, res) => {
           err
@@ -215,13 +204,6 @@ export class Courses extends Component {
       isOpen: false,
     });
   }
-  // take back to Programs
-  changeUrl(event) {
-    event.preventDefault();
-    const id = FlowRouter.getParam('_id');
-    FlowRouter.go(`/dashboard/program/${id}`);
-    $('html, body').animate({ scrollTop: 0 }, 'slow');
-  }
 
   saveTitle = ({ target: { value } }, type) => {
     console.log(type);
@@ -249,14 +231,7 @@ export class Courses extends Component {
     return courses.map(course => (
       <tr key={course._id} className="link-section">
         <td>{count++}</td>
-        <td
-          onClick={Courses.handleUrl.bind(
-            this,
-            course._id,
-            course.details.programId,
-            course.details.year,
-          )}
-        >
+        <td onClick={Courses.handleUrl.bind(this, course._id, course.details.year)}>
           {course.name}
         </td>
         <td>{course.createdAt.toDateString()}</td>
@@ -279,9 +254,7 @@ export class Courses extends Component {
         </td>
         <td>
           <a
-            href={`/dashboard/units/${course.details.programId}?cs=${course._id}&y=${
-              course.details.year
-            }`}
+            href={`/dashboard/units/${course._id}&y=${course.details.year}`}
             className="fa fa-pencil"
           />
         </td>
@@ -400,19 +373,6 @@ export class Courses extends Component {
             <h4>Manage {new_title}</h4> {/* Add */}
           </div>
           <div className="row">
-            {config.sch === true ? (
-              <div className="col m3">
-                <button
-                  className="btn grey darken-3 fa fa-angle-left"
-                  onClick={e => this.changeUrl(e)}
-                >
-                  {' '}
-                  Programs
-                </button>
-              </div>
-            ) : (
-              <span />
-            )}
             <div className="col m3">
               <button
                 className="btn red darken-3 fa fa-remove"
@@ -468,25 +428,13 @@ Courses.propTypes = {
   courses: PropTypes.array.isRequired,
 };
 
-export function getProgramId() {
-  return FlowRouter.getQueryParam('cs');
-}
-
 export default withTracker(() => {
   Meteor.subscribe('searchdata');
   Meteor.subscribe('deleted');
   Meteor.subscribe('titles');
   Meteor.subscribe('courses');
-  if (!getProgramId()) {
-    return {
-      courses: _Courses.find({ createdBy: Meteor.userId() }).fetch(),
-      titles: Titles.findOne({}),
-    };
-  }
   return {
-    courses: _Courses
-      .find({ 'details.programId': getProgramId(), createdBy: Meteor.userId() })
-      .fetch(),
+    courses: _Courses.find({ createdBy: Meteor.userId() }).fetch(),
     titles: Titles.findOne({}),
   };
 })(Courses);

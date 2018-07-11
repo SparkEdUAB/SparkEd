@@ -14,6 +14,12 @@ import { Resources } from '../../../api/resources/resources';
 import * as config from '../../../../config.json';
 
 export class ViewResourceApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      download: false,
+    };
+  }
   static extractFileType(data) {
     const fileTypeData = data.split('/');
     let type = fileTypeData[0];
@@ -44,7 +50,7 @@ export class ViewResourceApp extends Component {
 
   fetchResource() {
     let { resource } = this.props;
-    if (resource === undefined) {
+    if (!resource) {
       resource = null;
     }
     return resource;
@@ -52,18 +58,18 @@ export class ViewResourceApp extends Component {
 
   renderResource() {
     const resourceObj = this.fetchResource();
-    if (resourceObj === null) {
+    if (!resourceObj) {
       return null;
     }
-
     const resources = resourceObj;
     const resource = {
       type: resources.type,
       ext: resources.ext,
       name: resources.name,
+      urlLink: resourceObj.link(),
       _id: resources._id,
     };
-    return <ResourceRender resource={resource} />;
+    return <ResourceRender resource={resource} Link={resourceObj.link()} />;
   }
 
   fetchResources() {
@@ -72,7 +78,7 @@ export class ViewResourceApp extends Component {
       return null;
     }
     let data = query;
-    if (query === undefined) {
+    if (!query) {
       data = [
         {
           id: 0,
@@ -88,6 +94,7 @@ export class ViewResourceApp extends Component {
     }
 
     if (data.length === 0) {
+      // !data.length
       data = [
         {
           id: 0,
@@ -115,12 +122,10 @@ export class ViewResourceApp extends Component {
       <ErrorBoundary>
         <div className="row">
           <div className="col s12 m8 l9">{this.renderResource()}</div>
-
           <div className="col s12 m4 l3 ">
             <ViewFrame resources={this.props.resources} />
           </div>
         </div>
-
         <div className="">
           <FloatingButton className="left" />{' '}
         </div>
@@ -130,7 +135,7 @@ export class ViewResourceApp extends Component {
 }
 
 export function getResourceWithId(coll) {
-  if (coll === undefined) {
+  if (!coll) {
     return 'null';
   }
   const resourceArray = coll.resources;
@@ -154,7 +159,7 @@ ViewResourceApp.propTypes = {
 
 export default withTracker(() => {
   const handle = Meteor.subscribe('resourcess');
-  if (config.sec) {
+  if (config.isHighSchool) {
     return {
       subsReady: handle.ready(),
       resources: Resources.find(

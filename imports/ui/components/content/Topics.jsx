@@ -39,7 +39,7 @@ export class Topics extends Component {
   };
   renderPagination() {
     const { count } = this.props;
-    if (!!count && count <= Session.get('limit')) {
+    if (!count || !count <= Session.get('limit')) {
       return <span />;
     }
     return (
@@ -86,7 +86,7 @@ export class Topics extends Component {
   renderTopic() {
     let index = 0;
     const { topics, unitId } = this.props;
-    if (topics === undefined) {
+    if (!topics) {
       return null;
     }
     return topics.map(topic => (
@@ -120,7 +120,7 @@ Topics.propTypes = {
 };
 
 export default withTracker(param => {
-  if (config.sec) {
+  if (config.isHighSchool) {
     Meteor.subscribe('units');
     return {
       topics: _Units

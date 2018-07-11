@@ -1,21 +1,19 @@
 /* eslint class-methods-use-this: "off" */
-import React, { Component, Fragment } from 'react';
+/* eslint import/no-unresolved: "off" */
+
+import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import Header from '../components/layouts/Header';
 
-export default class AppWrapper extends Component {
-  render() {
-    return (
-            <Fragment>
-                <Header/>
-                <Fragment>
-                    {this.props.yield}
-                </Fragment>
-            </Fragment>
-    );
-  }
-}
+const AppWrapper = props => (
+  <Fragment>
+    <Header />
+    <Fragment>{props.children}</Fragment>
+  </Fragment>
+);
 
 AppWrapper.propTypes = {
-  yield: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
+
+export default AppWrapper;

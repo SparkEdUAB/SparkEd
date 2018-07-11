@@ -3,14 +3,14 @@ import { PropTypes } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import * as config from '../../../../config.json';
 import Header from '../layouts/Header';
-
+import AppWrapper from '../../containers/AppWrapper';
 // currently disabled the sync and sync settings as they need to be tested and thoroughly reviewed
 //  The code can remain here as both will be updated in the later release
+
 export default class Sidenav extends Component {
   render() {
     return (
-      <Fragment>
-        <Header />
+      <AppWrapper>
         <div className="row">
           <Fragment>
             <div className="col m3 s1 menu_simple">
@@ -28,26 +28,7 @@ export default class Sidenav extends Component {
                   </a>
                 </li>
 
-                {/* Display  Courses if School doesn't exist */}
-                {config.sch ? (
-                  <Fragment>
-                  <li>
-                    <a href="/dashboard/school" className={`  side-list ${this.props.school}`}>
-                      <i className={`fa fa-book fa-lg `} />
-                      <span className="hide-on-small-only">&nbsp;School</span>
-                    </a>
-                  </li>
-                        <li>
-                        <a
-                          href="/dashboard/list_topics"
-                          className={`  side-list ${this.props.topics}`}
-                        >
-                          <i className={`fa fa-text-width fa-lg `} />
-                          <span className="hide-on-small-only">&nbsp; All Topics</span>
-                        </a>
-                      </li>
-                      </Fragment>
-                ) : config.sec ? (
+                {config.isHighSchool ? (
                   <li>
                     <a href="/dashboard/course" className={`  side-list ${this.props.course}`}>
                       <i className={`fa fa-book fa-lg `} />
@@ -85,12 +66,16 @@ export default class Sidenav extends Component {
                     <span className="hide-on-small-only">&nbsp; External Link</span>
                   </a>
                 </li>
-                <li>
-                  <a href="/dashboard/overview" className={`  side-list ${this.props.stats}`}>
-                    <i className={`fa fa-bar-chart fa-lg `} />
-                    <span className="hide-on-small-only">&nbsp;Statistics</span>
-                  </a>
-                </li>
+                {config.isUserAuth ? (
+                  <li>
+                    <a href="/dashboard/overview" className={`  side-list ${this.props.stats}`}>
+                      <i className={`fa fa-bar-chart fa-lg `} />
+                      <span className="hide-on-small-only">&nbsp;Statistics</span>
+                    </a>
+                  </li>
+                ) : (
+                  <span />
+                )}
                 <li>
                   <a href="/dashboard/feedback" className={`  side-list ${this.props.feedback}`}>
                     <i className={`fa fa-comments fa-lg `} />
@@ -114,9 +99,12 @@ export default class Sidenav extends Component {
                         <span className="hide-on-small-only">&nbsp; Change Slides</span>
                       </a>
                     </li>
-
-
-                  
+                    <li>
+                      <a href="/dashboard/updates" className={`  side-list ${this.props.slides}`}>
+                        <i className={`fa fa-picture-o `} />
+                        <span className="hide-on-small-only">&nbsp; Updates</span>
+                      </a>
+                    </li>
                   </>
                 ) : (
                   <span />
@@ -132,15 +120,14 @@ export default class Sidenav extends Component {
               {/* end list (ul) */}
             </div>
           </Fragment>
-          <Fragment>{this.props.children}</Fragment>
+          <Fragment>{this.props.yield}</Fragment>
         </div>
-      </Fragment>
+      </AppWrapper>
     );
   }
 }
 Sidenav.propTypes = {
   accounts: PropTypes.string,
-  school: PropTypes.string,
   extra: PropTypes.string,
   stats: PropTypes.string,
   feedback: PropTypes.string,

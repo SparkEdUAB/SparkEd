@@ -1,10 +1,10 @@
 {
-  "name": "ManoAp-V2",
+  "name": "SparkEd",
   "private": true,
   "scripts": {
     "start": "meteor",
     "lint": "eslint .",
-    "pretest": "npm run lint --silent"
+    "test": "jest"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.44",
@@ -13,29 +13,31 @@
     "body-parser": "^1.15.2",
     "core-js": "^2.4.1",
     "fs-extra": "^4.0.3",
+    "gridfs-stream": "^1.1.1",
     "meteor-node-stubs": "^0.3.2",
     "mmmagic": "^0.5.0",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
     "react-mounter": "^1.2.0",
     "react-paginate": "^5.2.2",
     "request": "^2.75.0",
     "simpl-schema": "^1.4.2"
   },
   "version": "1.0.0",
-  "description": "Content Platfrom",
+  "description":
+    "Software for organizing and presenting educational and training content for delivery on most platforms.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hackersguild/ManoAp-V2.git"
+    "url": "git+https://github.com/SparkEdUAB/SparkEd.git"
   },
-  "author": "Hackers Guild",
+  "author": "SparkEd Team",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hackersguild/ManoAp-V2/issues"
+    "url": "https://github.com/SparkEdUAB/SparkEd/issues"
   },
-  "homepage": "https://github.com/hackersguild/ManoAp-V2#readme",
+  "homepage": "https://github.com/SparkEdUAB/SparkEd#readme",
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "^1.0.5",
     "babel-eslint": "^8.2.1",
@@ -45,20 +47,16 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-meteor": "^4.1.4",
-    "eslint-plugin-react": "^7.6.1"
+    "eslint-plugin-react": "^7.6.1",
+    "jest": "^22.4.3"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
     "parserOptions": {
       "allowImportExportEverywhere": true
     },
-    "plugins": [
-      "meteor"
-    ],
-    "extends": [
-      "airbnb",
-      "plugin:meteor/recommended"
-    ],
+    "plugins": ["meteor"],
+    "extends": ["airbnb", "plugin:meteor/recommended"],
     "settings": {
       "import/resolver": "meteor"
     }

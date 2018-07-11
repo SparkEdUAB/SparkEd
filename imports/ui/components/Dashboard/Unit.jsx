@@ -46,8 +46,7 @@ export class Unit extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const programId = FlowRouter.getParam('_id');
-    const courseId = FlowRouter.getQueryParam('cs');
+    const courseId = FlowRouter.getParam('_id');
     const year = FlowRouter.getQueryParam('y');
     const user = Meteor.userId();
     const unitId = new Meteor.Collection.ObjectID().valueOf();
@@ -56,7 +55,6 @@ export class Unit extends Component {
     let details = {};
     const { topics, description, unitName } = this.state;
     details = {
-      programId: programId === 'prog' ? null : programId,
       year,
       courseId,
     };
@@ -85,7 +83,7 @@ export class Unit extends Component {
                 });
           });
     });
-    if (!config.sec) {
+    if (!config.isHighSchool) {
       for (topic of topics) {
         const { name } = topic;
         const _id = new Meteor.Collection.ObjectID().valueOf();
@@ -115,7 +113,7 @@ export class Unit extends Component {
   };
   backToUnits = e => {
     e.preventDefault();
-    return FlowRouter.go(`/dashboard/units/prog?cs=${FlowRouter.getQueryParam('cs')}`);
+    return FlowRouter.go(`/dashboard/units/${FlowRouter.getParam('_id')}`);
   };
   render() {
     const { topics, description, unitName } = this.state;
@@ -127,13 +125,9 @@ export class Unit extends Component {
             <div className="card-panel">
               <div className="">
                 <button className="btn fa fa-arrow-left" onClick={this.backToUnits}>
-                  {
-                    ` ${name}`
-                  }
+                  {` ${name}`}
                 </button>
-                <h5 className="center large">
-                {`Add New ${name}`}
-                </h5>
+                <h5 className="center large">{`Add New ${name}`}</h5>
               </div>
 
               <form className="new-topic" name="new-topic" onSubmit={e => this.handleSubmit(e)}>
@@ -159,7 +153,7 @@ export class Unit extends Component {
                     required
                   />
                 </div>
-                {config.sec ? (
+                {config.isHighSchool ? (
                   <span />
                 ) : (
                   topics.map((topic, index) => (
@@ -177,7 +171,7 @@ export class Unit extends Component {
                   ))
                 )}
 
-                {config.sec ? (
+                {config.isHighSchool ? (
                   <div className="row">
                     <span className="input-group-btn">
                       <button className="btn fa fa-floppy-o pull-right s12" role="submit">

@@ -109,12 +109,12 @@ export class EditResources extends Component {
   getBack = e => {
     // event.preventDefault();
     const unitId = Session.get('unitId');
-    if (config.sec) {
+    if (config.isHighSchool) {
       FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseId')}`);
     } else {
-      FlowRouter.go(`/dashboard/edit_unit/${'d9ee6fd932517fc757040ed3'}`);
+      FlowRouter.go(`/dashboard/edit_unit/${Session.get('unitId')}`);
     }
-  }
+  };
 
   // callback for the modal ( When it is add, save or Yes )
   handleSubmit(event) {
@@ -165,8 +165,6 @@ export class EditResources extends Component {
             // });
           });
         });
-        // const name = count > 1 ? 'resources' : 'resource';
-
         break;
     }
     // close the modal when done submitting
@@ -176,14 +174,14 @@ export class EditResources extends Component {
   renderResources() {
     const { topic, resources } = this.props;
 
-    if (topic === undefined && !resources) {
+    if (!topic && !resources) {
       return null;
     }
-    if (resources === undefined || resources.length === 0) {
+    if (!resources || resources.length === 0) {
       return null;
     }
     let count = 1;
-    return this.props.resources.map(resource => (
+    return resources.map(resource => (
       <tr key={resource._id}>
         <td>{count++}</td>
         <td>{resource.name.replace(/\.[^/.]+$/, '')}</td>
@@ -266,32 +264,34 @@ export class EditResources extends Component {
     );
   }
   render() {
+    const { isOpen, title, confirm, reject, modalType, name } = this.state;
+    const limit = Session.get('limit');
     return (
       <>
-        {this.state.modalType === 'upload' ? (
+        {modalType === 'upload' ? (
           <UploadWrapper
-            show={this.state.isOpen}
+            show={isOpen}
             close={this.closeModal}
-            title={this.state.title}
+            title={title}
             submit={this.submitFile}
           />
         ) : (
           <MainModal
-            show={this.state.isOpen}
+            show={isOpen}
             onClose={this.closeModal}
             subFunc={this.handleSubmit}
-            title={this.state.title}
-            confirm={this.state.confirm}
-            reject={this.state.reject}
+            title={title}
+            confirm={confirm}
+            reject={reject}
           >
-            {this.state.modalType === 'del' ? (
+            {modalType === 'del' ? (
               ''
             ) : (
               <div className="input-field">
                 <input
                   placeholder="Name of Resource"
                   type="text"
-                  defaultValue={this.state.name}
+                  defaultValue={name}
                   className="validate clear"
                   required
                   name="resource"
@@ -306,10 +306,9 @@ export class EditResources extends Component {
           </div>
           <div className="row ">
             <div className="col s4 m3">
-              <button className="btn grey darken-3 fa fa-angle-left" 
-              onClick={this.getBack}>
+              <button className="btn grey darken-3 fa fa-angle-left" onClick={this.getBack}>
                 {' '}
-                {config.sec ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
+                {config.isHighSchool ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
               </button>
             </div>
             <div className="col s4 m3">
@@ -335,13 +334,13 @@ export class EditResources extends Component {
               Resources displayed
               <div className="row">
                 <a className="col s2 link" onClick={e => this.getEntriesCount(e, 5)}>
-                  <u>{Session.get('limit') === 5 ? <b>5</b> : 5}</u>
+                  <u>{limit === 5 ? <b>5</b> : 5}</u>
                 </a>
                 <a className="col s2 link" onClick={e => this.getEntriesCount(e, 10)}>
-                  <u>{Session.get('limit') === 10 ? <b>10</b> : 10}</u>
+                  <u>{limit === 10 ? <b>10</b> : 10}</u>
                 </a>
                 <a className="col s2 link" onClick={e => this.getEntriesCount(e, 20)}>
-                  <u>{Session.get('limit') === 20 ? <b>20</b> : 20}</u>
+                  <u>{limit === 20 ? <b>20</b> : 20}</u>
                 </a>
               </div>
             </div>
@@ -376,8 +375,8 @@ export function getId() {
 }
 export default withTracker(() => {
   Meteor.subscribe('resourcess');
-  if (config.sec) {
-    Meteor.subscribe('sec.units', getId());
+  if (config.isHighSchool) {
+    Meteor.subscribe('isHighSchool.units', getId());
     return {
       resources: Resources.find(
         { 'meta.unitId': getId() },

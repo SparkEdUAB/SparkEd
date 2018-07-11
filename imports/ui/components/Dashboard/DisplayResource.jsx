@@ -24,7 +24,7 @@ export class DisplayResource extends Component {
   fetchResource() {
     let { resource } = this.props;
 
-    if (resource === undefined) {
+    if (!resource) {
       resource = null;
     }
     return resource;
@@ -32,7 +32,7 @@ export class DisplayResource extends Component {
 
   renderResource() {
     let resource = this.fetchResource();
-    if (resource == null) {
+    if (!resource) {
       return null;
     }
 
@@ -42,13 +42,13 @@ export class DisplayResource extends Component {
       name: resource.name,
       _id: resource._id,
     };
-
-    return <ResourceRender resource={_resource} />;
+    //
+    return <ResourceRender resource={_resource} Link={resource.link()} />;
   }
   // display the related files and if not present put a back button
   renderResources() {
     const { resources } = this.props;
-    if (resources === undefined || resources.length < 1) {
+    if (!resources || resources.length < 1) {
       return <SideMenu address={'/reference'} name={'Go Back'} />;
     }
 

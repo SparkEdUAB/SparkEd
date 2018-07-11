@@ -20,7 +20,7 @@ export class ContentsApp extends Component {
 
   saveUsage() {
     const ref = FlowRouter.getQueryParam('ref');
-    if (!ref || this.props.unit === undefined) {
+    if (!ref || !this.props.unit) {
       return;
     }
     if (!Meteor.user()) {
@@ -68,6 +68,11 @@ export class ContentsApp extends Component {
     window.scrollTo(0, 0);
   }
 
+  getBack = e => {
+    const courseId = Session.get('courseId');
+    return FlowRouter.go(`/course_content/${courseId}?ref=home`);
+  };
+
   render() {
     let unitName = '';
     let topicName = '';
@@ -91,7 +96,17 @@ export class ContentsApp extends Component {
         </div>
         <div className="row">
           <div className="col s12 m4 l3 topics-container">
-            <h6 className="center">{config.sec ? title : 'Topics'}</h6>
+            <div className="sideNavHeadingUnderline">
+              <a
+                title="Go back to Topics"
+                id="backButtonLink"
+                href={''}
+                onClick={e => this.getBack(e)}
+              >
+                <i className="fa fa-chevron-circle-left fa-lg" />
+              </a>
+              <p className="sideNavHeading">{config.isHighSchool ? title : 'Topics'}</p>
+            </div>
             <Topics unitId={getUnitId()} />
           </div>
           <div className="col s12 m8 l9">
@@ -115,9 +130,9 @@ export function getUnitId() {
   return FlowRouter.getParam('_id');
 }
 
-// in high-sec grab the unitId
+// in high-isHighSchool grab the unitId
 export function getTopicId() {
-  if (config.sec) {
+  if (config.isHighSchool) {
     topicId = FlowRouter.getQueryParam('rs');
     topics = _Units.findOne({ 'details.courseId': FlowRouter.getParam('_id') });
   } else {
@@ -125,9 +140,9 @@ export function getTopicId() {
     topics = _Topics.findOne({ unitId: FlowRouter.getParam('_id') });
   }
 
-  if (topicId === undefined && topics !== undefined) {
+  if (!topicId && topics !== undefined) {
     return topics._id;
-  } else if (topics === undefined) {
+  } else if (!topics) {
     return '1';
   }
   return topicId;
@@ -138,7 +153,7 @@ export default withTracker(() => {
   Meteor.subscribe('resourcess');
   Meteor.subscribe('topics');
   Meteor.subscribe('titles');
-  if (config.sec) {
+  if (config.isHighSchool) {
     return {
       unit: _Units.findOne({ _id: getTopicId() }),
       titles: Titles.findOne({}),

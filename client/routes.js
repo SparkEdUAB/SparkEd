@@ -18,11 +18,8 @@ import NotFound from '../imports/ui/components/layouts/NotFound';
 import OverView from '../imports/ui/components/Dashboard/Statistics/Overview.jsx';
 import UserStatistics from '../imports/ui/components/Dashboard/Statistics/UserStatistics';
 import AllTopics from '../imports/ui/components/Dashboard/AllTopics.jsx';
-import AllResources from '../imports/ui/components/Dashboard/AllResources.jsx';
 import Feedback from '../imports/ui/components/Dashboard/Feedback.jsx';
-import School from '../imports/ui/components/Dashboard/School.jsx';
 import Additional from '../imports/ui/components/Dashboard/Additional.jsx';
-import Program from '../imports/ui/components/Dashboard/Program.jsx';
 import Courses from '../imports/ui/components/Dashboard/Courses.jsx';
 import DisplayResource from '../imports/ui/components/Dashboard/DisplayResource.jsx';
 import Institution from '../imports/ui/components/Dashboard/Settings/Institution.jsx';
@@ -37,7 +34,7 @@ import Sidenav from '../imports/ui/components/Dashboard/Sidenav';
 import SetUp from '../imports/ui/components/WalkThrough/Setup';
 import ExternalLinks from '../imports/ui/components/ExternalLink/ExternalLinks.jsx';
 import ExternalLinksPage from '../imports/ui/components/ExternalLink/ListExternalLinkPage.jsx';
-
+import SyncUpdates from '../imports/ui/components/Sync/SyncUpdates';
 const config = require('../config.json');
 
 const exposed = FlowRouter.group({});
@@ -64,8 +61,8 @@ const adminRoutes = FlowRouter.group({
   ],
 });
 
-export default function setConfig() {
-  if (config.userAuth) {
+export default function isAuthRequired() {
+  if (config.isUserAuth) {
     return loggedIn;
   }
   return exposed;
@@ -78,10 +75,10 @@ adminRoutes.route('/setup', {
   },
 });
 
-setConfig().route('/', {
+isAuthRequired().route('/', {
   name: 'Home',
   action() {
-    mount(Home, {});
+    mount(AppWrapper, { children: <Home /> });
   },
 });
 
@@ -99,64 +96,64 @@ exposed.route('/login', {
   },
 });
 
-setConfig().route('/view_resource/:_id', {
+isAuthRequired().route('/view_resource/:_id', {
   name: 'Home',
   action(params, queryParams) {
-    mount(AppWrapper, { yield: <ViewResourceApp /> });
+    mount(AppWrapper, { children: <ViewResourceApp /> });
   },
 });
 
-setConfig().route('/extra/view_resource/:_id', {
+isAuthRequired().route('/extra/view_resource/:_id', {
   name: 'ViewExtraResource',
   action(queryParams) {
-    mount(AppWrapper, { yield: <DisplayResource /> });
+    mount(AppWrapper, { children: <DisplayResource /> });
   },
 });
 
-setConfig().route('/contents/:_id', {
+isAuthRequired().route('/contents/:_id', {
   name: 'Contents',
   action(params, queryParams) {
-    mount(AppWrapper, { yield: <ContentsApp /> });
+    mount(AppWrapper, { children: <ContentsApp /> });
     // console.log("This is my blog post:", params);
   },
 });
 
-setConfig().route('/contents/', {
+isAuthRequired().route('/contents/', {
   name: 'Contents',
   action(params, queryParams) {
-    mount(AppWrapper, { yield: <ContentsApp /> });
+    mount(AppWrapper, { children: <ContentsApp /> });
   },
 });
 
-setConfig().route('/course_content/:_id', {
+isAuthRequired().route('/course_content/:_id', {
   name: 'CourseContent',
   action(params, queryParams) {
-    mount(AppWrapper, { yield: <CourseContent /> });
+    mount(AppWrapper, { children: <CourseContent /> });
   },
 });
 
-setConfig().route('/course_content/', {
+isAuthRequired().route('/course_content/', {
   name: 'CourseContent',
   action(params, queryParams) {
-    mount(AppWrapper, { yield: <CourseContent /> });
+    mount(AppWrapper, { children: <CourseContent /> });
   },
 });
 
-setConfig().route('/results', {
+isAuthRequired().route('/results', {
   name: 'Results',
   action() {
     mount(SearchResults, {});
   },
 });
 
-setConfig().route('/sync', {
+isAuthRequired().route('/sync', {
   name: 'Sync',
   action() {
     mount(AutoSync, {});
   },
 });
 
-setConfig().route('/request', {
+isAuthRequired().route('/request', {
   name: 'Request',
   action() {
     mount(ProcessRequest, {});
@@ -165,157 +162,143 @@ setConfig().route('/request', {
 adminRoutes.route('/dashboard/edit_resources/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
-    mount(Sidenav, { children: <EditResources /> });
+    mount(Sidenav, { yield: <EditResources /> });
   },
 });
-adminRoutes.route('/dashboard/sec/edit_unit/:_id', {
+adminRoutes.route('/dashboard/isHighSchool/edit_unit/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
-    mount(Sidenav, { children: <EditResources /> });
+    mount(Sidenav, { yield: <EditResources /> });
   },
 });
 
 adminRoutes.route('/dashboard/setsync', {
   name: 'SyncSettings',
   action() {
-    mount(Sidenav, { children: <SyncSettings /> });
+    mount(Sidenav, { yield: <SyncSettings /> });
   },
 });
 
 adminRoutes.route('/dashboard/edit_unit/:_id', {
   name: 'EditUnit',
   action() {
-    mount(Sidenav, { children: <EditUnit /> });
+    mount(Sidenav, { yield: <EditUnit /> });
   },
 });
 
 adminRoutes.route('/dashboard/units/:_id', {
   name: 'ManageUnits',
   action(params, queryParams) {
-    mount(Sidenav, { children: <ManageUnits /> });
+    mount(Sidenav, { yield: <ManageUnits /> });
   },
 });
 
 adminRoutes.route('/dashboard/units/prog/:_id', {
   name: 'SearchUnits',
   action(params, queryParams) {
-    mount(Sidenav, { children: <ManageUnits /> });
+    mount(Sidenav, { yield: <ManageUnits /> });
   },
 });
 
-setConfig().route('/dashboard/units/', {
+isAuthRequired().route('/dashboard/units/', {
   name: 'SearchUnits',
   action(params, queryParams) {
-    mount(Sidenav, { children: <ManageUnits /> });
+    mount(Sidenav, { yield: <ManageUnits /> });
   },
 });
 adminRoutes.route('/dashboard/unit/:_id', {
   name: 'New Unit',
   action(params, queryParams) {
-    mount(Sidenav, { children: <Unit /> });
+    mount(Sidenav, { yield: <Unit /> });
   },
 });
 
 adminRoutes.route('/dashboard/accounts', {
   name: 'ManageAccounts',
   action() {
-    mount(Sidenav, { children: <ManageAccounts /> });
+    mount(Sidenav, { yield: <ManageAccounts /> });
   },
 });
 adminRoutes.route('/dashboard/extra', {
   name: 'Additional',
   action() {
-    mount(Sidenav, { children: <Additional /> });
+    mount(Sidenav, { yield: <Additional /> });
   },
 });
 adminRoutes.route('/dashboard/overview', {
   name: 'OverView',
   action() {
-    mount(Sidenav, { children: <OverView /> });
+    mount(Sidenav, { yield: <OverView /> });
   },
 });
 
-setConfig().route('/dashboard/feedback', {
+isAuthRequired().route('/dashboard/feedback', {
   name: 'Feedback',
   action() {
-    mount(Sidenav, { children: <Feedback /> });
+    mount(Sidenav, { yield: <Feedback /> });
   },
 });
 
 adminRoutes.route('/dashboard/list_topics', {
   name: 'AllTopics',
   action() {
-    mount(Sidenav, { children: <AllTopics /> });
-  },
-});
-
-adminRoutes.route('/dashboard/list_resources', {
-  name: 'AllResources',
-  action() {
-    mount(Sidenav, { children: <AllResources /> });
-  },
-});
-
-adminRoutes.route('/dashboard/school', {
-  name: 'School',
-  action() {
-    mount(Sidenav, { children: <School /> });
-  },
-});
-
-adminRoutes.route('/dashboard/program/:_id', {
-  name: 'Program',
-  action(params) {
-    mount(Sidenav, { children: <Program /> });
+    mount(Sidenav, { yield: <AllTopics /> });
   },
 });
 
 adminRoutes.route('/dashboard/course/:_id', {
   name: 'Courses',
   action(params, queryParams) {
-    mount(Sidenav, { children: <Courses /> });
+    mount(Sidenav, { yield: <Courses /> });
   },
 });
 
 adminRoutes.route('/dashboard/course', {
   name: 'Courses',
   action(params) {
-    mount(Sidenav, { children: <Courses /> });
+    mount(Sidenav, { yield: <Courses /> });
   },
 });
 
 adminRoutes.route('/dashboard/settings', {
   name: 'Institution',
   action() {
-    mount(Sidenav, { children: <Institution /> });
+    mount(Sidenav, { yield: <Institution /> });
   },
 });
 
 adminRoutes.route('/dashboard/view_resource/:_id', {
   name: 'DisplayResource',
   action(queryParams) {
-    mount(Sidenav, { children: <DisplayResource /> });
+    mount(Sidenav, { yield: <DisplayResource /> });
   },
 });
 
-setConfig().route('/dashboard/slides', {
+isAuthRequired().route('/dashboard/slides', {
   name: 'Slides',
   action() {
-    mount(Sidenav, { children: <ManageSlides /> });
+    mount(Sidenav, { yield: <ManageSlides /> });
   },
 });
 
-setConfig().route('/externallinks', {
+isAuthRequired().route('/externallinks', {
   name: 'External',
   action() {
-    mount(Sidenav, {children: <ExternalLinks />})
+    mount(Sidenav, { yield: <ExternalLinks /> });
   },
 });
 
-setConfig().route('/user_details/:_id', {
+isAuthRequired().route('/user_details/:_id', {
   name: 'UserStatistics',
   action() {
-    mount(Sidenav, { children: <UserStatistics /> });
+    mount(Sidenav, { yield: <UserStatistics /> });
+  },
+});
+
+isAuthRequired().route('/dashboard/updates', {
+  name: 'Sync Updates',
+  action() {
+    mount(Sidenav, { yield: <SyncUpdates /> });
   },
 });
 
@@ -325,7 +308,7 @@ FlowRouter.notFound = {
   },
 };
 
-setConfig().route('/reference', {
+isAuthRequired().route('/reference', {
   name: 'ReferenceLibrary',
   action() {
     mount(ReferenceLibrary, {});
@@ -335,19 +318,18 @@ setConfig().route('/reference', {
 loggedIn.route('/notifications', {
   name: 'Notifications',
   action() {
-    mount(AppWrapper, { yield: <Notifications /> });
+    mount(AppWrapper, { children: <Notifications /> });
   },
 });
 
 loggedIn.route('/externallinkpages', {
   name: 'ExternalLinksPage',
   action() {
-    mount(AppWrapper, {yield: <ExternalLinksPage />})
+    mount(AppWrapper, { children: <ExternalLinksPage /> });
   },
-})
+});
 
-
-setConfig().route('/reference/:_id', {
+isAuthRequired().route('/reference/:_id', {
   name: 'ReferenceLibrary',
   action(queryParams) {
     mount(ReferenceLibrary, {});

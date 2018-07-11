@@ -41,3 +41,5 @@ momentjs:moment
 percolate:synced-cron
 ostrio:files
 universe:i18n
+chfritz:serversync
+mrest:restivus

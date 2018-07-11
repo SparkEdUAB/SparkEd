@@ -75,8 +75,9 @@ globals:
   exportcsv: false
   require: false
   # packages
-  FlowRouter: false # kadira:flow-router
-  moment: false # momentjs:moment
+  FlowRouter: false 
+  moment: false 
+  Picker: false
 settings:
   import/core-modules: [meteor/meteor]
   import/resolver: meteor

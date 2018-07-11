@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
+import { Session } from 'meteor/session';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
@@ -13,12 +14,12 @@ import { Loader } from '../Loader';
 export class CourseContent extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
+    Session.set('courseId', FlowRouter.getParam('_id'));
   }
-
   renderUnits(name) {
     let index = 0;
     const { unitd } = this.props;
-    if (unitd === undefined) {
+    if (!unitd) {
       return null;
     } else if (unitd.length < 1) {
       return `No units for ${name} has been added yet,Please Check again soon!!`;
@@ -91,7 +92,7 @@ export function getCourseId() {
 }
 
 export function courseName(coll) {
-  if (coll === undefined) {
+  if (!coll) {
     return null;
   }
   return coll.name;
@@ -101,9 +102,9 @@ export function getTopicId() {
   const topicId = FlowRouter.getQueryParam('rs');
   const topics = _Topics.findOne({ unitId: FlowRouter.getParam('_id') });
 
-  if (topicId === undefined && topics !== undefined) {
+  if (!topicId && topics !== undefined) {
     return topics._id;
-  } else if (topics === undefined) {
+  } else if (!topics) {
     return '1';
   }
   return topicId;

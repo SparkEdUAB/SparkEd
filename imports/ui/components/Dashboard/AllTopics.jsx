@@ -64,7 +64,7 @@ export class AllTopics extends Component {
 
   renderAllTopics() {
     let count = 1;
-    if (this.state === null || this.state.data === undefined) {
+    if (!this.state || !this.state.data) {
       return null;
     }
 

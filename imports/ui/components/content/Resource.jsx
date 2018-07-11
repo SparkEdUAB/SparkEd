@@ -16,6 +16,7 @@ export default class Resource extends Component {
       docx: 'fa-file-text',
       image: 'fa-picture-o',
       audio: 'fa-headphones',
+      text: 'fa-file-text',
     };
     return fileTypesIcon[type];
   }

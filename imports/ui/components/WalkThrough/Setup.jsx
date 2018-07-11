@@ -37,9 +37,9 @@ export default class SetUp extends Component {
         break;
 
       case 'auth':
-        const userAuth = value === 'true' ? true : false;
+        const isUserAuth = value === 'true' ? true : false;
         this.setState({
-          auth: userAuth,
+          auth: isUserAuth,
         });
         break;
 
@@ -56,30 +56,24 @@ export default class SetUp extends Component {
   saveConfig = e => {
     e.preventDefault();
     const { name, tag, structure, auth } = this.state;
-    let sch, sec;
-    const isSet = config.set;
+    let isHighSchool;
+    const isSet = config.isConfigured;
     switch (structure) {
-      case 'school':
-        sch = true;
-        sec = false;
-        break;
       case 'course':
-        sch = false;
-        sec = false;
+        isHighSchool = false;
         break;
-      case 'sec':
-        sec = true;
-        sch = false;
+      case 'isHighSchool':
+        isHighSchool = true;
         break;
       default:
         break;
     }
-    if (!name || name.length === 0) {
+    if (!name || !name.trim().length) {
       this.setState({
         error: 'Please Enter the Institution name',
       });
       return;
-    } else if (!tag || tag.length === 0) {
+    } else if (!tag || !tag.trim().length) {
       this.setState({
         error: 'Please Enter Institution Tag or Motto',
       });
@@ -95,15 +89,14 @@ export default class SetUp extends Component {
       name,
       tag,
       auth,
-      sch,
-      sec,
+      isHighSchool,
     });
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
   render() {
     const { isOpen, confirm, reject, error, name } = this.state;
-    const isSet = config.set;
+    const isSet = config.isConfigured;
     return (
       <Fragment>
         <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} />
@@ -165,15 +158,6 @@ export default class SetUp extends Component {
                       <span className="red-text">*</span>
                       <div className="row">
                         <div className="col s12" onChange={e => this.saveChange(e, 'structure')}>
-                          <p className="gender-male">
-                            <input name="struct" type="radio" id="school" value="school" required />
-                            <label
-                              htmlFor="school"
-                              title="Different Schools with programs and courses"
-                            >
-                              School{' '}
-                            </label>
-                          </p>
                           <p className="gender-female">
                             <input
                               name="struct"
@@ -189,7 +173,7 @@ export default class SetUp extends Component {
                               name="struct"
                               type="radio"
                               id="high-school"
-                              value="sec"
+                              value="isHighSchool"
                               required
                             />
                             <label htmlFor="high-school">High School</label>

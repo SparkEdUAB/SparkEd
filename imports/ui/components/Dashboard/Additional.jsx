@@ -158,7 +158,7 @@ export class Additional extends Component {
     // this should be reactive
     const course = _Courses.findOne({ _id: courseId });
     // show anonymous on references that don't belong to any course
-    if (course === undefined) {
+    if (!course) {
       return 'Anonymous';
     }
     return course.name;
@@ -167,7 +167,7 @@ export class Additional extends Component {
   renderExtra() {
     let count = 1;
     const { extras } = this.props;
-    if (extras === undefined) {
+    if (!extras) {
       return null;
     }
     return extras.map(extra => (
@@ -214,7 +214,6 @@ export class Additional extends Component {
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
-    console.log('clicked me');
     Session.set('limit', count);
   };
   renderPagination() {

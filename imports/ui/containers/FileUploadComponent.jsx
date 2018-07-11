@@ -31,12 +31,13 @@ export class FileUploadComponent extends Component {
     _.each(files, file => {
       let uploadInstance;
       if (file) {
+        console.log(file);
         const route = FlowRouter.getRouteName();
 
         switch (route) {
           case 'EditResources':
             let unitId, topicId;
-            if (config.sec) {
+            if (config.isHighSchool) {
               unitId = FlowRouter.getParam('_id');
               topicId = '';
             } else {
@@ -163,10 +164,10 @@ export class FileUploadComponent extends Component {
               case 'EditResources':
                 const topic_id = FlowRouter.getParam('_id');
                 const _topic = _Topics.findOne({ _id: topic_id });
-                const unit_id = config.sec ? topic_id : _topic.unitId;
-              
+                const unit_id = config.isHighSchool ? topic_id : _topic.unitId;
+
                 const msg = `new resource ${fileObj.name.replace(/\.[^/.]+$/, '')} was uploaded`;
-                Session.set('ids', { topic_id, filess: fileObj._id});
+                Session.set('ids', { topic_id, filess: fileObj._id });
                 Meteor.call(
                   'insert.search',
                   fileObj._id,
@@ -175,7 +176,7 @@ export class FileUploadComponent extends Component {
                   'resource',
                   err => {
                     err
-                      ? Materialize.toast(err.reason, 3000, 'error-toast')
+                      ? Materialize.toast(err.reason, 7000, 'error-toast')
                       : Meteor.call(
                           'insertNotification',
                           msg,
@@ -185,7 +186,7 @@ export class FileUploadComponent extends Component {
                           fileObj._id,
                           err => {
                             err
-                              ? Materialize.toast(err.reason, 4000, 'error-toast')
+                              ? Materialize.toast(err.reason, 7000, 'error-toast')
                               : Materialize.toast(
                                   'successfully uploaded a file',
                                   3000,
@@ -265,10 +266,9 @@ export class FileUploadComponent extends Component {
                 const instName = Session.get('name');
                 const tag = Session.get('tag');
                 const auth = Session.get('auth');
-                const sch = Session.get('sch');
-                const sec = Session.get('sec');
+                const isHighSchool = Session.get('isHighSchool');
 
-                Meteor.call('addConfig', instName, tag, auth, true, sch, sec, err => {
+                Meteor.call('addConfig', instName, tag, auth, true, isHighSchool, err => {
                   err
                     ? Materialize.toast(err.reason, 4000, 'error-toast')
                     : Materialize.toast(
@@ -299,7 +299,7 @@ export class FileUploadComponent extends Component {
         });
 
         uploadInstance.on('error', function(error, fileObj) {
-          Materialize.toast(error, 3000, 'error-toast');
+          Materialize.toast(error, 10000, 'error-toast');
         });
 
         uploadInstance.on('progress', (progress, fileObj) => {

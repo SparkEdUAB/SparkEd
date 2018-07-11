@@ -124,7 +124,7 @@ Meteor.methods({
     var url = hostUrl + 'stats'; //"http://localhost:3000/stats";
     //var data = EJSON.stringify(statistics);
 
-    HTTP.call('POST', url, { params: { statistics: statistics, sch: school } }, function(
+    HTTP.call('POST', url, { params: { statistics: statistics, isSchool: school } }, function(
       error,
       result,
     ) {
@@ -154,7 +154,7 @@ Meteor.methods({
     var size = users.length;
     users = JSON.stringify(users);
 
-    HTTP.call('POST', url, { params: { users: users, sch: school } }, function(error, result) {
+    HTTP.call('POST', url, { params: { users: users, isSchool: school } }, function(error, result) {
       if (!error) {
         return true;
         console.log(url, result);
@@ -202,15 +202,15 @@ Meteor.methods({
       freq = data.freq;
     }
 
-    if (data.sch == undefined) {
-      sch = school;
+    if (data.isSchool == undefined) {
+      isSchool = school;
     }
 
     _Statistics.update(
       { _id: _id },
       {
         $set: {
-          sch: 'sch',
+          isSchool: 'isSchool',
           material,
           url,
           page,
@@ -227,11 +227,12 @@ Meteor.methods({
 
 //save user accounts sent from remote school
 Meteor.methods({
-  insertUser: function(data, sch) {
+  insertUser: function(data, isSchool) {
     var id = data._id;
     var emails = data.emails;
     var profile = data.profile;
-    profile['sch'] = sch;
+    profile['isSchool'] = isSchool;
+    profile.createdAt = new Date();
 
     Meteor.users.update(
       { _id: id },
@@ -243,7 +244,7 @@ Meteor.methods({
 
 //getJSONFileContent
 Meteor.methods({
-  getSyncContent: function(fileType, sch, reset) {
+  getSyncContent: function(fileType, isSchool, reset) {
     var val = false;
     var status = true;
     var results = null;
@@ -257,7 +258,7 @@ Meteor.methods({
     var data = [];
     var query = {};
 
-    query['sync.' + sch] = val;
+    query['sync.' + isSchool] = val;
 
     if (fileType == 'egranary') {
       results = mCollections[fileType].find({});
@@ -275,7 +276,7 @@ Meteor.methods({
         sync = {};
       }
 
-      sync[sch] = status;
+      sync[isSchool] = status;
 
       /*update db
      mCollections[fileType].update({_id:id},{$set:{sync:{kijabe:false,kisumu:false}}});
@@ -502,17 +503,17 @@ WebApp.connectHandlers.use('/syncApp', function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.writeHead(200);
   var file = req.query.file;
-  var sch = req.query.sch;
+  var isSchool = req.query.isSchool;
   var reset = req.query.reset;
 
-  if (file == undefined || sch == undefined) {
+  if (file == undefined || isSchool == undefined) {
     res.end('request undefined');
   } else if (reset == undefined) {
     reset = false;
   }
 
   console.log('linked', file);
-  var content = Meteor.call('getSyncContent', file, sch, reset);
+  var content = Meteor.call('getSyncContent', file, isSchool, reset);
   var data = [];
   var dataJSON = '';
   if (file == 'resource') {
@@ -543,7 +544,7 @@ Picker.route('/stats/', function(params, req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.writeHead(200);
   var statistics = req.body.statistics;
-  var sch = req.body.sch;
+  var isSchool = req.body.isSchool;
   //console.log('mmmmmmmmmmmmm');
 
   if (statistics == undefined) {
@@ -553,10 +554,10 @@ Picker.route('/stats/', function(params, req, res, next) {
   }
   var stats = EJSON.parse(statistics);
 
-  _Statistics.remove({ sch: sch }); //clear old statistics
+  _Statistics.remove({ isSchool: isSchool }); //clear old statistics
 
   stats.forEach(function(v, k, arr) {
-    Meteor.call('insertUsage', v, true, sch);
+    Meteor.call('insertUsage', v, true, isSchool);
   });
 
   console.log('inserted statistics=> ' + stats.length);
@@ -565,14 +566,15 @@ Picker.route('/stats/', function(params, req, res, next) {
 });
 
 //receive users accounts
-Picker.route('/users', function(params, req, res, next) {
+Picker.route('/userss', function(params, req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.writeHead(200);
   var users = req.body.users;
-  var sch = req.body.sch;
+  var isSchool = req.body.isSchool;
   //console.log('mmmmmmmmmmmmm');
 
-  var users = EJSON.parse(users);
+  // var users = EJSON.parse(users);
+  var users = JSON.stringify(users)
   //console.log(users);
   if (users == undefined) {
     res.end('request undefined');
@@ -580,7 +582,7 @@ Picker.route('/users', function(params, req, res, next) {
   }
 
   users.forEach(function(v, k, arr) {
-    Meteor.call('insertUser', v, sch);
+    Meteor.call('insertUser', v, isSchool);
   });
 
   console.log('users inserted=> ' + users.length);

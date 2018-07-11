@@ -230,11 +230,6 @@ export class ManageUnits extends Component {
       case 'field':
         const name = target.course.value;
         const title_id = Session.get('title_id');
-      // Meteor.call('insert.title', table_title, sub_title, err => {
-      //   err
-      //     ? Materialize.toast(err.reason, 3000, 'error-toast')
-      //     : Materialize.toast('Successfully updated the titles', 3000, 'success-toast');
-      // });
     }
 
     // close the modal when done;
@@ -259,13 +254,10 @@ export class ManageUnits extends Component {
     );
   }
 
-  routeToCourses(schoolId, programId, event) {
-    event.preventDefault();
-    if (!schoolId) {
-      return FlowRouter.go('/dashboard/course');
-    }
-    return FlowRouter.go(`/dashboard/course/${schoolId}?cs=${programId}`);
-  }
+  routeToCourses = e => {
+    e.preventDefault();
+    return FlowRouter.go('/dashboard/course');
+  };
 
   render() {
     let { course, titles } = this.props;
@@ -280,16 +272,11 @@ export class ManageUnits extends Component {
       sub_title,
       description,
     } = this.state;
-    let schoolId,
-      programId,
-      courseId,
-      new_title,
-      new_sub_title,
-      courseName = null;
+    let courseId, new_title, new_sub_title, year;
+    courseName = null;
     if (course) {
-      programId = course.details.programId || 'prog';
       courseId = course._id;
-      schoolId = course.details.schoolId;
+      year = course.details.year;
       courseName = course.name;
       Session.set('courseName', courseName);
     }
@@ -350,7 +337,7 @@ export class ManageUnits extends Component {
         <div className="col m9 s11">
           <div className="row">
             <div className="">
-              <h4>Units for {` ${courseName}`} </h4>
+              <h4>{`${Session.get('sub_unit_title')} for ${courseName}`} </h4>
             </div>
             <div className="col m8 ">
               <SearchField
@@ -366,7 +353,7 @@ export class ManageUnits extends Component {
             <div className="col m3">
               <button
                 className="btn grey darken-3 fa fa-angle-left"
-                onClick={this.routeToCourses.bind(this, schoolId, programId)}
+                onClick={e => this.routeToCourses(e)}
               >
                 <a href={''} className="white-text">
                   {` ${new_title}`}
@@ -383,10 +370,7 @@ export class ManageUnits extends Component {
               </button>
             </div>
             <div className="col m2">
-              <a
-                href={`/dashboard/unit/${programId ||
-                  'prog'}?cs=${courseId}&y=${FlowRouter.getQueryParam('y')}`}
-              >
+              <a href={`/dashboard/unit/${courseId}?y=${year}`}>
                 <button className="btn grey fa fa-plus"> New</button>
               </a>
             </div>
@@ -433,8 +417,8 @@ export class ManageUnits extends Component {
 export class Unit extends Component {
   handleUrl(id) {
     // id => unit_id
-    if (config.sec) {
-      FlowRouter.go(`/dashboard/sec/edit_unit/${id}`);
+    if (config.isHighSchool) {
+      FlowRouter.go(`/dashboard/isHighSchool/edit_unit/${id}`);
     } else {
       FlowRouter.go(`/dashboard/edit_unit/${id}`);
     }
@@ -465,18 +449,13 @@ export class Unit extends Component {
     );
   }
 }
-export function getCourseId() {
-  let initId = FlowRouter.getQueryParam('cs');
-  return initId;
-}
-
 export default withTracker(params => {
-  Meteor.subscribe('searchUnits', Session.get('courseIde') || Session.get('courseId'));
+  Meteor.subscribe('searchUnits', Session.get('courseIde'));
   Meteor.subscribe('courses');
   Meteor.subscribe('deleted');
   Meteor.subscribe('titles');
   return {
-    course: _Courses.findOne({ _id: Session.get('courseId') }),
+    course: _Courses.findOne({ _id: Session.get('courseIde') }),
     titles: Titles.findOne({}),
     Units: [],
   };

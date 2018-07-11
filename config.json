@@ -1,8 +1,8 @@
 {
-  "name": "University of Alabama",
-  "tag": "Delivering Education ",
-  "userAuth": false,
-  "sch": false,
-  "sec": false,
-  "set": false
+  "name": "Sparkman Center For Global Health",
+  "tag": "Delivering Education Contents in style",
+  "isUserAuth": false,
+  "isHighSchool": false,
+  "set": true,
+  "isConfigured": true
 }
