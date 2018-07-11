@@ -4,6 +4,8 @@ uploads/
 upload/
 public/uploads/
 .idea/
+.vs/
+centers.js
 .vscode/
 .DS_Store
 # Logs
