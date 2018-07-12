@@ -8,7 +8,6 @@ import { _Statistics } from '../statistics/statistics';
 import { Titles } from '../settings/titles';
 import { _Topics } from '../topics/topics';
 import { _Units } from '../units/units';
-import { centers } from '../../../centers';
 // disable user auth for GET
 
 const Api = new Restivus({
@@ -72,11 +71,11 @@ Api.addCollection(Titles, {
 Api.addCollection(_Topics, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: true,
+    authRequired: false,
   },
   endpoints: {
     get: {
-      authRequired: true,
+      authRequired: false,
     },
   },
 });
@@ -84,11 +83,11 @@ Api.addCollection(_Topics, {
 Api.addCollection(_Units, {
   excludedEndpoints: ['put', 'post', 'delete'],
   routeOptions: {
-    authRequired: true,
+    authRequired: false,
   },
   endpoints: {
     get: {
-      authRequired: true,
+      authRequired: false,
     },
   },
 });
@@ -146,25 +145,6 @@ Api.addRoute(
         const references = References.find({}).fetch();
         if (references) {
           return { status: 'success', data: references };
-        }
-        return {
-          statusCode: 400,
-          body: { status: 'fail', message: "Error happened, I couldn't fetch the data" },
-        };
-      },
-    },
-  },
-);
-
-Api.addRoute(
-  'centers',
-  { authRequired: false },
-  {
-    get: {
-      action: function() {
-        const { query } = this.queryParams;
-        if (centers) {
-          return { status: 'success', data: centers, count: centers.length };
         }
         return {
           statusCode: 400,

@@ -71,4 +71,7 @@ Meteor.methods({
       }
     }
   },
+  'courses.count' () {
+    _Courses.find().count()
+  }
 });
