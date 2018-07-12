@@ -11,163 +11,101 @@ import { _Topics } from '../../../api/topics/topics';
 import { syncData } from '../../../api/sync/syncData';
 import DataList from './DataList';
 
+let wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
+
 export class SyncUpdates extends Component {
   state = {
-    courses: [],
+    coursesData: [],
+    unitsData: [],
+    topicsData: [],
   };
   // Try and Sync  courseAdd(id, course, courseCode, details)
-  syncContents = () => {
-    const { data } = this.props;
-    data.map(item => {
-      const { data } = item;
-      switch (item.type) {
-        case 'course':
-          data.map(course => {
-            // Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
-            //   err
-            //     ? Materialize.toast(err.reason, 3000, 'error-toast')
-            //     : Materialize.toast(`Successfully added ${course} `, 3000, 'success-toast');
-            // });
-          });
-          break;
-        case 'unit':
-          // data.map(unit => {
-          //   Meteor.call(
-          //     'unit.insert',
-          //     unit._id,
-          //     unit._id,
-          //     unit.topics,
-          //     unit.unitDesc,
-          //     unit.details,
-          //     err => {
-          //       err
-          //         ? Materialize.toast(err.reason, 4000, 'error-toast')
-          //         : Materialize.toast(`Synced Units successfully`, 5000, 'success-toast');
-          //     },
-          //   );
-          // });
-          break;
-        case 'topic':
-          data.map(topic => {
-            Meteor.call(
-              'singletopic.insert',
-              topic._id,
-              topic.unitId,
-              topic.name,
-              topic.unit,
-              err => {
-                err
-                  ? Materialize.toast(err.reason, 4000, 'error-toast')
-                  : Materialize.toast(`Successfully synced topics`, 4000, 'success-toast');
-              },
-            );
-          });
-          break;
-        default:
-          break;
-      }
-    });
+  _syncContents = () => {
+    const { coursesData, unitsData, topicsData } = this.state;
+    // start by inserting courses
+    console.log(coursesData);
   };
-  componentDidMount() {
-    Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
-      err
-        ? this.setState({ error: err.reason })
-        : (Session.set('data', res.data.data),
-          this.setState({ token: res.data.data.authToken, userId: res.data.data.userId }));
-    });
-    // axios.get('/api/course',   {
-    //   headers: {
-    //     'X-Auth-Token': this.state.token,
-    //     'X-User-Id': this.state.userId,
-    //   },
-    // },)
 
-    setTimeout(() => this.getCounts(), 500); // get counts after 500ms
-    // this.getCounts();
-    this.getRemoteColls();
-    // Meteor.call('exportDbChunks');
+  async componentDidMount() {
+    Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
+      err ? this.setState({ error: err.reason }) : Session.set('data', res.data.data);
+    });
+    await wait(2000);
+    await this.getRemoteColls();
   }
-  // check server collections and their counts
-  getCounts = () => {
-    const data = Session.get('data');
-    if (data) {
-      const { authToken, userId } = data;
-      Meteor.call('getAllCollections', authToken, userId);
-    }
-  };
 
   getRemoteColls = async () => {
-    const data = await Session.get('data');
+    const data = Session.get('data');
     let authToken, userId;
     if (data) {
       authToken = data.authToken;
       userId = data.userId;
     }
-    const coursesPromise = axios('http://13.232.61.192/api/course/');
-    const unitsPromise = axios('http://13.232.61.192/api/unit', {
-      headers: {
-        'X-Auth-Token': authToken,
-        'X-User-Id': userId,
-      },
-    });
-    const topicsPromise = axios('http://13.232.61.192/api/topic', {
-      headers: {
-        'X-Auth-Token': authToken,
-        'X-User-Id': userId,
-      },
-    });
+    try {
+      const coursesPromise = axios('http://13.232.61.192/api/course/');
+      const unitsPromise = axios('http://13.232.61.192/api/unit', {
+        headers: {
+          'X-Auth-Token': authToken,
+          'X-User-Id': userId,
+        },
+      });
+      const topicsPromise = axios('http://13.232.61.192/api/topic', {
+        headers: {
+          'X-Auth-Token': authToken,
+          'X-User-Id': userId,
+        },
+      });
 
-    const [courses, units, topics] = await Promise.all([
-      coursesPromise,
-      unitsPromise,
-      topicsPromise,
-    ]);
-    this.setState({
-      coursesData: courses.data.data,
-      topicsData: topics.data.data,
-      unitsData: units.data.data,
-    });
+      const [courses, units, topics] = await Promise.all([
+        coursesPromise,
+        unitsPromise,
+        topicsPromise,
+      ]);
+      this.setState({
+        coursesData: courses.data.data,
+        topicsData: topics.data.data,
+        unitsData: units.data.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  renderSyncData() {
-    const { data } = this.props;
-    if (!data) {
-      return 'null';
-    }
-
-    return data.map(coll => (
-      <li className="collection-item" key={coll._id}>
-        <div>
-          {coll.type}
-          <a href="#!" className="secondary-content">
-            <span className="blue-text">{coll.count}</span>
-          </a>
-        </div>
-      </li>
-    ));
-  }
-
   render() {
-    console.log(Meteor.call('courses.count'));
+    const { unitsData, coursesData, topicsData } = this.state;
     return (
       <>
         <div className="col m9 s11">
-          <div className="col m5">
-            <DataList count={this.props} title={'Local Collections'} />
-          </div>
-          <div className="col m4">
-            <ul className="collection with-header">
-              <li className="collection-header">
-                <h5> Server Collections</h5>
-              </li>
-              {this.renderSyncData()}
-            </ul>
-          </div>
-          <div className="col m11">
-            <button className="btn" onClick={this.syncContents}>
-              Sync
-            </button>
-          </div>
+          <table className="striped">
+            <thead>
+              <tr>
+                <th>Collections</th>
+                <th>Local Count</th>
+                <th>Server Count</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Courses</td>
+                <td>{this.props.courses}</td>
+                <td>{coursesData.length}</td>
+              </tr>
+              <tr>
+                <td>Units</td>
+                <td>{this.props.units}</td>
+                <td>{unitsData.length}</td>
+              </tr>
+              <tr>
+                <td>Topics</td>
+                <td>{this.props.topics}</td>
+                <td>{topicsData.length}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button className="btn " onClick={this._syncContents}>
+            Sync
+          </button>
         </div>
       </>
     );
