@@ -1,12 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
-import { Session } from 'meteor/session';
 import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import Header from './layouts/Header.jsx';
 import { _Courses } from '../../api/courses/courses';
 import { _Units } from '../../api/units/units';
-import Unit from './content/Unit.jsx';
 import Courses from './content/Courses.jsx';
 import { FloatingButton } from './Utilities/Utilities.jsx';
 import ImgSlider from '../components/layouts/ImageSlider';
@@ -37,6 +34,19 @@ export class Home extends Component {
 
   render() {
     const { courseReady } = this.props;
+    const headers = ['course', 'topics', 'numver'];
+    const rowData = [
+      {
+        name: 'course',
+        course: 'topics',
+        index: 2,
+      },
+      {
+        name: 'course',
+        course: 'topics',
+        index: 1,
+      },
+    ];
     return (
       <ErrorBoundary>
         <Fragment>

@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
-import { PropTypes } from 'prop-types';
 import axios from 'axios';
 import { Resources, References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
-import { syncData } from '../../../api/sync/syncData';
-import DataList from './DataList';
 
 let wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
 
@@ -19,11 +16,50 @@ export class SyncUpdates extends Component {
     unitsData: [],
     topicsData: [],
   };
-  // Try and Sync  courseAdd(id, course, courseCode, details)
+
   _syncContents = () => {
-    const { coursesData, unitsData, topicsData } = this.state;
-    // start by inserting courses
-    console.log(coursesData);
+    const { coursesData, unitsData, topicsData, searchData } = this.state;
+    // sync courses
+    coursesData.map(course => {
+      Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
+        err
+          ? Materialize.toast(err.reason, 3000, 'error-toast')
+          : Materialize.toast(`Successfully synced ${coursesData.length} `, 3000, 'success-toast');
+      });
+    });
+    // sync units
+    unitsData.map(unit => {
+      Meteor.call(
+        'unit.insert',
+        unit._id,
+        unit.name,
+        unit.topics,
+        unit.unitDesc,
+        unit.details,
+        err => {
+          err
+            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            : Materialize.toast(`Successfully synced ${unitsData.length} `, 3000, 'success-toast');
+        },
+      );
+    });
+
+    // sync topics
+    topicsData.map(topic => {
+      Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
+        err
+          ? Materialize.toast(err.reason, 3000, 'error-toast')
+          : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
+      });
+    });
+    // insert search Data
+    searchData.map(search => {
+      Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
+        err
+          ? Materialize.toast(err.reason, 3000, 'error-toast')
+          : Materialize.toast(`Successfully added ${search} `, 3000, 'success-toast');
+      });
+    });
   };
 
   async componentDidMount() {
@@ -55,16 +91,24 @@ export class SyncUpdates extends Component {
           'X-User-Id': userId,
         },
       });
+      const searchPromise = axios('http://13.232.61.192/api/search', {
+        headers: {
+          'X-Auth-Token': authToken,
+          'X-User-Id': userId,
+        },
+      });
 
-      const [courses, units, topics] = await Promise.all([
+      const [courses, units, topics, search] = await Promise.all([
         coursesPromise,
         unitsPromise,
         topicsPromise,
+        searchPromise,
       ]);
       this.setState({
         coursesData: courses.data.data,
         topicsData: topics.data.data,
         unitsData: units.data.data,
+        searchData: search.data.data,
       });
     } catch (error) {
       console.log(error);
@@ -76,7 +120,7 @@ export class SyncUpdates extends Component {
     return (
       <>
         <div className="col m9 s11">
-          <table className="striped">
+          <table className="highlight">
             <thead>
               <tr>
                 <th>Collections</th>
@@ -125,6 +169,5 @@ export default withTracker(() => {
     courses: _Courses.find().count(),
     units: _Units.find().count(),
     topics: _Topics.find().count(),
-    data: syncData.find().fetch(),
   };
 })(SyncUpdates);
