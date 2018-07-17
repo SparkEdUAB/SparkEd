@@ -17,6 +17,7 @@ export class SyncUpdates extends Component {
     unitsData: [],
     topicsData: [],
     error: '',
+    loading: true,
   };
 
   _syncContents = async () => {
@@ -26,7 +27,8 @@ export class SyncUpdates extends Component {
     coursesData.map(course => {
       Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
         err
-          ? Materialize.toast(err.reason, 3000, 'error-toast')
+          ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
           : Materialize.toast(`Successfully synced ${coursesData.length} `, 3000, 'success-toast');
       });
     });
@@ -45,7 +47,8 @@ export class SyncUpdates extends Component {
         unit.details,
         err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
             : Materialize.toast(`Successfully synced ${unitsData.length} `, 3000, 'success-toast');
         },
       );
@@ -56,7 +59,8 @@ export class SyncUpdates extends Component {
     topicsData.map(topic => {
       Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
         err
-          ? Materialize.toast(err.reason, 3000, 'error-toast')
+          ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
           : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
       });
     });
@@ -67,7 +71,11 @@ export class SyncUpdates extends Component {
       Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
         err
           ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-            Meteor.call('logger', formatText(err.reason, Meteor.userId()), 'error'))
+            Meteor.call(
+              'logger',
+              formatText(err.message, Meteor.userId(), console.log(err)),
+              'error',
+            ))
           : Materialize.toast(`Successfully added ${search} `, 3000, 'success-toast');
       });
     });
@@ -84,7 +92,7 @@ export class SyncUpdates extends Component {
     Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
       err
         ? (this.setState({ error: err.reason }),
-          Meteor.call('logger', formatText(err.reason, Meteor.userId()), 'error'))
+          Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
         : Session.set('data', res.data.data);
     });
     await wait(2000);
@@ -130,6 +138,7 @@ export class SyncUpdates extends Component {
         topicsData: topics.data.data,
         unitsData: units.data.data,
         searchData: search.data.data,
+        loading: false,
       });
     } catch (error) {
       this.setState({
@@ -140,7 +149,7 @@ export class SyncUpdates extends Component {
   };
 
   render() {
-    const { unitsData, coursesData, topicsData, error } = this.state;
+    const { unitsData, coursesData, topicsData, error, loading } = this.state;
     return (
       <>
         <div className="col m9 s11">
@@ -171,12 +180,20 @@ export class SyncUpdates extends Component {
               </tr>
             </tbody>
           </table>
-          {!error.length ? (
+
+          {error.length > 0 ? (
+            <p className="red-text">{`${error} Please check your internet connection`}</p>
+          ) : loading ? (
+            <>
+              <p>Checking for Remote Data ....</p>
+              <div className="progress">
+                <div className="indeterminate" />
+              </div>
+            </>
+          ) : (
             <button className="btn " onClick={this._syncContents}>
               Sync
             </button>
-          ) : (
-            <p className="red-text">{`${error} Please check your internet connection`}</p>
           )}
         </div>
       </>
