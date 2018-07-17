@@ -18,22 +18,33 @@ export class SyncUpdates extends Component {
     topicsData: [],
     error: '',
     loading: true,
+    status: 'Checking remote data to Sync ...',
+    synced: false,
   };
 
   _syncContents = async () => {
-    const { coursesData, unitsData, topicsData, searchData } = await this.state;
+    const { coursesData, unitsData, topicsData, searchData, synced } = await this.state;
+
+    if (synced) {
+      Materialize.toast('You have synced already', 2000, 'success toast');
+      return;
+    }
+
     // sync courses
+    await this.setState({
+      loading: true,
+      status: 'Fetching and Syncing data ...',
+    });
 
     coursesData.map(course => {
       Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
         err
           ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-            Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
+            Meteor.call('logger', formatText(err.message, Meteor.userId(), 'course'), 'error'))
           : Materialize.toast(`Successfully synced ${coursesData.length} `, 3000, 'success-toast');
       });
     });
 
-    // Time ==> Type ==>  ==> Route ==> Info
     await wait(2000);
     // sync units
 
@@ -48,7 +59,7 @@ export class SyncUpdates extends Component {
         err => {
           err
             ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
+              Meteor.call('logger', formatText(err.message, Meteor.userId(), 'units'), 'error'))
             : Materialize.toast(`Successfully synced ${unitsData.length} `, 3000, 'success-toast');
         },
       );
@@ -60,7 +71,7 @@ export class SyncUpdates extends Component {
       Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
         err
           ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-            Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
+            Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topics'), 'error'))
           : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
       });
     });
@@ -70,20 +81,24 @@ export class SyncUpdates extends Component {
     searchData.map(search => {
       Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
         err
-          ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-            Meteor.call(
+          ? Meteor.call(
               'logger',
-              formatText(err.message, Meteor.userId(), console.log(err)),
+              formatText(err.message, Meteor.userId(), console.log(err), 'search'),
               'error',
-            ))
-          : Materialize.toast(`Successfully added ${search} `, 3000, 'success-toast');
+            )
+          : '';
       });
     });
     // await wait(2000);
     // write to the file that the sync was successful
+    await this.setState({
+      loading: false,
+      synced: true,
+    });
+
     await Meteor.call(
       'logger',
-      formatText('Data was successfully synced', Meteor.userId()),
+      formatText('Data was successfully synced', Meteor.userId(), 'sync'),
       'info',
     );
   };
@@ -149,7 +164,8 @@ export class SyncUpdates extends Component {
   };
 
   render() {
-    const { unitsData, coursesData, topicsData, error, loading } = this.state;
+    const { unitsData, coursesData, topicsData, error, loading, status } = this.state;
+    const { courses, units, topics } = this.props;
     return (
       <>
         <div className="col m9 s11">
@@ -165,17 +181,17 @@ export class SyncUpdates extends Component {
             <tbody>
               <tr>
                 <td>Courses</td>
-                <td>{this.props.courses}</td>
+                <td>{courses}</td>
                 <td>{coursesData.length}</td>
               </tr>
               <tr>
                 <td>Units</td>
-                <td>{this.props.units}</td>
+                <td>{units}</td>
                 <td>{unitsData.length}</td>
               </tr>
               <tr>
                 <td>Topics</td>
-                <td>{this.props.topics}</td>
+                <td>{topics}</td>
                 <td>{topicsData.length}</td>
               </tr>
             </tbody>
@@ -185,7 +201,7 @@ export class SyncUpdates extends Component {
             <p className="red-text">{`${error} Please check your internet connection`}</p>
           ) : loading ? (
             <>
-              <p>Checking for Remote Data ....</p>
+              <p>{status}</p>
               <div className="progress">
                 <div className="indeterminate" />
               </div>
