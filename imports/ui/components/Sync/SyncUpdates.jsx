@@ -7,7 +7,7 @@ import { Resources, References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
-// import logger from '../../../api/logs/logger';
+import { formatText } from '../../utils/utils';
 
 let wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
 
@@ -19,8 +19,8 @@ export class SyncUpdates extends Component {
     error: '',
   };
 
-  _syncContents = () => {
-    const { coursesData, unitsData, topicsData, searchData } = this.state;
+  _syncContents = async () => {
+    const { coursesData, unitsData, topicsData, searchData } = await this.state;
     // sync courses
 
     coursesData.map(course => {
@@ -32,9 +32,7 @@ export class SyncUpdates extends Component {
     });
 
     // Time ==> Type ==>  ==> Route ==> Info
-
-    Meteor.call('logger', formatText('Data was successfully synced', Meteor.userId()), 'info');
-
+    await wait(2000);
     // sync units
 
     unitsData.map(unit => {
@@ -52,6 +50,7 @@ export class SyncUpdates extends Component {
         },
       );
     });
+    await wait(2000);
     // sync topics
 
     topicsData.map(topic => {
@@ -62,19 +61,31 @@ export class SyncUpdates extends Component {
       });
     });
     // insert search Data
+    await wait(2000);
 
     searchData.map(search => {
       Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
         err
-          ? Materialize.toast(err.reason, 3000, 'error-toast')
+          ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            Meteor.call('logger', formatText(err.reason, Meteor.userId()), 'error'))
           : Materialize.toast(`Successfully added ${search} `, 3000, 'success-toast');
       });
     });
+    // await wait(2000);
+    // write to the file that the sync was successful
+    await Meteor.call(
+      'logger',
+      formatText('Data was successfully synced', Meteor.userId()),
+      'info',
+    );
   };
 
   async componentDidMount() {
     Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
-      err ? this.setState({ error: err.reason }) : Session.set('data', res.data.data);
+      err
+        ? (this.setState({ error: err.reason }),
+          Meteor.call('logger', formatText(err.reason, Meteor.userId()), 'error'))
+        : Session.set('data', res.data.data);
     });
     await wait(2000);
     await this.getRemoteColls();
@@ -188,16 +199,3 @@ export default withTracker(() => {
     topics: _Topics.find().count(),
   };
 })(SyncUpdates);
-
-/**
- * @description Properly arranges the text to be written to a log file
- * @param {String} info
- * @param {String} id
- * @returns {String} text
- */
-export const formatText = (info, id) => {
-  const currentTime = moment().format();
-  const textContent = `Time: ${currentTime},  Info: ${info},  Page: ${FlowRouter.getRouteName()},  UserId: ${id}\n`;
-
-  return textContent;
-};

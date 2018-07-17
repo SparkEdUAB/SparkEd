@@ -1,15 +1,7 @@
-import {
-  Meteor
-} from 'meteor/meteor';
-import {
-  HTTP
-} from 'meteor/http';
-import {
-  check
-} from 'meteor/check';
-import {
-  syncData
-} from './syncData';
+import { Meteor } from 'meteor/meteor';
+import { HTTP } from 'meteor/http';
+import { check } from 'meteor/check';
+import { syncData } from './syncData';
 import child_process from 'child_process';
 // check internet connection
 
@@ -39,49 +31,14 @@ Meteor.methods({
       },
     });
   },
-  // Insert Courses
-  insertremoteCourse: (token, userId) => {
-    check(token, String);
-    check(userId, String);
-    let count = 0;
-    HTTP.get(
-      `${baseUrl}/api/course/`, {
-        headers: {
-          'X-Auth-Token': token,
-          'X-User-Id': userId,
-        },
-      },
-      (err, response) => {
-        if (err) {
-          console.log(err.reason);
-        }
-        const {
-          data: {
-            data
-          },
-        } = response;
-        data.forEach((course, index) => {
-          count = index;
-          return Meteor.call(
-            'course.add',
-            course._id,
-            course.name,
-            course.code,
-            course.details,
-            course.createdAt,
-            course.createdBy,
-          );
-        });
-        console.log(count);
-      },
-    );
-  },
+
   getAllCollections: (token, userId) => {
     check(token, String);
     check(userId, String);
     collections.map(coll => {
       return HTTP.get(
-        `${baseUrl}/api/${coll}/`, {
+        `${baseUrl}/api/${coll}/`,
+        {
           headers: {
             'X-Auth-Token': token,
             'X-User-Id': userId,
@@ -93,19 +50,20 @@ Meteor.methods({
           }
           if (response && response.data) {
             const {
-              data: {
-                data
-              },
+              data: { data },
             } = response;
-            syncData.update({
-                type: coll
-              }, {
+            syncData.update(
+              {
+                type: coll,
+              },
+              {
                 $set: {
                   data,
-                  count: data.length
-                }
-              }, {
-                upsert: true
+                  count: data.length,
+                },
+              },
+              {
+                upsert: true,
               },
               (err, res) => {
                 if (err) {
@@ -128,5 +86,4 @@ Meteor.methods({
       console.log(stdout);
     });
   },
-
 });
