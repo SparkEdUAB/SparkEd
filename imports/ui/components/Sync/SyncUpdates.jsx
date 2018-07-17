@@ -7,6 +7,7 @@ import { Resources, References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
+// import logger from '../../../api/logs/logger';
 
 let wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
 
@@ -20,6 +21,9 @@ export class SyncUpdates extends Component {
   _syncContents = () => {
     const { coursesData, unitsData, topicsData, searchData } = this.state;
     // sync courses
+
+    /*
+
     coursesData.map(course => {
       Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
         err
@@ -27,7 +31,15 @@ export class SyncUpdates extends Component {
           : Materialize.toast(`Successfully synced ${coursesData.length} `, 3000, 'success-toast');
       });
     });
+
+    */
+    // log to the server from here
+    // logger.info('Hello again distributed logs');
+    Meteor.call('logger', 'The button was clicked \n');
+
     // sync units
+
+    /*
     unitsData.map(unit => {
       Meteor.call(
         'unit.insert',
@@ -43,8 +55,10 @@ export class SyncUpdates extends Component {
         },
       );
     });
-
+*/
     // sync topics
+
+    /*
     topicsData.map(topic => {
       Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
         err
@@ -52,7 +66,10 @@ export class SyncUpdates extends Component {
           : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
       });
     });
+    */
     // insert search Data
+    /* 
+
     searchData.map(search => {
       Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
         err
@@ -60,6 +77,8 @@ export class SyncUpdates extends Component {
           : Materialize.toast(`Successfully added ${search} `, 3000, 'success-toast');
       });
     });
+
+    */
   };
 
   async componentDidMount() {
