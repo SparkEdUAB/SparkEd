@@ -16,13 +16,12 @@ export class SyncUpdates extends Component {
     coursesData: [],
     unitsData: [],
     topicsData: [],
+    error: '',
   };
 
   _syncContents = () => {
     const { coursesData, unitsData, topicsData, searchData } = this.state;
     // sync courses
-
-    /*
 
     coursesData.map(course => {
       Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
@@ -32,14 +31,12 @@ export class SyncUpdates extends Component {
       });
     });
 
-    */
-    // log to the server from here
-    // logger.info('Hello again distributed logs');
-    Meteor.call('logger', 'The button was clicked \n');
+    // Time ==> Type ==>  ==> Route ==> Info
+
+    Meteor.call('logger', formatText('Data was successfully synced', Meteor.userId()), 'info');
 
     // sync units
 
-    /*
     unitsData.map(unit => {
       Meteor.call(
         'unit.insert',
@@ -55,10 +52,8 @@ export class SyncUpdates extends Component {
         },
       );
     });
-*/
     // sync topics
 
-    /*
     topicsData.map(topic => {
       Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
         err
@@ -66,9 +61,7 @@ export class SyncUpdates extends Component {
           : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
       });
     });
-    */
     // insert search Data
-    /* 
 
     searchData.map(search => {
       Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
@@ -77,8 +70,6 @@ export class SyncUpdates extends Component {
           : Materialize.toast(`Successfully added ${search} `, 3000, 'success-toast');
       });
     });
-
-    */
   };
 
   async componentDidMount() {
@@ -130,12 +121,15 @@ export class SyncUpdates extends Component {
         searchData: search.data.data,
       });
     } catch (error) {
-      console.log(error);
+      this.setState({
+        error: error.message,
+      });
+      Meteor.call('logger', formatText(error.message, Meteor.userId()), 'error');
     }
   };
 
   render() {
-    const { unitsData, coursesData, topicsData } = this.state;
+    const { unitsData, coursesData, topicsData, error } = this.state;
     return (
       <>
         <div className="col m9 s11">
@@ -166,9 +160,13 @@ export class SyncUpdates extends Component {
               </tr>
             </tbody>
           </table>
-          <button className="btn " onClick={this._syncContents}>
-            Sync
-          </button>
+          {!error.length ? (
+            <button className="btn " onClick={this._syncContents}>
+              Sync
+            </button>
+          ) : (
+            <p className="red-text">{`${error} Please check your internet connection`}</p>
+          )}
         </div>
       </>
     );
@@ -190,3 +188,16 @@ export default withTracker(() => {
     topics: _Topics.find().count(),
   };
 })(SyncUpdates);
+
+/**
+ * @description Properly arranges the text to be written to a log file
+ * @param {String} info
+ * @param {String} id
+ * @returns {String} text
+ */
+export const formatText = (info, id) => {
+  const currentTime = moment().format();
+  const textContent = `Time: ${currentTime},  Info: ${info},  Page: ${FlowRouter.getRouteName()},  UserId: ${id}\n`;
+
+  return textContent;
+};
