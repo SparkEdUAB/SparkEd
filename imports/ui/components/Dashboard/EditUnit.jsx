@@ -1,27 +1,21 @@
-import React, {Component} from 'react';
-import {PropTypes} from 'prop-types';
-import {Session} from 'meteor/session';
-import {Meteor} from 'meteor/meteor';
-import ReactPaginate from 'react-paginate';
-import {_Units} from '../../../api/units/units';
-import {_Topics} from '../../../api/topics/topics';
-import {_SearchData} from '../../../api/search/search';
-import {_Deleted} from '../../../api/Deleted/deleted';
-import {withTracker} from 'meteor/react-meteor-data';
-import Header from '../layouts/Header.jsx';
-import Sidenav from './Sidenav.jsx';
-import {handleCheckboxChange, handleCheckAll, getCheckBoxValues} from '../Utilities/CheckBoxHandler.jsx';
+import React, { Component } from 'react';
+import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
+import { _Units } from '../../../api/units/units';
+import { _Topics } from '../../../api/topics/topics';
+import { withTracker } from 'meteor/react-meteor-data';
+import {
+  handleCheckboxChange,
+  handleCheckAll,
+  getCheckBoxValues,
+} from '../Utilities/CheckBoxHandler.jsx';
 import MainModal from '../../../ui/modals/MainModal';
-import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
-import ErrorBoundary from '../ErrorBoundary'; 
-
+import { formatText } from '../../utils/utils';
 
 export class EditUnits extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this
-      .handleSubmit
-      .bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       isOpen: false,
       modalIdentifier: '', // Topic Id
@@ -30,7 +24,7 @@ export class EditUnits extends Component {
       name: '',
       confirm: '',
       reject: '',
-      ids: []
+      ids: [],
     };
     Session.set('limit', 10);
     Session.set('skip', 0);
@@ -39,12 +33,13 @@ export class EditUnits extends Component {
   // close the modal, this was separate to ease the reusability of the modal
   closeModal = () => {
     this.setState({
-      isOpen: false, modalIdentifier: '', // Topic Id
+      isOpen: false,
+      modalIdentifier: '', // Topic Id
       modalType: '', // Add or Edit
       title: '', // Add Topic or Edit Topic
       name: '',
       confirm: '',
-      reject: ''
+      reject: '',
     });
   };
 
@@ -64,20 +59,24 @@ export class EditUnits extends Component {
           title: 'Edit The Topic',
           name: this.name,
           confirm: 'Save',
-          reject: 'Close'
+          reject: 'Close',
         });
         break;
 
       case 'add':
-        this.setState({modalIdentifier: id, modalType: ide, title: 'Add New Topic', confirm: 'Save', reject: 'Close'});
+        this.setState({
+          modalIdentifier: id,
+          modalType: ide,
+          title: 'Add New Topic',
+          confirm: 'Save',
+          reject: 'Close',
+        });
         break;
 
       case 'del':
         const topics = getCheckBoxValues('chk');
         const count = topics.length;
-        const name = count > 1
-          ? 'topics'
-          : 'topic';
+        const name = count > 1 ? 'topics' : 'topic';
         if (count < 1) {
           Materialize.toast('Please check at least one topic', 4000);
           return;
@@ -88,14 +87,14 @@ export class EditUnits extends Component {
           title: `Are you sure to delete ${count} ${name}`,
           confirm: 'Yes',
           reject: 'No',
-          ids: topics
+          ids: topics,
         });
 
         break;
     }
     // close the modal;
     this.setState(prevState => ({
-      isOpen: !prevState.isOpen
+      isOpen: !prevState.isOpen,
     }));
   };
 
@@ -114,27 +113,21 @@ export class EditUnits extends Component {
     return topics.map(topic => (
       <tr key={topic._id} className="link-section">
         <td>{count++}</td>
-        <td onClick={this
-          .handleUrl
-          .bind(this, topic._id)}>{topic.name}</td>
-        <td>{topic
-            .createdAt
-            .toDateString()}</td>
+        <td onClick={this.handleUrl.bind(this, topic._id)}>{topic.name}</td>
+        <td>{topic.createdAt.toDateString()}</td>
         <td>
           <a
             href=""
             onClick={e => this.toggleEditModal('edit', topic._id, topic.name, e)}
-            className="fa fa-pencil"/>
+            className="fa fa-pencil"
+          />
         </td>
         <td>
-          <a className="fa fa-pencil" href={`/dashboard/edit_resources/${topic._id}`}/>
+          <a className="fa fa-pencil" href={`/dashboard/edit_resources/${topic._id}`} />
         </td>
         <td onClick={handleCheckboxChange.bind(this, topic._id)}>
-          <input
-            type="checkbox"
-            className={' filled-in chk chk' + topic._id}
-            id={topic._id}/>
-          <label/>
+          <input type="checkbox" className={' filled-in chk chk' + topic._id} id={topic._id} />
+          <label />
         </td>
       </tr>
     ));
@@ -142,21 +135,18 @@ export class EditUnits extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const {modalIdentifier, modalType, ids} = this.state;
+    const { modalIdentifier, modalType, ids } = this.state;
     const unitId = FlowRouter.getParam('_id');
-    const _id = new Meteor
-      .Collection
-      .ObjectID()
-      .valueOf();
-    const {unit: {
-        name
-      }} = this.props;
+    const _id = new Meteor.Collection.ObjectID().valueOf();
+    const {
+      unit: { name },
+    } = this.props;
     let newTopic;
     const topics = [
       {
         name: newTopic,
-        _id: modalIdentifier
-      }
+        _id: modalIdentifier,
+      },
     ];
     //insert search index
 
@@ -166,14 +156,22 @@ export class EditUnits extends Component {
         newTopic = event.target.topic.value;
         Meteor.call('singletopic.insert', _id, unitId, newTopic, name, err => {
           err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
-            : Meteor.call('insert.search', _id, {
-              unitId
-            }, newTopic, 'topic', err => {
-              err
-                ? Materialize.toast(err.reason, 4000, 'error-toast')
-                : Materialize.toast(`Successfully added ${newTopic}`, 4000, 'success-toast');
-            });
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topic-add'), 'error'))
+            : Meteor.call(
+                'insert.search',
+                _id,
+                {
+                  unitId,
+                },
+                newTopic,
+                'topic',
+                err => {
+                  err
+                    ? Materialize.toast(err.reason, 4000, 'error-toast')
+                    : Materialize.toast(`Successfully added ${newTopic}`, 4000, 'success-toast');
+                },
+              );
         });
 
         // Meteor.call('generateSyncTopics', topics);
@@ -183,15 +181,20 @@ export class EditUnits extends Component {
         // update the topic
         Meteor.call('topic.update', modalIdentifier, newTopic, err => {
           err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'topic-edit'),
+                'error',
+              ))
             : Meteor.call('updateSearch', modalIdentifier, newTopic, err => {
-              err
-                ? Materialize.toast(err.reason, 4000, 'error-toast')
-                : Materialize.toast(`Successfully updated ${newTopic}`, 4000, 'success-toast');
-            });
+                err
+                  ? Materialize.toast(err.reason, 4000, 'error-toast')
+                  : Materialize.toast(`Successfully updated ${newTopic}`, 4000, 'success-toast');
+              });
         });
         break;
-        // delete topic
+      // delete topic
       case 'del':
         let count = 0;
         const topics = ids;
@@ -199,16 +202,26 @@ export class EditUnits extends Component {
           count += 1;
           Meteor.call('topic.remove', v, err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'topic-remove'),
+                'error',
+              ))
+
               : Meteor.call('removeSearchData', v, err => {
-                err
-                  ? Materialize.toast(err.reason, 4000, 'error-toast')
-                  : Meteor.call('removeSearchData', v, err => {
-                    err
-                      ? Materialize.toast(err.reason, 4000, 'error-toast')
-                      : Materialize.toast(`${count} topics successfully deleted`, 4000, 'success-toast',);
-                  });
-              });
+                  err
+                    ? Materialize.toast(err.reason, 4000, 'error-toast')
+                    : Meteor.call('removeSearchData', v, err => {
+                        err
+                          ? Materialize.toast(err.reason, 4000, 'error-toast')
+                          : Materialize.toast(
+                              `${count} topics successfully deleted`,
+                              4000,
+                              'success-toast',
+                            );
+                      });
+                });
           });
         });
 
@@ -221,7 +234,7 @@ export class EditUnits extends Component {
   backToUnits = (programId, courseId) => {
     // event.preventDefault();
     FlowRouter.go(`/dashboard/units/${programId}?cs=${courseId}`);
-  }
+  };
 
   render() {
     let { unit } = this.props;
@@ -242,33 +255,33 @@ export class EditUnits extends Component {
           subFunc={this.handleSubmit}
           title={this.state.title}
           confirm={this.state.confirm}
-          reject={this.state.reject}>
-          {this.state.modalType === 'del'
-            ? ('')
-            : (
-              <div className="input-field">
-                <input
-                  placeholder="Name of Topic"
-                  type="text"
-                  defaultValue={this.state.name}
-                  className="validate clear"
-                  required
-                  name="topic"/>
-              </div>
-            )}
+          reject={this.state.reject}
+        >
+          {this.state.modalType === 'del' ? (
+            ''
+          ) : (
+            <div className="input-field">
+              <input
+                placeholder="Name of Topic"
+                type="text"
+                defaultValue={this.state.name}
+                className="validate clear"
+                required
+                name="topic"
+              />
+            </div>
+          )}
         </MainModal>
         <div className="col m9 s11">
           <div className="">
-            <h4>
-              {unit.name}
-            </h4>
+            <h4>{unit.name}</h4>
           </div>
           <div className="row ">
             <div className="col m3 ">
               <button
                 className="btn grey darken-3 fa fa-angle-left"
-                onClick={(e) => this.backToUnits(programId, courseId, e)}
-                >
+                onClick={e => this.backToUnits(programId, courseId, e)}
+              >
                 <a href={''} className="white-text">
                   {` ${Session.get('unit_title') || 'Back'}`}
                 </a>
@@ -277,7 +290,8 @@ export class EditUnits extends Component {
             <div className="col m3 ">
               <button
                 className="btn red darken-3 fa fa-remove "
-                onClick={e => this.toggleEditModal('del', e)}>
+                onClick={e => this.toggleEditModal('del', e)}
+              >
                 {' '}
                 Delete
               </button>
@@ -286,7 +300,8 @@ export class EditUnits extends Component {
               <a href="">
                 <button
                   className="btn green darken-4 fa fa-plus "
-                  onClick={e => this.toggleEditModal('add', e)}>
+                  onClick={e => this.toggleEditModal('add', e)}
+                >
                   {' '}
                   Add
                 </button>
@@ -303,7 +318,7 @@ export class EditUnits extends Component {
                 <th>Edit Topics</th>
                 <th>Resources</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly/>
+                  <input type="checkbox" className="filled-in chk-all" readOnly />
                   <label>Check All</label>
                 </th>
               </tr>
@@ -325,14 +340,18 @@ export default withTracker(() => {
   Meteor.subscribe('units');
   Meteor.subscribe('topics');
   return {
-    topics: _Topics.find({
-      unitId: getUnitId(),
-      createdBy: Meteor.userId()
-    }).fetch(),
-    unit: _Units.findOne({_id: getUnitId()}),
-    count: _Topics.find({
-      unitId: getUnitId(),
-      createdBy: Meteor.userId()
-    }).count()
+    topics: _Topics
+      .find({
+        unitId: getUnitId(),
+        createdBy: Meteor.userId(),
+      })
+      .fetch(),
+    unit: _Units.findOne({ _id: getUnitId() }),
+    count: _Topics
+      .find({
+        unitId: getUnitId(),
+        createdBy: Meteor.userId(),
+      })
+      .count(),
   };
 })(EditUnits);

@@ -12,7 +12,8 @@ import {
 } from '../Utilities/CheckBoxHandler.jsx';
 import UploadWrapper from '../../../ui/modals/UploadWrapper.jsx';
 import MainModal from '../../../ui/modals/MainModal';
-import { closeModal, schoolStates } from '../../../ui/modals/methods.js';
+import { closeModal } from '../../../ui/modals/methods.js';
+import { formatText } from '../../utils/utils';
 
 export class Additional extends Component {
   constructor(props) {
@@ -109,7 +110,12 @@ export class Additional extends Component {
         const reference = e.target.res.value;
         Meteor.call('updateReference', modalIdentifier, reference, err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'reference-edit'),
+                'error',
+              ))
             : Meteor.call('updateSearch', modalIdentifier, reference, err => {
                 err
                   ? Materialize.toast(err.reason, 3000, 'error-toast')
@@ -125,7 +131,12 @@ export class Additional extends Component {
           const name = count > 1 ? 'references' : 'reference';
           Meteor.call('removeReference', res, err => {
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.message, Meteor.userId(), 'reference-remove'),
+                  'error',
+                ))
               : Meteor.call('removeSearchData', res, err => {
                   err
                     ? Materialize.toast(err.reason, 3000, 'error-toast')
