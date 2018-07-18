@@ -13,6 +13,7 @@ import {
 import MainModal from '../../../ui/modals/MainModal.jsx';
 import { closeModal } from '../../../ui/modals/methods.js';
 import * as config from '../../../../config.json';
+import { formatText } from '../../utils/utils';
 
 export class Courses extends Component {
   constructor(props) {
@@ -137,7 +138,12 @@ export class Courses extends Component {
         const courseId = new Meteor.Collection.ObjectID().valueOf();
         Meteor.call('course.add', courseId, course, courseCode, details, (err, res) => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'course-add'),
+                'error',
+              ))
             : Meteor.call('insert.search', courseId, { courseId }, course, reference, err => {
                 err
                   ? Materialize.toast(err.reason, 3000, 'error-toast')
@@ -153,7 +159,12 @@ export class Courses extends Component {
         year = target.year.value;
         Meteor.call('course.edit', modalIdentifier, course, courseCode, year, owner, err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'course-edit'),
+                'error',
+              ))
             : Meteor.call('updateSearch', modalIdentifier, course, err => {
                 err
                   ? Materialize.toast(err.reason, 3000, 'error-toast')
@@ -170,7 +181,12 @@ export class Courses extends Component {
           const name = count > 1 ? 'courses' : 'course';
           Meteor.call('course.remove', v, err => {
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.message, Meteor.userId(), 'course-remove'),
+                  'error',
+                ))
               : Meteor.call('removeSearchData', v),
               err => {
                 err
@@ -195,7 +211,12 @@ export class Courses extends Component {
         // update.title'(id, title, sub)
         Meteor.call('update.title', title_id, table_title, sub_title, err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'update-title'),
+                'error',
+              ))
             : Materialize.toast('Successfully updated the titles', 3000, 'success-toast');
         });
     }
@@ -206,7 +227,6 @@ export class Courses extends Component {
   }
 
   saveTitle = ({ target: { value } }, type) => {
-    console.log(type);
     switch (type) {
       case 'sub':
         this.setState({
@@ -225,7 +245,7 @@ export class Courses extends Component {
   renderCourses() {
     let count = 1;
     const { courses } = this.props;
-    if (courses === undefined) {
+    if (!courses) {
       return '';
     }
     return courses.map(course => (
