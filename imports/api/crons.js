@@ -6,6 +6,5 @@ SyncedCron.add({
     Meteor.call('dropNotifications');
   },
 });
-
 // start the cronjob
 SyncedCron.start();

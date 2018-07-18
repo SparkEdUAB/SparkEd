@@ -10,13 +10,13 @@ import {
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
 import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
-import { initInput, filterUrl, SearchField } from '../Utilities/Utilities.jsx';
-import Sidenav from '../Dashboard/Sidenav.jsx';
+import { initInput, SearchField } from '../Utilities/Utilities.jsx';
 import AccountEditModal from '../Utilities/Modal/EditAccounts.jsx';
 import { UserRoles } from '../Utilities/Modal/UserRoles.jsx';
 import MainModal from '../../modals/MainModal.jsx';
 import { closeModal, accountsModalStates } from '../../modals/methods';
 import * as config from '../../../../config.json';
+import { formatText } from '../../utils/utils';
 
 const { isUserAuth } = config;
 export class ManageAccounts extends React.Component {
@@ -133,7 +133,12 @@ export class ManageAccounts extends React.Component {
           }
           Meteor.call('removeUser', v, err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.reason, Meteor.userId(), 'user-remove'),
+                  'error',
+                ))
               : Materialize.toast(`${count} ${name} successfully deleted`, 4000, 'success-toast');
           });
         });
@@ -161,7 +166,12 @@ export class ManageAccounts extends React.Component {
           }
           Meteor.call('user.suspend', v, err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.reason, Meteor.userId(), 'user-suspend'),
+                  'error',
+                ))
               : Materialize.toast(`${count} ${name} successfully suspended`, 4000, 'success-toast');
           });
         });
@@ -172,7 +182,12 @@ export class ManageAccounts extends React.Component {
 
         Meteor.call('user.update', ids, fname, err => {
           err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
+            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.reason, Meteor.userId(), 'user-update'),
+                'error',
+              ))
             : Materialize.toast(`successfully updated`, 4000, 'success-toast');
         });
         break;
@@ -181,7 +196,12 @@ export class ManageAccounts extends React.Component {
         const roles = target.roles.value;
         Meteor.call('promoteUser', ids[0], roles, err => {
           err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
+            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.reason, Meteor.userId(), 'roles-update'),
+                'error',
+              ))
             : Materialize.toast('Successfully updated user roles', 4000, 'success-toast');
         });
         break;
@@ -192,7 +212,7 @@ export class ManageAccounts extends React.Component {
   render() {
     let count = 1;
     const { users } = this.props;
-    const { email, fname, lname, title, confirm, reject, isOpen, modalType } = this.state;
+    const { email, fname, title, confirm, reject, isOpen, modalType } = this.state;
 
     return (
       <div>
