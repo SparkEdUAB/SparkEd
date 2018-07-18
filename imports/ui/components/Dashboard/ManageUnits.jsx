@@ -1,27 +1,21 @@
 import { Session } from 'meteor/session';
 import React, { Component, Fragment } from 'react';
-import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { Titles } from '../../../api/settings/titles';
-import Header from '../layouts/Header.jsx';
 import {
   handleCheckboxChange,
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
-import Sidenav from './Sidenav.jsx';
-import Pagination, {
-  getPageNumber,
-  validatePageNum,
-  getQuery,
-} from '../Utilities/Pagination/Pagination.jsx';
-import { initInput, SearchView, filterUrl, SearchField } from '../Utilities/Utilities.jsx';
+import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
+import { SearchField } from '../Utilities/Utilities.jsx';
 import Search from '../Utilities/Search/Search.jsx';
 import UploadWrapper from '../../../ui/modals/UploadWrapper.jsx';
 import MainModal from '../../../ui/modals/MainModal';
 import * as config from '../../../../config.json';
+import { formatText } from '../../utils/utils';
 
 // this lists what a specific course contains
 
@@ -194,7 +188,8 @@ export class ManageUnits extends Component {
         const unit = target.unit.value;
         Meteor.call('unit.update', modalIdentifier, unit, description, err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call('logger', formatText(err.message, Meteor.userId(), 'unit-edit'), 'error'))
             : Meteor.call('updateSearch', modalIdentifier, unit, err => {
                 err
                   ? Materialize.toast(err.reason, 3000, 'error-toast')
@@ -210,7 +205,12 @@ export class ManageUnits extends Component {
             count += 1;
             const name = count > 1 ? 'units' : 'unit';
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.message, Meteor.userId(), 'unit-remove'),
+                  'error',
+                ))
               : Meteor.call('removeSearchData', id, err => {
                   err
                     ? Materialize.toast(err.reason, 3000, 'error-toast')

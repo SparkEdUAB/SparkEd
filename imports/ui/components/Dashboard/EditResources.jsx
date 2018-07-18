@@ -4,10 +4,6 @@ import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
 import ReactPaginate from 'react-paginate';
 import { _Topics } from '../../../api/topics/topics';
-import { _SearchData } from '../../../api/search/search';
-import { _Deleted } from '../../../api/Deleted/deleted';
-import Header from '../layouts/Header.jsx';
-import Sidenav from './Sidenav.jsx';
 import {
   handleCheckboxChange,
   handleCheckAll,
@@ -18,6 +14,7 @@ import MainModal from '../../../ui/modals/MainModal.jsx';
 import { Resources } from '../../../api/resources/resources';
 import * as config from '../../../../config.json';
 import { _Units } from '../../../api/units/units';
+import { formatText } from '../../utils/utils';
 
 export class EditResources extends Component {
   constructor(props) {
@@ -127,7 +124,12 @@ export class EditResources extends Component {
         const resourceName = event.target.resource.value;
         Meteor.call('updateResource', modalIdentifier, resourceName, err => {
           err
-            ? Materialize.toast(err.reason, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'resource-update'),
+                'error',
+              ))
             : Meteor.call('updateSearch', modalIdentifier, resourceName, err => {
                 err
                   ? Materialize.toast(err.reason, 'error-toast')
@@ -148,7 +150,12 @@ export class EditResources extends Component {
           const name = count > 1 ? 'resources' : 'resource';
           Meteor.call('removeResource', v, err => {
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.message, Meteor.userId(), 'resource-remove'),
+                  'error',
+                ))
               : Meteor.call('removeSearchData', v, err => {
                   err
                     ? Materialize.toast(err.reason)

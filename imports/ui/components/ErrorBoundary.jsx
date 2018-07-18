@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import Header from '../components/layouts/Header';
+import { Meteor } from 'meteor/meteor';
+import { formatText } from '../utils/utils';
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export default class ErrorBoundary extends Component {
 
   componentDidCatch(error, info) {
     this.setState({ hasError: true, info });
+    Meteor.call('logger', formatText(error, Meteor.userId(), 'error-boundary'), 'error');
   }
   takeBack = e => {
     e.preventDefault();
