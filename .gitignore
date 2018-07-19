@@ -4,7 +4,7 @@ uploads/
 upload/
 public/uploads/
 .idea/
-.vs/
+.vs
 centers.js
 .vscode/
 .DS_Store
