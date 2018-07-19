@@ -4,7 +4,7 @@ const initialState = {
   sidebarColor: 'blue',
 };
 
-export default function resourceReducer(state = initialState, action) {
+export default function colorReducer(state = initialState, action) {
   const {
     mainColor, buttonColors, sidebarColor, type,
   } = action;

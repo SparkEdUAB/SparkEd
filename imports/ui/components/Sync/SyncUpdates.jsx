@@ -211,6 +211,7 @@ export class SyncUpdates extends Component {
               Sync
             </button>
           )}
+          <button className="btn ">Update</button>
         </div>
       </>
     );
