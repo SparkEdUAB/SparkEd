@@ -1,6 +1,7 @@
 /* eslint class-methods-use-this: "off" */
 import React, { Component, Fragment } from 'react';
 import { Session } from 'meteor/session';
+import { TwitterPicker } from 'react-color';
 import UploadWrapper from '../../modals/UploadWrapper';
 import * as config from '../../../../config.json';
 
@@ -94,6 +95,10 @@ export default class SetUp extends Component {
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
+  getColors = color => {
+    Meteor.call('updateColors', color.hex);
+  };
+
   render() {
     const { isOpen, confirm, reject, error, name } = this.state;
     const isSet = config.isConfigured;
@@ -184,6 +189,11 @@ export default class SetUp extends Component {
                   ) : (
                     <span />
                   )}
+                  {error ? <h6 className="red-text ">{error}</h6> : ''}
+                  <h6>Pick Main Color</h6>
+                  <TwitterPicker onChangeComplete={this.getColors} />
+                  <br />
+                  <br />
                   <button
                     className="btn waves-effect waves-light center pulse"
                     role="submit"
@@ -192,9 +202,6 @@ export default class SetUp extends Component {
                   >
                     Save
                   </button>
-                  <br />
-                  <br />
-                  {error ? <h6 className="red-text ">{error}</h6> : ''}
                 </form>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { _Settings } from './institution';
+import { _Settings } from './settings';
 import { _Slides, Slides } from './slides';
 import { Institution } from './institution';
 import { Titles } from './titles';
@@ -83,8 +83,8 @@ Meteor.methods({
   },
   updateColors(main, button, sidebar) {
     check(main, String);
-    check(button, String);
-    check(sidebar, String);
+    check(button, Match.OneOf(String, null, undefined));
+    check(sidebar, Match.OneOf(String, null, undefined));
     _Settings.insert({
       main,
       button,

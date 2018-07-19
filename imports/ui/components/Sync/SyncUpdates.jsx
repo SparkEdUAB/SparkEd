@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 import axios from 'axios';
-import { SwatchesPicker } from 'react-color';
 import { Resources, References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
@@ -164,10 +163,6 @@ export class SyncUpdates extends Component {
     }
   };
 
-  getColors = color => {
-    console.log(color.hex);
-  };
-
   render() {
     const { unitsData, coursesData, topicsData, error, loading, status } = this.state;
     const { courses, units, topics } = this.props;
@@ -216,7 +211,6 @@ export class SyncUpdates extends Component {
               Sync
             </button>
           )}
-          <SwatchesPicker onChangeComplete={this.getColors} />
         </div>
       </>
     );
