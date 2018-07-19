@@ -23,7 +23,6 @@ import Additional from '../imports/ui/components/Dashboard/Additional.jsx';
 import Courses from '../imports/ui/components/Dashboard/Courses.jsx';
 import DisplayResource from '../imports/ui/components/Dashboard/DisplayResource.jsx';
 import Institution from '../imports/ui/components/Dashboard/Settings/Institution.jsx';
-import SyncSettings from '../imports/ui/components/Dashboard/Settings/SyncSettings.jsx';
 import Notifications from '../imports/ui/components/Notifications/Notifications.jsx';
 import ManageSlides from '../imports/ui/components/Dashboard/Settings/ManageSlides.jsx';
 import ReferenceLibrary from '../imports/ui/components/content/ReferenceLibrary.jsx';
@@ -169,13 +168,6 @@ adminRoutes.route('/dashboard/isHighSchool/edit_unit/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
     mount(Sidenav, { yield: <EditResources /> });
-  },
-});
-
-adminRoutes.route('/dashboard/setsync', {
-  name: 'SyncSettings',
-  action() {
-    mount(Sidenav, { yield: <SyncSettings /> });
   },
 });
 
