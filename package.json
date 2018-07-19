@@ -23,6 +23,8 @@
     "react-dom": "^16.3.0",
     "react-mounter": "^1.2.0",
     "react-paginate": "^5.2.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
     "request": "^2.75.0",
     "simpl-schema": "^1.4.2",
     "winston": "^3.0.0"
