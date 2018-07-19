@@ -96,7 +96,7 @@ export default class SetUp extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
   getColors = color => {
-    Meteor.call('updateColors', color.hex);
+    Meteor.call('updateColors', '1', color.hex);
   };
 
   render() {

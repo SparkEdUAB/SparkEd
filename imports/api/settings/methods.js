@@ -81,14 +81,26 @@ Meteor.methods({
       },
     );
   },
-  updateColors(main, button, sidebar) {
+  updateColors(id, main, button, sidebar) {
+    check(id, String);
     check(main, String);
     check(button, Match.OneOf(String, null, undefined));
     check(sidebar, Match.OneOf(String, null, undefined));
-    _Settings.insert({
-      main,
-      button,
-      sidebar,
-    });
+    // _Settings.insert({
+    //   main,
+    //   button,
+    //   sidebar,
+    // });
+    _Settings.update(
+      { _id: id },
+      {
+        $set: {
+          main,
+          button,
+          sidebar,
+        },
+      },
+      { upsert: true },
+    );
   },
 });
