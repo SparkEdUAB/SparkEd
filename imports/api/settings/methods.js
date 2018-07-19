@@ -81,4 +81,14 @@ Meteor.methods({
       },
     );
   },
+  updateColors(main, button, sidebar) {
+    check(main, String);
+    check(button, String);
+    check(sidebar, String);
+    _Settings.insert({
+      main,
+      button,
+      sidebar,
+    });
+  },
 });
