@@ -4,7 +4,6 @@ import { Session } from 'meteor/session';
 import { TwitterPicker } from 'react-color';
 import UploadWrapper from '../../modals/UploadWrapper';
 import * as config from '../../../../config.json';
-import Sidenav from '../Dashboard/Sidenav';
 
 export default class SetUp extends Component {
   constructor(props) {
@@ -106,15 +105,6 @@ export default class SetUp extends Component {
     return (
       <Fragment>
         <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} />
-        {/* <div className="register-page">
-          <div className="container setup-container">
-            <div className="container">
-              <div className="row" style={{ marginTop: 30 }}>
-                
-              </div>
-            </div>
-          </div>
-        </div> */}
         <div className="col s11 m9">
           <form className="">
             <div className="row">

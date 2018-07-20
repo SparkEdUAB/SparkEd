@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
-import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import { SearchView, SearchField } from '../Utilities/Utilities.jsx';
-import { toggleModal } from '../Utilities/Modal/Modal.jsx';
+import { SearchView } from '../Utilities/Utilities.jsx';
 import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 import { _Notifications } from '../../../api/notifications/notifications';
 import { Institution } from '../../../api/settings/institution';
@@ -105,10 +103,10 @@ export class Header extends Component {
 
   // Notifications Number
   countNotifications() {
-    const count = this.props.notificationsCount;
-    if (count === undefined) {
+    const { notificationsCount } = this.props;
+    if (!notificationsCount) {
       return null;
-    } else if (count < 1) {
+    } else if (notificationsCount < 1) {
       return (
         <a
           href="#"
@@ -121,7 +119,7 @@ export class Header extends Component {
       <a href="#" onClick={e => this.toggleEditModal(e, 'note')} className="inst-link">
         <div id="notificationBellContainer">
           <i className="fa fa-bell fa-2x block" id="usrIcon" />
-          <span className="danger-bg">{count}</span>
+          <span className="danger-bg">{notificationsCount}</span>
         </div>
       </a>
     );
@@ -152,7 +150,7 @@ export class Header extends Component {
   };
   renderNotifications(nameClass) {
     const { notifications } = this.props;
-    if (notifications === undefined || notifications.length === 0) {
+    if (!notifications || !notifications.length) {
       return <li className={`collection-item ${nameClass}`}> No new notifications!</li>;
     }
     notifications.length = 5;
@@ -227,7 +225,7 @@ export class Header extends Component {
 
   renderExternalLinks(nameClass) {
     const { externallinks } = this.props;
-    if (externallinks === undefined || externallinks.length === 0) {
+    if (!externallinks || !externallinks.length) {
       return <li className={`collection-item ${nameClass}`}> No External links!</li>;
     }
     return externallinks.map(externallink => (
@@ -270,11 +268,10 @@ export class Header extends Component {
   }
 
   markAllAsVisited(bool) {
-    var allNotifications = this.props.notifications;
-
-    return allNotifications.map(function(notifications) {
-      id = notifications._id;
-      Meteor.call('markRead', id, bool);
+    const { notifications } = this.props;
+    return notifications.map(notification => {
+      id = notification._id;
+      return Meteor.call('markRead', id, bool);
     });
   }
 
@@ -283,7 +280,7 @@ export class Header extends Component {
     const { institution } = this.props;
     if (!institution) {
       return null;
-    } else if (institution.length === 0) {
+    } else if (!institution.length) {
       return (
         <div className="logo-container">
           <a href="/" className="inst-link">
@@ -540,6 +537,6 @@ export default withTracker(() => {
     externallinks: _ExternalLink.find({}).fetch(),
     institution: Institution.findOne({}, { sort: { 'meta.createdAt': -1 } }),
     count: _Bookmark.find({ user: Meteor.userId() }, { sort: { color: 1 } }).count(),
-    colors: _Settings.findOne(),
+    colors: _Settings.findOne(), // get the current main color
   };
 })(Header);
