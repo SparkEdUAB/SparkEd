@@ -86,11 +86,6 @@ Meteor.methods({
     check(main, String);
     check(button, Match.OneOf(String, null, undefined));
     check(sidebar, Match.OneOf(String, null, undefined));
-    // _Settings.insert({
-    //   main,
-    //   button,
-    //   sidebar,
-    // });
     _Settings.update(
       { _id: id },
       {

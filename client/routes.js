@@ -70,7 +70,7 @@ export default function isAuthRequired() {
 adminRoutes.route('/setup', {
   name: 'WalkThrough',
   action() {
-    mount(SetUp, {});
+    mount(Sidenav, { yield: <SetUp /> });
   },
 });
 

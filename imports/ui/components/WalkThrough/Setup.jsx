@@ -4,6 +4,7 @@ import { Session } from 'meteor/session';
 import { TwitterPicker } from 'react-color';
 import UploadWrapper from '../../modals/UploadWrapper';
 import * as config from '../../../../config.json';
+import Sidenav from '../Dashboard/Sidenav';
 
 export default class SetUp extends Component {
   constructor(props) {
@@ -105,107 +106,98 @@ export default class SetUp extends Component {
     return (
       <Fragment>
         <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} />
-        <div className="register-page">
+        {/* <div className="register-page">
           <div className="container setup-container">
             <div className="container">
               <div className="row" style={{ marginTop: 30 }}>
-                <form className="col s12">
-                  <div className="row">
-                    <div className="input-field col s12 m6">
-                      <input
-                        id="inst_name"
-                        type="text"
-                        className="validate"
-                        required="true"
-                        value={name}
-                        onChange={e => this.saveChange(e, 'name')}
-                      />
-                      <label htmlFor="inst_name">
-                        Institution Name <span className="red-text">*</span>{' '}
-                      </label>
-                    </div>
-                    <div className="input-field col s12 m6">
-                      <input
-                        id="inst_tag"
-                        type="text"
-                        className="validate"
-                        required
-                        onChange={e => this.saveChange(e, 'tag')}
-                      />
-                      <label htmlFor="inst_tag">
-                        Institution Tagline <span className="red-text">*</span>
-                      </label>
-                    </div>
-                  </div>
-                  Authentication <span>(Defaults to False)</span>
-                  <div className="row">
-                    <div className="col s6" onChange={e => this.saveChange(e, 'auth')}>
-                      <p className="gender-male">
-                        <input name="gender" type="radio" id="requred" value={true} required />
-                        <label htmlFor="requred">Required</label>
-                      </p>
-                      <p className="gender-female">
-                        <input
-                          name="gender"
-                          type="radio"
-                          id="not-required"
-                          value={false}
-                          required
-                        />
-                        <label htmlFor="not-required">Not Required</label>
-                      </p>
-                    </div>
-                  </div>
-                  {/* Hide the structure in case it has already been set */}
-                  {!isSet ? (
-                    <>
-                      <span>Structure (Note: You won't be able to change this afterwards)</span>
-                      <span className="red-text">*</span>
-                      <div className="row">
-                        <div className="col s12" onChange={e => this.saveChange(e, 'structure')}>
-                          <p className="gender-female">
-                            <input
-                              name="struct"
-                              type="radio"
-                              id="courses"
-                              value="course"
-                              required
-                            />
-                            <label htmlFor="courses">Courses</label>
-                          </p>
-                          <p className="gender-female">
-                            <input
-                              name="struct"
-                              type="radio"
-                              id="high-school"
-                              value="isHighSchool"
-                              required
-                            />
-                            <label htmlFor="high-school">High School</label>
-                          </p>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <span />
-                  )}
-                  {error ? <h6 className="red-text ">{error}</h6> : ''}
-                  <h6>Pick Main Color</h6>
-                  <TwitterPicker onChangeComplete={this.getColors} />
-                  <br />
-                  <br />
-                  <button
-                    className="btn waves-effect waves-light center pulse"
-                    role="submit"
-                    onClick={e => this.saveConfig(e)}
-                    title={'Save and Upload the Institution Logo'}
-                  >
-                    Save
-                  </button>
-                </form>
+                
               </div>
             </div>
           </div>
+        </div> */}
+        <div className="col s11 m9">
+          <form className="">
+            <div className="row">
+              <div className="input-field col s12 m6">
+                <input
+                  id="inst_name"
+                  type="text"
+                  className="validate"
+                  required="true"
+                  value={name}
+                  onChange={e => this.saveChange(e, 'name')}
+                />
+                <label htmlFor="inst_name">
+                  Institution Name <span className="red-text">*</span>{' '}
+                </label>
+              </div>
+              <div className="input-field col s12 m6">
+                <input
+                  id="inst_tag"
+                  type="text"
+                  className="validate"
+                  required
+                  onChange={e => this.saveChange(e, 'tag')}
+                />
+                <label htmlFor="inst_tag">
+                  Institution Tagline <span className="red-text">*</span>
+                </label>
+              </div>
+            </div>
+            Authentication <span>(Defaults to False)</span>
+            <div className="row">
+              <div className="col s6" onChange={e => this.saveChange(e, 'auth')}>
+                <p className="gender-male">
+                  <input name="gender" type="radio" id="requred" value={true} required />
+                  <label htmlFor="requred">Required</label>
+                </p>
+                <p className="gender-female">
+                  <input name="gender" type="radio" id="not-required" value={false} required />
+                  <label htmlFor="not-required">Not Required</label>
+                </p>
+              </div>
+            </div>
+            {/* Hide the structure in case it has already been set */}
+            {!isSet ? (
+              <>
+                <span>Structure (Note: You won't be able to change this afterwards)</span>
+                <span className="red-text">*</span>
+                <div className="row">
+                  <div className="col s12" onChange={e => this.saveChange(e, 'structure')}>
+                    <p className="gender-female">
+                      <input name="struct" type="radio" id="courses" value="course" required />
+                      <label htmlFor="courses">Courses</label>
+                    </p>
+                    <p className="gender-female">
+                      <input
+                        name="struct"
+                        type="radio"
+                        id="high-school"
+                        value="isHighSchool"
+                        required
+                      />
+                      <label htmlFor="high-school">High School</label>
+                    </p>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <span />
+            )}
+            {error ? <h6 className="red-text ">{error}</h6> : ''}
+            <h6>Pick Main Color</h6>
+            <TwitterPicker onChangeComplete={this.getColors} />
+            <br />
+            <br />
+            <button
+              className="btn waves-effect waves-light center pulse"
+              role="submit"
+              onClick={e => this.saveConfig(e)}
+              title={'Save and Upload the Institution Logo'}
+            >
+              Save
+            </button>
+          </form>
         </div>
       </Fragment>
     );

@@ -13,6 +13,7 @@ import Notifications from '../Notifications/Notifications.jsx';
 import Bookmark from '../Bookmark/Bookmark.jsx';
 import { Roles } from 'meteor/alanning:roles';
 import MainModal from '../../modals/MainModal';
+import { _Settings } from '../../../api/settings/settings';
 
 export class Header extends Component {
   constructor(props) {
@@ -90,7 +91,7 @@ export class Header extends Component {
       case 'bookmarks':
         break;
       case 'link':
-          break;
+        break;
       case 'search':
         FlowRouter.go(`/results?q=${value}`);
         break;
@@ -146,12 +147,9 @@ export class Header extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
-handleExternalLinkUrl = (event, url) => {
-  window.open(
-    url,
-    '_blank'
-  );
-}
+  handleExternalLinkUrl = (event, url) => {
+    window.open(url, '_blank');
+  };
   renderNotifications(nameClass) {
     const { notifications } = this.props;
     if (notifications === undefined || notifications.length === 0) {
@@ -227,39 +225,28 @@ handleExternalLinkUrl = (event, url) => {
     FlowRouter.go('/notifications');
   };
 
-
-    renderExternalLinks(nameClass) {
-      const { externallinks } = this.props;
-      if (externallinks === undefined || externallinks.length === 0) {
-
-        return <li className={`collection-item ${nameClass}`}> No External links!
-        </li>;
-      }
-      return externallinks.map(externallink => (
-        <span key={externallink._id}>
-              <a
-                style={{ padding: '1px 10px 5px', cursor: 'pointer' }}
-                onClick={e =>
-                  this.handleExternalLinkUrl(
-                    this,
-                    externallink.url
-                  )
-                }
-              >
-                <span>
-                <b>  {externallink.name}</b> <br />
-                  <span
-                    className="fa fa-link fa-2x"
-                    style={{ fontSize: '10px', color: 'blue' }}
-                  >
-                    {' '}
-                    <b> {externallink.url}</b>
-                  </span>
-                </span>
-              </a>
-            </span>
-      ));
+  renderExternalLinks(nameClass) {
+    const { externallinks } = this.props;
+    if (externallinks === undefined || externallinks.length === 0) {
+      return <li className={`collection-item ${nameClass}`}> No External links!</li>;
     }
+    return externallinks.map(externallink => (
+      <span key={externallink._id}>
+        <a
+          style={{ padding: '1px 10px 5px', cursor: 'pointer' }}
+          onClick={e => this.handleExternalLinkUrl(this, externallink.url)}
+        >
+          <span>
+            <b> {externallink.name}</b> <br />
+            <span className="fa fa-link fa-2x" style={{ fontSize: '10px', color: 'blue' }}>
+              {' '}
+              <b> {externallink.url}</b>
+            </span>
+          </span>
+        </a>
+      </span>
+    ));
+  }
 
   componentDidMount() {
     $('.button-collapse').sideNav({
@@ -294,7 +281,7 @@ handleExternalLinkUrl = (event, url) => {
   renderInstitution() {
     // Render the name of the institution
     const { institution } = this.props;
-    if (institution === undefined) {
+    if (!institution) {
       return null;
     } else if (institution.length === 0) {
       return (
@@ -355,14 +342,14 @@ handleExternalLinkUrl = (event, url) => {
           reject: 'Close',
         });
         break;
-        case 'link':
-          this.setState({
-            modalType: type,
-            title: 'External Links',
-            confirm: 'See',
-            reject: 'Close',
-          });
-          break;
+      case 'link':
+        this.setState({
+          modalType: type,
+          title: 'External Links',
+          confirm: 'See',
+          reject: 'Close',
+        });
+        break;
       case 'search':
         this.setState({
           modalType: type,
@@ -378,7 +365,7 @@ handleExternalLinkUrl = (event, url) => {
 
   getQuery() {
     let query = FlowRouter.getQueryParam(this.props.query);
-    query = query === undefined ? null : query;
+    query = !query ? null : query;
     return query;
   }
   grabText = ({ target: { value } }) => {
@@ -388,9 +375,10 @@ handleExternalLinkUrl = (event, url) => {
   };
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
+    const { colors } = this.props;
     return (
       <>
-        <div className="container-fluid header-container">
+        <div className="container-fluid " style={{ backgroundColor: colors.main }}>
           <div className="row ">
             <div className="col s12 m6">{this.renderInstitution()}</div>
             <div className="col s12 m2 hide-on-small-only">
@@ -430,21 +418,18 @@ handleExternalLinkUrl = (event, url) => {
               </div>
 
               <div className="col s2 m1 head-icons">
-                <div
-                  href="#"
-                  data-activates="slide-out"
-                >
+                <div href="#" data-activates="slide-out">
                   <div className="dropdownLink">
-                    <button className="dropbtnLink fa fa-link fa-2x inst-link"></button>
+                    <button className="dropbtnLink fa fa-link fa-2x inst-link" />
                     <div className="dropdownLink-content">
-                      <a href="/externallinkpages"
-                      className = "openLinks">
-                    Click here to  Open all the external links in a page</a>
-                    <p className=" blue-text externalLink" >
-                    <b> External Links</b>
-                  </p>
-                    <hr />
-                        {this.renderExternalLinks('')}
+                      <a href="/externallinkpages" className="openLinks">
+                        Click here to Open all the external links in a page
+                      </a>
+                      <p className=" blue-text externalLink">
+                        <b> External Links</b>
+                      </p>
+                      <hr />
+                      {this.renderExternalLinks('')}
                     </div>
                   </div>
                   <span className="new" />
@@ -512,8 +497,7 @@ handleExternalLinkUrl = (event, url) => {
           ) : modalType === 'bookmark' ? (
             <Bookmark />
           ) : modalType === 'link' ? (
-            <div className="row">
-            </div>
+            <div className="row" />
           ) : modalType === 'search' ? (
             <div className="searchbox-wrapper">
               <input
@@ -544,7 +528,7 @@ Header.propTypes = {
 
 export default withTracker(() => {
   Meteor.subscribe('notifications');
-  Meteor.subscribe('externallinks')
+  Meteor.subscribe('externallinks');
   Meteor.subscribe('institution');
   Meteor.subscribe('bookmarks');
   Meteor.subscribe('logo');
@@ -556,5 +540,6 @@ export default withTracker(() => {
     externallinks: _ExternalLink.find({}).fetch(),
     institution: Institution.findOne({}, { sort: { 'meta.createdAt': -1 } }),
     count: _Bookmark.find({ user: Meteor.userId() }, { sort: { color: 1 } }).count(),
+    colors: _Settings.findOne(),
   };
 })(Header);
