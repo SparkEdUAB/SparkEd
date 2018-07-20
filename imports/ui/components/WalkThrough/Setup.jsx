@@ -1,11 +1,14 @@
 /* eslint class-methods-use-this: "off" */
 import React, { Component, Fragment } from 'react';
 import { Session } from 'meteor/session';
+import { withTracker } from 'meteor/react-meteor-data';
 import { TwitterPicker } from 'react-color';
 import UploadWrapper from '../../modals/UploadWrapper';
 import * as config from '../../../../config.json';
+import { SaveButton } from '../../utils/Buttons';
+import { _Settings } from '../../../api/settings/settings';
 
-export default class SetUp extends Component {
+export class SetUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -102,6 +105,7 @@ export default class SetUp extends Component {
   render() {
     const { isOpen, confirm, reject, error, name } = this.state;
     const isSet = config.isConfigured;
+    const { colors } = this.props;
     return (
       <Fragment>
         <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} />
@@ -179,17 +183,20 @@ export default class SetUp extends Component {
             <TwitterPicker onChangeComplete={this.getColors} />
             <br />
             <br />
-            <button
-              className="btn waves-effect waves-light center pulse"
-              role="submit"
-              onClick={e => this.saveConfig(e)}
+            <SaveButton
+              actionFunc={e => this.saveConfig(e)}
               title={'Save and Upload the Institution Logo'}
-            >
-              Save
-            </button>
+              backgroundColor={colors.main}
+            />
           </form>
         </div>
       </Fragment>
     );
   }
 }
+
+export default withTracker(() => {
+  return {
+    colors: _Settings.findOne(), // get the current main color
+  };
+})(SetUp);
