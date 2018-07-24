@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { TwitterPicker } from 'react-color';
 import UploadWrapper from '../../modals/UploadWrapper';
 import * as config from '../../../../config.json';
-import { SaveButton } from '../../utils/Buttons';
+import { Button } from '../../utils/Buttons';
 import { _Settings } from '../../../api/settings/settings';
 
 export class SetUp extends Component {
@@ -183,10 +183,12 @@ export class SetUp extends Component {
             <TwitterPicker onChangeComplete={this.getColors} />
             <br />
             <br />
-            <SaveButton
+            <Button
               actionFunc={e => this.saveConfig(e)}
               title={'Save and Upload the Institution Logo'}
               backgroundColor={colors.main}
+              name={'Sync'}
+              extraClass={'pulse'}
             />
           </form>
         </div>
