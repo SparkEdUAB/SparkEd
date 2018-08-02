@@ -7,11 +7,12 @@ import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 import { _Notifications } from '../../../api/notifications/notifications';
 import { Institution } from '../../../api/settings/institution';
 import { _ExternalLink } from '../../../api/externallink/externallink';
-import Notifications from '../Notifications/Notifications.jsx';
 import Bookmark from '../Bookmark/Bookmark.jsx';
-import { Roles } from 'meteor/alanning:roles';
 import MainModal from '../../modals/MainModal';
 import { _Settings } from '../../../api/settings/settings';
+import UserInfo from './UserInfo';
+import ExternalLinksView from '../ExternalLink/ExternalLinksView';
+import InstitutionDetail from './InstitutionDetail';
 
 export class Header extends Component {
   constructor(props) {
@@ -56,27 +57,6 @@ export class Header extends Component {
     return '';
   }
 
-  takeToDashboard = () => {
-    FlowRouter.go('/dashboard/accounts');
-  };
-
-  // show dashboard link only when the user has an admin role
-  dashBoard() {
-    if (Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      return (
-        <div className="valign center-align" id="dashStylesDrop">
-          <span
-            className="dashLink link waves-effect waves-teal btn-flat"
-            onClick={this.takeToDashboard}
-          >
-            dashboard
-          </span>
-        </div>
-      );
-    }
-    return <div />;
-  }
-
   handleSubmit = event => {
     event.preventDefault();
     const { modalType, value } = this.state;
@@ -84,7 +64,6 @@ export class Header extends Component {
     switch (modalType) {
       case 'note':
         FlowRouter.go('/notifications');
-
         break;
       case 'bookmarks':
         break;
@@ -97,16 +76,12 @@ export class Header extends Component {
         break;
     }
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
-
-    // Add notifications for Admin
   };
 
   // Notifications Number
   countNotifications() {
     const { notificationsCount } = this.props;
     if (!notificationsCount) {
-      return null;
-    } else if (notificationsCount < 1) {
       return (
         <a
           href="#"
@@ -145,9 +120,6 @@ export class Header extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
-  handleExternalLinkUrl = (event, url) => {
-    window.open(url, '_blank');
-  };
   renderNotifications(nameClass) {
     const { notifications } = this.props;
     if (!notifications || !notifications.length) {
@@ -156,7 +128,7 @@ export class Header extends Component {
     notifications.length = 5;
     return notifications.map(notification => (
       <li key={notification._id}>
-        {notification.read === true ? (
+        {notification.read ? (
           <ul>
             <li
               style={{ backgroundColor: 'white', padding: '1px 10px 5px', cursor: 'pointer' }}
@@ -211,7 +183,6 @@ export class Header extends Component {
             </li>
           </ul>
         )}
-
         <hr />
       </li>
     ));
@@ -223,43 +194,11 @@ export class Header extends Component {
     FlowRouter.go('/notifications');
   };
 
-  renderExternalLinks(nameClass) {
-    const { externallinks } = this.props;
-    if (!externallinks || !externallinks.length) {
-      return <li className={`collection-item ${nameClass}`}> No External links!</li>;
-    }
-    return externallinks.map(externallink => (
-      <span key={externallink._id}>
-        <a
-          style={{ padding: '1px 10px 5px', cursor: 'pointer' }}
-          onClick={e => this.handleExternalLinkUrl(this, externallink.url)}
-        >
-          <span>
-            <b> {externallink.name}</b> <br />
-            <span className="fa fa-link fa-2x" style={{ fontSize: '10px', color: 'blue' }}>
-              {' '}
-              <b> {externallink.url}</b>
-            </span>
-          </span>
-        </a>
-      </span>
-    ));
-  }
-
   componentDidMount() {
-    $('.button-collapse').sideNav({
-      menuWidth: 300, // Default is 240
-      edge: 'left', // Choose the horizontal origin
-      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-      draggable: true, // Choose whether you can drag to open on touch screens
-    });
-    $('.collapsible').collapsible();
-
     $('.dropdown-button').dropdown({
       inDuration: 0,
       outDuration: 0,
       constrainWidth: false, // Does not change width of dropdown to that of the activator
-      hover: false, // Activate on hover
       gutter: 0, // Spacing from edge
       belowOrigin: true, // Displays dropdown below the button
       alignment: 'left', // Displays dropdown with edge aligned to the left of button
@@ -267,56 +206,13 @@ export class Header extends Component {
     });
   }
 
-  markAllAsVisited(bool) {
+  markAllAsVisited = bool => {
     const { notifications } = this.props;
     return notifications.map(notification => {
       id = notification._id;
       return Meteor.call('markRead', id, bool);
     });
-  }
-
-  renderInstitution() {
-    // Render the name of the institution
-    const { institution } = this.props;
-    if (!institution) {
-      return null;
-    } else if (!institution.length) {
-      return (
-        <div className="logo-container">
-          <a href="/" className="inst-link">
-            <img
-              style={{ float: 'left' }}
-              src={`/uploads/sparked.png`}
-              alt="logo"
-              width="80px"
-              height="80px"
-            />
-            <h5>{'SparkEd'}</h5>
-            <h6>{'Delivering Education Contents'}</h6>
-          </a>
-        </div>
-      );
-    } else {
-      const {
-        meta: { name, tagline },
-      } = institution;
-      return (
-        <div className="logo-container">
-          <a href="/" className="inst-link">
-            <img
-              style={{ float: 'left' }}
-              src={`/uploads/logos/${institution._id}.${institution.ext}`}
-              alt="logo"
-              width="80px"
-              height="80px"
-            />
-            <h5>{name}</h5>
-            <h6>{tagline}</h6>
-          </a>
-        </div>
-      );
-    }
-  }
+  };
 
   // close the modal, close the modal, and clear the states;
   close = () => this.setState(prevState => ({ isOpen: !prevState.isOpen }));
@@ -372,12 +268,14 @@ export class Header extends Component {
   };
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
-    const { colors } = this.props;
+    const { colors, externallinks, institution } = this.props;
     return (
       <>
         <div className="container-fluid " style={{ backgroundColor: colors.main }}>
           <div className="row ">
-            <div className="col s12 m6">{this.renderInstitution()}</div>
+            <div className="col s12 m6">
+              <InstitutionDetail institution={institution} />
+            </div>
             <div className="col s12 m2 hide-on-small-only">
               <SearchView
                 action={'/results'}
@@ -426,7 +324,7 @@ export class Header extends Component {
                         <b> External Links</b>
                       </p>
                       <hr />
-                      {this.renderExternalLinks('')}
+                      <ExternalLinksView externallinks={externallinks} />
                     </div>
                   </div>
                   <span className="new" />
@@ -460,7 +358,9 @@ export class Header extends Component {
                       </span>
                     </div>
                   </li>
-                  <li id="dropFooter">{this.dashBoard()}</li>
+                  <li id="dropFooter">
+                    <UserInfo />
+                  </li>
                 </ul>
               </div>
             </div>
@@ -483,12 +383,11 @@ export class Header extends Component {
                   href=""
                   className=" blue-text "
                   style={{ fontSize: '11px' }}
-                  onClick={this.markAllAsVisited.bind(this, true)}
+                  onClick={e => this.markAllAsVisited(true)}
                 >
                   <u> Mark opened as read</u>
                 </a>
               </div>
-
               <ul className="collection">{this.renderNotifications('')}</ul>
             </div>
           ) : modalType === 'bookmark' ? (
