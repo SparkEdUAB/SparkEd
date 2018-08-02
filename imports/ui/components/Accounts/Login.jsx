@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-import { Accounts } from 'meteor/accounts-base';
-import { isLoggedOut, checkPassword } from './AccountFunction.js';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: '',
+      languages: [],
     };
+  }
+
+  componentDidMount() {
+    Meteor.call('getLanguages', (error, languages) => {
+      if (!error) {
+        this.setState({ languages });
+      }
+    });
   }
 
   loginUser = e => {
@@ -16,15 +26,11 @@ export default class Login extends Component {
     const password = e.target.password.value;
     Meteor.call('account.check', email, (err, result) => {
       if (result) {
-        this.setState({
-          error: result,
-        });
+        this.setState({ error: result });
       } else {
         Meteor.loginWithPassword(email, password, error => {
           if (error) {
-            this.setState({
-              error: error.reason,
-            });
+            this.setState({ error: error.reason });
           } else {
             // Don't use FlowRouter.go('/) to allow updating the admin details;
             if (localStorage.getItem('beenhere')) {
@@ -41,6 +47,22 @@ export default class Login extends Component {
     });
   };
 
+  // change the language
+  changeLangauge = (e, lang) => {
+    switch (lang) {
+      case 'fr':
+        i18n.setLocale('fr-FR');
+        break;
+      case 'en':
+        i18n.setLocale('en-US');
+        break;
+      case 'es':
+        i18n.setLocale('es-Es');
+        break;
+      default:
+        break;
+    }
+  };
   render() {
     const { error } = this.state;
     return (
@@ -51,7 +73,9 @@ export default class Login extends Component {
               <div className="row">
                 <div className="input-field col s12">
                   <input id="email" type="email" className="validate field" required />
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">
+                    <T>common.accounts.Email</T>
+                  </label>
                 </div>
               </div>
               <div className="row">
@@ -63,7 +87,9 @@ export default class Login extends Component {
                     minLength="6"
                     required
                   />
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">
+                    <T>common.accounts.Password</T>
+                  </label>
                 </div>
               </div>
               <div className="row">
@@ -73,13 +99,26 @@ export default class Login extends Component {
                     type="submit"
                   >
                     {' '}
-                    Login
+                    <T>common.accounts.Login</T>
                     <i className="fa fa-paper-plane right" />
                   </button>
                 </div>
               </div>
               {error ? <div className="row">{error}</div> : <span />}
             </form>
+            <a href="" onClick={e => this.changeLangauge(e, 'en')}>
+              <T>common.accounts.enUS</T>
+            </a>
+            {' |'}
+            <a href="" onClick={e => this.changeLangauge(e, 'fr')}>
+              {' '}
+              <T>common.accounts.frFr</T>
+            </a>
+            |
+            <a href="" onClick={e => this.changeLangauge(e, 'es')}>
+              {' '}
+              <T>common.accounts.esES</T>
+            </a>
           </div>
           <a
             title="Register"

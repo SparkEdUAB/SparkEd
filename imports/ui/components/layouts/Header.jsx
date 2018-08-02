@@ -12,6 +12,7 @@ import Bookmark from '../Bookmark/Bookmark.jsx';
 import { Roles } from 'meteor/alanning:roles';
 import MainModal from '../../modals/MainModal';
 import { _Settings } from '../../../api/settings/settings';
+import UserInfo from './UserInfo';
 
 export class Header extends Component {
   constructor(props) {
@@ -55,10 +56,6 @@ export class Header extends Component {
     }
     return '';
   }
-
-  takeToDashboard = () => {
-    FlowRouter.go('/dashboard/accounts');
-  };
 
   // show dashboard link only when the user has an admin role
   dashBoard() {
@@ -460,7 +457,9 @@ export class Header extends Component {
                       </span>
                     </div>
                   </li>
-                  <li id="dropFooter">{this.dashBoard()}</li>
+                  <li id="dropFooter">
+                    <UserInfo />
+                  </li>
                 </ul>
               </div>
             </div>
