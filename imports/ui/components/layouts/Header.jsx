@@ -102,8 +102,6 @@ export class Header extends Component {
   countNotifications() {
     const { notificationsCount } = this.props;
     if (!notificationsCount) {
-      return null;
-    } else if (notificationsCount < 1) {
       return (
         <a
           href="#"
