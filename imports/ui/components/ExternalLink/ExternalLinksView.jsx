@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ExternalLinksView = ({ externallinks }) => {
   if (!externallinks || !externallinks.length) {
@@ -20,6 +21,10 @@ const ExternalLinksView = ({ externallinks }) => {
       </a>
     </span>
   ));
+};
+
+ExternalLinksView.propTypes = {
+  externallinks: PropTypes.array,
 };
 
 export default ExternalLinksView;

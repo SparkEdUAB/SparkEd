@@ -1,5 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 
 const takeToDashboard = () => {
   FlowRouter.go('/dashboard/accounts');

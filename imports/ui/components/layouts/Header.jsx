@@ -9,11 +9,11 @@ import { Institution } from '../../../api/settings/institution';
 import { _ExternalLink } from '../../../api/externallink/externallink';
 import Notifications from '../Notifications/Notifications.jsx';
 import Bookmark from '../Bookmark/Bookmark.jsx';
-import { Roles } from 'meteor/alanning:roles';
 import MainModal from '../../modals/MainModal';
 import { _Settings } from '../../../api/settings/settings';
 import UserInfo from './UserInfo';
 import ExternalLinksView from '../ExternalLink/ExternalLinksView';
+import InstitutionDetail from './InstitutionDetail';
 
 export class Header extends Component {
   constructor(props) {
@@ -65,7 +65,6 @@ export class Header extends Component {
     switch (modalType) {
       case 'note':
         FlowRouter.go('/notifications');
-
         break;
       case 'bookmarks':
         break;
@@ -217,56 +216,13 @@ export class Header extends Component {
     });
   }
 
-  markAllAsVisited(bool) {
+  markAllAsVisited = bool => {
     const { notifications } = this.props;
     return notifications.map(notification => {
       id = notification._id;
       return Meteor.call('markRead', id, bool);
     });
-  }
-
-  renderInstitution() {
-    // Render the name of the institution
-    const { institution } = this.props;
-    if (!institution) {
-      return null;
-    } else if (!institution.length) {
-      return (
-        <div className="logo-container">
-          <a href="/" className="inst-link">
-            <img
-              style={{ float: 'left' }}
-              src={`/uploads/sparked.png`}
-              alt="logo"
-              width="80px"
-              height="80px"
-            />
-            <h5>{'SparkEd'}</h5>
-            <h6>{'Delivering Education Contents'}</h6>
-          </a>
-        </div>
-      );
-    } else {
-      const {
-        meta: { name, tagline },
-      } = institution;
-      return (
-        <div className="logo-container">
-          <a href="/" className="inst-link">
-            <img
-              style={{ float: 'left' }}
-              src={`/uploads/logos/${institution._id}.${institution.ext}`}
-              alt="logo"
-              width="80px"
-              height="80px"
-            />
-            <h5>{name}</h5>
-            <h6>{tagline}</h6>
-          </a>
-        </div>
-      );
-    }
-  }
+  };
 
   // close the modal, close the modal, and clear the states;
   close = () => this.setState(prevState => ({ isOpen: !prevState.isOpen }));
@@ -322,12 +278,14 @@ export class Header extends Component {
   };
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
-    const { colors, externallinks } = this.props;
+    const { colors, externallinks, institution } = this.props;
     return (
       <>
         <div className="container-fluid " style={{ backgroundColor: colors.main }}>
           <div className="row ">
-            <div className="col s12 m6">{this.renderInstitution()}</div>
+            <div className="col s12 m6">
+              <InstitutionDetail institution={institution} />
+            </div>
             <div className="col s12 m2 hide-on-small-only">
               <SearchView
                 action={'/results'}
@@ -435,7 +393,7 @@ export class Header extends Component {
                   href=""
                   className=" blue-text "
                   style={{ fontSize: '11px' }}
-                  onClick={this.markAllAsVisited.bind(this, true)}
+                  onClick={e => this.markAllAsVisited(true)}
                 >
                   <u> Mark opened as read</u>
                 </a>
