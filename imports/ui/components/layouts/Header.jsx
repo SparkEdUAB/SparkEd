@@ -7,7 +7,6 @@ import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 import { _Notifications } from '../../../api/notifications/notifications';
 import { Institution } from '../../../api/settings/institution';
 import { _ExternalLink } from '../../../api/externallink/externallink';
-import Notifications from '../Notifications/Notifications.jsx';
 import Bookmark from '../Bookmark/Bookmark.jsx';
 import MainModal from '../../modals/MainModal';
 import { _Settings } from '../../../api/settings/settings';
@@ -129,7 +128,7 @@ export class Header extends Component {
     notifications.length = 5;
     return notifications.map(notification => (
       <li key={notification._id}>
-        {notification.read === true ? (
+        {notification.read ? (
           <ul>
             <li
               style={{ backgroundColor: 'white', padding: '1px 10px 5px', cursor: 'pointer' }}
@@ -196,19 +195,10 @@ export class Header extends Component {
   };
 
   componentDidMount() {
-    $('.button-collapse').sideNav({
-      menuWidth: 300, // Default is 240
-      edge: 'left', // Choose the horizontal origin
-      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-      draggable: true, // Choose whether you can drag to open on touch screens
-    });
-    $('.collapsible').collapsible();
-
     $('.dropdown-button').dropdown({
       inDuration: 0,
       outDuration: 0,
       constrainWidth: false, // Does not change width of dropdown to that of the activator
-      hover: false, // Activate on hover
       gutter: 0, // Spacing from edge
       belowOrigin: true, // Displays dropdown below the button
       alignment: 'left', // Displays dropdown with edge aligned to the left of button
@@ -398,7 +388,6 @@ export class Header extends Component {
                   <u> Mark opened as read</u>
                 </a>
               </div>
-
               <ul className="collection">{this.renderNotifications('')}</ul>
             </div>
           ) : modalType === 'bookmark' ? (
