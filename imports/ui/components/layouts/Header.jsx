@@ -13,6 +13,7 @@ import { Roles } from 'meteor/alanning:roles';
 import MainModal from '../../modals/MainModal';
 import { _Settings } from '../../../api/settings/settings';
 import UserInfo from './UserInfo';
+import ExternalLinksView from '../ExternalLink/ExternalLinksView';
 
 export class Header extends Component {
   constructor(props) {
@@ -57,23 +58,6 @@ export class Header extends Component {
     return '';
   }
 
-  // show dashboard link only when the user has an admin role
-  dashBoard() {
-    if (Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      return (
-        <div className="valign center-align" id="dashStylesDrop">
-          <span
-            className="dashLink link waves-effect waves-teal btn-flat"
-            onClick={this.takeToDashboard}
-          >
-            dashboard
-          </span>
-        </div>
-      );
-    }
-    return <div />;
-  }
-
   handleSubmit = event => {
     event.preventDefault();
     const { modalType, value } = this.state;
@@ -94,8 +78,6 @@ export class Header extends Component {
         break;
     }
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
-
-    // Add notifications for Admin
   };
 
   // Notifications Number
@@ -140,9 +122,6 @@ export class Header extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
-  handleExternalLinkUrl = (event, url) => {
-    window.open(url, '_blank');
-  };
   renderNotifications(nameClass) {
     const { notifications } = this.props;
     if (!notifications || !notifications.length) {
@@ -206,7 +185,6 @@ export class Header extends Component {
             </li>
           </ul>
         )}
-
         <hr />
       </li>
     ));
@@ -217,29 +195,6 @@ export class Header extends Component {
     event.preventDefault();
     FlowRouter.go('/notifications');
   };
-
-  renderExternalLinks(nameClass) {
-    const { externallinks } = this.props;
-    if (!externallinks || !externallinks.length) {
-      return <li className={`collection-item ${nameClass}`}> No External links!</li>;
-    }
-    return externallinks.map(externallink => (
-      <span key={externallink._id}>
-        <a
-          style={{ padding: '1px 10px 5px', cursor: 'pointer' }}
-          onClick={e => this.handleExternalLinkUrl(this, externallink.url)}
-        >
-          <span>
-            <b> {externallink.name}</b> <br />
-            <span className="fa fa-link fa-2x" style={{ fontSize: '10px', color: 'blue' }}>
-              {' '}
-              <b> {externallink.url}</b>
-            </span>
-          </span>
-        </a>
-      </span>
-    ));
-  }
 
   componentDidMount() {
     $('.button-collapse').sideNav({
@@ -367,7 +322,7 @@ export class Header extends Component {
   };
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
-    const { colors } = this.props;
+    const { colors, externallinks } = this.props;
     return (
       <>
         <div className="container-fluid " style={{ backgroundColor: colors.main }}>
@@ -421,7 +376,7 @@ export class Header extends Component {
                         <b> External Links</b>
                       </p>
                       <hr />
-                      {this.renderExternalLinks('')}
+                      <ExternalLinksView externallinks={externallinks} />
                     </div>
                   </div>
                   <span className="new" />
