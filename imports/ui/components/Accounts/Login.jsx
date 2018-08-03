@@ -48,7 +48,7 @@ export default class Login extends Component {
   };
 
   // change the language
-  changeLangauge = (e, lang) => {
+  changeLangauge = lang => {
     switch (lang) {
       case 'fr':
         i18n.setLocale('fr-FR');
@@ -106,16 +106,16 @@ export default class Login extends Component {
               </div>
               {error ? <div className="row">{error}</div> : <span />}
             </form>
-            <a href="" onClick={e => this.changeLangauge(e, 'en')}>
+            <a href="" onClick={e => this.changeLangauge('en')}>
               <T>common.accounts.enUS</T>
             </a>
             {' |'}
-            <a href="" onClick={e => this.changeLangauge(e, 'fr')}>
+            <a href="" onClick={e => this.changeLangauge('fr')}>
               {' '}
               <T>common.accounts.frFr</T>
             </a>
             |
-            <a href="" onClick={e => this.changeLangauge(e, 'es')}>
+            <a href="" onClick={e => this.changeLangauge('es')}>
               {' '}
               <T>common.accounts.esES</T>
             </a>

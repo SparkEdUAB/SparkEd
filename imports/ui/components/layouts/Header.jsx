@@ -335,33 +335,7 @@ export class Header extends Component {
                 <a className="dropdown-button inst-link " href="#" data-activates="dropdown1">
                   <i className="fa fa-user fa-2x" id="usrIcon" />
                 </a>
-                <ul id="dropdown1" className="dropdown-content">
-                  <li id="dropBody">
-                    <div id="accName">
-                      {this.getUserName()}
-                      <span id="userEmail">{this.getEmail()}</span>
-
-                      <span>{!Meteor.loggingIn() ? '' : Meteor.userId()}</span>
-
-                      <span id="uiWrapper">
-                        <a href="#" onClick={this.openSettings}>
-                          {Meteor.userId() ? (
-                            <span className="btn-flat" id="accounts-button">
-                              Logout
-                            </span>
-                          ) : (
-                            <span className="btn-flat" id="accounts-button">
-                              You are not Logged in
-                            </span>
-                          )}
-                        </a>
-                      </span>
-                    </div>
-                  </li>
-                  <li id="dropFooter">
-                    <UserInfo />
-                  </li>
-                </ul>
+                <UserInfo />
               </div>
             </div>
           </div>

@@ -13,10 +13,7 @@ import ErrorBoundary from './ErrorBoundary';
 
 export class Home extends Component {
   componentDidMount() {
-    const users = Meteor.users.find({}).fetch();
-    if (!users || !users.length) {
-      FlowRouter.go('/setup');
-    } else if (!Config.isConfigured) {
+    if (!Config.isConfigured) {
       FlowRouter.go('/setup');
     }
   }
