@@ -28,7 +28,6 @@ export class Header extends Component {
     };
   }
 
-
   handleSubmit = event => {
     event.preventDefault();
     const { modalType, value } = this.state;

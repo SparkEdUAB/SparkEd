@@ -12,14 +12,6 @@ export default class Login extends Component {
     };
   }
 
-  componentDidMount() {
-    Meteor.call('getLanguages', (error, languages) => {
-      if (!error) {
-        this.setState({ languages });
-      }
-    });
-  }
-
   loginUser = e => {
     e.preventDefault();
     const email = e.target.email.value;
