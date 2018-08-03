@@ -28,34 +28,6 @@ export class Header extends Component {
     };
   }
 
-  openSettings = () => {
-    // event.preventDefault();
-
-    Meteor.logout(error => {
-      if (!error) {
-        FlowRouter.go('/login');
-      } else {
-        // You can also verbose the logout error to the user
-        return null;
-      }
-    });
-  };
-
-  getUserName() {
-    const user = Meteor.user();
-    if (user) {
-      return `${user.profile.name} `;
-    }
-    return '';
-  }
-
-  getEmail() {
-    const email = Meteor.user();
-    if (email) {
-      return email.emails[0].address;
-    }
-    return '';
-  }
 
   handleSubmit = event => {
     event.preventDefault();

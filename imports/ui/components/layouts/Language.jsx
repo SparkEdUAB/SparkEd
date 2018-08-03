@@ -39,7 +39,7 @@ export default class Languages extends Component {
 
   render() {
     return (
-      <>
+      <div className="row">
         <a href="" onClick={e => this.changeLangauge(e, 'en')}>
           <T>common.accounts.enUS</T>
         </a>
@@ -53,7 +53,7 @@ export default class Languages extends Component {
           {' '}
           <T>common.accounts.esES</T>
         </a>
-      </>
+      </div>
     );
   }
 }

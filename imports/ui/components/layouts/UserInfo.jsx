@@ -37,6 +37,9 @@ const UserInfo = () => {
               </span>
             </div>
           </li>
+          <li id="dropBody">
+            <Languages />
+          </li>
           <li id="dropFooter">
             {Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager']) ? (
               <div className="valign center-align" id="dashStylesDrop">
