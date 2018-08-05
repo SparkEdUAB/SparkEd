@@ -12,8 +12,8 @@ export default class Languages extends Component {
       error: '',
       languages: [],
     };
+    i18n.setLocale(localStorage.getItem('locale'));
   }
-  // i18n.setLocale(localStorage.getItem('locale'));
   //
 
   // change the language
@@ -25,9 +25,11 @@ export default class Languages extends Component {
         break;
       case 'en':
         i18n.setLocale('en-US');
+        localStorage.setItem('locale', 'en-US');
         break;
       case 'es':
         i18n.setLocale('es-Es');
+        localStorage.setItem('locale', 'es-ES');
         break;
       default:
         break;

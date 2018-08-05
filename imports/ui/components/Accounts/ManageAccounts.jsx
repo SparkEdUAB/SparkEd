@@ -261,7 +261,7 @@ export class ManageAccounts extends React.Component {
                 onClick={e => this.openModal('delete', e)}
               >
                 {' '}
-                <T>common.action.delete</T>
+                <T>common.actions.delete</T>
               </button>
             </div>
             {isUserAuth ? (
