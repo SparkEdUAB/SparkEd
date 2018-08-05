@@ -87,3 +87,12 @@ Meteor.methods({
     });
   },
 });
+
+function getData() {
+  HTTP.call('GET', 'https://jsonplaceholder.typicode.com/posts', (error, result) => {
+    if (!error) {
+      console.log(result);
+    }
+  });
+  console.log('Going to grab data');
+}

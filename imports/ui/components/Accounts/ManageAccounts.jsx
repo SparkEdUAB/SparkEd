@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
-import Header from '../layouts/Header.jsx';
 import {
   handleCheckboxChange,
   handleCheckAll,

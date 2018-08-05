@@ -4,6 +4,9 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import * as config from '../../../../config.json';
+import i18n from 'meteor/universe:i18n';
+
+export const T = i18n.createComponent();
 
 export class Courses extends Component {
   countUnits() {
@@ -42,7 +45,7 @@ export class Courses extends Component {
                 <span className="" />
                 <span className="">
                   <a href="" id="cardListTitle">
-                    &#8667; # of Units : {this.countUnits()}
+                    &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
                   </a>
                 </span>
               </span>
@@ -51,7 +54,7 @@ export class Courses extends Component {
                 <span className="" />
                 <span className="">
                   <a href="" id="cardListTitle">
-                    &#8667; # of Units : {this.countUnits()}
+                    &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
                   </a>
                 </span>
               </span>

@@ -12,5 +12,11 @@
     "Logout": "Deconnection",
     "Password": "Mot de Passe",
     "Email": "Addresse Email"
+  },
+  "manage": {
+    "courses": "coursess",
+    "units": "unite",
+    "topics": "topique",
+    "resources": "resourcess"
   }
 }

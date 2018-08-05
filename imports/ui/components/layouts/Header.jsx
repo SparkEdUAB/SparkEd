@@ -13,6 +13,7 @@ import { _Settings } from '../../../api/settings/settings';
 import UserInfo from './UserInfo';
 import ExternalLinksView from '../ExternalLink/ExternalLinksView';
 import InstitutionDetail from './InstitutionDetail';
+import { ThemeContext, T } from '../Language/Languages';
 
 export class Header extends Component {
   constructor(props) {
@@ -241,121 +242,124 @@ export class Header extends Component {
     const { isOpen, title, confirm, reject, modalType } = this.state;
     const { colors, externallinks, institution } = this.props;
     return (
-      <>
-        <div className="container-fluid " style={{ backgroundColor: colors.main }}>
-          <div className="row ">
-            <div className="col s12 m6">
-              <InstitutionDetail institution={institution} />
-            </div>
-            <div className="col s12 m2 hide-on-small-only">
-              <SearchView
-                action={'/results'}
-                placeholder={'Search'}
-                query={'q'}
-                sClass={'searchAnim'}
-              />
-            </div>
-            <div className="row ">
-              <div className="col s2 m1 head-icons ">{this.countNotifications()}</div>
-              <div className="col s2 m1 head-icons ">
-                <a href="/reference" className="fa fa-book fa-2x inst-link" />
-              </div>
+      <ThemeContext.Consumer>
+        {() => (
+          <Fragment>
+            <div className="container-fluid " style={{ backgroundColor: colors.main }}>
+              <div className="row ">
+                <div className="col s12 m6">
+                  <InstitutionDetail institution={institution} />
+                </div>
+                <div className="col s12 m2 hide-on-small-only">
+                  <SearchView
+                    action={'/results'}
+                    placeholder={'Search'}
+                    query={'q'}
+                    sClass={'searchAnim'}
+                  />
+                </div>
+                <div className="row ">
+                  <div className="col s2 m1 head-icons ">{this.countNotifications()}</div>
+                  <div className="col s2 m1 head-icons ">
+                    <a href="/reference" className="fa fa-book fa-2x inst-link" />
+                  </div>
 
-              <div className="col s2 m1 head-icons hide-on-med-and-up">
-                <a
-                  href=""
-                  className="inst-link fa fa-search"
-                  onClick={e => this.toggleEditModal(e, 'search')}
-                />
-              </div>
-              <div className="col s2 m1 head-icons">
-                <a
-                  href="#"
-                  className={
-                    this.props.count > 0
-                      ? 'fa fa-star fa-2x inst-link'
-                      : 'fa fa-star-o fa-2x inst-link'
-                  }
-                  data-activates="slide-out"
-                  onClick={e => this.toggleEditModal(e, 'bookmark')}
-                >
-                  <span className="new" />
-                </a>
-              </div>
+                  <div className="col s2 m1 head-icons hide-on-med-and-up">
+                    <a
+                      href=""
+                      className="inst-link fa fa-search"
+                      onClick={e => this.toggleEditModal(e, 'search')}
+                    />
+                  </div>
+                  <div className="col s2 m1 head-icons">
+                    <a
+                      href="#"
+                      className={
+                        this.props.count > 0
+                          ? 'fa fa-star fa-2x inst-link'
+                          : 'fa fa-star-o fa-2x inst-link'
+                      }
+                      data-activates="slide-out"
+                      onClick={e => this.toggleEditModal(e, 'bookmark')}
+                    >
+                      <span className="new" />
+                    </a>
+                  </div>
 
-              <div className="col s2 m1 head-icons">
-                <div href="#" data-activates="slide-out">
-                  <div className="dropdownLink">
-                    <button className="dropbtnLink fa fa-link fa-2x inst-link" />
-                    <div className="dropdownLink-content">
-                      <a href="/externallinkpages" className="openLinks">
-                        Click here to Open all the external links in a page
-                      </a>
-                      <p className=" blue-text externalLink">
-                        <b> External Links</b>
-                      </p>
-                      <hr />
-                      <ExternalLinksView externallinks={externallinks} />
+                  <div className="col s2 m1 head-icons">
+                    <div href="#" data-activates="slide-out">
+                      <div className="dropdownLink">
+                        <button className="dropbtnLink fa fa-link fa-2x inst-link" />
+                        <div className="dropdownLink-content">
+                          <a href="/externallinkpages" className="openLinks">
+                            Click here to Open all the external links in a page
+                          </a>
+                          <p className=" blue-text externalLink">
+                            <b> External Links</b>
+                          </p>
+                          <hr />
+                          <ExternalLinksView externallinks={externallinks} />
+                        </div>
+                      </div>
+                      <span className="new" />
                     </div>
                   </div>
-                  <span className="new" />
+
+                  <div className="col s2 m1 head-icons ">
+                    <a className="dropdown-button inst-link " href="#" data-activates="dropdown1">
+                      <i className="fa fa-user fa-2x" id="usrIcon" />
+                    </a>
+                    <UserInfo />
+                  </div>
                 </div>
               </div>
+            </div>
 
-              <div className="col s2 m1 head-icons ">
-                <a className="dropdown-button inst-link " href="#" data-activates="dropdown1">
-                  <i className="fa fa-user fa-2x" id="usrIcon" />
-                </a>
-                <UserInfo />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* feedback modal to be changed */}
-        <MainModal
-          show={isOpen}
-          onClose={this.close}
-          subFunc={this.handleSubmit}
-          title={title}
-          confirm={confirm}
-          reject={reject}
-        >
-          {modalType === 'note' ? (
-            <div className="row">
-              <div className="">
-                <a
-                  href=""
-                  className=" blue-text "
-                  style={{ fontSize: '11px' }}
-                  onClick={e => this.markAllAsVisited(true)}
-                >
-                  <u> Mark opened as read</u>
-                </a>
-              </div>
-              <ul className="collection">{this.renderNotifications('')}</ul>
-            </div>
-          ) : modalType === 'bookmark' ? (
-            <Bookmark />
-          ) : modalType === 'link' ? (
-            <div className="row" />
-          ) : modalType === 'search' ? (
-            <div className="searchbox-wrapper">
-              <input
-                className={''}
-                name={'search'}
-                type="search"
-                defaultValue={this.getQuery()}
-                id="searchField"
-                placeholder={'Search'}
-                onChange={this.grabText}
-              />
-            </div>
-          ) : (
-            ''
-          )}
-        </MainModal>
-      </>
+            <MainModal
+              show={isOpen}
+              onClose={this.close}
+              subFunc={this.handleSubmit}
+              title={title}
+              confirm={confirm}
+              reject={reject}
+            >
+              {modalType === 'note' ? (
+                <div className="row">
+                  <div className="">
+                    <a
+                      href=""
+                      className=" blue-text "
+                      style={{ fontSize: '11px' }}
+                      onClick={e => this.markAllAsVisited(true)}
+                    >
+                      <u> Mark opened as read</u>
+                    </a>
+                  </div>
+                  <ul className="collection">{this.renderNotifications('')}</ul>
+                </div>
+              ) : modalType === 'bookmark' ? (
+                <Bookmark />
+              ) : modalType === 'link' ? (
+                <div className="row" />
+              ) : modalType === 'search' ? (
+                <div className="searchbox-wrapper">
+                  <input
+                    className={''}
+                    name={'search'}
+                    type="search"
+                    defaultValue={this.getQuery()}
+                    id="searchField"
+                    placeholder={'Search'}
+                    onChange={this.grabText}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+            </MainModal>
+          </Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }

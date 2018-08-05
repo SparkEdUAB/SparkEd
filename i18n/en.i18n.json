@@ -13,5 +13,11 @@
     "Logout": "Logout",
     "Password": "Password",
     "Email": "Email Address"
+  },
+  "manage": {
+    "courses": "courses",
+    "unit": "units",
+    "topics": "topics",
+    "resources": "resources"
   }
 }

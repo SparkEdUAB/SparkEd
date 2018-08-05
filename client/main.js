@@ -7,6 +7,8 @@ import '../imports/ui/stylesheets/header.css';
 import '../imports/ui/stylesheets/overwrites.css';
 import '../imports/ui/stylesheets/register.css';
 import '../imports/ui/stylesheets/mainModal.css';
+import '../imports/api/languages/language';
+// import { La }
 
 FlowRouter.wait();
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import i18n from 'meteor/universe:i18n';
 
-const T = i18n.createComponent();
+export const T = i18n.createComponent();
 
 export const ThemeContext = React.createContext();
 
@@ -19,6 +19,7 @@ export default class Languages extends Component {
     switch (lang) {
       case 'fr':
         i18n.setLocale('fr-FR');
+        localStorage.setItem('locale', 'fr-FR');
         break;
       case 'en':
         i18n.setLocale('en-US');

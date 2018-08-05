@@ -12,5 +12,11 @@
     "Logout": "cerrar sesión",
     "Password": "contraseña",
     "Email": "correo electrónico"
+  },
+  "manage": {
+    "courses": "coursos",
+    "unit": "unito",
+    "topics": "topicos",
+    "resources": "resourcos"
   }
 }
