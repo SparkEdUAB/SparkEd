@@ -1,23 +1,39 @@
 {
   "_locale": "en-US",
   "_namespace": "common",
-  "accounts": {
-    "userName": "User name",
-    "Language": "Language",
+  "language": {
     "enUS": "English - U.S.",
     "esES": "Spanish - SP",
     "frFr": "French - FR",
+    "Language": "Language"
+  },
+  "accounts": {
+    "userName": "User name",
     "Subjects": "Subjects",
     "Register": "Register",
     "Login": "LogIn",
     "Logout": "Logout",
     "Password": "Password",
-    "Email": "Email Address"
+    "EmailField": "Email Address",
+    "name": "name",
+    "Role": "Role",
+    "Email": "Email",
+    "Gender": "Gender"
   },
   "manage": {
+    "accounts": "accounts",
     "courses": "courses",
     "unit": "units",
     "topics": "topics",
     "resources": "resources"
+  },
+  "actions": {
+    "delete": "delete",
+    "add": "add",
+    "new": "new",
+    "approve": "approve",
+    "suspend": "suspend",
+    "ChangeRoles": "Change Roles",
+    "edit": "edit"
   }
 }

@@ -1,22 +1,38 @@
 {
   "_locale": "es-ES",
   "_namespace": "common",
+  "language": {
+    "enUS": "Englos - U.S.",
+    "esES": "Spañol - SP",
+    "frFr": "frances - FR",
+    "Language": "Idioma"
+  },
   "accounts": {
     "userName": "Nombre",
-    "Language": "Idioma",
-    "enUS": "English - U.S.",
-    "esES": "Spanish - SP",
-    "frFr": "French - FR",
     "Register": "Registro",
     "Login": "iniciar sesión",
     "Logout": "cerrar sesión",
     "Password": "contraseña",
-    "Email": "correo electrónico"
+    "EmailField": "correo electrónico",
+    "name": "name",
+    "Role": "Role",
+    "Email": "Email",
+    "Gender": "Gender"
   },
   "manage": {
+    "accounts": "compte",
     "courses": "coursos",
     "unit": "unito",
     "topics": "topicos",
     "resources": "resourcos"
+  },
+  "actions": {
+    "delete": "removos",
+    "add": "ajoutos",
+    "new": "novos",
+    "approve": "approvos",
+    "suspend": "suspenos",
+    "ChangeRoles": "Change Rolesss",
+    "edit": "editos"
   }
 }

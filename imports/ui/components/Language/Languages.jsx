@@ -13,6 +13,8 @@ export default class Languages extends Component {
       languages: [],
     };
   }
+  // i18n.setLocale(localStorage.getItem('locale'));
+  //
 
   // change the language
   changeLangauge = (e, lang) => {
@@ -37,17 +39,17 @@ export default class Languages extends Component {
       <ThemeContext.Provider value="en">
         <div className="row">
           <a href="" onClick={e => this.changeLangauge(e, 'en')}>
-            <T>common.accounts.enUS</T>
+            <T>common.language.enUS</T>
           </a>
           {' |'}
           <a href="" onClick={e => this.changeLangauge(e, 'fr')}>
             {' '}
-            <T>common.accounts.frFr</T>
+            <T>common.language.frFr</T>
           </a>
           |
           <a href="" onClick={e => this.changeLangauge(e, 'es')}>
             {' '}
-            <T>common.accounts.esES</T>
+            <T>common.language.esES</T>
           </a>
         </div>
       </ThemeContext.Provider>

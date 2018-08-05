@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
+import i18n from 'meteor/universe:i18n';
 import {
   handleCheckboxChange,
   handleCheckAll,
@@ -16,6 +17,8 @@ import MainModal from '../../modals/MainModal.jsx';
 import { closeModal, accountsModalStates } from '../../modals/methods';
 import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
+
+const T = i18n.createComponent();
 
 const { isUserAuth } = config;
 export class ManageAccounts extends React.Component {
@@ -238,7 +241,9 @@ export class ManageAccounts extends React.Component {
         <div className="col m9 s11">
           <div className="row">
             <div>
-              <h4>Manage Accounts</h4>
+              <h4>
+                Manage <T>common.manage.accounts</T>
+              </h4>
             </div>
             <div className="col m8">
               <SearchField
@@ -256,7 +261,7 @@ export class ManageAccounts extends React.Component {
                 onClick={e => this.openModal('delete', e)}
               >
                 {' '}
-                Delete
+                <T>common.action.delete</T>
               </button>
             </div>
             {isUserAuth ? (

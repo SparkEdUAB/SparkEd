@@ -1,12 +1,14 @@
 {
   "_locale": "fr-FR",
   "_namespace": "common",
+  "language": {
+    "enUS": "Anglais - U.S.",
+    "esES": "Espagnol - SP",
+    "frFr": "Francais - FR",
+    "Language": "Language"
+  },
   "accounts": {
     "userName": "Nom",
-    "Language": "Language",
-    "enUS": "English - U.S.",
-    "esES": "Spanish - SP",
-    "frFr": "French - FR",
     "Register": "Enregistre-moi",
     "Login": "Se Connecter",
     "Logout": "Deconnection",
@@ -14,9 +16,19 @@
     "Email": "Addresse Email"
   },
   "manage": {
+    "accounts": "compte",
     "courses": "coursess",
     "units": "unite",
     "topics": "topique",
     "resources": "resourcess"
+  },
+  "actions": {
+    "delete": "eraser",
+    "add": "ajouter",
+    "new": "nouveau",
+    "approve": "approver",
+    "suspend": "suspender",
+    "ChangeRoles": "Changer Roles",
+    "edit": "editer"
   }
 }
