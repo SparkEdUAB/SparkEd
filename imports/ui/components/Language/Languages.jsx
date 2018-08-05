@@ -14,9 +14,7 @@ export default class Languages extends Component {
     };
     i18n.setLocale(localStorage.getItem('locale'));
   }
-  //
 
-  // change the language
   changeLangauge = (e, lang) => {
     switch (lang) {
       case 'fr':

@@ -8,7 +8,6 @@ export default class Login extends Component {
     super(props);
     this.state = {
       error: '',
-      languages: [],
     };
   }
 
@@ -39,22 +38,6 @@ export default class Login extends Component {
     });
   };
 
-  // change the language
-  changeLangauge = lang => {
-    switch (lang) {
-      case 'fr':
-        i18n.setLocale('fr-FR');
-        break;
-      case 'en':
-        i18n.setLocale('en-US');
-        break;
-      case 'es':
-        i18n.setLocale('es-Es');
-        break;
-      default:
-        break;
-    }
-  };
   render() {
     const { error } = this.state;
     return (
@@ -98,19 +81,6 @@ export default class Login extends Component {
               </div>
               {error ? <div className="row">{error}</div> : <span />}
             </form>
-            <a href="" onClick={e => this.changeLangauge('en')}>
-              <T>common.accounts.enUS</T>
-            </a>
-            {' |'}
-            <a href="" onClick={e => this.changeLangauge('fr')}>
-              {' '}
-              <T>common.accounts.frFr</T>
-            </a>
-            |
-            <a href="" onClick={e => this.changeLangauge('es')}>
-              {' '}
-              <T>common.accounts.esES</T>
-            </a>
           </div>
           <a
             title="Register"
