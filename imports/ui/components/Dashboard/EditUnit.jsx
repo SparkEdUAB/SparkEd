@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
+import i18n from 'meteor/universe:i18n';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -12,6 +13,7 @@ import {
 import MainModal from '../../../ui/modals/MainModal';
 import { formatText } from '../../utils/utils';
 
+export const T = i18n.createComponent();
 export class EditUnits extends Component {
   constructor(props) {
     super(props);
@@ -203,12 +205,11 @@ export class EditUnits extends Component {
           Meteor.call('topic.remove', v, err => {
             err
               ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'topic-remove'),
-                'error',
-              ))
-
+                Meteor.call(
+                  'logger',
+                  formatText(err.message, Meteor.userId(), 'topic-remove'),
+                  'error',
+                ))
               : Meteor.call('removeSearchData', v, err => {
                   err
                     ? Materialize.toast(err.reason, 4000, 'error-toast')
@@ -293,7 +294,7 @@ export class EditUnits extends Component {
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
             <div className="col m3">
@@ -303,7 +304,7 @@ export class EditUnits extends Component {
                   onClick={e => this.toggleEditModal('add', e)}
                 >
                   {' '}
-                  Add
+                  <T>common.actions.add</T>
                 </button>
               </a>
             </div>
@@ -314,12 +315,21 @@ export class EditUnits extends Component {
               <tr>
                 <th>#</th>
                 <th>{`${Session.get('sub_unit_title') || 'Topics'}`}</th>
-                <th>Uploaded At</th>
+                <th>
+                  {' '}
+                  <T>common.actions.createdAt</T>
+                </th>
                 <th>Edit Topics</th>
-                <th>Resources</th>
+                <th>
+                  {' '}
+                  <T>common.manage.resources</T>
+                </th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    {' '}
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
               </tr>
             </thead>
