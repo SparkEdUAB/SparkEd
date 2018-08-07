@@ -12,7 +12,9 @@
     "referenceDisplaced": "References displayed",
     "feedback": "Feedback",
     "source": "Source",
-    "usersfeedback": "Users Feedback"
+    "usersfeedback": "Users Feedback",
+    "notifications": "Notifications",
+    "bookmarks": "Bookmarks"
   },
   "accounts": {
     "userName": "User name",

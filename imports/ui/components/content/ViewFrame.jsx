@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import i18n from 'meteor/universe:i18n';
-import ViewResource from './ViewResource.jsx';
+import ViewResource from './ViewResource';
 
 export const T = i18n.createComponent();
 

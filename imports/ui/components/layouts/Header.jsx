@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
+import i18n from 'meteor/universe:i18n';
 import { SearchView } from '../Utilities/Utilities.jsx';
 import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 import { _Notifications } from '../../../api/notifications/notifications';
@@ -194,25 +195,25 @@ export class Header extends Component {
       case 'note':
         this.setState({
           modalType: type,
-          title: 'Notifications',
+          title: <T>common.titles.notifications</T>,
           confirm: 'More',
-          reject: 'Close',
+          reject: <T>common.actions.close</T>,
         });
         break;
       case 'bookmark':
         this.setState({
           modalType: type,
-          title: 'Bookmarks',
+          title: <T>common.titles.bookmarks</T>,
           confirm: 'See',
-          reject: 'Close',
+          reject: <T>common.actions.close</T>,
         });
         break;
       case 'link':
         this.setState({
           modalType: type,
-          title: 'External Links',
+          title: <T>common.sidenav.externalLinks</T>,
           confirm: 'See',
-          reject: 'Close',
+          reject: <T>common.actions.close</T>,
         });
         break;
       case 'search':
