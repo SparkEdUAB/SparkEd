@@ -5,10 +5,10 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import Header from '../components/layouts/Header';
 
-const AppWrapper = props => (
+const AppWrapper = ({ children }) => (
   <Fragment>
     <Header />
-    <Fragment>{props.children}</Fragment>
+    <Fragment>{children}</Fragment>
   </Fragment>
 );
 

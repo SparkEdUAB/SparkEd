@@ -18,7 +18,9 @@ export default class ErrorBoundary extends Component {
     return history.go(-1);
   };
   render() {
-    if (this.state.hasError) {
+    const { hasError } = this.state;
+    const { children } = this.props;
+    if (hasError) {
       return (
         <>
           <h1 className="notFoundHead">
@@ -35,7 +37,7 @@ export default class ErrorBoundary extends Component {
         </>
       );
     }
-    return this.props.children;
+    return children;
   }
 }
 

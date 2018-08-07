@@ -1,44 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 
 /**
  * @prop { subFunc } a callback function for different modals
  */
-
-export default class MainModal extends Component {
-  render() {
-    if (!this.props.show) {
-      return null;
-    }
-
-    return (
-      // <div style={styles.backdropStyle}>
-      <div id="notifications">
-        {/* <div style={styles.modalStyle} className="main_modal"> */}
-        <div id = "notificationsStyle" className="main_modal">
-          <h5>{this.props.title}</h5>
-          <div className="row">
-            <form onSubmit={this.props.subFunc}>
-              <div className="row">{this.props.children}</div>
-              <div className="" id = "notificationBody">
-                <div className="modal-footer">
-                  <button className="btn left" role="submit">
-                    {' '}
-                    {this.props.confirm}
-                  </button>
-                  <a href="" onClick={this.props.onClose} className="btn grey darken-3 right">
-                    {' '}
-                    {this.props.reject}
-                  </a>
-                </div>
+const MainModal = (props) => {
+  if (!props.show) {
+    return null;
+  }
+  return (
+    // <div style={styles.backdropStyle}>
+    <div id="notifications">
+      {/* <div style={styles.modalStyle} className="main_modal"> */}
+      <div id="notificationsStyle" className="main_modal">
+        <h5>{props.title}</h5>
+        <div className="row">
+          <form onSubmit={props.subFunc}>
+            <div className="row">{props.children}</div>
+            <div className="" id="notificationBody">
+              <div className="modal-footer">
+                <button className="btn left" role="submit">
+                  {' '}
+                  {props.confirm}
+                </button>
+                <a href="" onClick={props.onClose} className="btn grey darken-3 right">
+                  {' '}
+                  {props.reject}
+                </a>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 MainModal.propTypes = {
   subFunc: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
@@ -48,3 +44,5 @@ MainModal.propTypes = {
   confirm: PropTypes.string.isRequired,
   reject: PropTypes.string.isRequired,
 };
+
+export default MainModal;
