@@ -1,5 +1,3 @@
-
-
 export function handleCheckboxChange(id) {
   const checkbox = $(`.chk${id}`);
   const checkBoxes = $('.chk').toArray();
@@ -37,7 +35,6 @@ export function getCheckBoxValues(checkboxes) {
   });
   return values;
 }
-
 
 export function handleCheckAll(parent, children) {
   const checkBox = $('.chk-all');

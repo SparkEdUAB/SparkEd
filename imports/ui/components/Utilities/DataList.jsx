@@ -4,11 +4,17 @@ import { PropTypes } from 'prop-types';
 export default class DataList extends Component {
   renderOptions() {
     return this.props.options.map(item => (
-      <DataOption key={item._id} showData={this.props.showData} val={item.name} id={item._id} clas={this.props.id} data={item} />
+      <DataOption
+        key={item._id}
+        showData={this.props.showData}
+        val={item.name}
+        id={item._id}
+        clas={this.props.id}
+        data={item}
+      />
       // note that parent's id it passed as  a className for children
     ));
   }
-
 
   componentDidMount() {
     $(`#${this.props.id}`).bind('change', this.props.change);
@@ -17,29 +23,35 @@ export default class DataList extends Component {
 
   render() {
     return (
-          <div>
-            <div className="input-fields col s12" >
-              <label>{this.props.title}:</label>
-                <select className="data-list browser-default" id={this.props.id} name={this.props.name}>
-                  <option value="" ></option>
-                  {this.renderOptions()}
-                </select>
-              </div>
-            </div>
+      <div className="input-fields col s12">
+        <label>{this.props.title}:</label>
+        <select className="data-list browser-default" id={this.props.id} name={this.props.name}>
+          <option value="" />
+          {this.renderOptions()}
+        </select>
+      </div>
     );
   }
 }
 
+export const DataOption = ({
+  showData, data, id, clas, val,
+}) => {
+  const content = showData ? JSON.stringify(data) : '';
+  return (
+    <option value={id} className={`dt dt${clas}`} data={content}>
+      {val}
+    </option>
+  );
+};
 
-export class DataOption extends Component {
-  render() {
-    const content = this.props.showData === true ? JSON.stringify(this.props.data) : '';
-
-    return (
-      <option value={this.props.id} className={`dt dt${this.props.clas}`} data={content} >{this.props.val}</option>
-    );
-  }
-}
+DataOption.propTypes = {
+  showData: PropTypes.bool,
+  data: PropTypes.object,
+  id: PropTypes.string,
+  clas: PropTypes.string,
+  val: PropTypes.string,
+};
 
 DataList.propTypes = {
   title: PropTypes.string.isRequired, // label title
