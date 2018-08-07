@@ -34,5 +34,19 @@
     "suspend": "suspenos",
     "ChangeRoles": "Change Rolesss",
     "edit": "editos"
+  },
+  "sidenav": {
+    "dashboard": "Dashboard",
+    "accounts": "Accounts",
+    "courses": "Courses",
+    "alltopics": "All Topicos",
+    "resourceLibrary": "Resource Library",
+    "externalLinks": "External Links",
+    "feedback": "Feedback",
+    "setup": "Set Up",
+    "changeSlides": "Change Slides",
+    "updates": "Updates",
+    "subjects": "Subjects",
+    "stats": "Statistics"
   }
 }

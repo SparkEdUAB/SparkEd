@@ -30,5 +30,19 @@
     "suspend": "suspender",
     "ChangeRoles": "Changer Roles",
     "edit": "editer"
+  },
+  "sidenav": {
+    "dashboard": "Dashboard",
+    "accounts": "Accounts",
+    "courses": "Courses",
+    "alltopics": "All Topique",
+    "resourceLibrary": "Resource Library",
+    "externalLinks": "External Links",
+    "feedback": "Feedback",
+    "setup": "Set Up",
+    "changeSlides": "Change Slides",
+    "updates": "Updates",
+    "subjects": "Subjects",
+    "stats": "Statistics"
   }
 }

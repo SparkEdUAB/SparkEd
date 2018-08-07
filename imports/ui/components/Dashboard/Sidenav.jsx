@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import * as config from '../../../../config.json';
-import Header from '../layouts/Header';
 import AppWrapper from '../../containers/AppWrapper';
-// currently disabled the sync and sync settings as they need to be tested and thoroughly reviewed
-//  The code can remain here as both will be updated in the later release
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 export default class Sidenav extends Component {
   render() {
@@ -18,13 +18,15 @@ export default class Sidenav extends Component {
               <ul className="item-container">
                 <li className="hide-on-med-and-down">
                   <a id="dashtweek" href="/dashboard/accounts" className="center">
-                    Dashboard
+                    <T>common.sidenav.dashboard</T>
                   </a>
                 </li>
                 <li>
                   <a href="/dashboard/accounts" className={`  side-list ${this.props.accounts}`}>
                     <i className={`fa fa-user fa-lg icon-white `} />
-                    <span className="hide-on-small-only">&nbsp;Accounts</span>
+                    <span className="hide-on-small-only">
+                      &nbsp; <T>common.sidenav.accounts</T>
+                    </span>
                   </a>
                 </li>
 
@@ -32,7 +34,9 @@ export default class Sidenav extends Component {
                   <li>
                     <a href="/dashboard/course" className={`  side-list ${this.props.course}`}>
                       <i className={`fa fa-book fa-lg `} />
-                      <span className="hide-on-small-only">&nbsp;Subjects</span>
+                      <span className="hide-on-small-only">
+                        &nbsp; <T>common.sidenav.subjects</T>
+                      </span>
                     </a>
                   </li>
                 ) : (
@@ -40,7 +44,9 @@ export default class Sidenav extends Component {
                     <li>
                       <a href="/dashboard/course" className={`  side-list ${this.props.course}`}>
                         <i className={`fa fa-book fa-lg `} />
-                        <span className="hide-on-small-only">&nbsp;Courses</span>
+                        <span className="hide-on-small-only">
+                          &nbsp; <T>common.sidenav.courses</T>
+                        </span>
                       </a>
                     </li>
                     <li>
@@ -49,7 +55,9 @@ export default class Sidenav extends Component {
                         className={`  side-list ${this.props.topics}`}
                       >
                         <i className={`fa fa-text-width fa-lg `} />
-                        <span className="hide-on-small-only">&nbsp; All Topics</span>
+                        <span className="hide-on-small-only">
+                          &nbsp; <T>common.sidenav.alltopics</T>
+                        </span>
                       </a>
                     </li>
                   </Fragment>
@@ -57,20 +65,26 @@ export default class Sidenav extends Component {
                 <li>
                   <a href="/dashboard/extra" className={`  side-list ${this.props.extra}`}>
                     <i className={`fa fa-th fa-lg `} />
-                    <span className="hide-on-small-only">&nbsp;Resource Library</span>
+                    <span className="hide-on-small-only">
+                      &nbsp; <T>common.sidenav.resourceLibrary</T>
+                    </span>
                   </a>
                 </li>
                 <li>
                   <a href="/externallinks" className={`side-list ${this.props.externallinks}`}>
                     <i className={`fa fa-link `} />
-                    <span className="hide-on-small-only">&nbsp; External Link</span>
+                    <span className="hide-on-small-only">
+                      &nbsp; <T>common.sidenav.externalLinks</T>
+                    </span>
                   </a>
                 </li>
                 {config.isUserAuth ? (
                   <li>
                     <a href="/dashboard/overview" className={`  side-list ${this.props.stats}`}>
                       <i className={`fa fa-bar-chart fa-lg `} />
-                      <span className="hide-on-small-only">&nbsp;Statistics</span>
+                      <span className="hide-on-small-only">
+                        &nbsp; <T>common.sidenav.stats</T>
+                      </span>
                     </a>
                   </li>
                 ) : (
@@ -79,7 +93,9 @@ export default class Sidenav extends Component {
                 <li>
                   <a href="/dashboard/feedback" className={`  side-list ${this.props.feedback}`}>
                     <i className={`fa fa-comments fa-lg `} />
-                    <span className="hide-on-small-only">&nbsp;Feedback</span>
+                    <span className="hide-on-small-only">
+                      &nbsp; <T>common.sidenav.feedback</T>
+                    </span>
                   </a>
                 </li>
 
@@ -89,20 +105,26 @@ export default class Sidenav extends Component {
                     <li>
                       <a href="/setup" className={`  side-list ${this.props.settings}`}>
                         <i className={`fa fa-gear fa-lg `} />
-                        <span className="hide-on-small-only">&nbsp; Set Up</span>
+                        <span className="hide-on-small-only">
+                          &nbsp; <T>common.sidenav.setup</T>
+                        </span>
                       </a>
                     </li>
 
                     <li>
                       <a href="/dashboard/slides" className={`  side-list ${this.props.slides}`}>
                         <i className={`fa fa-picture-o `} />
-                        <span className="hide-on-small-only">&nbsp; Change Slides</span>
+                        <span className="hide-on-small-only">
+                          &nbsp; <T>common.sidenav.changeSlides</T>
+                        </span>
                       </a>
                     </li>
                     <li>
                       <a href="/dashboard/updates" className={`  side-list ${this.props.slides}`}>
                         <i className={`fa fa-picture-o `} />
-                        <span className="hide-on-small-only">&nbsp; Updates</span>
+                        <span className="hide-on-small-only">
+                          &nbsp; <T>common.sidenav.updates</T>
+                        </span>
                       </a>
                     </li>
                   </>
