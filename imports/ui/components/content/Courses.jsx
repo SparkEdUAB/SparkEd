@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import i18n from 'meteor/universe:i18n';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import * as config from '../../../../config.json';
-import i18n from 'meteor/universe:i18n';
+
 
 export const T = i18n.createComponent();
 

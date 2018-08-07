@@ -25,7 +25,8 @@
     "courses": "courses",
     "unit": "units",
     "topics": "topics",
-    "resources": "resources"
+    "resources": "resources",
+    "manage": "Manage"
   },
   "actions": {
     "delete": "delete",
@@ -36,7 +37,8 @@
     "ChangeRoles": "Change Roles",
     "edit": "edit",
     "check": "Check All",
-    "changeRole": "Change Role"
+    "changeRole": "Change Role",
+    "createdAt": "Created At"
   },
   "sidenav": {
     "dashboard": "Dashboard",

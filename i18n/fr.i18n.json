@@ -20,7 +20,8 @@
     "courses": "coursess",
     "units": "unite",
     "topics": "topique",
-    "resources": "resourcess"
+    "resources": "resourcess",
+    "manage": "Manage"
   },
   "actions": {
     "delete": "eraser",

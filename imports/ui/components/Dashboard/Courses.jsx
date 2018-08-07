@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
+import i18n from 'meteor/universe:i18n';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { Titles } from '../../../api/settings/titles';
@@ -14,6 +15,8 @@ import MainModal from '../../../ui/modals/MainModal.jsx';
 import { closeModal } from '../../../ui/modals/methods.js';
 import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
+
+export const T = i18n.createComponent();
 
 export class Courses extends Component {
   constructor(props) {
@@ -390,7 +393,11 @@ export class Courses extends Component {
 
         <div className="col m9 s11">
           <div className="">
-            <h4>Manage {new_title}</h4> {/* Add */}
+            <h4>
+              {' '}
+              <T>common.manage.manage</T> {new_title}
+            </h4>{' '}
+            {/* Add */}
           </div>
           <div className="row">
             <div className="col m3">
@@ -399,7 +406,7 @@ export class Courses extends Component {
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
             <div className="col m3">
@@ -409,7 +416,7 @@ export class Courses extends Component {
                   onClick={e => this.toggleEditModal('add', e)}
                 >
                   {' '}
-                  New
+                  <T>common.actions.new</T>
                 </button>
               </a>
             </div>
@@ -420,12 +427,18 @@ export class Courses extends Component {
               <tr>
                 <th>#</th>
                 <th>{new_title}</th>
-                <th>Created At</th>
+                <th>
+                  {' '}
+                  <T>common.actions.createdAt</T>
+                </th>
                 <th>{`Edit ${new_title}`}</th>
                 <th>{new_sub_title}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    {' '}
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
                 <th>
                   <a

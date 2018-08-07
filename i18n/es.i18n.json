@@ -24,7 +24,8 @@
     "courses": "coursos",
     "unit": "unito",
     "topics": "topicos",
-    "resources": "resourcos"
+    "resources": "resourcos",
+    "manage": "Manage"
   },
   "actions": {
     "delete": "removos",
