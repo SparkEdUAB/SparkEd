@@ -34,6 +34,8 @@
     "approve": "approve",
     "suspend": "suspend",
     "ChangeRoles": "Change Roles",
-    "edit": "edit"
+    "edit": "edit",
+    "check": "Check All",
+    "changeRole": "Change Role"
   }
 }

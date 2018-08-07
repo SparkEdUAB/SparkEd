@@ -293,7 +293,7 @@ export class ManageAccounts extends React.Component {
                 onClick={e => this.openModal('roles', e)}
               >
                 {' '}
-                Change Roles
+                <T>common.actions.changeRole</T>
               </button>
             </div>
           </div>
@@ -301,15 +301,27 @@ export class ManageAccounts extends React.Component {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Email</th>
-                <th>Gender</th>
+                <th>
+                  <T>common.accounts.name</T>
+                </th>
+                <th>
+                  <T>common.accounts.Role</T>
+                </th>
+                <th>
+                  <T>common.accounts.Email</T>
+                </th>
+                <th>
+                  <T>common.accounts.Gender</T>
+                </th>
                 {isUserAuth ? <th>Status</th> : null}
-                <th>Edit</th>
+                <th>
+                  <T>common.actions.edit</T>
+                </th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
               </tr>
             </thead>
