@@ -423,41 +423,33 @@ export class ManageUnits extends Component {
   }
 }
 
-export class Unit extends Component {
-  handleUrl(id) {
-    // id => unit_id
-    if (config.isHighSchool) {
-      FlowRouter.go(`/dashboard/isHighSchool/edit_unit/${id}`);
-    } else {
-      FlowRouter.go(`/dashboard/edit_unit/${id}`);
-    }
-  }
+export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
+  <tr key={_id} className="link-unit">
+    <td>{count}</td>
+    <td onClick={e => this.handleUrl(e, _id)}>{name}</td>
+    <td>{createdAt}</td>
+    <td>
+      <a href="" className="fa fa-pencil" onClick={EditUnit} />
+    </td>
+    <td>
+      <a href={''} onClick={e => this.handleUrl(e, _id)} className="fa fa-pencil" />
+    </td>
+    <td onClick={handleCheckboxChange.bind(this, _id)}>
+      <input type="checkbox" className={' filled-in chk chk' + _id} id={_id} />
+      <label />
+    </td>
+  </tr>
+);
 
-  render() {
-    const {
-      EditUnit,
-      count,
-      unit: { _id, name, createdAt },
-    } = this.props;
-    return (
-      <tr key={_id} className="link-unit">
-        <td>{count}</td>
-        <td onClick={this.handleUrl.bind(this, _id)}>{name}</td>
-        <td>{createdAt}</td>
-        <td>
-          <a href="" className="fa fa-pencil" onClick={EditUnit} />
-        </td>
-        <td>
-          <a href={''} onClick={this.handleUrl.bind(this, _id)} className="fa fa-pencil" />
-        </td>
-        <td onClick={handleCheckboxChange.bind(this, _id)}>
-          <input type="checkbox" className={' filled-in chk chk' + _id} id={_id} />
-          <label />
-        </td>
-      </tr>
-    );
+handleUrl = (e, id) => {
+  // id => unit_id
+  if (config.isHighSchool) {
+    FlowRouter.go(`/dashboard/isHighSchool/edit_unit/${id}`);
+  } else {
+    FlowRouter.go(`/dashboard/edit_unit/${id}`);
   }
-}
+};
+
 export default withTracker(params => {
   Meteor.subscribe('searchUnits', Session.get('courseIde'));
   Meteor.subscribe('courses');
