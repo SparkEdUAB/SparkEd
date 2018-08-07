@@ -3,8 +3,6 @@ import i18n from 'meteor/universe:i18n';
 
 export const T = i18n.createComponent();
 
-export const ThemeContext = React.createContext();
-
 export default class Languages extends Component {
   constructor(props) {
     super(props);
@@ -36,23 +34,21 @@ export default class Languages extends Component {
 
   render() {
     return (
-      <ThemeContext.Provider value="en">
-        <div className="row">
-          <a href="" onClick={e => this.changeLangauge(e, 'en')}>
-            <T>common.language.enUS</T>
-          </a>
-          {' |'}
-          <a href="" onClick={e => this.changeLangauge(e, 'fr')}>
-            {' '}
-            <T>common.language.frFr</T>
-          </a>
-          |
-          <a href="" onClick={e => this.changeLangauge(e, 'es')}>
-            {' '}
-            <T>common.language.esES</T>
-          </a>
-        </div>
-      </ThemeContext.Provider>
+      <div className="row">
+        <a href="" onClick={e => this.changeLangauge(e, 'en')}>
+          <T>common.language.enUS</T>
+        </a>
+        {' |'}
+        <a href="" onClick={e => this.changeLangauge(e, 'fr')}>
+          {' '}
+          <T>common.language.frFr</T>
+        </a>
+        |
+        <a href="" onClick={e => this.changeLangauge(e, 'es')}>
+          {' '}
+          <T>common.language.esES</T>
+        </a>
+      </div>
     );
   }
 }

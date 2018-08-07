@@ -3,8 +3,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { _Units } from '../../../api/units/units';
-import Header from '../layouts/Header.jsx';
-import Sidenav from './Sidenav.jsx';
 import * as config from '../../../../config.json';
 
 export class Unit extends Component {
