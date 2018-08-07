@@ -38,7 +38,17 @@
     "edit": "edit",
     "check": "Check All",
     "changeRole": "Change Role",
-    "createdAt": "Created At"
+    "createdAt": "Created At",
+    "save": "Save",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "addreference": "Add Reference"
+  },
+  "message": {
+    "success": "",
+    "error": "",
+    "warn": ""
   },
   "sidenav": {
     "dashboard": "Dashboard",

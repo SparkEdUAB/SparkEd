@@ -34,7 +34,16 @@
     "approve": "approvos",
     "suspend": "suspenos",
     "ChangeRoles": "Change Rolesss",
-    "edit": "editos"
+    "edit": "editos",
+    "save": "Savos",
+    "close": "Closos",
+    "yes": "Si",
+    "no": "Na"
+  },
+  "message": {
+    "success": "",
+    "error": "",
+    "warn": ""
   },
   "sidenav": {
     "dashboard": "Dashboard",

@@ -1,6 +1,7 @@
 import { Session } from 'meteor/session';
 import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
+import i18n from 'meteor/universe:i18n';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { Titles } from '../../../api/settings/titles';
@@ -17,6 +18,7 @@ import MainModal from '../../../ui/modals/MainModal';
 import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
 
+export const T = i18n.createComponent();
 // this lists what a specific course contains
 
 export class ManageUnits extends Component {
@@ -366,12 +368,15 @@ export class ManageUnits extends Component {
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
             <div className="col m2">
               <a href={`/dashboard/unit/${courseId}?y=${year}`}>
-                <button className="btn grey fa fa-plus"> New</button>
+                <button className="btn grey fa fa-plus">
+                  {' '}
+                  <T>common.actions.new</T>
+                </button>
               </a>
             </div>
             <div className="col 4">
@@ -380,7 +385,7 @@ export class ManageUnits extends Component {
                 onClick={e => this.toggleEditModal('upload', e)}
               >
                 {' '}
-                Add Reference
+                <T>common.actions.addreference</T>
               </button>
             </div>
           </div>
@@ -390,12 +395,16 @@ export class ManageUnits extends Component {
               <tr>
                 <th>#</th>
                 <th>{new_sub_title}</th>
-                <th>Created At</th>
+                <th>
+                  <T>common.actions.createdAt</T>
+                </th>
                 <th>{`Edit ${new_sub_title}`}</th>
                 <th>{`Manage sub-${new_sub_title}`}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
               </tr>
             </thead>

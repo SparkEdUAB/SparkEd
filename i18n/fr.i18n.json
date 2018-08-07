@@ -30,7 +30,16 @@
     "approve": "approver",
     "suspend": "suspender",
     "ChangeRoles": "Changer Roles",
-    "edit": "editer"
+    "edit": "editer",
+    "save": "Sauver",
+    "close": "Closer",
+    "yes": "Oui",
+    "no": "No"
+  },
+  "message": {
+    "success": "",
+    "error": "",
+    "warn": ""
   },
   "sidenav": {
     "dashboard": "Dashboard",

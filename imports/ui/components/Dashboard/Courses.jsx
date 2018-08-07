@@ -66,8 +66,8 @@ export class Courses extends Component {
           modalIdentifier: id,
           modalType: ide,
           title: `Edit ${Session.get('course_title')}`,
-          confirm: 'Save',
-          reject: 'Close',
+          confirm: <T>common.actions.save</T>,
+          reject: <T>common.actions.close</T>,
           name: this.name,
           code: this.code,
           year: this.year,
@@ -79,8 +79,8 @@ export class Courses extends Component {
           modalIdentifier: id,
           modalType: ide,
           title: `Add ${Session.get('course_title')}`,
-          confirm: 'Save',
-          reject: 'Close',
+          confirm: <T>common.actions.save</T>,
+          reject: <T>common.actions.close</T>,
         });
         break;
       case 'del':
@@ -95,16 +95,16 @@ export class Courses extends Component {
           modalIdentifier: 'id',
           modalType: ide,
           title: `Are you sure to delete ${count} ${name}`,
-          confirm: 'Yes',
-          reject: 'No',
+          confirm: <T>common.actions.yes</T>,
+          reject: <T>common.actions.no</T>,
           ids: course,
         });
         break;
       case 'field':
         this.setState({
           title: 'Edit Table titles on this page',
-          confirm: 'Save',
-          reject: 'Close',
+          confirm: <T>common.actions.save</T>,
+          reject: <T>common.actions.close</T>,
           modalType: ide,
           table_title: yr,
           sub_title: id,
