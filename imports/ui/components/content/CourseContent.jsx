@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
+import i18n from 'meteor/universe:i18n';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
@@ -10,6 +11,8 @@ import { Header } from '../layouts/Header.jsx';
 import { FloatingButton, SearchField } from './../Utilities/Utilities.jsx';
 import Unit, { ExtraResource } from '../content/Unit.jsx';
 import { Loader } from '../Loader';
+
+export const T = i18n.createComponent();
 
 export class CourseContent extends Component {
   componentDidMount() {
@@ -73,7 +76,9 @@ export class CourseContent extends Component {
           ) : (
             <div className="row col m4">
               <h4>
-                <a name="references">References</a>
+                <a name="references">
+                  <T>common.manage.reference</T>
+                </a>
               </h4>
               <hr />
               {this.renderExtra(courseName(this.props.courseName))}

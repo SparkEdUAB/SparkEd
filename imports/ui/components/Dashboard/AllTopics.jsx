@@ -2,11 +2,15 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
+import i18n from 'meteor/universe:i18n';
 import { _Topics } from '../../../api/topics/topics';
 import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
 import Search from '../Utilities/Search/Search.jsx';
 import { SearchField } from '../Utilities/Utilities';
 import ErrorBoundary from '../../../ui/components/ErrorBoundary';
+
+export const T = i18n.createComponent();
+
 // todo: Add the name of unit where a topic belongs
 export class AllTopics extends Component {
   constructor() {
@@ -89,7 +93,9 @@ export class AllTopics extends Component {
         <div>
           {this.getTopics()}
           <div className="col m9 s11">
-            <h4>List of Topics</h4>
+            <h4>
+              List of <T>common.manage.topics</T>
+            </h4>
             <div className="col m8 offset-m2">
               <SearchField
                 action={'/dashboard/list_topics'}
@@ -103,8 +109,12 @@ export class AllTopics extends Component {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Topics</th>
-                  <th>Unit Name </th>
+                  <th>
+                    <T>common.manage.topics</T>
+                  </th>
+                  <th>
+                    <T>common.manage.unit</T> <T>common.accounts.name</T>{' '}
+                  </th>
                 </tr>
               </thead>
               <tbody>{this.renderAllTopics()}</tbody>

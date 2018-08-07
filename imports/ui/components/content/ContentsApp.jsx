@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Tracker } from 'meteor/tracker';
 import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
+import i18n from 'meteor/universe:i18n';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
 import Topics from './Topics.jsx';
@@ -11,6 +12,8 @@ import { insertStatistics } from '../Statistics/Statistics.jsx';
 import { FloatingButton } from '../Utilities/Utilities.jsx';
 import * as config from '../../../../config.json';
 import { Titles } from '../../../api/settings/titles';
+
+export const T = i18n.createComponent();
 
 export class ContentsApp extends Component {
   constructor(props) {
@@ -105,7 +108,9 @@ export class ContentsApp extends Component {
               >
                 <i className="fa fa-chevron-circle-left fa-lg" />
               </a>
-              <p className="sideNavHeading">{config.isHighSchool ? title : 'Topics'}</p>
+              <p className="sideNavHeading">
+                {config.isHighSchool ? title : <T>common.manage.topics</T>}
+              </p>
             </div>
             <Topics unitId={getUnitId()} />
           </div>

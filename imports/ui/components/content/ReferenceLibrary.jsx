@@ -3,10 +3,13 @@ import { PropTypes } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactPaginate from 'react-paginate';
+import i18n from 'meteor/universe:i18n';
 import Header from '../layouts/Header';
 import { References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { ExtraResource } from './Unit.jsx';
+
+export const T = i18n.createComponent();
 
 export class ReferenceLibrary extends Component {
   renderCourses() {
@@ -87,7 +90,7 @@ export class ReferenceLibrary extends Component {
             <ul className="item-container">
               <li className="hide-on-med-and-down">
                 <a id="dashtweek" href="/reference" className="center">
-                  Reference Library
+                  <T>common.sidenav.resourceLibrary</T>
                 </a>
               </li>
               {this.renderCourses()}

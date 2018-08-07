@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { withTracker } from 'meteor/react-meteor-data';
+import i18n from 'meteor/universe:i18n';
 import { Session } from 'meteor/session';
 import { _Courses } from '../../../api/courses/courses';
 import { References } from '../../../api/resources/resources';
@@ -14,6 +15,8 @@ import UploadWrapper from '../../../ui/modals/UploadWrapper.jsx';
 import MainModal from '../../../ui/modals/MainModal';
 import { closeModal } from '../../../ui/modals/methods.js';
 import { formatText } from '../../utils/utils';
+
+export const T = i18n.createComponent();
 
 export class Additional extends Component {
   constructor(props) {
@@ -289,7 +292,9 @@ export class Additional extends Component {
         </>
         <div className="col m9 s11">
           <div className="">
-            <h4>Reference Library </h4>
+            <h4>
+              <T>common.sidenav.resourceLibrary</T>{' '}
+            </h4>
           </div>
           <div className="row">
             <div className="col m4">
@@ -298,7 +303,7 @@ export class Additional extends Component {
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
             <div className="col m4">
@@ -311,7 +316,7 @@ export class Additional extends Component {
               </button>
             </div>
             <div className="col m4">
-              Reference displayed
+              <T>common.titles.referenceDisplaced</T>
               <div className="row">
                 <a className="col s2 link" onClick={e => this.getEntriesCount(e, 5)}>
                   <u>{Session.get('limit') === 5 ? <b>5</b> : 5}</u>
@@ -330,12 +335,18 @@ export class Additional extends Component {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Resource Name</th>
-                <th>Edit the Reference</th>
+                <th>
+                  <T>common.manage.reference</T>
+                </th>
+                <th>
+                  <T>common.actions.edit</T> <T>common.manage.reference</T>
+                </th>
                 <th>Course Name</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
               </tr>
             </thead>

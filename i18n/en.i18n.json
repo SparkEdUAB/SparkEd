@@ -7,6 +7,13 @@
     "frFr": "French - FR",
     "Language": "Language"
   },
+  "titles": {
+    "addreference": "Add Reference",
+    "referenceDisplaced": "References displayed",
+    "feedback": "Feedback",
+    "source": "Source",
+    "usersfeedback": "Users Feedback"
+  },
   "accounts": {
     "userName": "User name",
     "Subjects": "Subjects",
@@ -24,8 +31,9 @@
     "accounts": "accounts",
     "courses": "courses",
     "unit": "units",
-    "topics": "topics",
+    "topics": "Topics",
     "resources": "resources",
+    "reference": "References",
     "manage": "Manage"
   },
   "actions": {
