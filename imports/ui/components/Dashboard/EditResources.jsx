@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
+import i18n from 'meteor/universe:i18n';
 import ReactPaginate from 'react-paginate';
 import { _Topics } from '../../../api/topics/topics';
 import {
@@ -15,6 +16,8 @@ import { Resources } from '../../../api/resources/resources';
 import * as config from '../../../../config.json';
 import { _Units } from '../../../api/units/units';
 import { formatText } from '../../utils/utils';
+
+export const T = i18n.createComponent();
 
 export class EditResources extends Component {
   constructor(props) {
@@ -324,7 +327,7 @@ export class EditResources extends Component {
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
 
@@ -357,12 +360,18 @@ export class EditResources extends Component {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Resource</th>
-                <th>Edit Resource</th>
+                <th>
+                  <T>common.manage.resources</T>
+                </th>
+                <th>
+                  <T>common.actions.edit</T> <T>common.manage.resources</T>
+                </th>
                 <th>Type</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
               </tr>
             </thead>
