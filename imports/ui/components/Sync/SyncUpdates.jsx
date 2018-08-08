@@ -48,47 +48,47 @@ export class SyncUpdates extends Component {
     await wait(2000);
     // sync units
 
-    unitsData.map(unit => {
-      Meteor.call(
-        'unit.insert',
-        unit._id,
-        unit.name,
-        unit.topics,
-        unit.unitDesc,
-        unit.details,
-        err => {
-          err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call('logger', formatText(err.message, Meteor.userId(), 'units'), 'error'))
-            : Materialize.toast(`Successfully synced ${unitsData.length} `, 3000, 'success-toast');
-        },
-      );
-    });
+    // unitsData.map(unit => {
+    //   Meteor.call(
+    //     'unit.insert',
+    //     unit._id,
+    //     unit.name,
+    //     unit.topics,
+    //     unit.unitDesc,
+    //     unit.details,
+    //     err => {
+    //       err
+    //         ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+    //           Meteor.call('logger', formatText(err.message, Meteor.userId(), 'units'), 'error'))
+    //         : Materialize.toast(`Successfully synced ${unitsData.length} `, 3000, 'success-toast');
+    //     },
+    //   );
+    // });
     await wait(2000);
     // sync topics
 
-    topicsData.map(topic => {
-      Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
-        err
-          ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-            Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topics'), 'error'))
-          : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
-      });
-    });
+    // topicsData.map(topic => {
+    //   Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
+    //     err
+    //       ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+    //         Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topics'), 'error'))
+    //       : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
+    //   });
+    // });
     // insert search Data
     await wait(2000);
 
-    searchData.map(search => {
-      Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
-        err
-          ? Meteor.call(
-              'logger',
-              formatText(err.message, Meteor.userId(), console.log(err), 'search'),
-              'error',
-            )
-          : '';
-      });
-    });
+    // searchData.map(search => {
+    //   Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
+    //     err
+    //       ? Meteor.call(
+    //           'logger',
+    //           formatText(err.message, Meteor.userId(), console.log(err), 'search'),
+    //           'error',
+    //         )
+    //       : '';
+    //   });
+    // });
     // await wait(2000);
     // write to the file that the sync was successful
     await this.setState({
