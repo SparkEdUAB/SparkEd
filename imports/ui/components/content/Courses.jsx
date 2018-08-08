@@ -47,25 +47,14 @@ export class Courses extends Component {
                     </a>
                   </h5>
                 </span>
-                {!checkPermissions() ? (
-                  <span>
-                    <span className="" />
-                    <span className="">
-                      <a href="" id="cardListTitle">
-                        &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
-                      </a>
-                    </span>
+                <span>
+                  <span className="" />
+                  <span className="">
+                    <a href="" id="cardListTitle">
+                      &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
+                    </a>
                   </span>
-                ) : (
-                  <span>
-                    <span className="" />
-                    <span className="">
-                      <a href="" id="cardListTitle">
-                        &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
-                      </a>
-                    </span>
-                  </span>
-                )}
+                </span>
               </div>
             </div>
           </div>
@@ -86,7 +75,7 @@ export function checkPermissions() {
 
 export default withTracker((params) => {
   Meteor.subscribe('courses');
-  Meteor.subscribe('searchUnits', params.course._id);
+  Meteor.subscribe('units');
 
   return {
     courses: _Courses.findOne({}),

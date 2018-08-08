@@ -17,7 +17,6 @@ export const AppWrapper = ({ children, colors }) => (
     </Fragment>
   </ThemeContext.Provider>
 );
-
 AppWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   colors: PropTypes.object,
