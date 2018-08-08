@@ -117,18 +117,21 @@ export class SyncUpdates extends Component {
         status: 'No Topics to Sync ...',
       });
     }
+
+    // When all is done, get the resources and references and sync them to the local
+    await Meteor.call('restoreDbChunks');
+    await Meteor.call(
+      'logger',
+      formatText('Data was successfully synced', Meteor.userId(), 'sync'),
+      'info',
+    );
+
     // await wait(2000);
     // write to the file that the sync was successful
     await this.setState({
       loading: false,
       synced: true,
     });
-
-    await Meteor.call(
-      'logger',
-      formatText('Data was successfully synced', Meteor.userId(), 'sync'),
-      'info',
-    );
   };
 
   async componentDidMount() {

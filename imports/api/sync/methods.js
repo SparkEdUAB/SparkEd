@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
 import { syncData } from './syncData';
-import child_process from 'child_process';
+import { execFile } from 'child_process';
 // check internet connection
 
 const baseUrl = 'http://13.232.61.192';
@@ -79,7 +79,7 @@ Meteor.methods({
   },
   // restore the dumped files from the server
   restoreDbChunks: () => {
-    child_process.execFile('bash', [`${process.env.PWD}/scripts/importdbs.sh`], (error, stdout) => {
+    execFile('bash', [`${process.env.PWD}/scripts/importdbs.sh`], (error, stdout) => {
       if (error) {
         console.log(error);
       }

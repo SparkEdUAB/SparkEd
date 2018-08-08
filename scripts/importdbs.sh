@@ -26,8 +26,8 @@ if [ -d "dump" ] ; then
     do
     echo $coll
     # mongorestore -h localhost:27017 -d sparked -c $coll ˜
-    # mongorestore -h 127.0.0.1:4001 -d meteor -c $coll dump/sparked/$coll.bson
-    mongorestore -h localhost:27017 -d sparked -c $coll dump/sparked/$coll.bson # for the remote main server
+    mongorestore -h 127.0.0.1:3001 -d meteor -c $coll dump/sparked/$coll.bson
+    # mongorestore -h localhost:27017 -d sparked -c $coll dump/sparked/$coll.bson # for the remote main server
     done
  else 
 sleep 2
