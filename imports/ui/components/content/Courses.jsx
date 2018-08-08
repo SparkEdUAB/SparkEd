@@ -5,7 +5,7 @@ import i18n from 'meteor/universe:i18n';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import * as config from '../../../../config.json';
-
+import { ThemeContext } from '../../containers/AppWrapper';
 
 export const T = i18n.createComponent();
 
@@ -31,38 +31,46 @@ export class Courses extends Component {
       course: { _id, name },
     } = this.props;
     return (
-      <div className={'col m6 s12 l4 '}>
-        <div className="card blue darken-2 homeCardColor">
-          <div className="card-content">
-            <span className={'card-title '}>
-              <h5>
-                <a href={''} onClick={Courses.redirectToUnits.bind(this, _id)} id="cardListTitle">
-                  {name}
-                </a>
-              </h5>
-            </span>
-            {!checkPermissions() ? (
-              <span>
-                <span className="" />
-                <span className="">
-                  <a href="" id="cardListTitle">
-                    &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
-                  </a>
+      <ThemeContext.Consumer>
+        {color => (
+          <div className={'col m6 s12 l4 '}>
+            <div className="card darken-2 homeCardColor" style={{ backgroundColor: color.main }}>
+              <div className="card-content">
+                <span className={'card-title '}>
+                  <h5>
+                    <a
+                      href={''}
+                      onClick={Courses.redirectToUnits.bind(this, _id)}
+                      id="cardListTitle"
+                    >
+                      {name}
+                    </a>
+                  </h5>
                 </span>
-              </span>
-            ) : (
-              <span>
-                <span className="" />
-                <span className="">
-                  <a href="" id="cardListTitle">
-                    &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
-                  </a>
-                </span>
-              </span>
-            )}
+                {!checkPermissions() ? (
+                  <span>
+                    <span className="" />
+                    <span className="">
+                      <a href="" id="cardListTitle">
+                        &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
+                      </a>
+                    </span>
+                  </span>
+                ) : (
+                  <span>
+                    <span className="" />
+                    <span className="">
+                      <a href="" id="cardListTitle">
+                        &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
+                      </a>
+                    </span>
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
