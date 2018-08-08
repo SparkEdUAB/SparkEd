@@ -37,12 +37,12 @@ const MainModal = (props) => {
 };
 MainModal.propTypes = {
   subFunc: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.node, // it shouldn't be required, it can work independently, check ManageAccount
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  confirm: PropTypes.string.isRequired,
-  reject: PropTypes.string.isRequired,
+  confirm: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  reject: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default MainModal;
