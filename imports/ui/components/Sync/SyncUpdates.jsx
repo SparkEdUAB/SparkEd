@@ -5,6 +5,7 @@ import { Session } from 'meteor/session';
 import axios from 'axios';
 import { _ } from 'lodash';
 import { Resources, References } from '../../../api/resources/resources';
+import { _SearchData } from '../../../api/search/search';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
@@ -25,24 +26,22 @@ export class SyncUpdates extends Component {
 
   _syncContents = async () => {
     const { coursesData, unitsData, topicsData, searchData, synced } = await this.state;
-    const { courses, units, topics } = await this.props;
+    const { courses, units, topics, search } = await this.props;
 
     if (synced) {
       Materialize.toast('You have synced already', 2000, 'success toast');
       return;
     }
-    // sync courses
 
+    // sync courses
+    await this.setState({
+      loading: true,
+      status: 'Fetching and Syncing data ...',
+    });
     const coursesSync = await _.differenceBy(coursesData, courses, '_id');
     const unitsSync = await _.differenceBy(unitsData, units, '_id');
     const topicsSync = await _.differenceBy(topicsData, topics, '_id');
-
-    if (!coursesSync && !unitsSync && !topicsSync) {
-      await this.setState({
-        status: 'No Data to Sync',
-        synced: true,
-      });
-    }
+    const searchSync = await _.differenceBy(searchData, search, '_id');
 
     await coursesSync.map(course => {
       Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
@@ -86,23 +85,44 @@ export class SyncUpdates extends Component {
     // insert search Data
     await wait(2000);
 
-    // searchData.map(search => {
-    //   Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
-    //     err
-    //       ? Meteor.call(
-    //           'logger',
-    //           formatText(err.message, Meteor.userId(), console.log(err), 'search'),
-    //           'error',
-    //         )
-    //       : '';
-    //   });
-    // });
+    searchSync.map(search => {
+      Meteor.call('insert.search', search._id, search.ids, search.name, search.category, err => {
+        err
+          ? Meteor.call(
+              'logger',
+              formatText(err.message, Meteor.userId(), console.log(err), 'search'),
+              'error',
+            )
+          : '';
+      });
+    });
+
+    if (!coursesSync.length) {
+      this.setState({
+        loading: true,
+        status: 'No Courses to Sync, Checking Units ...',
+      });
+    }
+    await wait(1000);
+    if (!unitsSync.length) {
+      this.setState({
+        loading: true,
+        status: 'No Units to Sync, Checking Topics ...',
+      });
+    }
+    await wait(1000);
+    if (!unitsSync.length) {
+      this.setState({
+        loading: true,
+        status: 'No Topics to Sync ...',
+      });
+    }
     // await wait(2000);
     // write to the file that the sync was successful
-    // await this.setState({
-    //   loading: false,
-    //   synced: true,
-    // });
+    await this.setState({
+      loading: false,
+      synced: true,
+    });
 
     await Meteor.call(
       'logger',
@@ -174,7 +194,7 @@ export class SyncUpdates extends Component {
     Meteor.call('courses.sync', this.state.coursesData);
   };
   render() {
-    const { unitsData, coursesData, topicsData, error, loading, status, synced } = this.state;
+    const { unitsData, coursesData, topicsData, error, loading, status } = this.state;
     const { courses, units, topics } = this.props;
     return (
       <>
@@ -209,8 +229,6 @@ export class SyncUpdates extends Component {
 
           {error.length > 0 ? (
             <p className="red-text">{`${error} Please check your internet connection`}</p>
-          ) : synced ? (
-            <p>{status}</p>
           ) : loading ? (
             <>
               <p>{status}</p>
@@ -242,5 +260,6 @@ export default withTracker(() => {
     courses: _Courses.find().fetch(),
     units: _Units.find().fetch(),
     topics: _Topics.find().fetch(),
+    search: _SearchData.find().fetch(),
   };
 })(SyncUpdates);
