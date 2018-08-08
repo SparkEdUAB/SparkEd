@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 import axios from 'axios';
+import { _ } from 'lodash';
 import { Resources, References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
@@ -35,8 +36,8 @@ export class SyncUpdates extends Component {
       loading: true,
       status: 'Fetching and Syncing data ...',
     });
-
-    coursesData.map(course => {
+    const offlineData = _.differenceBy(coursesData, await this.props.courses, '_id');
+    await offlineData.map(course => {
       Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
         err
           ? (Materialize.toast(err.reason, 3000, 'error-toast'),
@@ -48,22 +49,22 @@ export class SyncUpdates extends Component {
     await wait(2000);
     // sync units
 
-    // unitsData.map(unit => {
-    //   Meteor.call(
-    //     'unit.insert',
-    //     unit._id,
-    //     unit.name,
-    //     unit.topics,
-    //     unit.unitDesc,
-    //     unit.details,
-    //     err => {
-    //       err
-    //         ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-    //           Meteor.call('logger', formatText(err.message, Meteor.userId(), 'units'), 'error'))
-    //         : Materialize.toast(`Successfully synced ${unitsData.length} `, 3000, 'success-toast');
-    //     },
-    //   );
-    // });
+    unitsData.map(unit => {
+      Meteor.call(
+        'unit.insert',
+        unit._id,
+        unit.name,
+        unit.topics,
+        unit.unitDesc,
+        unit.details,
+        err => {
+          err
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call('logger', formatText(err.message, Meteor.userId(), 'units'), 'error'))
+            : Materialize.toast(`Successfully synced ${unitsData.length} `, 3000, 'success-toast');
+        },
+      );
+    });
     await wait(2000);
     // sync topics
 
@@ -162,7 +163,9 @@ export class SyncUpdates extends Component {
       Meteor.call('logger', formatText(error.message, Meteor.userId()), 'error');
     }
   };
-
+  syncCourses = () => {
+    Meteor.call('courses.sync', this.state.coursesData);
+  };
   render() {
     const { unitsData, coursesData, topicsData, error, loading, status } = this.state;
     const { courses, units, topics } = this.props;
@@ -181,7 +184,7 @@ export class SyncUpdates extends Component {
             <tbody>
               <tr>
                 <td>Courses</td>
-                <td>{courses}</td>
+                <td>{courses.length}</td>
                 <td>{coursesData.length}</td>
               </tr>
               <tr>
@@ -227,7 +230,7 @@ export default withTracker(() => {
   return {
     resources: Resources.find().count(),
     references: References.find().count(),
-    courses: _Courses.find().count(),
+    courses: _Courses.find().fetch(),
     units: _Units.find().count(),
     topics: _Topics.find().count(),
   };

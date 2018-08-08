@@ -34,3 +34,4 @@ import '../../api/sync/server/sync';
 import '../../api/crons';
 import '../../api/logs/logger';
 import '../../api/languages/methods';
+import '../../api/utils';

@@ -10,12 +10,7 @@ Meteor.methods({
     check(course, String);
     check(courseCode, String);
     check(details, Object);
-    const courses = _Courses.find().fetch();
-    if (courses.find(course => course._id === id)) {
-      throw new Meteor.Error('oops', 'Some courses already exist');
-    } else if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
-      throw new Meteor.Error('oops', 'You are not allowed to make changes');
-    } else {
+    if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
       _Courses.insert({
         _id: id,
         name: course,
@@ -24,6 +19,8 @@ Meteor.methods({
         createdAt: new Date(),
         createdBy: this.userId,
       });
+    } else {
+      throw new Meteor.Error('oops', 'You are not allowed to make changes');
     }
   },
   'course.edit'(id, course, courseCode, year, ownerId) {

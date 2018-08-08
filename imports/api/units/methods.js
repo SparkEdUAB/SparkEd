@@ -11,7 +11,12 @@ Meteor.methods({
     check(topics, Match.OneOf(Number, null, undefined));
     check(unitDesc, String);
     check(details, Object);
-    if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
+    const units = _Units.find().fetch();
+    if (units.find(unit => unit._id === id)) {
+      throw new Meteor.Error('oops', 'Some units already exist');
+    } else if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
+      throw new Meteor.Error('oops', 'You are not allowed to make changes');
+    } else {
       _Units.insert({
         _id: id,
         name,
@@ -22,9 +27,6 @@ Meteor.methods({
         createdAt: new Date(),
         createdBy: this.userId,
       });
-      //  You can also trigger if something wrong happens
-    } else {
-      throw new Meteor.Error('oops', 'You are not allowed to not make changes');
     }
   },
 
