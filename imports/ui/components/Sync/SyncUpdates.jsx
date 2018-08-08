@@ -25,31 +25,38 @@ export class SyncUpdates extends Component {
 
   _syncContents = async () => {
     const { coursesData, unitsData, topicsData, searchData, synced } = await this.state;
+    const { courses, units, topics } = await this.props;
 
     if (synced) {
       Materialize.toast('You have synced already', 2000, 'success toast');
       return;
     }
-
     // sync courses
-    await this.setState({
-      loading: true,
-      status: 'Fetching and Syncing data ...',
-    });
-    const offlineData = _.differenceBy(coursesData, await this.props.courses, '_id');
-    await offlineData.map(course => {
+
+    const coursesSync = await _.differenceBy(coursesData, courses, '_id');
+    const unitsSync = await _.differenceBy(unitsData, units, '_id');
+    const topicsSync = await _.differenceBy(topicsData, topics, '_id');
+
+    if (!coursesSync && !unitsSync && !topicsSync) {
+      await this.setState({
+        status: 'No Data to Sync',
+        synced: true,
+      });
+    }
+
+    await coursesSync.map(course => {
       Meteor.call('course.add', course._id, course.name, course.code, course.details, err => {
         err
           ? (Materialize.toast(err.reason, 3000, 'error-toast'),
             Meteor.call('logger', formatText(err.message, Meteor.userId(), 'course'), 'error'))
-          : Materialize.toast(`Successfully synced ${coursesData.length} `, 3000, 'success-toast');
+          : Materialize.toast(`Successfully synced ${coursesSync.length} `, 3000, 'success-toast');
       });
     });
 
     await wait(2000);
     // sync units
 
-    unitsData.map(unit => {
+    await unitsSync.map(unit => {
       Meteor.call(
         'unit.insert',
         unit._id,
@@ -68,14 +75,14 @@ export class SyncUpdates extends Component {
     await wait(2000);
     // sync topics
 
-    // topicsData.map(topic => {
-    //   Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
-    //     err
-    //       ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-    //         Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topics'), 'error'))
-    //       : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
-    //   });
-    // });
+    await topicsSync.map(topic => {
+      Meteor.call('topic.insert', topic._id, topic.unitId, topic.name, topic.unit, err => {
+        err
+          ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topics'), 'error'))
+          : Materialize.toast(`Successfully synced ${topicsData.length} `, 3000, 'success-toast');
+      });
+    });
     // insert search Data
     await wait(2000);
 
@@ -92,10 +99,10 @@ export class SyncUpdates extends Component {
     // });
     // await wait(2000);
     // write to the file that the sync was successful
-    await this.setState({
-      loading: false,
-      synced: true,
-    });
+    // await this.setState({
+    //   loading: false,
+    //   synced: true,
+    // });
 
     await Meteor.call(
       'logger',
@@ -167,7 +174,7 @@ export class SyncUpdates extends Component {
     Meteor.call('courses.sync', this.state.coursesData);
   };
   render() {
-    const { unitsData, coursesData, topicsData, error, loading, status } = this.state;
+    const { unitsData, coursesData, topicsData, error, loading, status, synced } = this.state;
     const { courses, units, topics } = this.props;
     return (
       <>
@@ -189,12 +196,12 @@ export class SyncUpdates extends Component {
               </tr>
               <tr>
                 <td>Units</td>
-                <td>{units}</td>
+                <td>{units.length}</td>
                 <td>{unitsData.length}</td>
               </tr>
               <tr>
                 <td>Topics</td>
-                <td>{topics}</td>
+                <td>{topics.length}</td>
                 <td>{topicsData.length}</td>
               </tr>
             </tbody>
@@ -202,6 +209,8 @@ export class SyncUpdates extends Component {
 
           {error.length > 0 ? (
             <p className="red-text">{`${error} Please check your internet connection`}</p>
+          ) : synced ? (
+            <p>{status}</p>
           ) : loading ? (
             <>
               <p>{status}</p>
@@ -231,7 +240,7 @@ export default withTracker(() => {
     resources: Resources.find().count(),
     references: References.find().count(),
     courses: _Courses.find().fetch(),
-    units: _Units.find().count(),
-    topics: _Topics.find().count(),
+    units: _Units.find().fetch(),
+    topics: _Topics.find().fetch(),
   };
 })(SyncUpdates);
