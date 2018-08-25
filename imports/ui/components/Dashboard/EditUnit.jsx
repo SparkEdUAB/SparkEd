@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
+import ReactPaginate from 'react-paginate';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -237,6 +238,45 @@ export class EditUnits extends Component {
     FlowRouter.go(`/dashboard/units/${programId}?cs=${courseId}`);
   };
 
+  getPageCount() {
+    const { count } = this.props;
+    return Math.ceil(count / Session.get('limit'));
+  }
+
+  handlePageClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * Session.get('limit'));
+    Session.set('skip', offset);
+  };
+  getEntriesCount = (e, count) => {
+    Session.set('limit', count);
+  };
+
+  renderPagination() {
+    const { count } = this.props;
+    if (!count || count <= Session.get('limit')) {
+      return <span />;
+    }
+    return (
+      <ReactPaginate
+        previousLabel={'previous'}
+        nextLabel={'next'}
+        breakLabel={<a href="">...</a>}
+        breakClassName={'break-me'}
+        pageCount={this.getPageCount()}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={this.handlePageClick}
+        containerClassName={'pagination'}
+        subContainerClassName={'pages pagination '}
+        activeClassName={'active blue'}
+        pageLinkClassName={'link'}
+      />
+    );
+  }
+
+
+
   render() {
     let { unit } = this.props;
 
@@ -335,6 +375,7 @@ export class EditUnits extends Component {
             </thead>
             <tbody>{this.renderTopics()}</tbody>
           </table>
+        {this.renderPagination()}
         </div>
       </div>
     );
@@ -354,14 +395,16 @@ export default withTracker(() => {
       .find({
         unitId: getUnitId(),
         createdBy: Meteor.userId(),
-      })
+      },
+      { skip: Session.get('skip'), limit: Session.get('limit') },
+      )
       .fetch(),
     unit: _Units.findOne({ _id: getUnitId() }),
     count: _Topics
       .find({
         unitId: getUnitId(),
         createdBy: Meteor.userId(),
-      })
+      }, )
       .count(),
   };
 })(EditUnits);

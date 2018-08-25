@@ -1,6 +1,7 @@
 import { Session } from 'meteor/session';
 import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
+import ReactPaginate from 'react-paginate';
 import i18n from 'meteor/universe:i18n';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
@@ -260,6 +261,10 @@ export class ManageUnits extends Component {
     e.preventDefault();
     return FlowRouter.go('/dashboard/course');
   };
+
+
+
+
 
   render() {
     let { course, titles } = this.props;
