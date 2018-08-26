@@ -29,7 +29,7 @@ export class EditUnits extends Component {
       reject: '',
       ids: [],
     };
-    Session.set('limit', 10);
+    Session.set('limit', 5);
     Session.set('skip', 0);
   }
 
@@ -279,7 +279,7 @@ export class EditUnits extends Component {
 
   render() {
     let { unit } = this.props;
-
+    const limit = Session.get('limit');
     if (!unit) {
       return null;
     }
@@ -347,6 +347,20 @@ export class EditUnits extends Component {
                   <T>common.actions.add</T>
                 </button>
               </a>
+            </div>
+                        <div className="col m3">
+              Resources displayed
+              <div className="row">
+                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 5)}>
+                  <u>{limit === 5 ? <b>5</b> : 5}</u>
+                </a>
+                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 10)}>
+                  <u>{limit === 10 ? <b>10</b> : 10}</u>
+                </a>
+                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 20)}>
+                  <u>{limit === 20 ? <b>20</b> : 20}</u>
+                </a>
+              </div>
             </div>
           </div>
 
