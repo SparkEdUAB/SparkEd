@@ -94,42 +94,42 @@ export class ContentsApp extends Component {
         {
           color => (
             <Fragment>
-         <div className="row">
-          <div className=" unit-container" style={{backgroundColor: color.main}}>
-            <h4 className="center unit-name">{unitName}</h4>
-            <div className="container">
-              <p className="center">{desc}</p>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col s12 m4 l3 topics-container">
-            <div className="sideNavHeadingUnderline">
-              <a
-                title="Go back to Topics"
-                id="backButtonLink"
-                href={''}
-                onClick={e => this.getBack(e)}
-              >
-                <i className="fa fa-chevron-circle-left fa-lg" />
-              </a>
-              <p className="sideNavHeading">
-                {config.isHighSchool ? title : <T>common.manage.topics</T>}
-              </p>
-            </div>
-            <Topics unitId={getUnitId()} />
-          </div>
-          <div className="col s12 m8 l9">
-            <h5 className="center">{topicName}</h5>
-            <Resourcesss topicId={getTopicId()} />
-          </div>
-        </div>
-        <>
-          <FloatingButton />
-        </>
-       </Fragment>
+              <div className="row">
+                <div className=" unit-container" style={{ backgroundColor: color.main }}>
+                  <h4 className="center unit-name">{unitName}</h4>
+                  <div className="container">
+                    <p className="center">{desc}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col s12 m4 l3 topics-container">
+                  <div className="sideNavHeadingUnderline">
+                    <a
+                      title="Go back to Topics"
+                      id="backButtonLink"
+                      href={''}
+                      onClick={e => this.getBack(e)}
+                    >
+                      <i className="fa fa-chevron-circle-left fa-lg" />
+                    </a>
+                    <p className="sideNavHeading">
+                      {config.isHighSchool ? title : <T>common.manage.topics</T>}
+                    </p>
+                  </div>
+                  <Topics unitId={getUnitId()} />
+                </div>
+                <div className="col s12 m8 l9">
+                  <h5 className="center">{topicName}</h5>
+                  <Resourcesss topicId={getTopicId()} />
+                </div>
+              </div>
+              <>
+                <FloatingButton />
+              </>
+            </Fragment>
           )
-        }      
+        }
       </ThemeContext.Consumer>
     );
   }
