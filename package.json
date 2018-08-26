@@ -20,10 +20,10 @@
     "mmmagic": "^0.5.0",
     "prop-types": "^15.6.0",
     "react": "^16.3.0",
+    "react-beforeunload": "^1.0.4",
     "react-color": "^2.14.1",
     "react-dom": "^16.3.0",
     "react-mounter": "^1.2.0",
-    "react-paginate": "^5.2.2",
     "request": "^2.75.0",
     "simpl-schema": "^1.4.2"
   },

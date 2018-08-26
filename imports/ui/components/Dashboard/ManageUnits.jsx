@@ -60,6 +60,7 @@ export class ManageUnits extends Component {
     window.scrollTo(0, 0);
   }
 
+
   componentWillUnmount() {
     this.computation.stop();
     Session.set({
@@ -71,6 +72,7 @@ export class ManageUnits extends Component {
       resultsCount: '',
     });
     this._ismounted = false;
+
   }
 
   // close the modal, and clear the states;

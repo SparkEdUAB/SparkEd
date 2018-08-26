@@ -117,7 +117,7 @@ export class Courses extends Component {
   // route to whats contained in the course
   static handleUrl(id, year, event) {
     event.preventDefault();
-    Session.set('courseIde', id);
+    Session.setPersistent('courseIde', id);
     FlowRouter.go(`/dashboard/units/${id}?y=${year}`);
   }
 
@@ -308,7 +308,7 @@ export class Courses extends Component {
     if (titles) {
       new_title = titles.title;
       new_sub_title = titles.sub_title;
-      Session.set({
+      Session.setPersistent({
         title_id: titles._id,
         course_title: new_title,
       });

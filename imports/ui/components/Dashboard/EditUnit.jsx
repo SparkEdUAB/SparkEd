@@ -110,7 +110,7 @@ export class EditUnits extends Component {
     let count = 1;
     const topics = this.props.topics;
     const unitId = FlowRouter.getParam('_id');
-    if (topics === undefined) {
+    if (!topics) {
       return null;
     }
     return topics.map(topic => (
@@ -348,8 +348,8 @@ export class EditUnits extends Component {
                 </button>
               </a>
             </div>
-                        <div className="col m3">
-              Resources displayed
+            <div className="col m3">
+              Units displayed
               <div className="row">
                 <a className="col s2 link" onClick={e => this.getEntriesCount(e, 5)}>
                   <u>{limit === 5 ? <b>5</b> : 5}</u>

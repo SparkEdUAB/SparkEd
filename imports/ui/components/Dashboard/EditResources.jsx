@@ -107,12 +107,15 @@ export class EditResources extends Component {
   };
 
   getBack = e => {
-    // event.preventDefault();
+    event.preventDefault();
     const unitId = Session.get('unitId');
     if (config.isHighSchool) {
-      FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseId')}`);
+      console.log(Session.get('unitId'));
+      // FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseId')}`);
     } else {
-      FlowRouter.go(`/dashboard/edit_unit/${Session.get('unitId')}`);
+      // FlowRouter.go(`/dashboard/edit_unit/${Session.get('unitId')}`);
+      console.log(Session.get('courseId'));
+
     }
   };
 
