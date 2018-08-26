@@ -2,7 +2,7 @@
 import React, { Component, Fragment } from 'react';
 import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
-import { TwitterPicker } from 'react-color';
+import { GithubPicker } from 'react-color';
 import UploadWrapper from '../../modals/UploadWrapper';
 import * as config from '../../../../config.json';
 import { Button } from '../../utils/Buttons';
@@ -179,10 +179,15 @@ export class SetUp extends Component {
               <span />
             )}
             {error ? <h6 className="red-text ">{error}</h6> : ''}
-            <h6>Pick Main Color</h6>
-            <TwitterPicker onChangeComplete={this.getColors} />
-            <br />
-            <br />
+
+            <div className='row'>
+              <div className='col m3'>
+              <h6>Pick The Main Color</h6>
+                <GithubPicker onChangeComplete={this.getColors} />
+              </div>
+            </div>
+
+
             <Button
               actionFunc={e => this.saveConfig(e)}
               title={'Save and Upload the Institution Logo'}

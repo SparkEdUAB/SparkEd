@@ -15,12 +15,9 @@ nav {
 }
 
 .unit-container {
-  background-color: #018ac7;
-  height: 105px;
+  height: 110px;
   margin-top: -17px;
   color: #ffffff;
-  border-style:inset;
-  border-width: thin;
 }
 
 .unit-name {

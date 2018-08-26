@@ -12,6 +12,7 @@ import { insertStatistics } from '../Statistics/Statistics.jsx';
 import { FloatingButton } from '../Utilities/Utilities.jsx';
 import * as config from '../../../../config.json';
 import { Titles } from '../../../api/settings/titles';
+import { ThemeContext } from '../../containers/AppWrapper';
 
 export const T = i18n.createComponent();
 
@@ -88,9 +89,13 @@ export class ContentsApp extends Component {
       title = titles.title;
     }
     return (
-      <Fragment>
-        <div className="row">
-          <div className=" unit-container">
+      <ThemeContext.Consumer>
+
+        {
+          color => (
+            <Fragment>
+         <div className="row">
+          <div className=" unit-container" style={{backgroundColor: color.main}}>
             <h4 className="center unit-name">{unitName}</h4>
             <div className="container">
               <p className="center">{desc}</p>
@@ -122,7 +127,10 @@ export class ContentsApp extends Component {
         <>
           <FloatingButton />
         </>
-      </Fragment>
+       </Fragment>
+          )
+        }      
+      </ThemeContext.Consumer>
     );
   }
 }

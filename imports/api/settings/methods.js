@@ -84,7 +84,7 @@ Meteor.methods({
   updateColors(id, main, button, sidebar) {
     check(id, String);
     check(main, String);
-    check(button, Match.OneOf(String, null, undefined));
+    check(button, Match.OneOf(Object, null, undefined));
     check(sidebar, Match.OneOf(String, null, undefined));
     _Settings.update(
       { _id: id },
