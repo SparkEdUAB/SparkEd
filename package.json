@@ -24,6 +24,7 @@
     "react-color": "^2.14.1",
     "react-dom": "^16.3.0",
     "react-mounter": "^1.2.0",
+    "react-paginate": "^5.2.4",
     "request": "^2.75.0",
     "simpl-schema": "^1.4.2"
   },
@@ -49,8 +50,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-meteor": "^4.1.4",
-    "eslint-plugin-react": "^7.6.1",
-    "jest": "^22.4.3"
+    "eslint-plugin-react": "^7.6.1"
   },
   "eslintConfig": {
     "parser": "babel-eslint",

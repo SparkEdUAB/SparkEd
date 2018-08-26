@@ -102,7 +102,7 @@ export class EditUnits extends Component {
   };
 
   handleUrl(id) {
-    Session.set('topicId', id);
+    Session.setPersistent('topicId', id);
     FlowRouter.go(`/dashboard/edit_resources/${id}`);
   }
 
@@ -389,7 +389,7 @@ export class EditUnits extends Component {
             </thead>
             <tbody>{this.renderTopics()}</tbody>
           </table>
-        {this.renderPagination()}
+        {/* {this.renderPagination()} */}
         </div>
       </div>
     );

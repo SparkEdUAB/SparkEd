@@ -107,15 +107,11 @@ export class EditResources extends Component {
   };
 
   getBack = e => {
-    event.preventDefault();
-    const unitId = Session.get('unitId');
+    // event.preventDefault();
     if (config.isHighSchool) {
-      console.log(Session.get('unitId'));
-      // FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseId')}`);
+      FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseIde')}`);
     } else {
-      // FlowRouter.go(`/dashboard/edit_unit/${Session.get('unitId')}`);
-      console.log(Session.get('courseId'));
-
+      return FlowRouter.go(`/dashboard/edit_unit/${Session.get('unitId')}`);
     }
   };
 
@@ -224,7 +220,7 @@ export class EditResources extends Component {
     const { topic, unit } = this.props;
     // let nam
     if (topic) {
-      Session.set({
+      Session.setPersistent({
         unitId: topic.unitId,
         unitName: topic.name,
       });
@@ -319,7 +315,7 @@ export class EditResources extends Component {
           </div>
           <div className="row ">
             <div className="col s4 m3">
-              <button className="btn grey darken-3 fa fa-angle-left" onClick={this.getBack}>
+              <button className="btn grey darken-3 fa fa-angle-left" onClick={e => this.getBack(e)}>
                 {' '}
                 {config.isHighSchool ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
               </button>
