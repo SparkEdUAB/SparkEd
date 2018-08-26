@@ -289,7 +289,7 @@ export class Header extends Component {
                   <div className="col s2 m1 head-icons">
                     <div href="#" data-activates="slide-out">
                       <div className="dropdownLink">
-                        <button className="dropbtnLink fa fa-link fa-2x inst-link" />
+                        <button className="dropbtnLink fa fa-link fa-2x inst-link" style={{backgroundColor: color.main}}/>
                         <div className="dropdownLink-content">
                           <a href="/externallinkpages" className="openLinks">
                             Click here to Open all the external links in a page
