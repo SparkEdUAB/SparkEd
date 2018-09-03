@@ -3,15 +3,13 @@ import React, { Component, Fragment } from 'react';
 import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
 import { GithubPicker } from 'react-color';
-import UploadWrapper from '../../modals/UploadWrapper';
+import FileUploadComponent from '../../containers/FileUploadComponent';
 import * as config from '../../../../config.json';
 import { Button } from '../../utils/Buttons';
 import { _Settings } from '../../../api/settings/settings';
 
 export class SetUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+   state = {
       isOpen: false,
       confirm: '',
       reject: '',
@@ -21,7 +19,6 @@ export class SetUp extends Component {
       structure: '',
       error: '',
     };
-  }
 
   toggleModal = e => {
     e.preventDefault();
@@ -108,7 +105,7 @@ export class SetUp extends Component {
     const { colors } = this.props;
     return (
       <Fragment>
-        <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} />
+        {/* <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} /> */}
         <div className="col s11 m9">
           <form className="">
             <div className="row">
@@ -186,16 +183,15 @@ export class SetUp extends Component {
                 <GithubPicker onChangeComplete={this.getColors} />
               </div>
             </div>
-
-
-            <Button
+          </form>
+          <FileUploadComponent />
+          <Button
               actionFunc={e => this.saveConfig(e)}
               title={'Save and Upload the Institution Logo'}
               backgroundColor={colors.main}
               name={'Save'}
               extraClass={'pulse'}
             />
-          </form>
         </div>
       </Fragment>
     );
