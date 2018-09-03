@@ -8,13 +8,6 @@ const InstitutionDetail = ({ institution }) => {
     return (
       <div className="logo-container">
         <a href="/" className="inst-link">
-          <img
-            style={{ float: 'left' }}
-            src={'/uploads/sparked.png'}
-            alt="logo"
-            width="80px"
-            height="80px"
-          />
           <h5>{'SparkEd'}</h5>
           <h6>{'Delivering Education Contents'}</h6>
         </a>

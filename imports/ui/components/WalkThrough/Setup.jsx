@@ -192,7 +192,7 @@ export class SetUp extends Component {
               actionFunc={e => this.saveConfig(e)}
               title={'Save and Upload the Institution Logo'}
               backgroundColor={colors.main}
-              name={'Sync'}
+              name={'Save'}
               extraClass={'pulse'}
             />
           </form>
