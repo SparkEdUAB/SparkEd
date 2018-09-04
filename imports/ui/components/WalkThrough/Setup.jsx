@@ -51,8 +51,10 @@ export class SetUp extends Component {
         });
         break;
       case 'server':
+        const lastSubstring = value.slice(-1);
+        const address = lastSubstring === '/' ? value.substring(0, value.length - 1) : value
         this.setState({
-          server: value
+          server: address
         })
         break;
     }

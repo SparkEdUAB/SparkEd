@@ -1,8 +1,8 @@
 {
-  "name": "University of Ala",
-  "tag": "Tagline",
+  "name": "University of Alabama",
+  "tag": "Taglined ",
   "isUserAuth": false,
   "isHighSchool": true,
   "isConfigured": true,
-  "server": "http://13.232.61.192"
+  "server": "http://13.232.61.192/"
 }
