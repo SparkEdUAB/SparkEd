@@ -18,6 +18,7 @@ export class SetUp extends Component {
       auth: false,
       structure: '',
       error: '',
+      server: ''
     };
 
   toggleModal = e => {
@@ -49,14 +50,17 @@ export class SetUp extends Component {
           structure: value,
         });
         break;
-      default:
+      case 'server':
+        this.setState({
+          server: value
+        })
         break;
     }
   };
 
   saveConfig = e => {
     e.preventDefault();
-    const { name, tag, structure, auth } = this.state;
+    const { name, tag, structure, auth, server } = this.state;
     let isHighSchool;
     const isSet = config.isConfigured;
     switch (structure) {
@@ -86,11 +90,21 @@ export class SetUp extends Component {
       return;
     }
     // save to session for later, when uploading the logo
-    Session.set({
+    Session.setPersistent({
       name,
       tag,
       auth,
       isHighSchool,
+      server
+    });
+    Meteor.call('addConfig', name, tag, auth, isHighSchool, server, err => {
+      err
+        ? Materialize.toast(err.reason, 4000, 'error-toast')
+        : Materialize.toast(
+            'Successfully saved the configurations',
+            4000,
+            'success-toast',
+          );
     });
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
@@ -134,6 +148,20 @@ export class SetUp extends Component {
                   Institution Tagline <span className="red-text">*</span>
                 </label>
               </div>
+            </div>
+            <div className="row" >
+                <div className="col m6 s12 input-field">
+                <input
+                  id="server-address"
+                  type="text"
+                  className="validate"
+                  required
+                  onChange={e => this.saveChange(e, 'server')}
+                />
+                <label htmlFor="server-address">
+                  Server Address <span className="red-text">*</span>
+                </label>
+                </div>
             </div>
             Authentication <span>(Defaults to False)</span>
             <div className="row">
