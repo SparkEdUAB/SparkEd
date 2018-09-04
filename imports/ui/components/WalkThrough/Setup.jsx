@@ -26,6 +26,9 @@ export class SetUp extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
   saveChange = ({ target: { value } }, type) => {
+    this.setState({
+      error: ''
+    })
     switch (type) {
       case 'name':
         this.setState({
@@ -77,17 +80,22 @@ export class SetUp extends Component {
     }
     if (!name || !name.trim().length) {
       this.setState({
-        error: 'Please Enter the Institution name',
+        error: 'Institution name is needed',
       });
       return;
     } else if (!tag || !tag.trim().length) {
       this.setState({
-        error: 'Please Enter Institution Tag or Motto',
+        error: ' Institution Tag or Motto is needed',
       });
       return;
     } else if (!isSet && !structure) {
       this.setState({
-        error: 'Please select the institution structure',
+        error: 'Institution structure is needed',
+      });
+      return;
+    } else if (!server.includes('http')) {
+      this.setState({
+        error: "Check the server address, It should contain 'http' ",
       });
       return;
     }
