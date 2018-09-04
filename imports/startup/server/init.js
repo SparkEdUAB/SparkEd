@@ -14,6 +14,7 @@ Meteor.startup(() => {
       editedAt: new Date(),
     });
   }
+  // initialize the main color
   if (!_Settings.find().count()) {
     _Settings.insert({
       main: '#006b76',

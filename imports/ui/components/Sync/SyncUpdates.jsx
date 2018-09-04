@@ -137,6 +137,7 @@ export class SyncUpdates extends Component {
   };
 
   async componentDidMount() {
+    this._isMounted = true;
     Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
       err
         ? (this.setState({ error: err.reason }),
@@ -145,6 +146,9 @@ export class SyncUpdates extends Component {
     });
     await wait(2000);
     await this.getRemoteColls();
+  }
+  componentWillUnmount(){
+    this._isMounted =false;
   }
 
   getRemoteColls = async () => {
@@ -181,13 +185,16 @@ export class SyncUpdates extends Component {
         topicsPromise,
         searchPromise,
       ]);
-      this.setState({
-        coursesData: courses.data.data,
-        topicsData: topics.data.data,
-        unitsData: units.data.data,
-        searchData: search.data.data,
-        loading: false,
-      });
+      if (this._isMounted) {
+        this.setState({
+          coursesData: courses.data.data,
+          topicsData: topics.data.data,
+          unitsData: units.data.data,
+          searchData: search.data.data,
+          loading: false,
+        });
+      }
+
     } catch (error) {
       this.setState({
         error: error.message,
@@ -206,7 +213,7 @@ export class SyncUpdates extends Component {
         <div className="col m9 s11">
         <p>
           The Sync Address is <span className="red-text">{server}</span>
-          <a href="/dashboard/setup"> click here</a> if you wish to change the address
+          <a href="/setup"> click here</a> if you wish to change the address
         </p>
           <table className="highlight">
             <thead>
