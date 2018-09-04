@@ -1,7 +1,8 @@
 {
-  "name": "SparkEd V2",
-  "tag": "Delivering Education ",
+  "name": "University of Alabama",
+  "tag": "Taglined Again",
   "isUserAuth": false,
-  "isHighSchool": false,
-  "isConfigured": true
+  "isHighSchool": true,
+  "isConfigured": true,
+  "server": "http://13.232.61.192"
 }

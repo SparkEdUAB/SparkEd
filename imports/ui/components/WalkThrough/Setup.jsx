@@ -3,15 +3,13 @@ import React, { Component, Fragment } from 'react';
 import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
 import { GithubPicker } from 'react-color';
-import UploadWrapper from '../../modals/UploadWrapper';
+import FileUploadComponent from '../../containers/FileUploadComponent';
 import * as config from '../../../../config.json';
 import { Button } from '../../utils/Buttons';
 import { _Settings } from '../../../api/settings/settings';
 
 export class SetUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+   state = {
       isOpen: false,
       confirm: '',
       reject: '',
@@ -20,14 +18,17 @@ export class SetUp extends Component {
       auth: false,
       structure: '',
       error: '',
+      server: ''
     };
-  }
 
   toggleModal = e => {
     e.preventDefault();
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
   saveChange = ({ target: { value } }, type) => {
+    this.setState({
+      error: ''
+    })
     switch (type) {
       case 'name':
         this.setState({
@@ -52,14 +53,19 @@ export class SetUp extends Component {
           structure: value,
         });
         break;
-      default:
+      case 'server':
+        const lastSubstring = value.slice(-1);
+        const address = lastSubstring === '/' ? value.substring(0, value.length - 1) : value
+        this.setState({
+          server: address
+        })
         break;
     }
   };
 
   saveConfig = e => {
     e.preventDefault();
-    const { name, tag, structure, auth } = this.state;
+    const { name, tag, structure, auth, server } = this.state;
     let isHighSchool;
     const isSet = config.isConfigured;
     switch (structure) {
@@ -74,26 +80,41 @@ export class SetUp extends Component {
     }
     if (!name || !name.trim().length) {
       this.setState({
-        error: 'Please Enter the Institution name',
+        error: 'Institution name is needed',
       });
       return;
     } else if (!tag || !tag.trim().length) {
       this.setState({
-        error: 'Please Enter Institution Tag or Motto',
+        error: ' Institution Tag or Motto is needed',
       });
       return;
     } else if (!isSet && !structure) {
       this.setState({
-        error: 'Please select the institution structure',
+        error: 'Institution structure is needed',
+      });
+      return;
+    } else if (!server.includes('http')) {
+      this.setState({
+        error: "Check the server address, It should contain 'http' ",
       });
       return;
     }
     // save to session for later, when uploading the logo
-    Session.set({
+    Session.setPersistent({
       name,
       tag,
       auth,
       isHighSchool,
+      server
+    });
+    Meteor.call('addConfig', name, tag, auth, isHighSchool, server, err => {
+      err
+        ? Materialize.toast(err.reason, 4000, 'error-toast')
+        : Materialize.toast(
+            'Successfully saved the configurations',
+            4000,
+            'success-toast',
+          );
     });
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
@@ -103,12 +124,12 @@ export class SetUp extends Component {
   };
 
   render() {
-    const { isOpen, confirm, reject, error, name } = this.state;
+    const { error, name } = this.state;
     const isSet = config.isConfigured;
     const { colors } = this.props;
     return (
       <Fragment>
-        <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} />
+        {/* <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} /> */}
         <div className="col s11 m9">
           <form className="">
             <div className="row">
@@ -137,6 +158,20 @@ export class SetUp extends Component {
                   Institution Tagline <span className="red-text">*</span>
                 </label>
               </div>
+            </div>
+            <div className="row" >
+                <div className="col m6 s12 input-field">
+                <input
+                  id="server-address"
+                  type="text"
+                  className="validate"
+                  required
+                  onChange={e => this.saveChange(e, 'server')}
+                />
+                <label htmlFor="server-address">
+                  Server Address <span className="red-text">*</span>
+                </label>
+                </div>
             </div>
             Authentication <span>(Defaults to False)</span>
             <div className="row">
@@ -186,16 +221,16 @@ export class SetUp extends Component {
                 <GithubPicker onChangeComplete={this.getColors} />
               </div>
             </div>
-
-
-            <Button
+          </form>
+          <p>Upload the logo (Not Required)</p>
+          <FileUploadComponent />
+          <Button
               actionFunc={e => this.saveConfig(e)}
               title={'Save and Upload the Institution Logo'}
               backgroundColor={colors.main}
-              name={'Sync'}
+              name={'Save'}
               extraClass={'pulse'}
             />
-          </form>
         </div>
       </Fragment>
     );

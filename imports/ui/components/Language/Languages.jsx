@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import i18n from 'meteor/universe:i18n';
+import $ from 'meteor/jquery'
 
 export const T = i18n.createComponent();
 

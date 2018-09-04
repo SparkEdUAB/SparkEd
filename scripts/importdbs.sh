@@ -5,10 +5,10 @@
 # Run the Script from the root directory
 
 collections=( fs.chunks fs.files Resources References) # Array of collections to be restored
-server_address="13.232.61.192" # current server address should be passed as an argument
+#server_address="13.232.61.192" # current server address should be passed as an argument
 
 # get the dum from the main server
-curl -O http://$server_address/dump.tar.gz
+curl -O http://$1/dump.tar.gz
 
 sleep 5
 

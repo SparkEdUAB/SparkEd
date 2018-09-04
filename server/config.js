@@ -7,12 +7,13 @@ import * as config from '../config.json';
 const path = `${process.env.PWD}/config.json`;
 
 Meteor.methods({
-  addConfig: (name, tag, auth, set, isHighSchool) => {
+  addConfig: (name, tag, auth, isHighSchool, server) => {
     check(name, String);
     check(tag, String);
     check(auth, Boolean);
+    check(server, String);
     check(isHighSchool, Match.OneOf(Boolean, null));
-    check(set, Boolean);
+    // check(set, Boolean);
 
     const isSet = config.isConfigured;
     let newConfig;
@@ -23,6 +24,7 @@ Meteor.methods({
         isUserAuth: auth,
         isHighSchool: config.isHighSchool,
         isConfigured: true,
+        server
       };
     } else {
       newConfig = {
@@ -30,7 +32,8 @@ Meteor.methods({
         tag,
         isUserAuth: auth,
         isHighSchool,
-        isConfigured,
+        isConfigured: true,
+        server
       };
     }
 

@@ -10,8 +10,10 @@ import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
 import { formatText } from '../../utils/utils';
+import * as config from '../../../../config.json';
 
 let wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
+const { server } = config;
 
 export class SyncUpdates extends Component {
   state = {
@@ -135,6 +137,7 @@ export class SyncUpdates extends Component {
   };
 
   async componentDidMount() {
+    this._isMounted = true;
     Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
       err
         ? (this.setState({ error: err.reason }),
@@ -143,6 +146,9 @@ export class SyncUpdates extends Component {
     });
     await wait(2000);
     await this.getRemoteColls();
+  }
+  componentWillUnmount(){
+    this._isMounted =false;
   }
 
   getRemoteColls = async () => {
@@ -153,20 +159,20 @@ export class SyncUpdates extends Component {
       userId = data.userId;
     }
     try {
-      const coursesPromise = axios('http://13.232.61.192/api/course/');
-      const unitsPromise = axios('http://13.232.61.192/api/unit', {
+      const coursesPromise = axios(`${server}/api/course/`);
+      const unitsPromise = axios(`${server}/api/unit`, {
         headers: {
           'X-Auth-Token': authToken,
           'X-User-Id': userId,
         },
       });
-      const topicsPromise = axios('http://13.232.61.192/api/topic', {
+      const topicsPromise = axios(`${server}/api/topic`, {
         headers: {
           'X-Auth-Token': authToken,
           'X-User-Id': userId,
         },
       });
-      const searchPromise = axios('http://13.232.61.192/api/search', {
+      const searchPromise = axios(`${server}/api/search/`, {
         headers: {
           'X-Auth-Token': authToken,
           'X-User-Id': userId,
@@ -179,13 +185,16 @@ export class SyncUpdates extends Component {
         topicsPromise,
         searchPromise,
       ]);
-      this.setState({
-        coursesData: courses.data.data,
-        topicsData: topics.data.data,
-        unitsData: units.data.data,
-        searchData: search.data.data,
-        loading: false,
-      });
+      if (this._isMounted) {
+        this.setState({
+          coursesData: courses.data.data,
+          topicsData: topics.data.data,
+          unitsData: units.data.data,
+          searchData: search.data.data,
+          loading: false,
+        });
+      }
+
     } catch (error) {
       this.setState({
         error: error.message,
@@ -202,6 +211,10 @@ export class SyncUpdates extends Component {
     return (
       <>
         <div className="col m9 s11">
+        <p>
+          The Sync Address is <span className="red-text">{server}</span>
+          <a href="/setup"> click here</a> if you wish to change the address
+        </p>
           <table className="highlight">
             <thead>
               <tr>
