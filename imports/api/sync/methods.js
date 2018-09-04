@@ -3,9 +3,10 @@ import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
 import { syncData } from './syncData';
 import { execFile } from 'child_process';
+import * as config from '../../../config.json';
 // check internet connection
 
-const baseUrl = 'http://13.232.61.192';
+const { server } = config;
 const collections = ['course', 'unit', 'topic', 'resources', 'references', 'search', 'search'];
 
 Meteor.methods({
@@ -21,7 +22,7 @@ Meteor.methods({
   authenticate: (email, password) => {
     check(email, String);
     check(password, String);
-    return HTTP.post(`${baseUrl}/api/login/`, {
+    return HTTP.post(`${server}/api/login/`, {
       data: {
         email,
         password,
@@ -37,7 +38,7 @@ Meteor.methods({
     check(userId, String);
     collections.map(coll => {
       return HTTP.get(
-        `${baseUrl}/api/${coll}/`,
+        `${server}/api/${coll}/`,
         {
           headers: {
             'X-Auth-Token': token,

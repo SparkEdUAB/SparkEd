@@ -10,6 +10,7 @@ import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
 import { formatText } from '../../utils/utils';
+import * as config from '../../../../config.json';
 
 let wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
 
@@ -147,26 +148,27 @@ export class SyncUpdates extends Component {
 
   getRemoteColls = async () => {
     const data = Session.get('data');
+    const { server } = config;
     let authToken, userId;
     if (data) {
       authToken = data.authToken;
       userId = data.userId;
     }
     try {
-      const coursesPromise = axios('http://13.232.61.192/api/course/');
-      const unitsPromise = axios('http://13.232.61.192/api/unit', {
+      const coursesPromise = axios(`${server}/api/course/`);
+      const unitsPromise = axios(`${server}/api/unit`, {
         headers: {
           'X-Auth-Token': authToken,
           'X-User-Id': userId,
         },
       });
-      const topicsPromise = axios('http://13.232.61.192/api/topic', {
+      const topicsPromise = axios(`${server}/api/topic`, {
         headers: {
           'X-Auth-Token': authToken,
           'X-User-Id': userId,
         },
       });
-      const searchPromise = axios('http://13.232.61.192/api/search', {
+      const searchPromise = axios(`${server}/api/search/`, {
         headers: {
           'X-Auth-Token': authToken,
           'X-User-Id': userId,

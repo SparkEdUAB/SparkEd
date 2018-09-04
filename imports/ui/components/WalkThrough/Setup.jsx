@@ -114,7 +114,7 @@ export class SetUp extends Component {
   };
 
   render() {
-    const { isOpen, confirm, reject, error, name } = this.state;
+    const { error, name } = this.state;
     const isSet = config.isConfigured;
     const { colors } = this.props;
     return (
@@ -212,6 +212,7 @@ export class SetUp extends Component {
               </div>
             </div>
           </form>
+          <p>Upload the logo (Not Required)</p>
           <FileUploadComponent />
           <Button
               actionFunc={e => this.saveConfig(e)}
