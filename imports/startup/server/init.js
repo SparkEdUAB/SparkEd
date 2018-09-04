@@ -14,7 +14,9 @@ Meteor.startup(() => {
       editedAt: new Date(),
     });
   }
-  _Settings.insert({
-    main: '#006b76',
-  });
+  if (!_Settings.find().count()) {
+    _Settings.insert({
+      main: '#006b76',
+    });
+  }
 });
