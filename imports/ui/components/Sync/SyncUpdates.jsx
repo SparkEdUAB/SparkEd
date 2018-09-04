@@ -13,6 +13,7 @@ import { formatText } from '../../utils/utils';
 import * as config from '../../../../config.json';
 
 let wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
+const { server } = config;
 
 export class SyncUpdates extends Component {
   state = {
@@ -148,7 +149,6 @@ export class SyncUpdates extends Component {
 
   getRemoteColls = async () => {
     const data = Session.get('data');
-    const { server } = config;
     let authToken, userId;
     if (data) {
       authToken = data.authToken;
@@ -204,6 +204,10 @@ export class SyncUpdates extends Component {
     return (
       <>
         <div className="col m9 s11">
+        <p>
+          The Sync Address is <span className="red-text">{server}</span>
+          <a href="/dashboard/setup"> click here</a> if you wish to change the address
+        </p>
           <table className="highlight">
             <thead>
               <tr>
