@@ -80,7 +80,7 @@ Meteor.methods({
   },
   // restore the dumped files from the server
   restoreDbChunks: () => {
-    execFile('bash', [`${process.env.PWD}/scripts/importdbs.sh`], (error, stdout) => {
+    execFile(`${process.env.PWD}/scripts/importdbs.sh`, [server], (error, stdout) => {
       if (error) {
         console.log(error);
       }
