@@ -14,6 +14,7 @@ import ExternalLinksView from '../ExternalLink/ExternalLinksView';
 import InstitutionDetail from './InstitutionDetail';
 import { T } from '../Language/Languages';
 import { ThemeContext } from '../../containers/AppWrapper';
+import * as config from '../../../../config.json';
 
 export class Header extends Component {
   constructor(props) {
@@ -241,6 +242,7 @@ export class Header extends Component {
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
     const { externallinks, institution } = this.props;
+    const { name, tag } = config;
     return (
       <ThemeContext.Consumer>
         {color => (
@@ -248,7 +250,7 @@ export class Header extends Component {
             <div className="container-fluid " style={{ backgroundColor: color.main }}>
               <div className="row ">
                 <div className="col s12 m6">
-                  <InstitutionDetail institution={institution} />
+                  <InstitutionDetail institution={institution} name={name} tagline={tag} />
                 </div>
                 <div className="col s12 m2 hide-on-small-only">
                   <SearchView

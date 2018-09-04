@@ -261,22 +261,22 @@ export class FileUploadComponent extends Component {
                 break;
 
               case 'WalkThrough':
-                const instName = Session.get('name');
-                const tag = Session.get('tag');
-                const auth = Session.get('auth');
-                const isHighSchool = Session.get('isHighSchool');
+                // const instName = Session.get('name');
+                // const tag = Session.get('tag');
+                // const auth = Session.get('auth');
+                // const isHighSchool = Session.get('isHighSchool');
 
-                Meteor.call('addConfig', instName, tag, auth, true, isHighSchool, err => {
-                  err
-                    ? Materialize.toast(err.reason, 4000, 'error-toast')
-                    : Materialize.toast(
-                        'Successfully saved the configurations',
-                        4000,
-                        'success-toast',
-                      );
-                });
-                // take to Dashboard after a successful setup
-                FlowRouter.go('/dashboard/accounts');
+                // Meteor.call('addConfig', instName, tag, auth, true, isHighSchool, err => {
+                //   err
+                //     ? Materialize.toast(err.reason, 4000, 'error-toast')
+                //     : Materialize.toast(
+                //         'Successfully saved the configurations',
+                //         4000,
+                //         'success-toast',
+                //       );
+                // });
+                // // take to Dashboard after a successful setup
+                // FlowRouter.go('/dashboard/accounts');
                 break;
 
               default:
