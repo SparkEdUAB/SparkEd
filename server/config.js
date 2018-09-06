@@ -49,11 +49,11 @@ Meteor.methods({
         }
         // Create a config from here
         if (isHighSchool) {
-          title = 'Subject';
-          subTitle = 'Unit';
+          title = 'Subjects';
+          subTitle = 'Units';
         } else {
-          title = 'Course';
-          subTitle = 'Unit';
+          title = 'Courses';
+          subTitle = 'Units';
         }
         Meteor.call('insert.title', title, subTitle, error => {
           error ? console.err(error.reason) : console.log('Saved titles');

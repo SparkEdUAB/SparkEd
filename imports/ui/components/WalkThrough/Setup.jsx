@@ -116,6 +116,7 @@ export class SetUp extends Component {
             'success-toast',
           );
     });
+
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
