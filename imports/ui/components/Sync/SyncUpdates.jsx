@@ -258,6 +258,9 @@ export class SyncUpdates extends Component {
               Sync
             </button>
           )}
+          <p>
+            Resources and other references will synced in the background.
+          </p>
         </div>
       </>
     );
