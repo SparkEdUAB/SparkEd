@@ -1,0 +1,35 @@
+#outer-box {
+    /* width: 300px; */
+    height: 100%;
+    display: block;
+    position: relative;
+  }
+  /* line 9, ../sass/style.scss */
+  #outer-box img {
+    width: 300px;
+    height: auto;
+  }
+  /* line 14, ../sass/style.scss */
+  #outer-box #inner-box {
+    background: #006b76;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding: 0;
+    transition: opacity .5s;
+  }
+  /* line 25, ../sass/style.scss */
+  #outer-box #inner-box p {
+    color: #fff;
+    line-height: 150px;
+    font-family: 'arial';
+    text-align: center;
+  }
+  /* line 34, ../sass/style.scss */
+  #outer-box #inner-box {
+    opacity: .9;
+    transition: opacity .5s;
+  }

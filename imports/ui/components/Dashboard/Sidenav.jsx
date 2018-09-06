@@ -4,14 +4,15 @@ import { Meteor } from 'meteor/meteor';
 import * as config from '../../../../config.json';
 import AppWrapper from '../../containers/AppWrapper';
 import i18n from 'meteor/universe:i18n';
+import '../../stylesheets/overlay.css';
 
 const T = i18n.createComponent();
 
 const Sidenav = props => (
   <AppWrapper>
-    <div className="row">
+    <div className="row" >
       <Fragment>
-        <div className="col m3 s1 menu_simple">
+        <div className="col m3 s1 menu_simple" id={!config.isConfigured ? "outer-box": "" } >
           {/* begin list */}
           <ul className="item-container">
             <li className="hide-on-med-and-down">
@@ -135,12 +136,30 @@ const Sidenav = props => (
             </li>
           </ul>
           {/* end list (ul) */}
+          {
+            !config.isConfigured 
+            ?
+            <div id="inner-box">
+              <p>Finish Set up</p>
+            </div>
+            :
+            <span/>  
+          }
         </div>
       </Fragment>
       <Fragment>{props.yield}</Fragment>
     </div>
   </AppWrapper>
 );
+
+
+export const SidenavOverlay = () => (
+  <div id="overlay">
+    <div id="text">Overlay Text</div>
+  </div>
+)
+
+
 
 Sidenav.propTypes = {
   accounts: PropTypes.string,
