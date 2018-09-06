@@ -156,6 +156,7 @@ export default class Register extends Component {
             >
               <i className="fa fa-sign-in" />
             </a>
+            <a href="/login">Login here </a> if you already have an account
           </div>
         </div>
       </div>
