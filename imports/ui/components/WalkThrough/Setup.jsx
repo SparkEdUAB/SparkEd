@@ -1,14 +1,13 @@
 /* eslint class-methods-use-this: "off" */
 import React, { Component, Fragment } from 'react';
 import { Session } from 'meteor/session';
-import { withTracker } from 'meteor/react-meteor-data';
-import { GithubPicker } from 'react-color';
 import FileUploadComponent from '../../containers/FileUploadComponent';
 import * as config from '../../../../config.json';
 import { Button } from '../../utils/Buttons';
 import { _Settings } from '../../../api/settings/settings';
+import { ThemeContext } from '../../containers/AppWrapper';
 
-export class SetUp extends Component {
+export default class SetUp extends Component {
    state = {
       isOpen: false,
       confirm: '',
@@ -120,16 +119,15 @@ export class SetUp extends Component {
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
-  getColors = color => {
-    Meteor.call('updateColors', '1', color.hex);
-  };
-
   render() {
     const { error, name } = this.state;
     const isSet = config.isConfigured;
-    const { colors } = this.props;
     return (
-      <Fragment>
+      <ThemeContext.Consumer>
+
+        {
+          color => (
+            <Fragment>
         {/* <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} /> */}
         <div className="col s11 m9">
           <form className="">
@@ -215,31 +213,23 @@ export class SetUp extends Component {
               <span />
             )}
             {error ? <h6 className="red-text ">{error}</h6> : ''}
-
-            <div className='row'>
-              <div className='col m3'>
-              <h6>Pick The Main Color</h6>
-                <GithubPicker onChangeComplete={this.getColors} />
-              </div>
-            </div>
           </form>
           <p>Upload the logo (Not Required)</p>
           <FileUploadComponent />
           <Button
               actionFunc={e => this.saveConfig(e)}
               title={'Save and Upload the Institution Logo'}
-              backgroundColor={colors.main}
+              backgroundColor={color.main}
               name={'Save'}
               extraClass={'pulse'}
             />
         </div>
       </Fragment>
+          )
+        }
+
+      </ThemeContext.Consumer>
+      
     );
   }
 }
-
-export default withTracker(() => {
-  return {
-    colors: _Settings.findOne(), // get the current main color
-  };
-})(SetUp);
