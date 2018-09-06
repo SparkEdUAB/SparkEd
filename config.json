@@ -3,6 +3,6 @@
   "tag": "Taglined Again",
   "isUserAuth": false,
   "isHighSchool": true,
-  "isConfigured": true,
+  "isConfigured": false,
   "server": "http://13.232.61.192"
 }

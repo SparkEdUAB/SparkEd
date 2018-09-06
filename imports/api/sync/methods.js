@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
 import { syncData } from './syncData';
-import { execFile } from 'child_process';
+import { execFile, execFileSync } from 'child_process';
 import * as config from '../../../config.json';
 // check internet connection
 
@@ -86,14 +86,7 @@ Meteor.methods({
       }
       console.log(stdout);
     });
+    // return response;
+  // return execFileSync(`${process.env.PWD}/scripts/importdbs.sh`, [server]);  
   },
 });
-
-function getData() {
-  HTTP.call('GET', 'https://jsonplaceholder.typicode.com/posts', (error, result) => {
-    if (!error) {
-      console.log(result);
-    }
-  });
-  console.log('Going to grab data');
-}

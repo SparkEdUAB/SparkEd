@@ -5,12 +5,11 @@
 # Run the Script from the root directory
 
 collections=( fs.chunks fs.files Resources References) # Array of collections to be restored
-#server_address="13.232.61.192" # current server address should be passed as an argument
 
 # get the dum from the main server
-curl -O http://$1/dump.tar.gz
+echo "Downloading files from server on this address $1"
 
-sleep 5
+curl -O $1/dump.tar.gz
 
 # Decompress the downloaded file
 
@@ -34,5 +33,5 @@ sleep 2
  echo "The folder does not exist, Try and export again."   
 fi
 
-echo "Congratulations you have restored the files"
+echo "Done Synchronizing"
 # mongorestore --host 13.232.61.192 --port 37017 --username olivier --password "manoli" /opt/backup/mongodump-2011-10-24

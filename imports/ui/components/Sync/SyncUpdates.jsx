@@ -121,7 +121,7 @@ export class SyncUpdates extends Component {
     }
 
     // When all is done, get the resources and references and sync them to the local
-    await Meteor.call('restoreDbChunks');
+    Meteor.call('restoreDbChunks');
     await Meteor.call(
       'logger',
       formatText('Data was successfully synced', Meteor.userId(), 'sync'),
@@ -148,7 +148,7 @@ export class SyncUpdates extends Component {
     await this.getRemoteColls();
   }
   componentWillUnmount(){
-    this._isMounted =false;
+    this._isMounted = false;
   }
 
   getRemoteColls = async () => {
@@ -243,7 +243,8 @@ export class SyncUpdates extends Component {
             </tbody>
           </table>
 
-          {error.length > 0 ? (
+          {
+            error.length > 0 ? (
             <p className="red-text">{`${error} Please check your internet connection`}</p>
           ) : loading ? (
             <>
