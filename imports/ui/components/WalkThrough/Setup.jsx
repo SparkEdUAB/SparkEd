@@ -115,7 +115,15 @@ export default class SetUp extends Component {
             'success-toast',
           );
     });
-  // Meteor.call()
+  const settings = _Settings.findOne();
+
+  Meteor.call('updateSettings', settings._id, name, tag, server, true, err => {
+    err 
+      ?
+      console.log(err.reason)
+      :
+      console.log('yep it is done')
+  });
 
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));

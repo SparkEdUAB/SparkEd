@@ -98,10 +98,10 @@ Meteor.methods({
       { upsert: true },
     );
   },
-  updateSettings(id, name, title, server, isConfigured){
+  updateSettings(id, name, tag, server, isConfigured){
     check(id, String);
     check(name, String);
-    check(title, String);
+    check(tag, String);
     check(server, String);
     check(isConfigured, Boolean);
     _Settings.update(
@@ -109,7 +109,7 @@ Meteor.methods({
       {
         $set: {
           name, 
-          title,
+          tag,
           server,
           isConfigured
         }
