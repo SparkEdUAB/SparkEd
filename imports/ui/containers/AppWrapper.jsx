@@ -9,12 +9,13 @@ import Header from '../components/layouts/Header';
 
 export const ThemeContext = React.createContext();
 
+
 export const AppWrapper = ({ children, colors }) => {
   if (!colors) {
     return 'loading';
   }
   return (
-    <ThemeContext.Provider value={colors}>
+    <ThemeContext.Provider value={ colors }>
     <Fragment>
       <Header />
       <Fragment>{children}</Fragment>

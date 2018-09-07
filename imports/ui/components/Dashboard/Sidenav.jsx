@@ -150,13 +150,6 @@ const Sidenav = props => (
       <Fragment>{props.yield}</Fragment>
     </div>
   </AppWrapper>
-);
-
-
-export const SidenavOverlay = () => (
-  <div id="overlay">
-    <div id="text">Overlay Text</div>
-  </div>
 )
 
 
