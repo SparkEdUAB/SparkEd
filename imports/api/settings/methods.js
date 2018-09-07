@@ -98,4 +98,23 @@ Meteor.methods({
       { upsert: true },
     );
   },
+  updateSettings(id, name, title, server, isConfigured){
+    check(id, String);
+    check(name, String);
+    check(title, String);
+    check(server, String);
+    check(isConfigured, Boolean);
+    _Settings.update(
+      {_id:id},
+      {
+        $set: {
+          name, 
+          title,
+          server,
+          isConfigured
+        }
+      }
+    )
+  }
+
 });

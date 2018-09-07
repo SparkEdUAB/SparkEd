@@ -115,6 +115,7 @@ export default class SetUp extends Component {
             'success-toast',
           );
     });
+  // Meteor.call()
 
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
