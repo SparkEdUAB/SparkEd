@@ -24,6 +24,7 @@ export class SyncUpdates extends Component {
     loading: true,
     status: 'Checking remote data to Sync ...',
     synced: false,
+    data: null
   };
 
   _syncContents = async () => {
@@ -138,26 +139,23 @@ export class SyncUpdates extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    Meteor.call('authenticate', 'manolivier93@gmail.com', 'manoli', (err, res) => {
-      err
-        ? (this.setState({ error: err.reason }),
-          Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
-        : Session.set('data', res.data.data);
-    });
     await wait(2000);
-    await this.getRemoteColls();
+    // await this.getRemoteColls();
+
   }
   componentWillUnmount(){
     this._isMounted = false;
   }
 
   getRemoteColls = async () => {
-    const data = Session.get('data');
-    let authToken, userId;
-    if (data) {
-      authToken = data.authToken;
-      userId = data.userId;
-    }
+    const { data: { authToken,  userId } } = await this.state;
+    // const { } = data;
+    // let authToken, userId;
+    // if (data) {
+    //   authToken = data.authToken;
+    //   userId = data.userId;
+    // }
+   console.log(authToken)
     try {
       const coursesPromise = axios(`${server}/api/course/`);
       const unitsPromise = axios(`${server}/api/unit`, {
@@ -205,9 +203,39 @@ export class SyncUpdates extends Component {
   syncCourses = () => {
     Meteor.call('courses.sync', this.state.coursesData);
   };
+
+  serverAuthenticate = async () => {
+    const user = Meteor.user();
+    const { password } = this.state;
+    const { address } = user.emails[0];
+    await Meteor.call('authenticate', address, password, (err, res) => {
+      err
+        ? (this.setState({ error: err.reason }),
+          Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
+        : 
+        this.setState({
+          data: res.data.data
+        })
+        // Session.set('data', res.data.data);
+    });
+    await wait(1000)
+    await this.getRemoteColls();
+  }
+  getPassword = ({target: { value }}) => {
+    this.setState({
+      password: value,
+      error: ''
+
+    })
+  } 
   render() {
-    const { unitsData, coursesData, topicsData, error, loading, status } = this.state;
+    const { unitsData, coursesData, topicsData, error, loading, status, data } = this.state;
     const { courses, units, topics } = this.props;
+    // if (!data) {
+    //   return (
+    //     <InputPassword authenticateFunc={this.serverAuthenticate} onChange={this.getPassword} error={error} />
+    //   )
+    // }
     return (
       <>
         <div className="col m9 s11">
@@ -215,6 +243,14 @@ export class SyncUpdates extends Component {
           The Sync Address is <span className="red-text">{server}</span>
           <a href="/setup"> click here</a> if you wish to change the address
         </p>
+        {
+          !data 
+          ?
+          <InputPassword authenticateFunc={this.serverAuthenticate} onChange={this.getPassword} error={error} />
+
+          :
+
+          <>
           <table className="highlight">
             <thead>
               <tr>
@@ -261,11 +297,52 @@ export class SyncUpdates extends Component {
           <p>
             Resources and other references will synced in the background.
           </p>
+
+          </>
+
+        }
+         
         </div>
       </>
     );
   }
 }
+
+const InputPassword = props => (
+  <div className="col m9 s11">
+    <div className="row">
+      <div className="input-field col s12 m6">
+        <input
+          id="inst_tag"
+          type="text"
+          className="validate"
+          required
+          onChange={props.onChange}
+        />
+        <label htmlFor="inst_tag">
+          Enter your password <span className="red-text">*</span>
+        </label>
+      </div>
+    </div>
+    <div className="row">
+      <button className="btn " onClick={props.authenticateFunc}>
+          Authenticate
+      </button>
+    </div>
+    
+    <div className="row">
+      {
+        props.error.length
+        ?
+        props.error
+        :
+        null
+      }
+    </div>
+
+  </div>
+)
+
 // todo: consider making these into server calls
 export default withTracker(() => {
   Meteor.subscribe('resourcess');
