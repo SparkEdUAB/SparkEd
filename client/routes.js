@@ -324,7 +324,7 @@ loggedIn.route('/externallinkpages', {
 isAuthRequired().route('/reference/:_id', {
   name: 'ReferenceLibrary',
   action(queryParams) {
-    mount(ReferenceLibrary, {});
+    mount(AppWrapper, { children: <ReferenceLibrary /> });
   },
 });
 
