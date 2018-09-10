@@ -118,7 +118,7 @@ export class ExtraResource extends Component {
           <span className={'card-title '}>
             <h5>
               <a href={`/extra/view_resource/${courseId}?rs=${resourceId}`} id="cardListTitle">
-                {name}
+                {name.replace(/\.[^/.]+$/, '')}
               </a>
             </h5>
           </span>
