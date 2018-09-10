@@ -24,9 +24,15 @@ export default class ViewFrame extends Component {
     return (
       <div className=" ">
         <div className="sideNavHeadingUnderline">
-          <a title="Go back to Topics" id="backButtonLink" href={ViewFrame.getUrl()}>
-            <i className="fa fa-chevron-circle-left fa-lg" />
-          </a>
+          {
+            FlowRouter.getQueryParam('scid')
+            ?
+            <a title="Go back to Topics" id="backButtonLink" href={ViewFrame.getUrl()}>
+              <i className="fa fa-chevron-circle-left fa-lg" />
+            </a>
+            :
+            null
+          }
           <p className="sideNavHeading">
             <T>common.manage.resources</T>
           </p>

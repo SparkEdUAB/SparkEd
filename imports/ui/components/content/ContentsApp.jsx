@@ -148,6 +148,9 @@ export function getTopicId() {
   if (config.isHighSchool) {
     topicId = FlowRouter.getQueryParam('rs');
     topics = _Units.findOne({ 'details.courseId': FlowRouter.getParam('_id') });
+    if (!topics) {
+      topics = _Units.findOne({ '_id': FlowRouter.getQueryParam('rs')})
+    }
   } else {
     topicId = FlowRouter.getQueryParam('rs');
     topics = _Topics.findOne({ unitId: FlowRouter.getParam('_id') });
