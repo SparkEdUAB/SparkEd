@@ -360,7 +360,7 @@ export class FileUploadComponent extends Component {
           <div className="col s12">
             <form onSubmit={this.uploadIt}>
               <div className="file-field input-field">
-                <div className="btn">
+                <div className="btn" style={{backgroundColor: '#006b76'}}>
                   <span>
                     {files.length >= 1
                       ? `${files.length} ${name} selected (${files_size})`
@@ -384,7 +384,7 @@ export class FileUploadComponent extends Component {
                   />
                 </div>
               </div>
-              <button role="submit" className="btn fa fa-upload" style={{ marginLeft: '42%' }}>
+              <button role="submit" className="btn fa fa-upload" style={{ marginLeft: '42%',backgroundColor: '#006b76' }}>
                 {uploaded ? ' Done Uploading' : ' Upload'}
               </button>
             </form>

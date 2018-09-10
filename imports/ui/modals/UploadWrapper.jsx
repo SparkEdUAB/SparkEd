@@ -15,6 +15,7 @@ const UploadWrapper = ({ show, close, title }) => {
           href=""
           className="pull-right waves-effect waves-light btn fa fa-times"
           onClick={close}
+          style={{ backgroundColor: '#006b76' }}
         />
         <h5>{title}</h5>
         <div className="row">

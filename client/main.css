@@ -449,6 +449,7 @@ nav ul a:hover {
 }
 #accounts-button {
   text-transform: capitalize;
+  background-color: #006b76
 }
 
 #usrIcon {

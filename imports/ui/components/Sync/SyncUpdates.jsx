@@ -306,7 +306,7 @@ const InputPassword = props => (
       </div>
     </div>
     <div className="row">
-      <button className="btn " onClick={props.authenticateFunc}>
+      <button className="btn " onClick={props.authenticateFunc} style={{ backgroundColor: '#006b76' }}>
           Authenticate
       </button>
     </div>

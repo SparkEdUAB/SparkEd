@@ -46,7 +46,7 @@ const UserInfo = () => {
             {Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager']) ? (
               <div className="valign center-align" id="dashStylesDrop">
                 <span
-                  className="dashLink link waves-effect waves-teal btn-flat"
+                  className="dashLink link waves-effect teal btn-flat"
                   onClick={takeToDashboard}
                 >
                   dashboard
