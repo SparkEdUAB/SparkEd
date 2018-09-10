@@ -22,7 +22,7 @@ export class ReferenceLibrary extends Component {
   }
 
   static renderResources(coll) {
-    if (coll === undefined) {
+    if (!coll) {
       return null;
     }
     return coll.map(res => (
@@ -84,7 +84,6 @@ export class ReferenceLibrary extends Component {
     Session.set('limit', 10);
     return (
       <Fragment>
-        <Header />
         <div className="row">
           <div className="col m3 s12 menu_simple">
             <ul className="item-container">

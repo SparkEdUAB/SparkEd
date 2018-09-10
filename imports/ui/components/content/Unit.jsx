@@ -114,7 +114,7 @@ export class ExtraResource extends Component {
         title={fileType}
         onClick={ExtraResource.handleClickCard.bind(this, courseId, resourceId)}
       >
-        <div className="card-panel homeCardColor-2 green lighten">
+        <div className="card-panel homeCardColor-2 teal">
           <span className={'card-title '}>
             <h5>
               <a href={`/extra/view_resource/${courseId}?rs=${resourceId}`} id="cardListTitle">

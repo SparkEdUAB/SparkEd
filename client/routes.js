@@ -303,7 +303,7 @@ FlowRouter.notFound = {
 isAuthRequired().route('/reference', {
   name: 'ReferenceLibrary',
   action() {
-    mount(ReferenceLibrary, {});
+    mount(AppWrapper, { children: <ReferenceLibrary /> });
   },
 });
 
