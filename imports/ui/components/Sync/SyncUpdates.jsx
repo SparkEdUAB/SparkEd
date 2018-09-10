@@ -198,7 +198,7 @@ export class SyncUpdates extends Component {
     const { address } = user.emails[0];
     Meteor.call('authenticate', address, password, (err, res) => {
       err
-        ? (this.setState({ error: err.reason }),
+        ? (this.setState({ error: err }),
           Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
         : 
         this.setState({
