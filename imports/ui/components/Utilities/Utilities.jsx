@@ -358,7 +358,7 @@ export class FloatingButton extends Component {
         </MainModal>
 
         <div className="fixed-action-btn plus-icon">
-          <a href="" className="btn-floating btn-large waves-effect waves-light blue ">
+          <a href="" className="btn-floating btn-large waves-effect waves-light teal darken-1">
             <i className="fa fa-plus center more-items" />
           </a>
           <ul>
@@ -366,7 +366,7 @@ export class FloatingButton extends Component {
               <a
                 href="#"
                 title="Provide feedback"
-                className="btn-floating  waves-effect waves-light blue"
+                className="btn-floating  waves-effect waves-light teal darken-1"
                 onClick={e => this.toggleEditModal(e, 'feedback')}
               >
                 <i className="fa fa-comments center" />
@@ -378,7 +378,7 @@ export class FloatingButton extends Component {
                 title="Bookmark"
                 href="#"
                 target="_blank"
-                className="btn-floating blue"
+                className="btn-floating teal darken-1"
               >
                 <i className="fa fa-bookmark" />
               </a>
