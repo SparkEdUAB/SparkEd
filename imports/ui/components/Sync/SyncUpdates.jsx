@@ -137,11 +137,8 @@ export class SyncUpdates extends Component {
     });
   };
 
-  async componentDidMount() {
+  componentDidMount(){
     this._isMounted = true;
-    await wait(2000);
-    // await this.getRemoteColls();
-
   }
   componentWillUnmount(){
     this._isMounted = false;
@@ -149,13 +146,7 @@ export class SyncUpdates extends Component {
 
   getRemoteColls = async () => {
     const { data: { authToken,  userId } } = await this.state;
-    // const { } = data;
-    // let authToken, userId;
-    // if (data) {
-    //   authToken = data.authToken;
-    //   userId = data.userId;
-    // }
-   console.log(authToken)
+   
     try {
       const coursesPromise = axios(`${server}/api/course/`);
       const unitsPromise = axios(`${server}/api/unit`, {
@@ -200,15 +191,12 @@ export class SyncUpdates extends Component {
       Meteor.call('logger', formatText(error.message, Meteor.userId()), 'error');
     }
   };
-  syncCourses = () => {
-    Meteor.call('courses.sync', this.state.coursesData);
-  };
 
   serverAuthenticate = async () => {
     const user = Meteor.user();
     const { password } = this.state;
     const { address } = user.emails[0];
-    await Meteor.call('authenticate', address, password, (err, res) => {
+    Meteor.call('authenticate', address, password, (err, res) => {
       err
         ? (this.setState({ error: err.reason }),
           Meteor.call('logger', formatText(err.message, Meteor.userId()), 'error'))
@@ -216,26 +204,19 @@ export class SyncUpdates extends Component {
         this.setState({
           data: res.data.data
         })
-        // Session.set('data', res.data.data);
     });
-    await wait(1000)
-    await this.getRemoteColls();
+    await wait(1500)
+    this.getRemoteColls();
   }
   getPassword = ({target: { value }}) => {
     this.setState({
       password: value,
       error: ''
-
     })
   } 
   render() {
     const { unitsData, coursesData, topicsData, error, loading, status, data } = this.state;
     const { courses, units, topics } = this.props;
-    // if (!data) {
-    //   return (
-    //     <InputPassword authenticateFunc={this.serverAuthenticate} onChange={this.getPassword} error={error} />
-    //   )
-    // }
     return (
       <>
         <div className="col m9 s11">
@@ -295,7 +276,7 @@ export class SyncUpdates extends Component {
             </button>
           )}
           <p>
-            Resources and other references will synced in the background.
+            Resources and other references will be synced in the background.
           </p>
 
           </>
