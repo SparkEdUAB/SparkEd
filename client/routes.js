@@ -141,7 +141,7 @@ isAuthRequired().route('/course_content/', {
 isAuthRequired().route('/results', {
   name: 'Results',
   action() {
-    mount(SearchResults, {});
+    mount(AppWrapper, { children: <SearchResults /> });
   },
 });
 

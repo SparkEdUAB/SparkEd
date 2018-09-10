@@ -1,10 +1,8 @@
 /* eslint class-methods-use-this: "off" */
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
-import Header from '../layouts/Header.jsx';
 import { _SearchData } from '../../../api/search/search';
 import Pagination, {
   getQuery,
@@ -63,7 +61,6 @@ export class SearchResults extends Component {
   render() {
     return (
       <div>
-        <Header />
         <div className="container">
           <table>
             <thead>
