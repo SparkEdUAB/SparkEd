@@ -10,8 +10,8 @@ export class ImgSlider extends Component {
     Meteor.clearTimeout(timeOut);
   }
 
-  static renderSlider(slides) {
-    if (slides.length === 0) {
+  renderSlider(slides) {
+    if (!slides || !slides.length) {
       return (
         <li>
           <div
@@ -27,15 +27,10 @@ export class ImgSlider extends Component {
           </div>
         </li>
       );
-    } else if (slides === undefined) {
-      return 'not defined';
     }
     return slides.map(slide => (
       <li key={slide._id}>
         <img src={`/uploads/slides/${slide._id}.${slide.ext}`} />
-        <div className="caption center-align">
-          <h4 className="light grey-text text-lighten-1">{slide.name.replace(/\.[^/.]+$/, '')}</h4>
-        </div>
       </li>
     ));
   }
@@ -46,7 +41,7 @@ export class ImgSlider extends Component {
     }, 5);
     return (
       <div className="slider" style={{ marginTop: '-21px' }}>
-        <ul className="slides">{ImgSlider.renderSlider(this.props.slides)}</ul>
+        <ul className="slides">{this.renderSlider(this.props.slides)}</ul>
       </div>
     );
   }

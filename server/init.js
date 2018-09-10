@@ -7,8 +7,7 @@ Meteor.startup(() => {
   const newPath = `${process.env.PWD}/public/uploads/sparked.png`;
   try {
     if (fs.statSync(currentPath)) {
-      fs
-        .copy(currentPath, newPath)
+      fs.copy(currentPath, newPath)
         .then(() => console.log(''))
         .catch(err => console.error(err));
     } else {

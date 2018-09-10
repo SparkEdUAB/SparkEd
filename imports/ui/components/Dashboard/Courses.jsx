@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
+import i18n from 'meteor/universe:i18n';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { Titles } from '../../../api/settings/titles';
@@ -13,6 +14,9 @@ import {
 import MainModal from '../../../ui/modals/MainModal.jsx';
 import { closeModal } from '../../../ui/modals/methods.js';
 import * as config from '../../../../config.json';
+import { formatText } from '../../utils/utils';
+
+export const T = i18n.createComponent();
 
 export class Courses extends Component {
   constructor(props) {
@@ -62,8 +66,8 @@ export class Courses extends Component {
           modalIdentifier: id,
           modalType: ide,
           title: `Edit ${Session.get('course_title')}`,
-          confirm: 'Save',
-          reject: 'Close',
+          confirm: <T>common.actions.save</T>,
+          reject: <T>common.actions.close</T>,
           name: this.name,
           code: this.code,
           year: this.year,
@@ -75,8 +79,8 @@ export class Courses extends Component {
           modalIdentifier: id,
           modalType: ide,
           title: `Add ${Session.get('course_title')}`,
-          confirm: 'Save',
-          reject: 'Close',
+          confirm: <T>common.actions.save</T>,
+          reject: <T>common.actions.close</T>,
         });
         break;
       case 'del':
@@ -91,16 +95,16 @@ export class Courses extends Component {
           modalIdentifier: 'id',
           modalType: ide,
           title: `Are you sure to delete ${count} ${name}`,
-          confirm: 'Yes',
-          reject: 'No',
+          confirm: <T>common.actions.yes</T>,
+          reject: <T>common.actions.no</T>,
           ids: course,
         });
         break;
       case 'field':
         this.setState({
           title: 'Edit Table titles on this page',
-          confirm: 'Save',
-          reject: 'Close',
+          confirm: <T>common.actions.save</T>,
+          reject: <T>common.actions.close</T>,
           modalType: ide,
           table_title: yr,
           sub_title: id,
@@ -113,7 +117,7 @@ export class Courses extends Component {
   // route to whats contained in the course
   static handleUrl(id, year, event) {
     event.preventDefault();
-    Session.set('courseIde', id);
+    Session.setPersistent('courseIde', id);
     FlowRouter.go(`/dashboard/units/${id}?y=${year}`);
   }
 
@@ -137,7 +141,12 @@ export class Courses extends Component {
         const courseId = new Meteor.Collection.ObjectID().valueOf();
         Meteor.call('course.add', courseId, course, courseCode, details, (err, res) => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'course-add'),
+                'error',
+              ))
             : Meteor.call('insert.search', courseId, { courseId }, course, reference, err => {
                 err
                   ? Materialize.toast(err.reason, 3000, 'error-toast')
@@ -153,7 +162,12 @@ export class Courses extends Component {
         year = target.year.value;
         Meteor.call('course.edit', modalIdentifier, course, courseCode, year, owner, err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'course-edit'),
+                'error',
+              ))
             : Meteor.call('updateSearch', modalIdentifier, course, err => {
                 err
                   ? Materialize.toast(err.reason, 3000, 'error-toast')
@@ -170,7 +184,12 @@ export class Courses extends Component {
           const name = count > 1 ? 'courses' : 'course';
           Meteor.call('course.remove', v, err => {
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.message, Meteor.userId(), 'course-remove'),
+                  'error',
+                ))
               : Meteor.call('removeSearchData', v),
               err => {
                 err
@@ -195,7 +214,12 @@ export class Courses extends Component {
         // update.title'(id, title, sub)
         Meteor.call('update.title', title_id, table_title, sub_title, err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'update-title'),
+                'error',
+              ))
             : Materialize.toast('Successfully updated the titles', 3000, 'success-toast');
         });
     }
@@ -206,7 +230,6 @@ export class Courses extends Component {
   }
 
   saveTitle = ({ target: { value } }, type) => {
-    console.log(type);
     switch (type) {
       case 'sub':
         this.setState({
@@ -225,7 +248,7 @@ export class Courses extends Component {
   renderCourses() {
     let count = 1;
     const { courses } = this.props;
-    if (courses === undefined) {
+    if (!courses) {
       return '';
     }
     return courses.map(course => (
@@ -285,7 +308,7 @@ export class Courses extends Component {
     if (titles) {
       new_title = titles.title;
       new_sub_title = titles.sub_title;
-      Session.set({
+      Session.setPersistent({
         title_id: titles._id,
         course_title: new_title,
       });
@@ -370,7 +393,11 @@ export class Courses extends Component {
 
         <div className="col m9 s11">
           <div className="">
-            <h4>Manage {new_title}</h4> {/* Add */}
+            <h4>
+              {' '}
+              <T>common.manage.manage</T> {new_title}
+            </h4>{' '}
+            {/* Add */}
           </div>
           <div className="row">
             <div className="col m3">
@@ -379,7 +406,7 @@ export class Courses extends Component {
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
             <div className="col m3">
@@ -389,7 +416,7 @@ export class Courses extends Component {
                   onClick={e => this.toggleEditModal('add', e)}
                 >
                   {' '}
-                  New
+                  <T>common.actions.new</T>
                 </button>
               </a>
             </div>
@@ -400,12 +427,18 @@ export class Courses extends Component {
               <tr>
                 <th>#</th>
                 <th>{new_title}</th>
-                <th>Created At</th>
+                <th>
+                  {' '}
+                  <T>common.actions.createdAt</T>
+                </th>
                 <th>{`Edit ${new_title}`}</th>
                 <th>{new_sub_title}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    {' '}
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
                 <th>
                   <a

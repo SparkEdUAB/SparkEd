@@ -161,9 +161,9 @@ export default withTracker(() => {
   Meteor.subscribe('externallinks');
 
   return {
-    // Show the newly created N notifications
-
-    externallinks: _ExternalLink.find({},{ skip: Session.get('skip'), limit: Session.get('limit')}).fetch(),
-      externallinksCount: _ExternalLink.find({}).count(),
+    externallinks: _ExternalLink
+      .find({}, { skip: Session.get('skip'), limit: Session.get('limit') })
+      .fetch(),
+    externallinksCount: _ExternalLink.find({}).count(),
   };
 })(ExternalLinkPage);

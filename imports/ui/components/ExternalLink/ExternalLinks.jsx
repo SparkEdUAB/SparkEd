@@ -1,21 +1,15 @@
 // TODO:  properly route back to the programs, can do this by setting the id in session
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ExternalLink } from '../../../api/externallink/externallink';
-import { Titles } from '../../../api/settings/titles';
-import Header from '../layouts/Header.jsx';
 import {
   handleCheckboxChange,
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
-import Sidenav from '../Dashboard/Sidenav.jsx';
 import MainModal from '../../../ui/modals/MainModal.jsx';
 import { closeModal } from '../../../ui/modals/methods.js';
-import * as config from '../../../../config.json';
-// import { createLink } from '../../../api/externallink/methods';
 
 export class ExternalLinks extends Component {
   constructor(props) {
@@ -100,11 +94,8 @@ export class ExternalLinks extends Component {
   };
 
   handleExternalLinkUrl = (event, url) => {
-    window.open(
-      url,
-      '_blank'
-    );
-  }
+    window.open(url, '_blank');
+  };
 
   renderExternalLinks() {
     let count = 1;
@@ -115,12 +106,9 @@ export class ExternalLinks extends Component {
       <tr className="link-section" key={externallink._id}>
         <td>{count++}</td>
         <td>{externallink.name}</td>
-        <td className = "blue-text" onClick={e =>
-          this.handleExternalLinkUrl(
-            this,
-            externallink.url
-          )
-        }>{externallink.url}</td>
+        <td className="blue-text" onClick={e => this.handleExternalLinkUrl(this, externallink.url)}>
+          {externallink.url}
+        </td>
         <td>{externallink.createdAt.toDateString()}</td>
 
         <td>
@@ -140,7 +128,11 @@ export class ExternalLinks extends Component {
           />
         </td>
         <td onClick={handleCheckboxChange.bind(this, externallink._id)}>
-          <input type="checkbox" className={` filled-in chk chk${externallink._id}`} id={externallink._id} />
+          <input
+            type="checkbox"
+            className={` filled-in chk chk${externallink._id}`}
+            id={externallink._id}
+          />
           <label />
         </td>
       </tr>
@@ -161,7 +153,11 @@ export class ExternalLinks extends Component {
         Meteor.call('externallink.add', id, externalLinkTitle, url, err => {
           err
             ? Materialize.toast(err.reason, 4000, 'error-toast')
-            : Materialize.toast(`Successfully added ${externalLinkTitle} web address` , 4000, 'success-toast');
+            : Materialize.toast(
+                `Successfully added ${externalLinkTitle} web address`,
+                4000,
+                'success-toast',
+              );
         });
 
         break;
@@ -185,11 +181,7 @@ export class ExternalLinks extends Component {
           Meteor.call('externallink.remove', v, err => {
             err
               ? Materialize.toast(err.reason, 4000, 'error-toast')
-             : Materialize.toast(
-                              `${count} ${name} successfully deleted`,
-                              4000,
-                              'success-toast',
-                            );
+              : Materialize.toast(`${count} ${name} successfully deleted`, 4000, 'success-toast');
           });
         });
 
@@ -281,13 +273,13 @@ export class ExternalLinks extends Component {
       </>
     );
   }
-  }
+}
 
-  ExternalLinks.propTypes = {
+ExternalLinks.propTypes = {
   externallinks: PropTypes.array,
-  };
+};
 
-  export default withTracker(() => {
+export default withTracker(() => {
   Meteor.subscribe('externallinks');
   Meteor.subscribe('deleted');
   Meteor.subscribe('searchdata');

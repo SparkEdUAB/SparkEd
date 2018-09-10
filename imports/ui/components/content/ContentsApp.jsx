@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Tracker } from 'meteor/tracker';
 import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
+import i18n from 'meteor/universe:i18n';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
 import Topics from './Topics.jsx';
@@ -11,6 +12,9 @@ import { insertStatistics } from '../Statistics/Statistics.jsx';
 import { FloatingButton } from '../Utilities/Utilities.jsx';
 import * as config from '../../../../config.json';
 import { Titles } from '../../../api/settings/titles';
+import { ThemeContext } from '../../containers/AppWrapper';
+
+export const T = i18n.createComponent();
 
 export class ContentsApp extends Component {
   constructor(props) {
@@ -85,39 +89,48 @@ export class ContentsApp extends Component {
       title = titles.title;
     }
     return (
-      <Fragment>
-        <div className="row">
-          <div className=" unit-container">
-            <h4 className="center unit-name">{unitName}</h4>
-            <div className="container">
-              <p className="center">{desc}</p>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col s12 m4 l3 topics-container">
-            <div className="sideNavHeadingUnderline">
-              <a
-                title="Go back to Topics"
-                id="backButtonLink"
-                href={''}
-                onClick={e => this.getBack(e)}
-              >
-                <i className="fa fa-chevron-circle-left fa-lg" />
-              </a>
-              <p className="sideNavHeading">{config.isHighSchool ? title : 'Topics'}</p>
-            </div>
-            <Topics unitId={getUnitId()} />
-          </div>
-          <div className="col s12 m8 l9">
-            <h5 className="center">{topicName}</h5>
-            <Resourcesss topicId={getTopicId()} />
-          </div>
-        </div>
-        <>
-          <FloatingButton />
-        </>
-      </Fragment>
+      <ThemeContext.Consumer>
+
+        {
+          color => (
+            <Fragment>
+              <div className="row">
+                <div className=" unit-container" style={{ backgroundColor: color.main }}>
+                  <h4 className="center unit-name">{unitName}</h4>
+                  <div className="container">
+                    <p className="center">{desc}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col s12 m4 l3 topics-container">
+                  <div className="sideNavHeadingUnderline">
+                    <a
+                      title="Go back to Topics"
+                      id="backButtonLink"
+                      href={''}
+                      onClick={e => this.getBack(e)}
+                    >
+                      <i className="fa fa-chevron-circle-left fa-lg" />
+                    </a>
+                    <p className="sideNavHeading">
+                      {config.isHighSchool ? title : <T>common.manage.topics</T>}
+                    </p>
+                  </div>
+                  <Topics unitId={getUnitId()} />
+                </div>
+                <div className="col s12 m8 l9">
+                  <h5 className="center">{topicName}</h5>
+                  <Resourcesss topicId={getTopicId()} />
+                </div>
+              </div>
+              <>
+                <FloatingButton />
+              </>
+            </Fragment>
+          )
+        }
+      </ThemeContext.Consumer>
     );
   }
 }
@@ -135,6 +148,9 @@ export function getTopicId() {
   if (config.isHighSchool) {
     topicId = FlowRouter.getQueryParam('rs');
     topics = _Units.findOne({ 'details.courseId': FlowRouter.getParam('_id') });
+    if (!topics) {
+      topics = _Units.findOne({ '_id': FlowRouter.getQueryParam('rs')})
+    }
   } else {
     topicId = FlowRouter.getQueryParam('rs');
     topics = _Topics.findOne({ unitId: FlowRouter.getParam('_id') });

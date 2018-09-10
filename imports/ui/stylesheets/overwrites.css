@@ -9,18 +9,15 @@ nav {
 
 /* #1E4847 */
 .homeCardColor-2 {
-  background-color: #37838f;
+  /* background-color: #37838f; */
   margin-top: 20px;
   height: 150px;
 }
 
 .unit-container {
-  background-color: #018ac7;
-  height: 105px;
+  height: 110px;
   margin-top: -17px;
   color: #ffffff;
-  border-style:inset;
-  border-width: thin;
 }
 
 .unit-name {

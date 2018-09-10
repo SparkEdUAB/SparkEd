@@ -1,17 +1,77 @@
 {
   "_locale": "en-US",
   "_namespace": "common",
-  "accounts": {
-    "userName": "User name",
-    "Language": "Language",
+  "language": {
     "enUS": "English - U.S.",
     "esES": "Spanish - SP",
     "frFr": "French - FR",
+    "Language": "Language"
+  },
+  "titles": {
+    "addreference": "Add Reference",
+    "referenceDisplaced": "References displayed",
+    "feedback": "Feedback",
+    "source": "Source",
+    "usersfeedback": "Users Feedback",
+    "notifications": "Notifications",
+    "bookmarks": "Bookmarks"
+  },
+  "accounts": {
+    "userName": "User name",
     "Subjects": "Subjects",
     "Register": "Register",
     "Login": "LogIn",
     "Logout": "Logout",
     "Password": "Password",
-    "Email": "Email Address"
+    "EmailField": "Email Address",
+    "name": "name",
+    "Role": "Role",
+    "Email": "Email",
+    "Gender": "Gender"
+  },
+  "manage": {
+    "accounts": "accounts",
+    "courses": "courses",
+    "unit": "units",
+    "topics": "Topics",
+    "resources": "resources",
+    "reference": "References",
+    "manage": "Manage"
+  },
+  "actions": {
+    "delete": "delete",
+    "add": "add",
+    "new": "new",
+    "approve": "approve",
+    "suspend": "suspend",
+    "ChangeRoles": "Change Roles",
+    "edit": "edit",
+    "check": "Check All",
+    "changeRole": "Change Role",
+    "createdAt": "Created At",
+    "save": "Save",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "addreference": "Add Reference"
+  },
+  "message": {
+    "success": "",
+    "error": "",
+    "warn": ""
+  },
+  "sidenav": {
+    "dashboard": "Dashboard",
+    "accounts": "Accounts",
+    "courses": "Courses",
+    "alltopics": "All Topics",
+    "resourceLibrary": "Resource Library",
+    "externalLinks": "External Links",
+    "feedback": "Feedback",
+    "setup": "Set Up",
+    "changeSlides": "Change Slides",
+    "updates": "Updates",
+    "subjects": "Subjects",
+    "stats": "Statistics"
   }
 }

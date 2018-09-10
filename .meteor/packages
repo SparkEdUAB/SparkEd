@@ -7,7 +7,6 @@
 meteor-base@1.3.0             # Packages every Meteor app needs to have
 mobile-experience@1.0.5       # Packages for a great mobile UX
 mongo@1.4.2                   # The database Meteor supports right now
-blaze-html-templates    # Compile .html files into Meteor Blaze views
 reactive-var@1.0.11            # Reactive variable for tracker
 jquery@1.11.10                  # Helpful client-side library
 tracker@1.1.3                 # Meteor's client-side reactive programming library
@@ -41,5 +40,6 @@ momentjs:moment
 percolate:synced-cron
 ostrio:files
 universe:i18n
-chfritz:serversync
 mrest:restivus
+email
+cultofcoders:persistent-session

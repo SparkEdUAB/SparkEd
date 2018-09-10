@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
+import i18n from 'meteor/universe:i18n';
 import ReactPaginate from 'react-paginate';
 import { _Topics } from '../../../api/topics/topics';
-import { _SearchData } from '../../../api/search/search';
-import { _Deleted } from '../../../api/Deleted/deleted';
-import Header from '../layouts/Header.jsx';
-import Sidenav from './Sidenav.jsx';
 import {
   handleCheckboxChange,
   handleCheckAll,
@@ -18,6 +15,9 @@ import MainModal from '../../../ui/modals/MainModal.jsx';
 import { Resources } from '../../../api/resources/resources';
 import * as config from '../../../../config.json';
 import { _Units } from '../../../api/units/units';
+import { formatText } from '../../utils/utils';
+
+export const T = i18n.createComponent();
 
 export class EditResources extends Component {
   constructor(props) {
@@ -108,11 +108,10 @@ export class EditResources extends Component {
 
   getBack = e => {
     // event.preventDefault();
-    const unitId = Session.get('unitId');
     if (config.isHighSchool) {
-      FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseId')}`);
+      FlowRouter.go(`/dashboard/units/?cs=${Session.get('courseIde')}`);
     } else {
-      FlowRouter.go(`/dashboard/edit_unit/${Session.get('unitId')}`);
+      return FlowRouter.go(`/dashboard/edit_unit/${Session.get('unitId')}`);
     }
   };
 
@@ -127,7 +126,12 @@ export class EditResources extends Component {
         const resourceName = event.target.resource.value;
         Meteor.call('updateResource', modalIdentifier, resourceName, err => {
           err
-            ? Materialize.toast(err.reason, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'resource-update'),
+                'error',
+              ))
             : Meteor.call('updateSearch', modalIdentifier, resourceName, err => {
                 err
                   ? Materialize.toast(err.reason, 'error-toast')
@@ -148,7 +152,12 @@ export class EditResources extends Component {
           const name = count > 1 ? 'resources' : 'resource';
           Meteor.call('removeResource', v, err => {
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.message, Meteor.userId(), 'resource-remove'),
+                  'error',
+                ))
               : Meteor.call('removeSearchData', v, err => {
                   err
                     ? Materialize.toast(err.reason)
@@ -211,7 +220,7 @@ export class EditResources extends Component {
     const { topic, unit } = this.props;
     // let nam
     if (topic) {
-      Session.set({
+      Session.setPersistent({
         unitId: topic.unitId,
         unitName: topic.name,
       });
@@ -306,7 +315,7 @@ export class EditResources extends Component {
           </div>
           <div className="row ">
             <div className="col s4 m3">
-              <button className="btn grey darken-3 fa fa-angle-left" onClick={this.getBack}>
+              <button className="btn grey darken-3 fa fa-angle-left" onClick={e => this.getBack(e)}>
                 {' '}
                 {config.isHighSchool ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
               </button>
@@ -317,7 +326,7 @@ export class EditResources extends Component {
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
 
@@ -350,12 +359,18 @@ export class EditResources extends Component {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Resource</th>
-                <th>Edit Resource</th>
+                <th>
+                  <T>common.manage.resources</T>
+                </th>
+                <th>
+                  <T>common.actions.edit</T> <T>common.manage.resources</T>
+                </th>
                 <th>Type</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
               </tr>
             </thead>

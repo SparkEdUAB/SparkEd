@@ -1,28 +1,25 @@
 import { Session } from 'meteor/session';
 import React, { Component, Fragment } from 'react';
-import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import ReactPaginate from 'react-paginate';
+import i18n from 'meteor/universe:i18n';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { Titles } from '../../../api/settings/titles';
-import Header from '../layouts/Header.jsx';
 import {
   handleCheckboxChange,
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
-import Sidenav from './Sidenav.jsx';
-import Pagination, {
-  getPageNumber,
-  validatePageNum,
-  getQuery,
-} from '../Utilities/Pagination/Pagination.jsx';
-import { initInput, SearchView, filterUrl, SearchField } from '../Utilities/Utilities.jsx';
+import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
+import { SearchField } from '../Utilities/Utilities.jsx';
 import Search from '../Utilities/Search/Search.jsx';
 import UploadWrapper from '../../../ui/modals/UploadWrapper.jsx';
 import MainModal from '../../../ui/modals/MainModal';
 import * as config from '../../../../config.json';
+import { formatText } from '../../utils/utils';
 
+export const T = i18n.createComponent();
 // this lists what a specific course contains
 
 export class ManageUnits extends Component {
@@ -59,9 +56,10 @@ export class ManageUnits extends Component {
       return;
     });
     // don't clean the courseId on unmount
-    Session.set('courseId', FlowRouter.getQueryParam('cs'));
+    Session.setPersistent('courseId', FlowRouter.getQueryParam('cs'));
     window.scrollTo(0, 0);
   }
+
 
   componentWillUnmount() {
     this.computation.stop();
@@ -74,6 +72,7 @@ export class ManageUnits extends Component {
       resultsCount: '',
     });
     this._ismounted = false;
+
   }
 
   // close the modal, and clear the states;
@@ -194,7 +193,8 @@ export class ManageUnits extends Component {
         const unit = target.unit.value;
         Meteor.call('unit.update', modalIdentifier, unit, description, err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
+            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              Meteor.call('logger', formatText(err.message, Meteor.userId(), 'unit-edit'), 'error'))
             : Meteor.call('updateSearch', modalIdentifier, unit, err => {
                 err
                   ? Materialize.toast(err.reason, 3000, 'error-toast')
@@ -210,7 +210,12 @@ export class ManageUnits extends Component {
             count += 1;
             const name = count > 1 ? 'units' : 'unit';
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.message, Meteor.userId(), 'unit-remove'),
+                  'error',
+                ))
               : Meteor.call('removeSearchData', id, err => {
                   err
                     ? Materialize.toast(err.reason, 3000, 'error-toast')
@@ -259,6 +264,10 @@ export class ManageUnits extends Component {
     return FlowRouter.go('/dashboard/course');
   };
 
+
+
+
+
   render() {
     let { course, titles } = this.props;
     const {
@@ -278,12 +287,12 @@ export class ManageUnits extends Component {
       courseId = course._id;
       year = course.details.year;
       courseName = course.name;
-      Session.set('courseName', courseName);
+      Session.setPersistent('courseName', courseName);
     }
     if (titles) {
       new_title = titles.title;
       new_sub_title = titles.sub_title;
-      Session.set({
+      Session.setPersistent({
         unit_title_id: titles._id,
         sub_unit_title: new_sub_title,
         unit_title: new_title,
@@ -366,12 +375,15 @@ export class ManageUnits extends Component {
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
             <div className="col m2">
               <a href={`/dashboard/unit/${courseId}?y=${year}`}>
-                <button className="btn grey fa fa-plus"> New</button>
+                <button className="btn grey fa fa-plus">
+                  {' '}
+                  <T>common.actions.new</T>
+                </button>
               </a>
             </div>
             <div className="col 4">
@@ -380,7 +392,7 @@ export class ManageUnits extends Component {
                 onClick={e => this.toggleEditModal('upload', e)}
               >
                 {' '}
-                Add Reference
+                <T>common.actions.addreference</T>
               </button>
             </div>
           </div>
@@ -390,12 +402,16 @@ export class ManageUnits extends Component {
               <tr>
                 <th>#</th>
                 <th>{new_sub_title}</th>
-                <th>Created At</th>
+                <th>
+                  <T>common.actions.createdAt</T>
+                </th>
                 <th>{`Edit ${new_sub_title}`}</th>
                 <th>{`Manage sub-${new_sub_title}`}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
               </tr>
             </thead>
@@ -414,41 +430,33 @@ export class ManageUnits extends Component {
   }
 }
 
-export class Unit extends Component {
-  handleUrl(id) {
-    // id => unit_id
-    if (config.isHighSchool) {
-      FlowRouter.go(`/dashboard/isHighSchool/edit_unit/${id}`);
-    } else {
-      FlowRouter.go(`/dashboard/edit_unit/${id}`);
-    }
-  }
+export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
+  <tr key={_id} className="link-unit">
+    <td>{count}</td>
+    <td onClick={e => this.handleUrl(e, _id)}>{name}</td>
+    <td>{createdAt}</td>
+    <td>
+      <a href="" className="fa fa-pencil" onClick={EditUnit} />
+    </td>
+    <td>
+      <a href={''} onClick={e => this.handleUrl(e, _id)} className="fa fa-pencil" />
+    </td>
+    <td onClick={handleCheckboxChange.bind(this, _id)}>
+      <input type="checkbox" className={' filled-in chk chk' + _id} id={_id} />
+      <label />
+    </td>
+  </tr>
+);
 
-  render() {
-    const {
-      EditUnit,
-      count,
-      unit: { _id, name, createdAt },
-    } = this.props;
-    return (
-      <tr key={_id} className="link-unit">
-        <td>{count}</td>
-        <td onClick={this.handleUrl.bind(this, _id)}>{name}</td>
-        <td>{createdAt}</td>
-        <td>
-          <a href="" className="fa fa-pencil" onClick={EditUnit} />
-        </td>
-        <td>
-          <a href={''} onClick={this.handleUrl.bind(this, _id)} className="fa fa-pencil" />
-        </td>
-        <td onClick={handleCheckboxChange.bind(this, _id)}>
-          <input type="checkbox" className={' filled-in chk chk' + _id} id={_id} />
-          <label />
-        </td>
-      </tr>
-    );
+handleUrl = (e, id) => {
+  // id => unit_id
+  if (config.isHighSchool) {
+    FlowRouter.go(`/dashboard/isHighSchool/edit_unit/${id}`);
+  } else {
+    FlowRouter.go(`/dashboard/edit_unit/${id}`);
   }
-}
+};
+
 export default withTracker(params => {
   Meteor.subscribe('searchUnits', Session.get('courseIde'));
   Meteor.subscribe('courses');

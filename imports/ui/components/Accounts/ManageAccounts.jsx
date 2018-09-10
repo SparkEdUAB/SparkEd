@@ -3,20 +3,22 @@ import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
-import Header from '../layouts/Header.jsx';
+import i18n from 'meteor/universe:i18n';
 import {
   handleCheckboxChange,
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
 import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
-import { initInput, filterUrl, SearchField } from '../Utilities/Utilities.jsx';
-import Sidenav from '../Dashboard/Sidenav.jsx';
+import { initInput, SearchField } from '../Utilities/Utilities.jsx';
 import AccountEditModal from '../Utilities/Modal/EditAccounts.jsx';
 import { UserRoles } from '../Utilities/Modal/UserRoles.jsx';
 import MainModal from '../../modals/MainModal.jsx';
 import { closeModal, accountsModalStates } from '../../modals/methods';
 import * as config from '../../../../config.json';
+import { formatText } from '../../utils/utils';
+
+const T = i18n.createComponent();
 
 const { isUserAuth } = config;
 export class ManageAccounts extends React.Component {
@@ -133,7 +135,12 @@ export class ManageAccounts extends React.Component {
           }
           Meteor.call('removeUser', v, err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.reason, Meteor.userId(), 'user-remove'),
+                  'error',
+                ))
               : Materialize.toast(`${count} ${name} successfully deleted`, 4000, 'success-toast');
           });
         });
@@ -161,7 +168,12 @@ export class ManageAccounts extends React.Component {
           }
           Meteor.call('user.suspend', v, err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+                Meteor.call(
+                  'logger',
+                  formatText(err.reason, Meteor.userId(), 'user-suspend'),
+                  'error',
+                ))
               : Materialize.toast(`${count} ${name} successfully suspended`, 4000, 'success-toast');
           });
         });
@@ -172,7 +184,12 @@ export class ManageAccounts extends React.Component {
 
         Meteor.call('user.update', ids, fname, err => {
           err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
+            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.reason, Meteor.userId(), 'user-update'),
+                'error',
+              ))
             : Materialize.toast(`successfully updated`, 4000, 'success-toast');
         });
         break;
@@ -181,7 +198,12 @@ export class ManageAccounts extends React.Component {
         const roles = target.roles.value;
         Meteor.call('promoteUser', ids[0], roles, err => {
           err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
+            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+              Meteor.call(
+                'logger',
+                formatText(err.reason, Meteor.userId(), 'roles-update'),
+                'error',
+              ))
             : Materialize.toast('Successfully updated user roles', 4000, 'success-toast');
         });
         break;
@@ -192,7 +214,7 @@ export class ManageAccounts extends React.Component {
   render() {
     let count = 1;
     const { users } = this.props;
-    const { email, fname, lname, title, confirm, reject, isOpen, modalType } = this.state;
+    const { email, fname, title, confirm, reject, isOpen, modalType } = this.state;
 
     return (
       <div>
@@ -219,7 +241,9 @@ export class ManageAccounts extends React.Component {
         <div className="col m9 s11">
           <div className="row">
             <div>
-              <h4>Manage Accounts</h4>
+              <h4>
+                Manage <T>common.manage.accounts</T>
+              </h4>
             </div>
             <div className="col m8">
               <SearchField
@@ -237,7 +261,7 @@ export class ManageAccounts extends React.Component {
                 onClick={e => this.openModal('delete', e)}
               >
                 {' '}
-                Delete
+                <T>common.actions.delete</T>
               </button>
             </div>
             {isUserAuth ? (
@@ -269,7 +293,7 @@ export class ManageAccounts extends React.Component {
                 onClick={e => this.openModal('roles', e)}
               >
                 {' '}
-                Change Roles
+                <T>common.actions.changeRole</T>
               </button>
             </div>
           </div>
@@ -277,15 +301,27 @@ export class ManageAccounts extends React.Component {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Email</th>
-                <th>Gender</th>
+                <th>
+                  <T>common.accounts.name</T>
+                </th>
+                <th>
+                  <T>common.accounts.Role</T>
+                </th>
+                <th>
+                  <T>common.accounts.Email</T>
+                </th>
+                <th>
+                  <T>common.accounts.Gender</T>
+                </th>
                 {isUserAuth ? <th>Status</th> : null}
-                <th>Edit</th>
+                <th>
+                  <T>common.actions.edit</T>
+                </th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                  <label>
+                    <T>common.actions.check</T>
+                  </label>
                 </th>
               </tr>
             </thead>

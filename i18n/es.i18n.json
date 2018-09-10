@@ -1,16 +1,71 @@
 {
   "_locale": "es-ES",
   "_namespace": "common",
+  "language": {
+    "enUS": "Englos - U.S.",
+    "esES": "Spañol - SP",
+    "frFr": "frances - FR",
+    "Language": "Idioma"
+  },
+  "titles": {
+    "addreference": "Add Reference",
+    "referenceDisplaced": "References displayed",
+    "feedback": "Feedback",
+    "source": "Source",
+    "usersfeedback": "Users Feedback",
+    "notifications": "Notifications",
+    "bookmarks": "Bookmarks"
+  },
   "accounts": {
     "userName": "Nombre",
-    "Language": "Idioma",
-    "enUS": "English - U.S.",
-    "esES": "Spanish - SP",
-    "frFr": "French - FR",
     "Register": "Registro",
     "Login": "iniciar sesión",
     "Logout": "cerrar sesión",
     "Password": "contraseña",
-    "Email": "correo electrónico"
+    "EmailField": "correo electrónico",
+    "name": "name",
+    "Role": "Role",
+    "Email": "Email",
+    "Gender": "Gender"
+  },
+  "manage": {
+    "accounts": "compte",
+    "courses": "coursos",
+    "unit": "unito",
+    "topics": "topicos",
+    "resources": "Resourcos",
+    "manage": "Manage"
+  },
+  "actions": {
+    "delete": "removos",
+    "add": "ajoutos",
+    "new": "novos",
+    "approve": "approvos",
+    "suspend": "suspenos",
+    "ChangeRoles": "Change Rolesss",
+    "edit": "editos",
+    "save": "Savos",
+    "close": "Closos",
+    "yes": "Si",
+    "no": "Na"
+  },
+  "message": {
+    "success": "",
+    "error": "",
+    "warn": ""
+  },
+  "sidenav": {
+    "dashboard": "Dashboard",
+    "accounts": "Accounts",
+    "courses": "Courses",
+    "alltopics": "All Topicos",
+    "resourceLibrary": "Resource Library",
+    "externalLinks": "External Links",
+    "feedback": "Feedback",
+    "setup": "Set Up",
+    "changeSlides": "Change Slides",
+    "updates": "Updates",
+    "subjects": "Subjects",
+    "stats": "Statistics"
   }
 }

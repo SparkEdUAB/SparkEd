@@ -1,5 +1,6 @@
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import i18n from 'meteor/universe:i18n';
+import { Language } from './language';
 
 // universe:i18n only bundles the default language on the client side.
 // To get a list of all avialble languages with at least one translation,
@@ -9,6 +10,21 @@ const getLanguages = new ValidatedMethod({
   validate: null,
   run() {
     return i18n.getLanguages();
+  },
+});
+
+// export const updateLanguage = new ValidatedMethod({
+//   name: 'language.update',
+//   validate: null,
+//   run({ id, language }) {
+//     return Language.update({ _id: '345345730' }, { $set: { language } }, { upsert: true });
+//   },
+// });
+
+Meteor.methods({
+  updateLanguage(language) {
+    check(language, String);
+    return Language.update({ _id: '345345730' }, { $set: { language } }, { upsert: true });
   },
 });
 

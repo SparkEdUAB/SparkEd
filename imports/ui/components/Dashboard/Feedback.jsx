@@ -2,15 +2,56 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import Header from '../layouts/Header.jsx';
-import Sidenav from './Sidenav.jsx';
+import { Session } from 'meteor/session';
+import ReactPaginate from 'react-paginate';
+import i18n from 'meteor/universe:i18n';
 import { _Feedback } from '../../../api/feedback/feedback';
+
+export const T = i18n.createComponent();
 
 export class Feedback extends Component {
   componentDidMount() {
     Meteor.setTimeout(() => {
       $('.collapsible').collapsible();
     }, 100);
+    Session.set('limit', 8);
+  }
+
+  getPageCount() {
+    const { count } = this.props;
+    return Math.ceil(count / Session.get('limit'));
+  }
+
+  handlePageClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * Session.get('limit'));
+    Session.set('skip', offset);
+  };
+  getEntriesCount = (e, count) => {
+    Session.set('limit', count);
+  };
+
+  renderPagination() {
+    const { count } = this.props;
+    if (!count || count <= Session.get('limit')) {
+      return <span />;
+    }
+    return (
+      <ReactPaginate
+        previousLabel={'previous'}
+        nextLabel={'next'}
+        breakLabel={<a href="">...</a>}
+        breakClassName={'break-me'}
+        pageCount={this.getPageCount()}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={this.handlePageClick}
+        containerClassName={'pagination'}
+        subContainerClassName={'pages pagination '}
+        activeClassName={'active blue'}
+        pageLinkClassName={'link'}
+      />
+    );
   }
 
   renderComments() {
@@ -27,7 +68,7 @@ export class Feedback extends Component {
             <span style={{ marginRight: '2%' }}>{feed.createdBy}</span>
             <span style={{ marginRight: '40%' }}>Title: {feed.title}</span>
             <a href={feed.link} className="blue-text right">
-              Source
+              <T>common.titles.source</T>
             </a>
           </div>
           <div className="collapsible-body">
@@ -42,10 +83,14 @@ export class Feedback extends Component {
     return (
       <>
         <div className="col m9 s11">
-          <h3 className="center blue-text">Users Feedback</h3>
+          <h3 className="center blue-text">
+            <T>common.titles.usersfeedback</T>
+          </h3>
           <div className="row">
             <div className="">{this.renderComments()}</div>
+            
           </div>
+          { this.renderPagination() }
         </div>
       </>
     );
@@ -61,12 +106,14 @@ export default withTracker(() => {
     feeds: _Feedback
       .find(
         {},
-        {
-          sort: {
-            createdAt: -1,
-          },
-        },
+        // {
+        //   sort: {
+        //     createdAt: -1,
+        //   },
+        // },
+        { skip: Session.get('skip'), limit: Session.get('limit'), sort :{ createdAt: -1 } },
       )
       .fetch(),
+    count: _Feedback.find().count(),
   };
 })(Feedback);

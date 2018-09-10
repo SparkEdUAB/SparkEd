@@ -1,16 +1,67 @@
 {
   "_locale": "fr-FR",
   "_namespace": "common",
+  "language": {
+    "enUS": "Anglais - U.S.",
+    "esES": "Espagnol - SP",
+    "frFr": "Francais - FR",
+    "Language": "Language"
+  },
+  "titles": {
+    "addreference": "Add Reference",
+    "referenceDisplaced": "References displayed",
+    "feedback": "Feedback",
+    "source": "Source",
+    "usersfeedback": "Users Feedback",
+    "notifications": "Notifications",
+    "bookmarks": "Bookmarks"
+  },
   "accounts": {
     "userName": "Nom",
-    "Language": "Language",
-    "enUS": "English - U.S.",
-    "esES": "Spanish - SP",
-    "frFr": "French - FR",
     "Register": "Enregistre-moi",
     "Login": "Se Connecter",
     "Logout": "Deconnection",
     "Password": "Mot de Passe",
     "Email": "Addresse Email"
+  },
+  "manage": {
+    "accounts": "compte",
+    "courses": "coursess",
+    "units": "unite",
+    "topics": "topique",
+    "resources": "resourcess",
+    "manage": "Manage"
+  },
+  "actions": {
+    "delete": "eraser",
+    "add": "ajouter",
+    "new": "nouveau",
+    "approve": "approver",
+    "suspend": "suspender",
+    "ChangeRoles": "Changer Roles",
+    "edit": "editer",
+    "save": "Sauver",
+    "close": "Closer",
+    "yes": "Oui",
+    "no": "No"
+  },
+  "message": {
+    "success": "",
+    "error": "",
+    "warn": ""
+  },
+  "sidenav": {
+    "dashboard": "Dashboard",
+    "accounts": "Accounts",
+    "courses": "Courses",
+    "alltopics": "All Topique",
+    "resourceLibrary": "Resource Library",
+    "externalLinks": "External Links",
+    "feedback": "Feedback",
+    "setup": "Set Up",
+    "changeSlides": "Change Slides",
+    "updates": "Updates",
+    "subjects": "Subjects",
+    "stats": "Statistics"
   }
 }

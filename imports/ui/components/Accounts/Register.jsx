@@ -155,7 +155,8 @@ export default class Register extends Component {
               className="ngl btn-floating btn-large waves-effect  waves-light"
             >
               <i className="fa fa-sign-in" />
-            </a>
+            </a> 
+            <a href="/login">Login here </a> if you already have an account
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { _Topics } from '../../../api/topics/topics';
+import { ThemeContext } from '../../containers/AppWrapper';
 
 export class Unit extends Component {
   countTopics() {
@@ -30,64 +31,68 @@ export class Unit extends Component {
     } = this.props.unit;
     const { topics } = this.props;
     return (
-      <div
-        className={`col m6 s12 l4 cse-unit ${courseId}yr${year}${programId}`}
-        id={`r${_id}`}
-        name={topics}
-      >
-        <div className="card blue darken-2 homeCardColor">
-          <div className="card-content">
-            {/* if the screen size is smaller then redirect to small view components */}
-            <span className={'card-title '}>
-              <h5>
-                <a href={`/contents/${_id}?ref=home`} id="cardListTitle">
-                  {name}
-                </a>
-              </h5>
-            </span>
+      <ThemeContext.Consumer>
+        {color => (
+          <div
+            className={`col m6 s12 l4 cse-unit ${courseId}yr${year}${programId}`}
+            id={`r${_id}`}
+            name={topics}
+          >
+            <div className="card darken-2 homeCardColor" style={{ backgroundColor: color.main }}>
+              <div className="card-content">
+                {/* if the screen size is smaller then redirect to small view components */}
+                <span className={'card-title '}>
+                  <h5>
+                    <a href={`/contents/${_id}?ref=home`} id="cardListTitle">
+                      {name}
+                    </a>
+                  </h5>
+                </span>
 
-            {!checkPermissions() ? (
-              <span>
-                <span className="">
-                  <h6>
-                    <a href="" id="cardListTitle">
-                      {' '}
-                      &#8667; Under Course <span> {this.courseName()}</span>
-                    </a>
-                  </h6>
-                </span>
-                <span className="">
-                  <a href="" id="cardListTitle">
-                    {' '}
-                    &#8667; # of Topics : {this.countTopics()}{' '}
-                  </a>
-                </span>
-              </span>
-            ) : (
-              <span>
-                <span className="">
-                  <h6>
-                    {' '}
-                    <a
-                      href={`/dashboard/units/${programId}?cs=${courseId}&y=${year}`}
-                      id="cardListTitle"
-                    >
-                      {' '}
-                      &#8667; Under Course <u> {this.courseName()}</u>{' '}
-                    </a>
-                  </h6>
-                </span>
-                <span className="">
-                  <a href={`/dashBoard/edit_unit/${_id}`} id="cardListTitle">
-                    {' '}
-                    &#8667; # of Topics : {this.countTopics()}{' '}
-                  </a>
-                </span>
-              </span>
-            )}
+                {!checkPermissions() ? (
+                  <span>
+                    <span className="">
+                      <h6>
+                        <a href="" id="cardListTitle">
+                          {' '}
+                          &#8667; Under Course <span> {this.courseName()}</span>
+                        </a>
+                      </h6>
+                    </span>
+                    <span className="">
+                      <a href="" id="cardListTitle">
+                        {' '}
+                        &#8667; # of Topics : {this.countTopics()}{' '}
+                      </a>
+                    </span>
+                  </span>
+                ) : (
+                  <span>
+                    <span className="">
+                      <h6>
+                        {' '}
+                        <a
+                          href={`/dashboard/units/${programId}?cs=${courseId}&y=${year}`}
+                          id="cardListTitle"
+                        >
+                          {' '}
+                          &#8667; Under Course <u> {this.courseName()}</u>{' '}
+                        </a>
+                      </h6>
+                    </span>
+                    <span className="">
+                      <a href={`/dashBoard/edit_unit/${_id}`} id="cardListTitle">
+                        {' '}
+                        &#8667; # of Topics : {this.countTopics()}{' '}
+                      </a>
+                    </span>
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
@@ -109,11 +114,11 @@ export class ExtraResource extends Component {
         title={fileType}
         onClick={ExtraResource.handleClickCard.bind(this, courseId, resourceId)}
       >
-        <div className="card-panel homeCardColor-2 green lighten">
+        <div className="card-panel homeCardColor-2 teal">
           <span className={'card-title '}>
             <h5>
               <a href={`/extra/view_resource/${courseId}?rs=${resourceId}`} id="cardListTitle">
-                {name}
+                {name.replace(/\.[^/.]+$/, '')}
               </a>
             </h5>
           </span>

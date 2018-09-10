@@ -23,14 +23,13 @@ import Additional from '../imports/ui/components/Dashboard/Additional.jsx';
 import Courses from '../imports/ui/components/Dashboard/Courses.jsx';
 import DisplayResource from '../imports/ui/components/Dashboard/DisplayResource.jsx';
 import Institution from '../imports/ui/components/Dashboard/Settings/Institution.jsx';
-import SyncSettings from '../imports/ui/components/Dashboard/Settings/SyncSettings.jsx';
 import Notifications from '../imports/ui/components/Notifications/Notifications.jsx';
 import ManageSlides from '../imports/ui/components/Dashboard/Settings/ManageSlides.jsx';
 import ReferenceLibrary from '../imports/ui/components/content/ReferenceLibrary.jsx';
 import Landing from '../imports/ui/components/Landing.jsx';
 import AppWrapper from '../imports/ui/containers/AppWrapper';
 import FileUploadComponent from '../imports/ui/containers/FileUploadComponent';
-import Sidenav from '../imports/ui/components/Dashboard/Sidenav';
+import WrappedSidenav from '../imports/ui/components/Dashboard/Sidenav';
 import SetUp from '../imports/ui/components/WalkThrough/Setup';
 import ExternalLinks from '../imports/ui/components/ExternalLink/ExternalLinks.jsx';
 import ExternalLinksPage from '../imports/ui/components/ExternalLink/ListExternalLinkPage.jsx';
@@ -71,7 +70,7 @@ export default function isAuthRequired() {
 adminRoutes.route('/setup', {
   name: 'WalkThrough',
   action() {
-    mount(SetUp, {});
+    mount(WrappedSidenav, { yield: <SetUp /> });
   },
 });
 
@@ -142,7 +141,7 @@ isAuthRequired().route('/course_content/', {
 isAuthRequired().route('/results', {
   name: 'Results',
   action() {
-    mount(SearchResults, {});
+    mount(AppWrapper, { children: <SearchResults /> });
   },
 });
 
@@ -162,143 +161,136 @@ isAuthRequired().route('/request', {
 adminRoutes.route('/dashboard/edit_resources/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
-    mount(Sidenav, { yield: <EditResources /> });
+    mount(WrappedSidenav, { yield: <EditResources /> });
   },
 });
 adminRoutes.route('/dashboard/isHighSchool/edit_unit/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
-    mount(Sidenav, { yield: <EditResources /> });
-  },
-});
-
-adminRoutes.route('/dashboard/setsync', {
-  name: 'SyncSettings',
-  action() {
-    mount(Sidenav, { yield: <SyncSettings /> });
+    mount(WrappedSidenav, { yield: <EditResources /> });
   },
 });
 
 adminRoutes.route('/dashboard/edit_unit/:_id', {
   name: 'EditUnit',
   action() {
-    mount(Sidenav, { yield: <EditUnit /> });
+    mount(WrappedSidenav, { yield: <EditUnit /> });
   },
 });
 
 adminRoutes.route('/dashboard/units/:_id', {
   name: 'ManageUnits',
   action(params, queryParams) {
-    mount(Sidenav, { yield: <ManageUnits /> });
+    mount(WrappedSidenav, { yield: <ManageUnits /> });
   },
 });
 
 adminRoutes.route('/dashboard/units/prog/:_id', {
   name: 'SearchUnits',
   action(params, queryParams) {
-    mount(Sidenav, { yield: <ManageUnits /> });
+    mount(WrappedSidenav, { yield: <ManageUnits /> });
   },
 });
 
 isAuthRequired().route('/dashboard/units/', {
   name: 'SearchUnits',
   action(params, queryParams) {
-    mount(Sidenav, { yield: <ManageUnits /> });
+    mount(WrappedSidenav, { yield: <ManageUnits /> });
   },
 });
 adminRoutes.route('/dashboard/unit/:_id', {
   name: 'New Unit',
   action(params, queryParams) {
-    mount(Sidenav, { yield: <Unit /> });
+    mount(WrappedSidenav, { yield: <Unit /> });
   },
 });
 
 adminRoutes.route('/dashboard/accounts', {
   name: 'ManageAccounts',
   action() {
-    mount(Sidenav, { yield: <ManageAccounts /> });
+    mount(WrappedSidenav, { yield: <ManageAccounts /> });
   },
 });
 adminRoutes.route('/dashboard/extra', {
   name: 'Additional',
   action() {
-    mount(Sidenav, { yield: <Additional /> });
+    mount(WrappedSidenav, { yield: <Additional /> });
   },
 });
 adminRoutes.route('/dashboard/overview', {
   name: 'OverView',
   action() {
-    mount(Sidenav, { yield: <OverView /> });
+    mount(WrappedSidenav, { yield: <OverView /> });
   },
 });
 
 isAuthRequired().route('/dashboard/feedback', {
   name: 'Feedback',
   action() {
-    mount(Sidenav, { yield: <Feedback /> });
+    mount(WrappedSidenav, { yield: <Feedback /> });
   },
 });
 
 adminRoutes.route('/dashboard/list_topics', {
   name: 'AllTopics',
   action() {
-    mount(Sidenav, { yield: <AllTopics /> });
+    mount(WrappedSidenav, { yield: <AllTopics /> });
   },
 });
 
 adminRoutes.route('/dashboard/course/:_id', {
   name: 'Courses',
   action(params, queryParams) {
-    mount(Sidenav, { yield: <Courses /> });
+    mount(WrappedSidenav, { yield: <Courses /> });
   },
 });
 
 adminRoutes.route('/dashboard/course', {
   name: 'Courses',
   action(params) {
-    mount(Sidenav, { yield: <Courses /> });
+    mount(WrappedSidenav, { yield: <Courses /> });
   },
 });
 
 adminRoutes.route('/dashboard/settings', {
   name: 'Institution',
   action() {
-    mount(Sidenav, { yield: <Institution /> });
+    mount(WrappedSidenav, { yield: <Institution /> });
   },
 });
 
 adminRoutes.route('/dashboard/view_resource/:_id', {
   name: 'DisplayResource',
   action(queryParams) {
-    mount(Sidenav, { yield: <DisplayResource /> });
+    mount(WrappedSidenav, { yield: <DisplayResource /> });
   },
 });
 
 isAuthRequired().route('/dashboard/slides', {
   name: 'Slides',
   action() {
-    mount(Sidenav, { yield: <ManageSlides /> });
+    mount(WrappedSidenav, { yield: <ManageSlides /> });
   },
 });
 
 isAuthRequired().route('/externallinks', {
   name: 'External',
   action() {
-    mount(Sidenav, { yield: <ExternalLinks /> });
+    mount(WrappedSidenav, { yield: <ExternalLinks /> });
   },
 });
 
 isAuthRequired().route('/user_details/:_id', {
   name: 'UserStatistics',
   action() {
-    mount(Sidenav, { yield: <UserStatistics /> });
+    mount(WrappedSidenav, { yield: <UserStatistics /> });
   },
 });
 
 isAuthRequired().route('/dashboard/updates', {
   name: 'Sync Updates',
   action() {
-    mount(Sidenav, { yield: <SyncUpdates /> });
+    mount(WrappedSidenav, { yield: <SyncUpdates /> });
   },
 });
 
@@ -311,7 +303,7 @@ FlowRouter.notFound = {
 isAuthRequired().route('/reference', {
   name: 'ReferenceLibrary',
   action() {
-    mount(ReferenceLibrary, {});
+    mount(AppWrapper, { children: <ReferenceLibrary /> });
   },
 });
 

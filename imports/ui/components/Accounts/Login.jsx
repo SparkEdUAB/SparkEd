@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Accounts } from 'meteor/accounts-base';
-import { isLoggedOut, checkPassword } from './AccountFunction.js';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 export default class Login extends Component {
   constructor(props) {
@@ -16,15 +17,11 @@ export default class Login extends Component {
     const password = e.target.password.value;
     Meteor.call('account.check', email, (err, result) => {
       if (result) {
-        this.setState({
-          error: result,
-        });
+        this.setState({ error: result });
       } else {
         Meteor.loginWithPassword(email, password, error => {
           if (error) {
-            this.setState({
-              error: error.reason,
-            });
+            this.setState({ error: error.reason });
           } else {
             // Don't use FlowRouter.go('/) to allow updating the admin details;
             if (localStorage.getItem('beenhere')) {
@@ -51,7 +48,9 @@ export default class Login extends Component {
               <div className="row">
                 <div className="input-field col s12">
                   <input id="email" type="email" className="validate field" required />
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">
+                    <T>common.accounts.Email</T>
+                  </label>
                 </div>
               </div>
               <div className="row">
@@ -63,7 +62,9 @@ export default class Login extends Component {
                     minLength="6"
                     required
                   />
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">
+                    <T>common.accounts.Password</T>
+                  </label>
                 </div>
               </div>
               <div className="row">
@@ -73,7 +74,7 @@ export default class Login extends Component {
                     type="submit"
                   >
                     {' '}
-                    Login
+                    <T>common.accounts.Login</T>
                     <i className="fa fa-paper-plane right" />
                   </button>
                 </div>
@@ -89,6 +90,7 @@ export default class Login extends Component {
           >
             <i className="fa fa-sign-in" />
           </a>
+          <a href="/register">Register here </a> if you don't have an account
         </div>
       </div>
     );

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
+import i18n from 'meteor/universe:i18n';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
@@ -11,10 +12,12 @@ import { FloatingButton, SearchField } from './../Utilities/Utilities.jsx';
 import Unit, { ExtraResource } from '../content/Unit.jsx';
 import { Loader } from '../Loader';
 
+export const T = i18n.createComponent();
+
 export class CourseContent extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
-    Session.set('courseId', FlowRouter.getParam('_id'));
+    Session.setPersistent('courseId', FlowRouter.getParam('_id'));
   }
   renderUnits(name) {
     let index = 0;
@@ -73,7 +76,9 @@ export class CourseContent extends Component {
           ) : (
             <div className="row col m4">
               <h4>
-                <a name="references">References</a>
+                <a name="references">
+                  <T>common.manage.reference</T>
+                </a>
               </h4>
               <hr />
               {this.renderExtra(courseName(this.props.courseName))}
@@ -87,20 +92,15 @@ export class CourseContent extends Component {
   }
 }
 
-export function getCourseId() {
-  return FlowRouter.getParam('_id');
-}
+export const getCourseId = () => FlowRouter.getParam('_id');
 
-export function courseName(coll) {
-  if (!coll) {
-    return null;
-  }
-  return coll.name;
-}
+export const courseName = coll => !coll ? null : coll.name;
 
-export function getTopicId() {
+export const getTopicId = () => {
   const topicId = FlowRouter.getQueryParam('rs');
   const topics = _Topics.findOne({ unitId: FlowRouter.getParam('_id') });
+
+  // !topicId && topics ? topics._id : !topics ? 1 : topicId;
 
   if (!topicId && topics !== undefined) {
     return topics._id;
@@ -109,6 +109,18 @@ export function getTopicId() {
   }
   return topicId;
 }
+
+// export function getTopicId() {
+//   const topicId = FlowRouter.getQueryParam('rs');
+//   const topics = _Topics.findOne({ unitId: FlowRouter.getParam('_id') });
+
+//   if (!topicId && topics !== undefined) {
+//     return topics._id;
+//   } else if (!topics) {
+//     return '1';
+//   }
+//   return topicId;
+// }
 
 CourseContent.propTypes = {
   subsReady: PropTypes.bool.isRequired,

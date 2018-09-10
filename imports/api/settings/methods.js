@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { _Settings } from './institution';
+import { _Settings } from './settings';
 import { _Slides, Slides } from './slides';
 import { Institution } from './institution';
 import { Titles } from './titles';
@@ -81,4 +81,40 @@ Meteor.methods({
       },
     );
   },
+  updateColors(id, main, button, sidebar) {
+    check(id, String);
+    check(main, String);
+    check(button, Match.OneOf(Object, null, undefined));
+    check(sidebar, Match.OneOf(String, null, undefined));
+    _Settings.update(
+      { _id: id },
+      {
+        $set: {
+          main,
+          button,
+          sidebar,
+        },
+      },
+      { upsert: true },
+    );
+  },
+  updateSettings(id, name, tag, server, isConfigured){
+    check(id, String);
+    check(name, String);
+    check(tag, String);
+    check(server, String);
+    check(isConfigured, Boolean);
+    _Settings.update(
+      {_id:id},
+      {
+        $set: {
+          name, 
+          tag,
+          server,
+          isConfigured
+        }
+      }
+    )
+  }
+
 });

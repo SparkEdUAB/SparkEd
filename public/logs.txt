@@ -1,0 +1,8 @@
+The button was clicked 
+Tue Jul 17 2018 09:59:11 GMT+0200 (Central Africa Time) Data was synced from Sync Updates 
+Tue Jul 17 2018 09:59:31 GMT+0200 (Central Africa Time) Data was synced from Sync Updates 
+2018-07-17T10:07:15+02:00 Data was synced from Sync Updates 
+Time: 2018-07-17T10:17:27+02:00 Info: Data was successfully synced Page: Sync Updates  UserId: XA5u8W3uL9mwngv47
+Time: 2018-07-17T10:17:49+02:00 Info: Data was successfully synced Page: Sync Updates  UserId: XA5u8W3uL9mwngv47
+Time: 2018-07-17T10:21:50+02:00,  Info: Data was successfully synced,  Page: Sync Updates,  UserId: XA5u8W3uL9mwngv47
+Time: 2018-07-17T10:21:52+02:00,  Info: Data was successfully synced,  Page: Sync Updates,  UserId: XA5u8W3uL9mwngv47

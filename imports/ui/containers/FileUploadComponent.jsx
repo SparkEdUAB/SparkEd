@@ -1,7 +1,6 @@
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Session } from 'meteor/session';
 import { Resources, References } from '../../api/resources/resources';
 import { _Topics } from '../../api/topics/topics';
@@ -31,7 +30,6 @@ export class FileUploadComponent extends Component {
     _.each(files, file => {
       let uploadInstance;
       if (file) {
-        console.log(file);
         const route = FlowRouter.getRouteName();
 
         switch (route) {
@@ -263,22 +261,22 @@ export class FileUploadComponent extends Component {
                 break;
 
               case 'WalkThrough':
-                const instName = Session.get('name');
-                const tag = Session.get('tag');
-                const auth = Session.get('auth');
-                const isHighSchool = Session.get('isHighSchool');
+                // const instName = Session.get('name');
+                // const tag = Session.get('tag');
+                // const auth = Session.get('auth');
+                // const isHighSchool = Session.get('isHighSchool');
 
-                Meteor.call('addConfig', instName, tag, auth, true, isHighSchool, err => {
-                  err
-                    ? Materialize.toast(err.reason, 4000, 'error-toast')
-                    : Materialize.toast(
-                        'Successfully saved the configurations',
-                        4000,
-                        'success-toast',
-                      );
-                });
-                // take to Dashboard after a successful setup
-                FlowRouter.go('/dashboard/accounts');
+                // Meteor.call('addConfig', instName, tag, auth, true, isHighSchool, err => {
+                //   err
+                //     ? Materialize.toast(err.reason, 4000, 'error-toast')
+                //     : Materialize.toast(
+                //         'Successfully saved the configurations',
+                //         4000,
+                //         'success-toast',
+                //       );
+                // });
+                // // take to Dashboard after a successful setup
+                // FlowRouter.go('/dashboard/accounts');
                 break;
 
               default:
@@ -362,7 +360,7 @@ export class FileUploadComponent extends Component {
           <div className="col s12">
             <form onSubmit={this.uploadIt}>
               <div className="file-field input-field">
-                <div className="btn">
+                <div className="btn" style={{backgroundColor: '#006b76'}}>
                   <span>
                     {files.length >= 1
                       ? `${files.length} ${name} selected (${files_size})`
@@ -386,7 +384,7 @@ export class FileUploadComponent extends Component {
                   />
                 </div>
               </div>
-              <button role="submit" className="btn fa fa-upload" style={{ marginLeft: '42%' }}>
+              <button role="submit" className="btn fa fa-upload" style={{ marginLeft: '42%',backgroundColor: '#006b76' }}>
                 {uploaded ? ' Done Uploading' : ' Upload'}
               </button>
             </form>

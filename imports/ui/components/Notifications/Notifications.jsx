@@ -94,7 +94,6 @@ export class Notifications extends Component {
     return allNotifications.map(function(notifications) {
       id = notifications._id;
       userId = Meteor.userId();
-
       Meteor.call('markRead', id, bool);
     });
   }

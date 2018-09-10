@@ -2,10 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
 import { syncData } from './syncData';
-import child_process from 'child_process';
+import { execFile, execFileSync } from 'child_process';
+import * as config from '../../../config.json';
 // check internet connection
 
-const baseUrl = 'http://13.232.61.192';
+const { server } = config;
 const collections = ['course', 'unit', 'topic', 'resources', 'references', 'search', 'search'];
 
 Meteor.methods({
@@ -21,7 +22,7 @@ Meteor.methods({
   authenticate: (email, password) => {
     check(email, String);
     check(password, String);
-    return HTTP.post(`${baseUrl}/api/login/`, {
+    return HTTP.post(`${server}/api/login/`, {
       data: {
         email,
         password,
@@ -31,49 +32,13 @@ Meteor.methods({
       },
     });
   },
-  // Insert Courses
-  insertremoteCourse: (token, userId) => {
-    check(token, String);
-    check(userId, String);
-    let count = 0;
-    HTTP.get(
-      `${baseUrl}/api/course/`,
-      {
-        headers: {
-          'X-Auth-Token': token,
-          'X-User-Id': userId,
-        },
-      },
-      (err, response) => {
-        if (err) {
-          console.log(err.reason);
-        }
-        const {
-          data: { data },
-        } = response;
-        console.log('##########################################');
-        data.forEach((course, index) => {
-          count = index;
-          return Meteor.call(
-            'course.add',
-            course._id,
-            course.name,
-            course.code,
-            course.details,
-            course.createdAt,
-            course.createdBy,
-          );
-        });
-        console.log(count);
-      },
-    );
-  },
+
   getAllCollections: (token, userId) => {
     check(token, String);
     check(userId, String);
     collections.map(coll => {
       return HTTP.get(
-        `${baseUrl}/api/${coll}/`,
+        `${server}/api/${coll}/`,
         {
           headers: {
             'X-Auth-Token': token,
@@ -89,9 +54,18 @@ Meteor.methods({
               data: { data },
             } = response;
             syncData.update(
-              { type: coll },
-              { $set: { data, count: data.length } },
-              { upsert: true },
+              {
+                type: coll,
+              },
+              {
+                $set: {
+                  data,
+                  count: data.length,
+                },
+              },
+              {
+                upsert: true,
+              },
               (err, res) => {
                 if (err) {
                   console.log(err.reason);
@@ -106,11 +80,13 @@ Meteor.methods({
   },
   // restore the dumped files from the server
   restoreDbChunks: () => {
-    child_process.execFile('bash', [`${process.env.PWD}/scripts/importdbs.sh`], (error, stdout) => {
+    execFile(`${process.env.PWD}/scripts/importdbs.sh`, [server], (error, stdout) => {
       if (error) {
         console.log(error);
       }
       console.log(stdout);
     });
+    // return response;
+  // return execFileSync(`${process.env.PWD}/scripts/importdbs.sh`, [server]);  
   },
 });

@@ -1,8 +1,8 @@
 {
-  "name": "Sparkman Center For Global Health",
-  "tag": "Delivering Education Contents in style",
+  "name": "Primary School",
+  "tag": "Taglined ",
   "isUserAuth": false,
-  "isHighSchool": false,
-  "set": true,
-  "isConfigured": true
+  "isHighSchool": true,
+  "isConfigured": true,
+  "server": "http://13.232.61.192"
 }
