@@ -22,7 +22,7 @@ export class ImgSlider extends Component {
           >
             <h4 className="light white-text text-lighten-1">Welcome To SparkEd</h4>
             <h5 className="light white-text text-lighten-1">
-              Kindly upload Slides images From the Dashboard
+               Upload Slides images From the Dashboard
             </h5>
           </div>
         </li>

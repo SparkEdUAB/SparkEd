@@ -117,7 +117,7 @@ const Sidenav = props => (
                 </li>
                 <li>
                   <a href="/dashboard/updates" className={`  side-list ${props.slides}`}>
-                    <i className={`fa fa-picture-o `} />
+                    <i className={`fa fa-download `} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.updates</T>
                     </span>
@@ -130,7 +130,7 @@ const Sidenav = props => (
             <li>
               <a href="#" className="small">
                 <span className="sideHide item">
-                  <code>version 1.0</code>
+                  <code>version 1.5</code>
                 </span>
               </a>
             </li>
