@@ -74,6 +74,9 @@ export class ContentsApp extends Component {
 
   getBack = e => {
     const courseId = Session.get('courseId');
+    if (config.isHighSchool) {
+      return FlowRouter.go('/');
+    }
     return FlowRouter.go(`/course_content/${courseId}?ref=home`);
   };
 
@@ -88,6 +91,7 @@ export class ContentsApp extends Component {
       desc = unit.unitDesc;
       title = titles.title;
     }
+    // console.log(title)
     return (
       <ThemeContext.Consumer>
 
