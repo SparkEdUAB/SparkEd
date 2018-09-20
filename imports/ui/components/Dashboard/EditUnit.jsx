@@ -408,7 +408,6 @@ export default withTracker(() => {
     topics: _Topics
       .find({
         unitId: getUnitId(),
-        createdBy: Meteor.userId(),
       },
       { skip: Session.get('skip'), limit: Session.get('limit') },
       )
@@ -417,7 +416,6 @@ export default withTracker(() => {
     count: _Topics
       .find({
         unitId: getUnitId(),
-        createdBy: Meteor.userId(),
       }, )
       .count(),
   };
