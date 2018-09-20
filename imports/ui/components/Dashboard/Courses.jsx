@@ -467,7 +467,7 @@ export default withTracker(() => {
   Meteor.subscribe('titles');
   Meteor.subscribe('courses');
   return {
-    courses: _Courses.find({ createdBy: Meteor.userId() }).fetch(),
+    courses: _Courses.find({}).fetch(),
     titles: Titles.findOne({}),
   };
 })(Courses);
