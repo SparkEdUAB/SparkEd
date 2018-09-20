@@ -213,5 +213,5 @@ export class Unit extends Component {
 
 export default withTracker(() => {
   Meteor.subscribe('topics');
-  return { units: _Units.find({ createdBy: Meteor.userId() }).fetch() };
+  return { units: _Units.find({}).fetch() };
 })(Unit);
