@@ -7,6 +7,7 @@ import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 import { _Notifications } from '../../../api/notifications/notifications';
 import { Institution } from '../../../api/settings/institution';
 import { _ExternalLink } from '../../../api/externallink/externallink';
+import { _Settings } from '../../../api/settings/settings';
 import Bookmark from '../Bookmark/Bookmark.jsx';
 import MainModal from '../../modals/MainModal';
 import UserInfo from './UserInfo';
@@ -241,7 +242,7 @@ export class Header extends Component {
   };
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
-    const { externallinks, institution } = this.props;
+    const { externallinks, institution, details } = this.props;
     const { name, tag } = config;
     return (
       <ThemeContext.Consumer>
@@ -250,7 +251,11 @@ export class Header extends Component {
             <div className="container-fluid " style={{ backgroundColor: color.main }}>
               <div className="row ">
                 <div className="col s12 m6">
-                  <InstitutionDetail institution={institution} name={name} tagline={tag} />
+                  <InstitutionDetail 
+                    institution={institution} 
+                    name={details.name} 
+                    tagline={details.tag} 
+                  />
                 </div>
                 <div className="col s12 m2 hide-on-small-only">
                   <SearchView
@@ -385,6 +390,7 @@ export default withTracker(() => {
       .find({ read: false, userId: Meteor.userId() }, { sort: { createdAt: -1 } })
       .fetch(),
     externallinks: _ExternalLink.find({}).fetch(),
+    details: _Settings.findOne({}),
     institution: Institution.findOne({}, { sort: { 'meta.createdAt': -1 } }),
     count: _Bookmark.find({ user: Meteor.userId() }, { sort: { color: 1 } }).count(),
   };
