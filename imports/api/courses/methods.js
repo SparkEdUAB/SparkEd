@@ -30,7 +30,7 @@ Meteor.methods({
     check(year, String);
     check(ownerId, String);
 
-    if (Roles.userIsInRole(this.userId, ['admin', 'content-manager']) && this.userId === ownerId) {
+    if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
       _Courses.update(
         {
           _id: id,
