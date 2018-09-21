@@ -7,6 +7,12 @@
     "frFr": "French - FR",
     "Language": "Language"
   },
+  "header":{
+    "openExternalLink": "Click here to Open all the external links in a page",
+    "externalLink": "External Links"
+
+  },
+  "notFound":"Oooops Page not Found Take me",
   "titles": {
     "addreference": "Add Reference",
     "referenceDisplaced": "References displayed",
@@ -27,13 +33,16 @@
     "name": "name",
     "Role": "Role",
     "Email": "Email",
-    "Gender": "Gender"
+    "Gender": "Gender",
+    "dashboard": "Dashboard",
+    "notlogedIn" : "You are not Logged in"
   },
   "manage": {
+    "Under" : "Under",
     "accounts": "accounts",
-    "courses": "courses",
-    "unit": "units",
-    "topics": "Topics",
+    "courses": "Grade",
+    "unit": "Subject",
+    "topics": "Unit",
     "resources": "resources",
     "reference": "References",
     "manage": "Manage"
@@ -63,8 +72,8 @@
   "sidenav": {
     "dashboard": "Dashboard",
     "accounts": "Accounts",
-    "courses": "Courses",
-    "alltopics": "All Topics",
+    "courses": "Grades",
+    "alltopics": "All Units",
     "resourceLibrary": "Resource Library",
     "externalLinks": "External Links",
     "feedback": "Feedback",

@@ -7,6 +7,12 @@
     "frFr": "Francais - FR",
     "Language": "Language"
   },
+
+  "header":{
+    "openExternalLink": "Click here to Open all the external links in a page",
+    "externalLink": "External Links"
+  },
+  "notFound":"ውይይይ፣ የከፈቱት ገጽ አልተገኘም።",
   "titles": {
     "addreference": "Add Reference",
     "referenceDisplaced": "References displayed",
@@ -22,15 +28,19 @@
     "Login": "Se Connecter",
     "Logout": "Deconnection",
     "Password": "Mot de Passe",
-    "Email": "Addresse Email"
+    "Email": "Addresse Email",
+    "Gender": "Gender",
+    "dashboard": "Dashboard",
+    "notlogedIn" : "You are not Logged in"
   },
   "manage": {
+    "Under" : "የሚገኘው",
     "accounts": "compte",
-    "courses": "coursess",
-    "units": "unite",
-    "topics": "topique",
-    "resources": "resourcess",
-    "manage": "Manage"
+    "courses": "coursos",
+    "unit": "unito",
+    "topics": "topicos",
+    "resources": "Resourcos",
+    "manage": "አስተዳድር"
   },
   "actions": {
     "delete": "eraser",
@@ -51,13 +61,13 @@
     "warn": ""
   },
   "sidenav": {
-    "dashboard": "Dashboard",
-    "accounts": "Accounts",
-    "courses": "Courses",
-    "alltopics": "All Topique",
+    "dashboard": "ዳሽቦርድ",
+    "accounts": "ሒሳብ መዝገብ",
+    "courses": "ክፍሎች",
+    "alltopics": "ሁሉም ምዕራፎች",
     "resourceLibrary": "Resource Library",
     "externalLinks": "External Links",
-    "feedback": "Feedback",
+    "feedback": "ግብረ መልስ",
     "setup": "Set Up",
     "changeSlides": "Change Slides",
     "updates": "Updates",
