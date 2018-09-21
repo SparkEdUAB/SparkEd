@@ -42,8 +42,8 @@ export class DisplayResource extends Component {
       name: resource.name,
       _id: resource._id,
     };
-    //
-    return <ResourceRender resource={_resource} Link={resource.link()} />;
+    const link = `/cdn/storage/References/${resource._id}/original/${resource._id}.${resource.ext}`;
+    return <ResourceRender resource={_resource} Link={link} />;
   }
   // display the related files and if not present put a back button
   renderResources() {
