@@ -43,12 +43,10 @@ Meteor.methods({
     const topics = _Topics.find({ unitId: id }).fetch();
     if (Roles.userIsInRole(this.userId, ['admin', 'content-manager']) && !topics.length) {
       _Units.remove(id);
+    } else if (topics.length >= 1) {
+      throw new Meteor.Error('sorry', 'The selected course unit has topics that depend on it');
     } else {
-      if (topics.length >= 1) {
-        throw new Meteor.Error('sorry', 'The selected course unit has topics that depend on it');
-      } else {
-        throw new Meteor.Error('oops', 'You are not allowed to not make changes');
-      }
+      throw new Meteor.Error('oops', 'You are not allowed to not make changes');
     }
   },
 });

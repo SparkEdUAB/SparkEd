@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { _Topics } from '../topics/topics';
+import { Resources } from '../resources/resources';
 
 Meteor.methods({
   'topic.insert'(id, unitId, name, unit) {
@@ -44,18 +45,13 @@ Meteor.methods({
   },
   'topic.remove'(id) {
     check(id, String);
-    const topic = _Topics.findOne({
-      _id: id,
-    });
-    const { resources } = topic;
-    if (Roles.userIsInRole(this.userId, ['admin'])) {
-      if (resources && resources.length >= 1) {
-        throw new Meteor.Error('sorry', 'The selected topic has resources that depend on it');
-      } else if (!resources || resources.length === 0) {
-        _Topics.remove(id);
-      } else {
-        throw new Meteor.Error('oops', 'You are not allowed to not make changes');
-      }
+    const resources = Resources.find({ 'meta.topicId': id }).fetch();
+    if (Roles.userIsInRole(this.userId, ['admin']) && !resources.length) {
+      _Topics.remove(id);
+    } else if (resources.length) {
+      throw new Meteor.Error('sorry', 'The selected topic has resources that depend on it');
+    } else {
+      throw new Meteor.Error('oops', 'You are not allowed to not make changes');
     }
   },
   'singletopic.insert'(_id, unitId, name, unit) {
