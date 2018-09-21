@@ -2,7 +2,7 @@
   "name": "Primary Schoolll",
   "tag": "Taglined ",
   "isUserAuth": false,
-  "isHighSchool": true,
+  "isHighSchool": false,
   "isConfigured": true,
   "server": "http://13.232.61.192"
 }

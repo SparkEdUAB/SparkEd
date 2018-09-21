@@ -60,7 +60,6 @@ export class ManageUnits extends Component {
     window.scrollTo(0, 0);
   }
 
-
   componentWillUnmount() {
     this.computation.stop();
     Session.set({
@@ -72,7 +71,6 @@ export class ManageUnits extends Component {
       resultsCount: '',
     });
     this._ismounted = false;
-
   }
 
   // close the modal, and clear the states;
@@ -187,7 +185,7 @@ export class ManageUnits extends Component {
     event.preventDefault();
     const { modalType, ids, modalIdentifier, table_title, sub_title, description } = this.state;
     const { target } = event;
-
+    console.log(modalType);
     switch (modalType) {
       case 'edit':
         const unit = target.unit.value;
@@ -263,10 +261,6 @@ export class ManageUnits extends Component {
     e.preventDefault();
     return FlowRouter.go('/dashboard/course');
   };
-
-
-
-
 
   render() {
     let { course, titles } = this.props;
