@@ -7,6 +7,7 @@
     "frFr": "frances - FR",
     "Language": "Idioma"
   },
+  "notFound":"ምንም አልተገኝም",
   "titles": {
     "addreference": "Add Reference",
     "referenceDisplaced": "References displayed",
@@ -29,6 +30,7 @@
     "Gender": "Gender"
   },
   "manage": {
+    "Under" : "Under",
     "accounts": "compte",
     "courses": "coursos",
     "unit": "unito",
@@ -57,8 +59,8 @@
   "sidenav": {
     "dashboard": "Dashboard",
     "accounts": "Accounts",
-    "courses": "Courses",
-    "alltopics": "All Topicos",
+    "courses": "Grades",
+    "alltopics": "All Unitos",
     "resourceLibrary": "Resource Library",
     "externalLinks": "External Links",
     "feedback": "Feedback",

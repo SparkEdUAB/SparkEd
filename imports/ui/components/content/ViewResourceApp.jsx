@@ -69,7 +69,9 @@ export class ViewResourceApp extends Component {
       urlLink: resourceObj.link(),
       _id: resources._id,
     };
-    return <ResourceRender resource={resource} Link={resourceObj.link()} />;
+    const link = `/cdn/storage/Resources/${resource._id}/original/${resource._id}.${resource.ext}`;
+
+    return <ResourceRender resource={resource} Link={link} />;
   }
 
   fetchResources() {
