@@ -4,9 +4,9 @@
 
 To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 
-# current 
+# For Maintainers
 
-**Sync ( Unstable )**
+## Sync
 
  - References
  - Resources
