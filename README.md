@@ -4,7 +4,47 @@
 
 To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 
-# For Maintainers
+# For Contributors
+
+### Read the Code of Conduct 
+
+The project uses the following stack 
+
+- **Meteor** as the overall framework
+- **React** as the front-end library
+- **eslint** to lint files
+- **Jest** for testing
+
+### Development
+
+if you don't have meteor run the script below
+
+`curl https://install.meteor.com/ | sh`
+
+Clone the repo
+
+`git clone https://github.com/SparkEdUAB/SparkEd.git`  
+`cd SparkEd`
+
+Install dependencies
+
+`meteor npm install` or `meteor yarn`
+
+Run the application
+
+`meteor`
+
+### Testing
+
+`npm run test` or `yarn run test`
+
+### linting
+
+`npm run lint` or `yarn run lint`  
+
+Before you make commit, make sure that the linting are passing, check with the eslintrc.yml to check the rules. 
+
+
 
 ## Sync
 
@@ -42,18 +82,4 @@ tar cvzf /var/www/sparked/bundle/public/dump.tar.gz dump/
 # bundle and send to the public to be downloadable (main server)
 
 ```
-## EndPoints API
 
-Each collection in SparkEd has an endpoint that can be used by an external application like a mobile app or any other.
-
-`/api/course/`   
-`/api/unit/`   
-`/api/topic/`  
-`/api/resources/`  
-`/api/references/`  
-`/api/statistic/`  
-`/api/search/`  
- `/api/users/`  
-   
-### todo  
-- [ ] Migrate API calls to Promises
