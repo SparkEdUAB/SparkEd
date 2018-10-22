@@ -1,8 +1,8 @@
 {
-  "name": "Primary Schoolll",
-  "tag": "Taglined ",
+  "name": "CIty University ",
+  "tag": "Education is our goal",
   "isUserAuth": false,
   "isHighSchool": false,
   "isConfigured": true,
-  "server": "http://13.232.61.192"
+  "server": "http://0.0.0.0"
 }

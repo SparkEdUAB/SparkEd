@@ -7,7 +7,7 @@
     "frFr": "frances - FR",
     "Language": "Idioma"
   },
-  "notFound":"ምንም አልተገኝም",
+  "notFound": "ምንም አልተገኝም",
   "titles": {
     "addreference": "Add Reference",
     "referenceDisplaced": "References displayed",
@@ -30,13 +30,13 @@
     "Gender": "Gender"
   },
   "manage": {
-    "Under" : "Under",
+    "Under": "Under",
     "accounts": "compte",
     "courses": "coursos",
     "unit": "unito",
     "topics": "topicos",
     "resources": "Resourcos",
-    "manage": "Manage"
+    "manage": "managerios"
   },
   "actions": {
     "delete": "removos",
