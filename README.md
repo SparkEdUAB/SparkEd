@@ -6,7 +6,7 @@ To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 
 # For Contributors
 
-### Read the Code of Conduct 
+ > Read the Code of Conduct [here](https://github.com/SparkEdUAB/SparkEd/blob/master/CODE_OF_CONDUCT.md)
 
 The project uses the following stack 
 
