@@ -23,12 +23,11 @@ export class Resourcesss extends Component {
     const audio = [];
     const presentations = [];
     const allResources = resourcess;
-    let topicId;
     const ppt = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
 
+    // eslint-disable-next-line
     allResources.map(resource => {
-      const { type, ext } = resource;
-      topicId = resource.topicId;
+      const { type } = resource;
       switch (type) {
         case 'video/mp4':
           videos.push(resource);

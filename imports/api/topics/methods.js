@@ -4,6 +4,7 @@ import { _Topics } from '../topics/topics';
 import { Resources } from '../resources/resources';
 
 Meteor.methods({
+  // eslint-disable-next-line
   'topic.insert'(id, unitId, name, unit) {
     check(id, String);
     check(unitId, String);
@@ -25,6 +26,7 @@ Meteor.methods({
       throw new Meteor.Error('oops', 'You are not allowed to not make changes');
     }
   },
+  // eslint-disable-next-line
   'topic.update'(id, topic) {
     check(id, String);
     check(topic, String);
@@ -43,6 +45,7 @@ Meteor.methods({
       throw new Meteor.Error('oops', 'You are not allowed to not make changes');
     }
   },
+  // eslint-disable-next-line
   'topic.remove'(id) {
     check(id, String);
     const resources = Resources.find({ 'meta.topicId': id }).fetch();
@@ -54,7 +57,8 @@ Meteor.methods({
       throw new Meteor.Error('oops', 'You are not allowed to not make changes');
     }
   },
-  'singletopic.insert'(_id, unitId, name, unit) {
+  // eslint-disable-next-line
+  'singletopic.insert': function(_id, unitId, name, unit) {
     check(_id, String);
     check(unitId, String);
     check(name, String);

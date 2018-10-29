@@ -24,6 +24,7 @@ export default class Login extends Component {
             this.setState({ error: error.reason });
           } else {
             // Don't use FlowRouter.go('/) to allow updating the admin details;
+            // eslint-disable-next-line
             if (localStorage.getItem('beenhere')) {
               //   window.location = '/';
               FlowRouter.go('/');

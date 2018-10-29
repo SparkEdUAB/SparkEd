@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { _Notifications } from './notifications';
-import { Roles } from 'meteor/alanning:roles';
+import { Roles } from 'meteor/alanning:roles'; // eslint-disable-line
 
 Meteor.methods({
   insertNotification(title, category, unitId = '', topicId = '', fileId = '') {
@@ -12,6 +12,7 @@ Meteor.methods({
     check(category, String);
     if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
       const testUsers = Meteor.users.find();
+      // eslint-disable-next-line
       testUsers.map(usr => {
         const _id = new Meteor.Collection.ObjectID().valueOf();
         const userId = usr._id;

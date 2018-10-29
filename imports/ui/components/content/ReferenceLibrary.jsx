@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactPaginate from 'react-paginate';
 import i18n from 'meteor/universe:i18n';
-import Header from '../layouts/Header';
 import { References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { ExtraResource } from './Unit.jsx';
@@ -35,6 +34,7 @@ export class ReferenceLibrary extends Component {
       />
     ));
   }
+  // eslint-disable-next-line
   componentWillUnmount() {
     Session.set({
       limit: 0,
@@ -47,8 +47,8 @@ export class ReferenceLibrary extends Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * Session.get('limit'));
+    const { selected } = data;
+    const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
@@ -113,7 +113,8 @@ export class SideMenu extends Component {
     return (
       <li className={'link topic'}>
         <a className="side-list" href={this.props.address}>
-          <i className="" />&nbsp; {this.props.name}
+          <i className="" />
+          &nbsp; {this.props.name}
         </a>
       </li>
     );
@@ -124,6 +125,7 @@ ReferenceLibrary.propTypes = {
   courses: PropTypes.array,
   extraResources: PropTypes.array,
   resources: PropTypes.array,
+  count: PropTypes.number,
 };
 SideMenu.propTypes = {
   address: PropTypes.string,

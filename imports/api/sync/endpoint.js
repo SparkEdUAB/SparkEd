@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Restivus } from 'meteor/mrest:restivus';
-import { Resources } from '../resources/resources';
-import { References } from '../resources/resources';
+import { Resources, References } from '../resources/resources';
 import { _Courses } from '../courses/courses';
 import { _SearchData } from '../search/search';
 import { _Statistics } from '../statistics/statistics';
@@ -121,7 +120,7 @@ Api.addRoute(
   { authRequired: false }, // temp
   {
     get: {
-      action: function() {
+      action() {
         const resources = Resources.find({}).fetch();
         if (resources) {
           return { status: 'success', data: resources };
@@ -140,7 +139,7 @@ Api.addRoute(
   { authRequired: true },
   {
     get: {
-      action: function() {
+      action() {
         // var article = Articles.findOne(this.urlParams.id);
         const references = References.find({}).fetch();
         if (references) {

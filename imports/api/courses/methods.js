@@ -15,7 +15,7 @@ Meteor.methods({
         _id: id,
         name: course,
         code: courseCode,
-        details: details,
+        details,
         createdAt: new Date(),
         createdBy: this.userId,
       });
@@ -23,6 +23,7 @@ Meteor.methods({
       throw new Meteor.Error('oops', 'You are not allowed to make changes');
     }
   },
+  // eslint-disable-next-line
   'course.edit'(id, course, courseCode, year, ownerId) {
     check(id, String);
     check(course, String);
@@ -47,7 +48,8 @@ Meteor.methods({
       throw new Meteor.Error('oops', 'You are not allowed to not make changes');
     }
   },
-  'course.remove'(id) {
+  // eslint-disable-next-line
+  'course.remove': function(id) {
     check(id, String);
 
     const units = _Units
@@ -65,7 +67,8 @@ Meteor.methods({
       }
     }
   },
-  'courses.count'() {
+  // eslint-disable-next-line
+  'courses.count': function() {
     _Courses.find().count();
   },
 });

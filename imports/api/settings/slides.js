@@ -1,5 +1,4 @@
 // import { Mongo } from 'meteor/mongo';
-import SimpleSchema from 'simpl-schema';
 import { FilesCollection } from 'meteor/ostrio:files';
 
 export const Slides = new FilesCollection({
@@ -16,15 +15,14 @@ export const Slides = new FilesCollection({
   onAfterUpload(file) {
     if (Meteor.isServer) {
       // check real mimetype
-      const { Magic, MAGIC_MIME_TYPE } = require('mmmagic');
+      const { Magic, MAGIC_MIME_TYPE } = require('mmmagic'); // eslint-disable-line
       const magic = new Magic(MAGIC_MIME_TYPE);
       magic.detectFile(
         file.path,
         Meteor.bindEnvironment((err, mimeType) => {
+          // eslint-disable-next-line
           if (err || !~mimeType.indexOf('image')) {
             // is not a real image --> delete
-            console.log('onAfterUpload, not an image: ', file.path);
-            console.log('deleted', file.path);
             this.remove(file._id);
           }
         }),
@@ -32,12 +30,3 @@ export const Slides = new FilesCollection({
     }
   },
 });
-
-const slideSchema = new SimpleSchema({
-  name: String,
-  file: Object,
-  createdAt: Date,
-  CreatedBy: String,
-});
-
-// _Slides.schema = slideSchema;

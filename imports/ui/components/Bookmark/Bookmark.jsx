@@ -13,7 +13,7 @@ export class Bookmark extends React.Component {
     e.preventDefault();
     return FlowRouter.go(path);
   };
-  removeBookMark(id, event) {
+  removeBookMark(id) {
     this.isDelete = true;
     Meteor.call('removeBookmark', id, err => {
       err

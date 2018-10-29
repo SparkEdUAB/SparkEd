@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
 import { check, Match } from 'meteor/check';
 import { _Deleted } from './deleted';
 

@@ -7,14 +7,14 @@ import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
 import { References } from '../../../api/resources/resources';
-import { Header } from '../layouts/Header.jsx';
 import { FloatingButton, SearchField } from './../Utilities/Utilities.jsx';
 import Unit, { ExtraResource } from '../content/Unit.jsx';
-import { Loader } from '../Loader';
+import { Loader } from '../Loader'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
 export class CourseContent extends Component {
+  // eslint-disable-next-line
   componentDidMount() {
     window.scrollTo(0, 0);
     Session.setPersistent('courseId', FlowRouter.getParam('_id'));
@@ -94,7 +94,7 @@ export class CourseContent extends Component {
 
 export const getCourseId = () => FlowRouter.getParam('_id');
 
-export const courseName = coll => !coll ? null : coll.name;
+export const courseName = coll => (!coll ? null : coll.name);
 
 export const getTopicId = () => {
   const topicId = FlowRouter.getQueryParam('rs');
@@ -108,7 +108,7 @@ export const getTopicId = () => {
     return '1';
   }
   return topicId;
-}
+};
 
 // export function getTopicId() {
 //   const topicId = FlowRouter.getQueryParam('rs');

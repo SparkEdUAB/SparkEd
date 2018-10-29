@@ -1,4 +1,4 @@
-import checkPassword from './accounts.client';
+import checkPassword from './accounts.client'; // eslint-disable-line
 
 test('The two passwords should be equal', () => {
   expect(checkPassword('olivier', 'oliier')).toHaveProperty('msg', 'Passowrds do not match');

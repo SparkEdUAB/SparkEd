@@ -1,9 +1,9 @@
-import { Mongo } from 'meteor/mongo';
+import { Mongo, MongoInternals } from 'meteor/mongo';
 // import SimpleSchema from 'simpl-schema';
 import { FilesCollection } from 'meteor/ostrio:files';
 import Grid from 'gridfs-stream';
-import { MongoInternals } from 'meteor/mongo';
-import fs from 'fs';
+// import {  } from 'meteor/mongo';
+import fs from 'fs'; // eslint-disable-line
 
 let gfs;
 if (Meteor.isServer) {
@@ -64,10 +64,11 @@ export const Resources = new FilesCollection({
     images.forEach(image => {
       Object.keys(image.versions).forEach(versionName => {
         const _id = (image.versions[versionName].meta || {}).gridFsFileId;
-        if (_id)
+        if (_id) {
           gfs.remove({ _id }, err => {
             if (err) throw err;
           });
+        }
       });
     });
   },
@@ -127,10 +128,12 @@ export const References = new FilesCollection({
     files.forEach(file => {
       Object.keys(file.versions).forEach(versionName => {
         const _id = (file.versions[versionName].meta || {}).gridFsFileId;
-        if (_id)
+        if (_id) {
+          // eslint-disable-line
           gfs.remove({ _id }, err => {
             if (err) throw err;
           });
+        }
       });
     });
   },

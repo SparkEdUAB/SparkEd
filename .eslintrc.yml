@@ -1,9 +1,15 @@
 # enable ES6
+
+parser: babel-eslint
+
 parserOptions:
   ecmaVersion: 6
   sourceType: module
   ecmaFeatures:
     jsx: true # enable React's JSX
+  allowImportExportEverywhere: false
+  codeFrame: true
+
 
 # register plugins
 plugins:
@@ -32,10 +38,12 @@ rules:
   no-underscore-dangle: 0
   import/no-named-as-default: 0
   no-nested-ternary: 0
-  
+  arrow-parens: 0
+  class-methods-use-this: 0
+  max-len: 0
   # eslint-plugin-meteor
   meteor/no-session: [0] # allow Session
-  meteor/prefer-session-equals: [2] # prefer Session.equals instead
+  meteor/prefer-session-equals: [0] # prefer Session.equals instead
   import/no-extraneous-dependencies: off
   react/require-extension: off
   import/extensions:
@@ -66,14 +74,18 @@ rules:
 
 globals:
   # collections
-  Foo: false
-  Bar: false
+  describe: false
+  beforeEach: false
   fs: false
   FS: false
   Materialize: false
   Roles: false
   exportcsv: false
   require: false
+  expect: false
+  test: false
+  it: false
+
   # packages
   FlowRouter: false 
   moment: false 

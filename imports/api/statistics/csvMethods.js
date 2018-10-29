@@ -25,7 +25,7 @@ Meteor.methods({
       return false;
     }
 
-    data.forEach((v, k, arr) => {
+    data.forEach(v => {
       v.name = `${mUser.profile.name}`;
       v.email = mUser.emails[0].address;
       v.gender = mUser.profile.gender;

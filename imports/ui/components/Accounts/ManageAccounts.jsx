@@ -113,6 +113,8 @@ export class ManageAccounts extends React.Component {
         });
 
         break;
+      default:
+        console.log(type) // eslint-disable-line
     }
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
@@ -120,12 +122,14 @@ export class ManageAccounts extends React.Component {
   // actions for buttons
   handleSubmit(e) {
     e.preventDefault();
-    const { modalType, ids, count, name } = this.state;
-    const target = e.target;
+    const {
+      modalType, ids, count, name,
+    } = this.state;
+    const { target } = e;
 
     switch (modalType) {
       case 'delete':
-        ids.forEach((v, k, arra) => {
+        ids.forEach((v) => {
           if (v === Meteor.userId()) {
             Materialize.toast("You can't delete yourself", 3000, 'error-toast');
             return;
@@ -134,20 +138,21 @@ export class ManageAccounts extends React.Component {
             return;
           }
           Meteor.call('removeUser', v, err => {
+            // eslint-disable-next-line
             err
               ? (Materialize.toast(err.reason, 4000, 'error-toast'),
-                Meteor.call(
-                  'logger',
-                  formatText(err.reason, Meteor.userId(), 'user-remove'),
-                  'error',
-                ))
+              Meteor.call(
+                'logger',
+                formatText(err.reason, Meteor.userId(), 'user-remove'),
+                'error',
+              ))
               : Materialize.toast(`${count} ${name} successfully deleted`, 4000, 'success-toast');
           });
         });
         break;
       // user.approve
       case 'approve':
-        ids.forEach((v, k, arra) => {
+        ids.forEach((v) => {
           Meteor.call('user.approve', v, err => {
             err
               ? Materialize.toast(err.reason, 4000, 'error-toast')
@@ -158,7 +163,7 @@ export class ManageAccounts extends React.Component {
         break;
 
       case 'suspend':
-        ids.forEach((v, k) => {
+        ids.forEach((v) => {
           if (v === Meteor.userId()) {
             Materialize.toast("You can't suspend the ", 3000, 'error-toast');
             return;
@@ -167,46 +172,51 @@ export class ManageAccounts extends React.Component {
             return;
           }
           Meteor.call('user.suspend', v, err => {
+            // eslint-disable-next-line
             err
               ? (Materialize.toast(err.reason, 4000, 'error-toast'),
-                Meteor.call(
-                  'logger',
-                  formatText(err.reason, Meteor.userId(), 'user-suspend'),
-                  'error',
-                ))
+              Meteor.call(
+                'logger',
+                formatText(err.reason, Meteor.userId(), 'user-suspend'),
+                'error',
+              ))
               : Materialize.toast(`${count} ${name} successfully suspended`, 4000, 'success-toast');
           });
         });
         break;
-
+        // eslint-disable-next-line
       case 'edit':
         const fname = target.fname.value;
-
         Meteor.call('user.update', ids, fname, err => {
+          // eslint-disable-next-line
           err
             ? (Materialize.toast(err.reason, 4000, 'error-toast'),
-              Meteor.call(
-                'logger',
-                formatText(err.reason, Meteor.userId(), 'user-update'),
-                'error',
-              ))
-            : Materialize.toast(`successfully updated`, 4000, 'success-toast');
+            Meteor.call(
+              'logger',
+              formatText(err.reason, Meteor.userId(), 'user-update'),
+              'error',
+            ))
+            : Materialize.toast('successfully updated', 4000, 'success-toast');
         });
         break;
-
+      // eslint-disable-next-line
       case 'roles':
         const roles = target.roles.value;
         Meteor.call('promoteUser', ids[0], roles, err => {
+          // eslint-disable-next-line
           err
             ? (Materialize.toast(err.reason, 4000, 'error-toast'),
-              Meteor.call(
-                'logger',
-                formatText(err.reason, Meteor.userId(), 'roles-update'),
-                'error',
-              ))
+            Meteor.call(
+              'logger',
+              formatText(err.reason, Meteor.userId(), 'roles-update'),
+              'error',
+            ))
             : Materialize.toast('Successfully updated user roles', 4000, 'success-toast');
         });
         break;
+
+      default:
+        console.log(type) // eslint-disable-line
     }
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
@@ -214,7 +224,9 @@ export class ManageAccounts extends React.Component {
   render() {
     let count = 1;
     const { users } = this.props;
-    const { email, fname, title, confirm, reject, isOpen, modalType } = this.state;
+    const {
+      email, fname, title, confirm, reject, isOpen, modalType,
+    } = this.state;
 
     return (
       <div>
@@ -330,7 +342,7 @@ export class ManageAccounts extends React.Component {
                 const { status } = user.profile;
                 let statusIcon = 'fa-clock-o  ';
                 let chkboxStatus = 'chk-appr  ';
-                let email = user.emails;
+                let email = user.emails; // eslint-disable-line
                 email = email === undefined ? 'null' : email[0].address;
                 if (status === 1) {
                   statusIcon = 'fa-check-circle ';
