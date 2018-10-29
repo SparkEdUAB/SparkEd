@@ -1,5 +1,4 @@
 // import { Mongo } from 'meteor/mongo';
-import SimpleSchema from 'simpl-schema';
 import { FilesCollection } from 'meteor/ostrio:files';
 
 export const Slides = new FilesCollection({

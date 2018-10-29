@@ -24,7 +24,7 @@ Meteor.methods({
         isUserAuth: auth,
         isHighSchool: config.isHighSchool,
         isConfigured: true,
-        server
+        server,
       };
     } else {
       newConfig = {
@@ -33,11 +33,12 @@ Meteor.methods({
         isUserAuth: auth,
         isHighSchool,
         isConfigured: true,
-        server
+        server,
       };
     }
 
-    let title, subTitle;
+    let title;
+    let subTitle;
     check(newConfig, Object);
 
     fs.writeFile(
@@ -45,7 +46,10 @@ Meteor.methods({
       JSON.stringify(newConfig, null, 2),
       Meteor.bindEnvironment(err => {
         if (err) {
-          throw new Meteor.Error('something wrong happened', "Couldn't write to the file");
+          throw new Meteor.Error(
+            'something wrong happened',
+            "Couldn't write to the file",
+          );
         }
         // Create a config from here
         if (isHighSchool) {

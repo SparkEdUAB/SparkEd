@@ -40,6 +40,7 @@ rules:
   no-nested-ternary: 0
   arrow-parens: 0
   class-methods-use-this: 0
+  max-len: 0
   # eslint-plugin-meteor
   meteor/no-session: [0] # allow Session
   meteor/prefer-session-equals: [0] # prefer Session.equals instead
