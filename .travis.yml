@@ -1,0 +1,23 @@
+language: node_js
+sudo: required
+node_js:
+- '8.11.1'
+
+cache:
+directories:
+- $HOME/.meteor
+
+before_cache:
+- rm -f $HOME/.meteor/log/*.log
+
+before_install:
+# Remove cache if the project is upgraded to a newer version of meteor
+- export PATH="$HOME/.meteor:$PATH"
+- curl https://install.meteor.com/?release=1.6.1.1 | /bin/sh
+
+branches:
+only:
+- master
+
+script:
+- npm run lint
