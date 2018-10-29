@@ -1,9 +1,15 @@
 # enable ES6
+
+parser: babel-eslint
+
 parserOptions:
   ecmaVersion: 6
   sourceType: module
   ecmaFeatures:
     jsx: true # enable React's JSX
+  allowImportExportEverywhere: false
+  codeFrame: true
+
 
 # register plugins
 plugins:
@@ -66,14 +72,18 @@ rules:
 
 globals:
   # collections
-  Foo: false
-  Bar: false
+  describe: false
+  beforeEach: false
   fs: false
   FS: false
   Materialize: false
   Roles: false
   exportcsv: false
   require: false
+  expect: false
+  test: false
+  it: false
+
   # packages
   FlowRouter: false 
   moment: false 

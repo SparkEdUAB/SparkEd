@@ -1,7 +1,6 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { chai, expect } from 'meteor/practicalmeteor:chai';
-import { resetDatabase } from 'meteor/xolvio:cleaner';
+import { expect } from 'meteor/practicalmeteor:chai'; // eslint-disable-line
+import { resetDatabase } from 'meteor/xolvio:cleaner'; // eslint-disable-line
 
 describe('Accounts', () => {
   beforeEach(() => {
@@ -9,7 +8,7 @@ describe('Accounts', () => {
   });
 
   it('should be able to create a user', () => {
-    const createUser = new Promise((resolve, reject) => {
+    const createUser = new Promise(() => {
       Accounts.createUser({
         username: 'demo',
         email: 'demo@demo.com',
@@ -18,7 +17,7 @@ describe('Accounts', () => {
     });
     return createUser
       .then((newUser) => {
-        expect(newUser).to.not.be.undefined;
+        expect(newUser).to.not.be.undefined; // eslint-disable-line
         expect(newUser.username).to.equal('demo');
       })
       .done();
