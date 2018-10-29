@@ -1,8 +1,9 @@
 export const findExisting = (coll, id) => {
   let count = 0;
-  coll.find((item) => {
+  // eslint-disable-next-line
+  coll.find(item => {
     if (item._id === id) {
-      count++;
+      count++; // eslint-disable-line
     }
   });
   return count;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import i18n from 'meteor/universe:i18n';
-import ViewResource from './ViewResource';
+import ViewResource from './ViewResource'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -24,15 +24,11 @@ export default class ViewFrame extends Component {
     return (
       <div className=" ">
         <div className="sideNavHeadingUnderline">
-          {
-            FlowRouter.getQueryParam('scid')
-            ?
+          {FlowRouter.getQueryParam('scid') ? (
             <a title="Go back to Topics" id="backButtonLink" href={ViewFrame.getUrl()}>
               <i className="fa fa-chevron-circle-left fa-lg" />
             </a>
-            :
-            null
-          }
+          ) : null}
           <p className="sideNavHeading">
             <T>common.manage.resources</T>
           </p>

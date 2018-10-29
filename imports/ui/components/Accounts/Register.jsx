@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Accounts } from 'meteor/accounts-base';
-import { isLoggedOut, checkPassword } from './AccountFunction.js';
+import { checkPassword } from './AccountFunction.js';
 
 export default class Register extends Component {
   constructor(props) {
@@ -14,9 +13,9 @@ export default class Register extends Component {
     const name = e.target.full_name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const password_2 = e.target.password_2.value;
+    const passwordConfirm = e.target.passwordConfirm.value;
     const gender = e.target.gender.value;
-    const pwdResults = checkPassword(password, password_2);
+    const pwdResults = checkPassword(password, passwordConfirm);
 
     // even if an error shows make sure the user doesn't get created when 2 passwords don't match
     if (!pwdResults.status) {
@@ -52,10 +51,10 @@ export default class Register extends Component {
   };
 
   checkEnteredPassword = ({ target: { value } }) => {
-    const password_2 = value;
+    const passwordConfirm = value;
     const { password } = this.state;
     Meteor.setTimeout(() => {
-      if (password !== password_2) {
+      if (password !== passwordConfirm) {
         this.setState({
           error: 'Passwords do not match',
         });
@@ -114,15 +113,15 @@ export default class Register extends Component {
                   </div>
                   <div className="input-field col s6">
                     <input
-                      id="password_2"
+                      id="passwordConfirm"
                       type="password"
                       className="validate"
                       minLength="6"
                       required
-                      name="password_2"
+                      name="passwordConfirm"
                       onChange={this.checkEnteredPassword}
                     />
-                    <label htmlFor="password_2">Confirm Password</label>
+                    <label htmlFor="passwordConfirm">Confirm Password</label>
                   </div>
                 </div>
                 <div className="row">
@@ -156,7 +155,7 @@ export default class Register extends Component {
               className="ngl btn-floating btn-large waves-effect  waves-light"
             >
               <i className="fa fa-sign-in" />
-            </a> 
+            </a>
             <a href="/login">Login here </a> if you already have an account
           </div>
         </div>

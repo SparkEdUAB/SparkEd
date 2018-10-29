@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 
 export default class Download extends Component {
@@ -10,6 +10,7 @@ export default class Download extends Component {
   }
   downLoadFile = e => {
     e.preventDefault();
+    // eslint-disable-next-line
     if (confirm('Do you want to Download the file?')) {
       this.setState({
         download: true,

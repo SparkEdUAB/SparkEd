@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { _Topics } from '../../../api/topics/topics';
 import ReactPaginate from 'react-paginate';
+import { Session } from 'meteor/session';
+import { _Topics } from '../../../api/topics/topics';
 import { insertStatistics } from '../Statistics/Statistics.jsx';
 import { setActiveItem } from '../Utilities/Utilities.jsx';
-import { Session } from 'meteor/session';
 import * as config from '../../../../config.json';
 import { _Units } from '../../../api/units/units';
 
@@ -30,8 +30,8 @@ export class Topics extends Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * Session.get('limit'));
+    const { selected } = data;
+    const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
@@ -67,7 +67,6 @@ export class Topics extends Component {
   saveUsage(id, name, url) {
     setActiveItem(id, 'topic', 'cardListItem');
     const material = name;
-    const urlData = FlowRouter.current();
     const page = 'TOPIC';
     const user = Meteor.userId();
     const date = new Date();
@@ -117,6 +116,8 @@ export class Topics extends Component {
 
 Topics.propTypes = {
   unitId: PropTypes.string.isRequired,
+  topics: PropTypes.array,
+  count: PropTypes.number,
 };
 
 export default withTracker(param => {

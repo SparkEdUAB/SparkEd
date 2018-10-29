@@ -12,7 +12,7 @@ import { insertStatistics } from '../Statistics/Statistics.jsx';
 import { FloatingButton } from '../Utilities/Utilities.jsx';
 import * as config from '../../../../config.json';
 import { Titles } from '../../../api/settings/titles';
-import { ThemeContext } from '../../containers/AppWrapper';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -72,7 +72,7 @@ export class ContentsApp extends Component {
     window.scrollTo(0, 0);
   }
 
-  getBack = e => {
+  getBack = () => {
     const courseId = Session.get('courseId');
     if (config.isHighSchool) {
       return FlowRouter.go('/');
@@ -82,10 +82,10 @@ export class ContentsApp extends Component {
 
   render() {
     let unitName = '';
-    let topicName = '';
+    const topicName = '';
     let desc = '';
     let title = '';
-    const { unit, topic, titles } = this.props;
+    const { unit, titles } = this.props;
     if (unit && titles) {
       unitName = unit.name;
       desc = unit.unitDesc;
@@ -94,46 +94,41 @@ export class ContentsApp extends Component {
     // console.log(title)
     return (
       <ThemeContext.Consumer>
-
-        {
-          color => (
-            <Fragment>
-              <div className="row">
-                <div className=" unit-container" style={{ backgroundColor: color.main }}>
-                  <h4 className="center unit-name">{unitName}</h4>
-                  <div className="container">
-                    <p className="center">{desc}</p>
-                  </div>
+        {color => (
+          <Fragment>
+            <div className="row">
+              <div className=" unit-container" style={{ backgroundColor: color.main }}>
+                <h4 className="center unit-name">{unitName}</h4>
+                <div className="container">
+                  <p className="center">{desc}</p>
                 </div>
               </div>
-              <div className="row">
-                <div className="col s12 m4 l3 topics-container">
-                  <div className="sideNavHeadingUnderline">
-                    <a
-                      title="Go back to Topics"
-                      id="backButtonLink"
-                      href={''}
-                      onClick={e => this.getBack(e)}
-                    >
-                      <i className="fa fa-chevron-circle-left fa-lg" />
-                    </a>
-                    <p className="sideNavHeading">
-                      {config.isHighSchool ? title : <T>common.manage.topics</T>}
-                    </p>
-                  </div>
-                  <Topics unitId={getUnitId()} />
+            </div>
+            <div className="row">
+              <div className="col s12 m4 l3 topics-container">
+                <div className="sideNavHeadingUnderline">
+                  <a
+                    title="Go back to Topics"
+                    id="backButtonLink"
+                    href={''}
+                    onClick={e => this.getBack(e)}
+                  >
+                    <i className="fa fa-chevron-circle-left fa-lg" />
+                  </a>
+                  <p className="sideNavHeading">
+                    {config.isHighSchool ? title : <T>common.manage.topics</T>}
+                  </p>
                 </div>
-                <div className="col s12 m8 l9">
-                  <h5 className="center">{topicName}</h5>
-                  <Resourcesss topicId={getTopicId()} />
-                </div>
+                <Topics unitId={getUnitId()} />
               </div>
-              <>
-                <FloatingButton />
-              </>
-            </Fragment>
-          )
-        }
+              <div className="col s12 m8 l9">
+                <h5 className="center">{topicName}</h5>
+                <Resourcesss topicId={getTopicId()} />
+              </div>
+            </div>
+            <>'             '<FloatingButton />'           '</>
+          </Fragment>
+        )}
       </ThemeContext.Consumer>
     );
   }
@@ -141,6 +136,7 @@ export class ContentsApp extends Component {
 ContentsApp.propTypes = {
   unit: PropTypes.object,
   topic: PropTypes.object,
+  titles: PropTypes.object,
 };
 
 export function getUnitId() {
@@ -153,7 +149,7 @@ export function getTopicId() {
     topicId = FlowRouter.getQueryParam('rs');
     topics = _Units.findOne({ 'details.courseId': FlowRouter.getParam('_id') });
     if (!topics) {
-      topics = _Units.findOne({ '_id': FlowRouter.getQueryParam('rs')})
+      topics = _Units.findOne({ _id: FlowRouter.getQueryParam('rs') });
     }
   } else {
     topicId = FlowRouter.getQueryParam('rs');

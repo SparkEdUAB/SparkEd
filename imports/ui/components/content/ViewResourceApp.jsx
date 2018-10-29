@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
-import { _Topics } from '../../../api/topics/topics';
-import { _FileDetails } from '../../../api/resources/resources';
 import ViewFrame from './ViewFrame.jsx';
 import ResourceRender from './ResourceRender.jsx';
 import { insertStatistics } from '../Statistics/Statistics.jsx';
 import { FloatingButton } from '../Utilities/Utilities.jsx';
-import ErrorBoundary from '../ErrorBoundary';
-import { Loader } from '../Loader';
+import ErrorBoundary from '../ErrorBoundary'; // eslint-disable-line
 import { Resources } from '../../../api/resources/resources';
 import * as config from '../../../../config.json';
 

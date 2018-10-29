@@ -5,7 +5,7 @@ import i18n from 'meteor/universe:i18n';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import * as config from '../../../../config.json';
-import { ThemeContext } from '../../containers/AppWrapper';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -73,7 +73,7 @@ export function checkPermissions() {
   return Meteor.user() ? Meteor.user().roles : undefined;
 }
 
-export default withTracker((params) => {
+export default withTracker(params => {
   Meteor.subscribe('courses');
   Meteor.subscribe('units');
 

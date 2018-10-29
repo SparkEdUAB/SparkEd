@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { _Topics } from '../../../api/topics/topics';
-import { ThemeContext } from '../../containers/AppWrapper';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export class Unit extends Component {
   countTopics() {
