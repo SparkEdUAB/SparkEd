@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { check } from 'meteor/check';
 import { Resources, References } from './resources';
-import fs from 'fs';
 
 Meteor.methods({
   updateResource(id, resource) {

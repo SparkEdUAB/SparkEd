@@ -3,7 +3,7 @@ import { Mongo, MongoInternals } from 'meteor/mongo';
 import { FilesCollection } from 'meteor/ostrio:files';
 import Grid from 'gridfs-stream';
 // import {  } from 'meteor/mongo';
-import fs from 'fs';
+import fs from 'fs'; // eslint-disable-line
 
 let gfs;
 if (Meteor.isServer) {

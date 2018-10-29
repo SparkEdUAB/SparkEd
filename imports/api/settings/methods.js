@@ -60,6 +60,7 @@ Meteor.methods({
       },
     );
   },
+  // eslint-disable-next-line
   'insert.title'(title, sub_title) {
     check(title, String);
     check(sub_title, String);
@@ -70,6 +71,7 @@ Meteor.methods({
       editedAt: today,
     });
   },
+  // eslint-disable-next-line
   'update.title'(id, title, sub) {
     check(id, String);
     check(title, String);
@@ -98,23 +100,23 @@ Meteor.methods({
       { upsert: true },
     );
   },
-  updateSettings(id, name, tag, server, isConfigured){
+  // eslint-disable-next-line
+  updateSettings(id, name, tag, server, isConfigured) {
     check(id, String);
     check(name, String);
     check(tag, String);
     check(server, String);
     check(isConfigured, Boolean);
     _Settings.update(
-      {_id:id},
+      { _id: id },
       {
         $set: {
-          name, 
+          name,
           tag,
           server,
-          isConfigured
-        }
-      }
-    )
-  }
-
+          isConfigured,
+        },
+      },
+    );
+  },
 });
