@@ -48,6 +48,7 @@ export default class Register extends Component {
         }
       });
     });
+    // FocalLoc0
   };
 
   checkEnteredPassword = ({ target: { value } }) => {

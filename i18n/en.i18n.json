@@ -7,12 +7,11 @@
     "frFr": "French - FR",
     "Language": "Language"
   },
-  "header":{
+  "header": {
     "openExternalLink": "Click here to Open all the external links in a page",
     "externalLink": "External Links"
-
   },
-  "notFound":"Oooops Page not Found Take me",
+  "notFound": "Oooops Page not Found Take me",
   "titles": {
     "addreference": "Add Reference",
     "referenceDisplaced": "References displayed",
@@ -35,10 +34,10 @@
     "Email": "Email",
     "Gender": "Gender",
     "dashboard": "Dashboard",
-    "notlogedIn" : "You are not Logged in"
+    "notlogedIn": "You are not Logged in"
   },
   "manage": {
-    "Under" : "Under",
+    "Under": "Under",
     "accounts": "accounts",
     "courses": "Grade",
     "unit": "Subject",

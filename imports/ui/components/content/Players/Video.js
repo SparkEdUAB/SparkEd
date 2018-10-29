@@ -1,12 +1,18 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import ReactPlayer from 'react-player';
 
 const Video = props => (
   <div className="videoViewerContainer">
-    <video controls autoPlay className="videoViewer">
-      <source src={props.link} type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <ReactPlayer
+      className="react-player"
+      width="100%"
+      height="100%"
+      url={props.link}
+      playing={true}
+      loop={true}
+      controls
+    />
   </div>
 );
 
