@@ -9,7 +9,8 @@ Meteor.methods({
     const path = `${process.env.PWD}/${type}.log`;
     fs.appendFile(path, text, (err) => {
       if (err) throw err;
-      console.log('the log was successfully written');
+      // eslint-disable-next-line
+      console.error('the log was successfully written');
     });
   },
 });
