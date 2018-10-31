@@ -1,23 +1,26 @@
 language: node_js
 sudo: required
 node_js:
-- '8.11.1'
+  - "8.11.1"
 
-cache:
+? cache
 directories:
-- $HOME/.meteor
+  - $HOME/.meteor
 
 before_cache:
-- rm -f $HOME/.meteor/log/*.log
+  - rm -f $HOME/.meteor/log/*.log
 
 before_install:
-# Remove cache if the project is upgraded to a newer version of meteor
-- export PATH="$HOME/.meteor:$PATH"
-- curl https://install.meteor.com/?release=1.6.1.1 | /bin/sh
+  # Remove cache if the project is upgraded to a newer version of meteor
+  - export PATH="$HOME/.meteor:$PATH"
+  - curl https://install.meteor.com/?release=1.6.1.1 | /bin/sh
+  # - npm install -g mup
 
-branches:
+? branches
 only:
-- master
+  - master
+  # - deploy
 
 script:
-- npm run lint
+  # - mup deploy
+  - npm run lint
