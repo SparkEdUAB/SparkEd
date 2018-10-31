@@ -1,0 +1,8 @@
+{
+  "name": "Secondary School",
+  "tag": "Education is our goal",
+  "isUserAuth": false,
+  "isHighSchool": false,
+  "isConfigured": true,
+  "server": "http://13.232.61.192"
+}
