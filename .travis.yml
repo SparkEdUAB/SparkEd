@@ -14,13 +14,13 @@ before_install:
   # Remove cache if the project is upgraded to a newer version of meteor
   - export PATH="$HOME/.meteor:$PATH"
   - curl https://install.meteor.com/?release=1.6.1.1 | /bin/sh
-  - npm install -g mup
+  # - npm install -g mup
 
 ? branches
 only:
   - master
-  - deploy
+  # - deploy
 
 script:
-  - mup deploy
+  # - mup deploy
   - npm run lint
