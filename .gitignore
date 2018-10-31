@@ -1,3 +1,5 @@
+.deploy/
+.deploy/mup.js
 node_modules/
 .uploads/
 uploads/
@@ -70,3 +72,4 @@ typings/
 .next
 settings.json
 config.json
+.deploy/
