@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
@@ -233,6 +234,7 @@ export class ManageAccounts extends React.Component {
             : Materialize.toast('Successfully updated user roles', 4000, 'success-toast');
         });
         break;
+        // eslint-disable-next-line
       case 'pass':
         const response = checkPassword(password, passwordConfirm);
         if (!response.status) {
@@ -241,9 +243,18 @@ export class ManageAccounts extends React.Component {
           });
           return false;
         }
-        break
-        
-
+        Meteor.call('changeUserPassword', userID, password, err => {
+          // eslint-disable-next-line
+          err
+            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+            Meteor.call(
+              'logger',
+              formatText(err.reason, Meteor.userId(), 'pass-change'),
+              'error',
+            ))
+            : Materialize.toast('Successfully created user password', 4000, 'success-toast');
+        });
+        break;
 
 
       default:
