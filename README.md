@@ -13,7 +13,7 @@ To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 The project uses the following stack 
 
 - **Meteor** as the overall framework
-- **React** as the front-end library
+- **React** as the User Interface library
 - **eslint** to lint files
 - **Jest** for testing
 
