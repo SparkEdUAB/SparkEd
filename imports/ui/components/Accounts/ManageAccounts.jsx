@@ -308,6 +308,15 @@ export class ManageAccounts extends React.Component {
                 <T>common.actions.changeRole</T>
               </button>
             </div>
+            <div className="col m3 s3">
+              <button
+                className="btn teal  fa fa-lock"
+                onClick={e => this.openModal('pass', e)}
+              >
+                {' '}
+                <T>Change Password</T>
+              </button>
+            </div>
           </div>
           <table className="highlight">
             <thead>
