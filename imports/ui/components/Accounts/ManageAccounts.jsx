@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
@@ -17,6 +18,8 @@ import MainModal from '../../modals/MainModal.jsx';
 import { closeModal, accountsModalStates } from '../../modals/methods';
 import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
+import PasswordEdit from '../Utilities/Modal/PasswordEdit.jsx';
+import { checkPassword } from './AccountFunction';
 
 const T = i18n.createComponent();
 
@@ -42,6 +45,10 @@ export class ManageAccounts extends React.Component {
       reject: '',
       ids: [],
       role: 'student',
+      password: '',
+      passwordConfirm: '',
+      userID: '',
+      error: '',
     };
   }
 
@@ -57,13 +64,15 @@ export class ManageAccounts extends React.Component {
   };
 
   // open modals
-  openModal = (type, id = '', email = '', fname = '', e) => {
+  openModal = (type, id = '', email = '', fname = '', password = '', passwordConfirm = '', e) => {
     const users = getCheckBoxValues('chk');
     const count = users.length;
     const name = count > 1 ? 'users' : 'user';
     this._id = id;
     this.email = email;
     this.fname = fname;
+    this.pass = password;
+    this.passConfirm = passwordConfirm;
 
     if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
       Materialize.toast('Only Admins can delete a user', 4000, 'error-toast');
@@ -113,6 +122,17 @@ export class ManageAccounts extends React.Component {
         });
 
         break;
+      case 'pass':
+        this.setState({
+          modalType: type,
+          title: 'Change User Password',
+          confirm: 'Save',
+          reject: 'Close',
+          userID: users[0],
+          password: this.pass,
+          passwordConfirm: this.passConfirm,
+        });
+        break;
       default:
         console.log(type) // eslint-disable-line
     }
@@ -123,7 +143,7 @@ export class ManageAccounts extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const {
-      modalType, ids, count, name,
+      modalType, ids, count, name, password, passwordConfirm, userID,
     } = this.state;
     const { target } = e;
 
@@ -214,6 +234,28 @@ export class ManageAccounts extends React.Component {
             : Materialize.toast('Successfully updated user roles', 4000, 'success-toast');
         });
         break;
+        // eslint-disable-next-line
+      case 'pass':
+        const response = checkPassword(password, passwordConfirm);
+        if (!response.status) {
+          this.setState({
+            error: response.msg,
+          });
+          return false;
+        }
+        Meteor.call('changeUserPassword', userID, password, err => {
+          // eslint-disable-next-line
+          err
+            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+            Meteor.call(
+              'logger',
+              formatText(err.reason, Meteor.userId(), 'pass-change'),
+              'error',
+            ))
+            : Materialize.toast('Successfully created user password', 4000, 'success-toast');
+        });
+        break;
+
 
       default:
         console.log(type) // eslint-disable-line
@@ -221,11 +263,22 @@ export class ManageAccounts extends React.Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
+  validatePassword = ({ target: { value } }) => {
+    this.setState({
+      password: value,
+    });
+  }
+  confirmPassword = ({ target: { value } }) => {
+    this.setState({
+      passwordConfirm: value,
+    });
+  }
+
   render() {
     let count = 1;
     const { users } = this.props;
     const {
-      email, fname, title, confirm, reject, isOpen, modalType,
+      error, email, fname, title, confirm, reject, isOpen, modalType, password, passwordConfirm,
     } = this.state;
 
     return (
@@ -246,9 +299,17 @@ export class ManageAccounts extends React.Component {
             <div className="input-field">
               <UserRoles value={this.state.role} />
             </div>
-          ) : (
-            ''
-          )}
+          ) :
+            modalType === 'pass' ? (
+              <PasswordEdit password={password}
+                passwordConfirm={passwordConfirm}
+                validatePassword={this.validatePassword}
+                confirmPassword={this.confirmPassword}
+                error={error}
+                />
+            ) :
+            <span />
+          }
         </MainModal>
         <div className="col m9 s11">
           <div className="row">
@@ -306,6 +367,15 @@ export class ManageAccounts extends React.Component {
               >
                 {' '}
                 <T>common.actions.changeRole</T>
+              </button>
+            </div>
+            <div className="col m3 s3">
+              <button
+                className="btn teal  fa fa-lock"
+                onClick={e => this.openModal('pass', e)}
+              >
+                {' '}
+                <T>Change Password</T>
               </button>
             </div>
           </div>

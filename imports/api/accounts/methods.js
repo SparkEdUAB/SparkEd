@@ -3,7 +3,7 @@ import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 
 Meteor.methods({
-  'user.insert': (user) => {
+  'user.insert': user => {
     check(user, {
       email: String,
       password: String,
@@ -11,7 +11,7 @@ Meteor.methods({
     });
     Accounts.createUser(user);
   },
-  'account.check': (email) => {
+  'account.check': email => {
     check(email, String);
     const initialUser = Meteor.users.findOne();
     const userId = initialUser._id;
@@ -43,7 +43,10 @@ Meteor.methods({
         },
       );
     } else {
-      throw new Meteor.Error('Sorry', "You don't have permissions to remove a user");
+      throw new Meteor.Error(
+        'Sorry',
+        "You don't have permissions to remove a user",
+      );
     }
   },
   // eslint-disable-next-line
@@ -61,7 +64,10 @@ Meteor.methods({
         },
       );
     } else {
-      throw new Meteor.Error('Sorry', "You don't have permissions to remove a user");
+      throw new Meteor.Error(
+        'Sorry',
+        "You don't have permissions to remove a user",
+      );
     }
   },
   promoteUser(id, role) {
@@ -71,11 +77,17 @@ Meteor.methods({
       // Make sure the admin doesn't block himself out of the platform
       // Roles.addUsersToRoles(id, role);
       if (id === this.userId) {
-        throw new Meteor.Error('Oops', 'You can not change your own Role as an Admin');
+        throw new Meteor.Error(
+          'Oops',
+          'You can not change your own Role as an Admin',
+        );
       }
       Roles.setUserRoles(id, role);
     } else {
-      throw new Meteor.Error('Sorry', "You don't have permissions to promote a user");
+      throw new Meteor.Error(
+        'Sorry',
+        "You don't have permissions to promote a user",
+      );
     }
   },
   removeUser(id) {
@@ -83,7 +95,10 @@ Meteor.methods({
     if (Roles.userIsInRole(this.userId, ['admin'])) {
       Meteor.users.remove(id);
     } else {
-      throw new Meteor.Error('Sorry', "You don't have permissions to remove a user");
+      throw new Meteor.Error(
+        'Sorry',
+        "You don't have permissions to remove a user",
+      );
     }
   },
   // eslint-disable-next-line
@@ -93,7 +108,10 @@ Meteor.methods({
     if (Roles.userIsInRole(this.userId, ['admin'])) {
       Meteor.users.update({ _id: id }, { $set: { 'profile.name': namef } });
     } else {
-      throw new Meteor.Error('Sorry', "You don't have permissions to remove a user");
+      throw new Meteor.Error(
+        'Sorry',
+        "You don't have permissions to remove a user",
+      );
     }
   },
   accountExist(email) {
@@ -109,5 +127,15 @@ Meteor.methods({
   'num.users': function() {
     const users = Meteor.users.find().count();
     return users;
+  },
+  changeUserPassword(userId, password) {
+    check(userId, String);
+    check(password, String);
+    const isAdmin = Roles.userIsInRole(this.userId, ['admin']);
+    if (isAdmin) {
+      Accounts.setPassword(userId, password);
+    } else {
+      throw new Meteor.Error('Sorry', 'An Error Ocurred');
+    }
   },
 });

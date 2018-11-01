@@ -5,7 +5,7 @@ export const ModalDialog = ({
   id, title, msg, callBack,
 }) => (
   <div id={id} className="modal">
-    <div ref="modal_upload" className="modal-content">
+    <div className="modal-content">
       <h4>{title}</h4>
       <p>{msg}</p>
     </div>
