@@ -18,6 +18,7 @@ import { closeModal, accountsModalStates } from '../../modals/methods';
 import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
 import PasswordEdit from '../Utilities/Modal/PasswordEdit.jsx';
+import { checkPassword } from './AccountFunction';
 
 const T = i18n.createComponent();
 
@@ -46,6 +47,7 @@ export class ManageAccounts extends React.Component {
       password: '',
       passwordConfirm: '',
       userID: '',
+      error: '',
     };
   }
 
@@ -140,7 +142,7 @@ export class ManageAccounts extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const {
-      modalType, ids, count, name,
+      modalType, ids, count, name, password, passwordConfirm, userID,
     } = this.state;
     const { target } = e;
 
@@ -231,6 +233,18 @@ export class ManageAccounts extends React.Component {
             : Materialize.toast('Successfully updated user roles', 4000, 'success-toast');
         });
         break;
+      case 'pass':
+        const response = checkPassword(password, passwordConfirm);
+        if (!response.status) {
+          this.setState({
+            error: response.msg,
+          });
+          return false;
+        }
+        break
+        
+
+
 
       default:
         console.log(type) // eslint-disable-line
@@ -253,7 +267,7 @@ export class ManageAccounts extends React.Component {
     let count = 1;
     const { users } = this.props;
     const {
-      email, fname, title, confirm, reject, isOpen, modalType, password, passwordConfirm,
+      error, email, fname, title, confirm, reject, isOpen, modalType, password, passwordConfirm,
     } = this.state;
 
     return (
@@ -279,7 +293,9 @@ export class ManageAccounts extends React.Component {
               <PasswordEdit password={password}
                 passwordConfirm={passwordConfirm}
                 validatePassword={this.validatePassword}
-                confirmPassword={this.confirmPassword} />
+                confirmPassword={this.confirmPassword}
+                error={error}
+                />
             ) :
             <span />
           }

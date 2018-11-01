@@ -6,6 +6,7 @@ const PasswordEdit = ({
   passwordConfirm,
   validatePassword,
   confirmPassword,
+  error,
 }) => (
   <Fragment>
     <div className="row">
@@ -32,12 +33,16 @@ const PasswordEdit = ({
         />
       </div>
     </div>
+    <div className="row">
+      <p className="red-text">{error}</p>
+    </div>
   </Fragment>
 );
 
 PasswordEdit.propTypes = {
   password: PropTypes.string.isRequired,
   passwordConfirm: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
   validatePassword: PropTypes.func.isRequired,
   confirmPassword: PropTypes.func.isRequired,
 };
