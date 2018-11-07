@@ -12,6 +12,7 @@ const ChangePassword = props => (
           placeholder="New Password"
           name="password"
           onChange={props.handleOldPassword}
+          required
         />
       </div>
     </div>
@@ -24,6 +25,7 @@ const ChangePassword = props => (
           placeholder="Old Password"
           name="password"
           onChange={props.handleNewPassword}
+          required
         />
       </div>
     </div>
@@ -36,8 +38,12 @@ const ChangePassword = props => (
           placeholder="Confirm Password"
           name="confirm-password"
           onChange={props.validatePassword}
+          required
         />
       </div>
+    </div>
+    <div className="row">
+      <p className="red-text center">{props.error}</p>
     </div>
   </Fragment>
 );
@@ -49,6 +55,7 @@ ChangePassword.propTypes = {
   newPassword: PropTypes.string.isRequired,
   oldPassword: PropTypes.string.isRequired,
   validatedPassword: PropTypes.string.isRequired,
+  error: PropTypes.string,
 };
 
 export default ChangePassword;

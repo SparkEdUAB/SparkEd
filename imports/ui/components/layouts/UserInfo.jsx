@@ -5,6 +5,7 @@ import i18n from 'meteor/universe:i18n';
 import Languages from '../Language/Languages';
 import ChangePassword from './ChangePassword';
 import MainModal from '../../modals/MainModal';
+import { checkPassword } from '../Accounts/AccountFunction';
 
 const T = i18n.createComponent();
 
@@ -31,6 +32,7 @@ class UserInfo extends Component {
     password: '',
     oldPassword: '',
     passwordConfirm: '',
+    error: '',
   };
 
   handleOldPasswordChange = e => {
@@ -56,9 +58,20 @@ class UserInfo extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    const { oldPassword, password } = this.state;
+    const { oldPassword, password, passwordConfirm } = this.state;
+    const response = checkPassword(password, passwordConfirm);
+    if (!response.status) {
+      this.setState({
+        error: response.msg,
+      });
+      return false;
+    }
     Accounts.changePassword(oldPassword, password, err => {
-      err ? console.log(err.reason) : 'changed';
+      err
+        ? this.setState({
+          error: err.reason,
+        })
+        : FlowRouter.go('/login');
     });
   };
 
@@ -73,6 +86,7 @@ class UserInfo extends Component {
       password,
       oldPassword,
       passwordConfirm,
+      error,
     } = this.state; // eslint-disable-line
     return (
       <Fragment>
@@ -91,6 +105,7 @@ class UserInfo extends Component {
             oldPassword={oldPassword}
             newPassword={password}
             validatedPassword={passwordConfirm}
+            error={error}
           />
         </MainModal>
         <ul id="dropdown1" className="dropdown-content">
@@ -123,7 +138,7 @@ class UserInfo extends Component {
                   </span>
                 </div>
               </li>
-              {isVisible ? (
+              {Meteor.userId() && isVisible ? (
                 <li>
                   <ChangePassword />
                 </li>
