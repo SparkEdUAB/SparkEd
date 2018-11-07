@@ -124,7 +124,7 @@ export class Header extends Component {
                   style={{ fontSize: '12px', color: '#90949c' }}
                 >
                   {' '}
-                  <b> {moment(note.createdAt).fromNow()}</b>
+                  <b> {moment(notification.createdAt).fromNow()}</b>
                 </span>
               </span>
             </li>
@@ -172,6 +172,7 @@ export class Header extends Component {
     $('.dropdown-button').dropdown({
       inDuration: 0,
       outDuration: 0,
+      hover: false, // opens just on hover
       constrainWidth: false, // Does not change width of dropdown to that of the activator
       gutter: 0, // Spacing from edge
       belowOrigin: true, // Displays dropdown below the button
@@ -183,7 +184,7 @@ export class Header extends Component {
   markAllAsVisited = bool => {
     const { notifications } = this.props;
     return notifications.map(notification => {
-      id = notification._id;
+      const id = notification._id;
       return Meteor.call('markRead', id, bool);
     });
   };

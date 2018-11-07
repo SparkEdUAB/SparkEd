@@ -33,12 +33,12 @@ export function isLoggedOut() {
 export function checkPassword(password, password2) {
   if (password.trim() !== password2.trim()) {
     return {
-      msg: 'Passowrds donot match',
+      msg: 'Passwords donot match',
       status: false,
     };
   } else if (password.length < 6) {
     return {
-      msg: 'Passowrd length must be greater five(5)',
+      msg: 'Password length must be greater five(5)',
       status: false,
     };
   }

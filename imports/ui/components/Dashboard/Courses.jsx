@@ -60,6 +60,7 @@ export class Courses extends Component {
     this.code = code;
     this.year = yr;
     this.owner = owner;
+    // eslint-disable-next-line
     switch (ide) {
       case 'edit':
         this.setState({
@@ -83,6 +84,7 @@ export class Courses extends Component {
           reject: <T>common.actions.close</T>,
         });
         break;
+      // eslint-disable-next-line
       case 'del':
         const course = getCheckBoxValues('chk');
         const count = course.length;
