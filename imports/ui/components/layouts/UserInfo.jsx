@@ -56,6 +56,10 @@ class UserInfo extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
+    const { oldPassword, password } = this.state;
+    Accounts.changePassword(oldPassword, password, err => {
+      err ? console.log(err.reason) : 'changed';
+    });
   };
 
   render() {
@@ -81,12 +85,12 @@ class UserInfo extends Component {
           reject={reject}
         >
           <ChangePassword
-            handlePasswordChange={this.handleOldPasswordChange}
-            handlePasswordConfirm={this.handlePasswordConfirm}
+            handleOldPassword={this.handleOldPasswordChange}
+            handleNewPassword={this.handlePasswordConfirm}
             validatePassword={this.validatePassword}
-            password={password}
             oldPassword={oldPassword}
-            passwordConfirm={passwordConfirm}
+            newPassword={password}
+            validatedPassword={passwordConfirm}
           />
         </MainModal>
         <ul id="dropdown1" className="dropdown-content">

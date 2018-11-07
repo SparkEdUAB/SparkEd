@@ -7,23 +7,11 @@ const ChangePassword = props => (
       <div className="input-field col s12">
         <input
           type="password"
-          defaultValue={props.password}
-          className="validate field"
-          placeholder="New Password"
-          name="password"
-          onChange={props.handlePasswordChange}
-        />
-      </div>
-    </div>
-    <div className="row">
-      <div className="input-field col s12">
-        <input
-          type="password"
           defaultValue={props.oldPassword}
           className="validate field"
           placeholder="New Password"
           name="password"
-          onChange={props.validatePassword}
+          onChange={props.handleOldPassword}
         />
       </div>
     </div>
@@ -31,11 +19,23 @@ const ChangePassword = props => (
       <div className="input-field col s12">
         <input
           type="password"
-          defaultValue={props.passwordConfirm}
+          defaultValue={props.newPassword}
+          className="validate field"
+          placeholder="Old Password"
+          name="password"
+          onChange={props.handleNewPassword}
+        />
+      </div>
+    </div>
+    <div className="row">
+      <div className="input-field col s12">
+        <input
+          type="password"
+          defaultValue={props.validatedPassword}
           className="validate field"
           placeholder="Confirm Password"
           name="confirm-password"
-          onChange={props.handlePasswordConfirm}
+          onChange={props.validatePassword}
         />
       </div>
     </div>
@@ -43,12 +43,12 @@ const ChangePassword = props => (
 );
 
 ChangePassword.propTypes = {
-  handlePasswordChange: PropTypes.func.isRequired,
-  handlePasswordConfirm: PropTypes.func.isRequired,
+  handleOldPassword: PropTypes.func.isRequired,
+  handleNewPassword: PropTypes.func.isRequired,
   validatePassword: PropTypes.func.isRequired,
-  password: PropTypes.string.isRequired,
+  newPassword: PropTypes.string.isRequired,
   oldPassword: PropTypes.string.isRequired,
-  passwordConfirm: PropTypes.string.isRequired,
+  validatedPassword: PropTypes.string.isRequired,
 };
 
 export default ChangePassword;
