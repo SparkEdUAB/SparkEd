@@ -267,7 +267,7 @@ export class Header extends Component {
                 </div>
                 <div className="row ">
                   {
-                    isUserAuth && <div className="col s2 m1 head-icons ">{this.countNotifications()}</div>
+                    Meteor.userId() && <div className="col s2 m1 head-icons ">{this.countNotifications()}</div>
                   }
 
 
@@ -282,20 +282,24 @@ export class Header extends Component {
                       onClick={e => this.toggleEditModal(e, 'search')}
                     />
                   </div>
-                  <div className="col s2 m1 head-icons">
-                    <a
-                      href="#"
-                      className={
-                        this.props.count > 0
-                          ? 'fa fa-star fa-2x inst-link'
-                          : 'fa fa-star-o fa-2x inst-link'
-                      }
-                      data-activates="slide-out"
-                      onClick={e => this.toggleEditModal(e, 'bookmark')}
-                    >
-                      <span className="new" />
-                    </a>
-                  </div>
+                  {
+                    Meteor.userId() && (
+                        <div className="col s2 m1 head-icons">
+                          <a
+                            href="#"
+                            className={
+                              this.props.count > 0
+                              ? 'fa fa-star fa-2x inst-link'
+                              : 'fa fa-star-o fa-2x inst-link'
+                            }
+                            data-activates="slide-out"
+                            onClick={e => this.toggleEditModal(e, 'bookmark')}
+                            >
+                            <span className="new" />
+                          </a>
+                        </div>
+                        )
+                    }
 
                   <div className="col s2 m1 head-icons">
                     <div href="#" data-activates="slide-out">
