@@ -243,7 +243,7 @@ export class Header extends Component {
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
     const { externallinks, institution, details } = this.props;
-    const { name, tag } = config;
+    const { name, tag, isUserAuth } = config;
     return (
       <ThemeContext.Consumer>
         {color => (
@@ -251,10 +251,10 @@ export class Header extends Component {
             <div className="container-fluid " style={{ backgroundColor: color.main }}>
               <div className="row ">
                 <div className="col s12 m6">
-                  <InstitutionDetail 
-                    institution={institution} 
-                    name={details.name} 
-                    tagline={details.tag} 
+                  <InstitutionDetail
+                    institution={institution}
+                    name={details.name}
+                    tagline={details.tag}
                   />
                 </div>
                 <div className="col s12 m2 hide-on-small-only">
@@ -266,7 +266,11 @@ export class Header extends Component {
                   />
                 </div>
                 <div className="row ">
-                  <div className="col s2 m1 head-icons ">{this.countNotifications()}</div>
+                  {
+                    isUserAuth && <div className="col s2 m1 head-icons ">{this.countNotifications()}</div>
+                  }
+
+
                   <div className="col s2 m1 head-icons ">
                     <a href="/reference" className="fa fa-book fa-2x inst-link" />
                   </div>
@@ -296,7 +300,7 @@ export class Header extends Component {
                   <div className="col s2 m1 head-icons">
                     <div href="#" data-activates="slide-out">
                       <div className="dropdownLink">
-                        <button className="dropbtnLink fa fa-link fa-2x inst-link" style={{backgroundColor: color.main}}/>
+                        <button className="dropbtnLink fa fa-link fa-2x inst-link" style={{ backgroundColor: color.main }}/>
                         <div className="dropdownLink-content" >
                           <a href="/externallinkpages" className="openLinks">
                             Click here to Open all the external links in a page
