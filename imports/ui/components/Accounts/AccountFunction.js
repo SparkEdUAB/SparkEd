@@ -38,7 +38,7 @@ export function checkPassword(password, password2) {
     };
   } else if (password.length < 6) {
     return {
-      msg: 'Passowrd length must be greater five(5)',
+      msg: 'Password length must be greater five(5)',
       status: false,
     };
   }
