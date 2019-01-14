@@ -109,7 +109,7 @@ export class Unit extends Component {
           unitId,
           name,
           unitName,
-          details,
+          // details, this is temporaly removed
           err => {
             err
               ? Materialize.toast(err.reason, 4000, 'error-toast')
