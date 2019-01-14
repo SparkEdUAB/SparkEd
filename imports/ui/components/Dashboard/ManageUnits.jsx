@@ -455,8 +455,13 @@ export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
   </tr>
 );
 
+Unit.propTypes = {
+  EditUnit: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
+  unit: PropTypes.object.isRequired,
+};
 
-export default withTracker(params => {
+export default withTracker(() => {
   Meteor.subscribe('searchUnits', Session.get('courseIde'));
   Meteor.subscribe('courses');
   Meteor.subscribe('deleted');
