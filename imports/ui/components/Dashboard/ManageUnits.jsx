@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-case-declarations */
 /* eslint-disable default-case */
 import { Session } from 'meteor/session';
@@ -57,8 +58,10 @@ export class ManageUnits extends Component {
     this._ismounted = true;
     this.computation = Tracker.autorun(() => {
       if (this._ismounted) {
-        this.setState({ data: Session.get('UNIT_RESULTS') });
-        this.setState({ resultsCount: Session.get('UNIT_RESULTS_COUNT') });
+        this.setState({
+          data: Session.get('UNIT_RESULTS'),
+          resultsCount: Session.get('UNIT_RESULTS_COUNT'),
+        });
       }
     });
     // don't clean the courseId on unmount
@@ -98,7 +101,7 @@ export class ManageUnits extends Component {
     });
   };
 
-  // ide => modalType, id=> schoolId
+  // ide => modalType, id => schoolId
   toggleEditModal = (ide, id = '', name = '', desc = '') => {
     // check if the user has full rights
     if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
@@ -193,12 +196,12 @@ export class ManageUnits extends Component {
       modalType, ids, modalIdentifier, description,
     } = this.state;
     const { target } = event;
-    console.log(modalType);
     switch (modalType) {
       case 'edit':
         const unit = target.unit.value;
         Meteor.call('unit.update', modalIdentifier, unit, description, err => {
           err
+          // eslint-disable-next-line
             ? (Materialize.toast(err.reason, 3000, 'error-toast'),
             Meteor.call('logger', formatText(err.message, Meteor.userId(), 'unit-edit'), 'error'))
             : Meteor.call('updateSearch', modalIdentifier, unit, err => {
@@ -317,7 +320,8 @@ export class ManageUnits extends Component {
             {modalType === 'del' ? (
               ''
             ) : (
-              <><div className="input-field">
+              <Fragment>
+              <div className="input-field">
                   <input
                     placeholder="Name of Unit"
                     type="text"
@@ -337,7 +341,7 @@ export class ManageUnits extends Component {
                     required
                   />
                 </div>
-                </>
+                </Fragment>
             )}
           </MainModal>
         )}

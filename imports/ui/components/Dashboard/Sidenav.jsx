@@ -124,8 +124,8 @@ const Sidenav = props => (
 
             {/* only show settings, sliders for admin only */}
             {Roles.userIsInRole(Meteor.userId(), ['admin']) ? (
-              <>              
-              <li>
+              <Fragment>
+                <li>
                   <a href="/setup" className={`  side-list ${props.settings}`}>
                     <i className={'fa fa-gear fa-lg '} />
                     <span className="hide-on-small-only">
@@ -133,7 +133,7 @@ const Sidenav = props => (
                     </span>
                   </a>
                 </li>
-               <li>
+                <li>
                   <a
                     href="/dashboard/slides"
                     className={`  side-list ${props.slides}`}
@@ -143,8 +143,8 @@ const Sidenav = props => (
                       &nbsp; <T>common.sidenav.changeSlides</T>
                     </span>
                   </a>
-                </li>             
-                 <li>
+                </li>
+                <li>
                   <a
                     href="/dashboard/updates"
                     className={`  side-list ${props.slides}`}
@@ -154,8 +154,8 @@ const Sidenav = props => (
                       &nbsp; <T>common.sidenav.updates</T>
                     </span>
                   </a>
-                </li>           
-                </>
+                </li>
+              </Fragment>
             ) : (
               <span />
             )}
@@ -193,6 +193,7 @@ Sidenav.propTypes = {
   sliding: PropTypes.string,
   course: PropTypes.string,
   externallinks: PropTypes.string,
+  yield: PropTypes.node,
 };
 
 export default Sidenav;
