@@ -49,8 +49,8 @@ export class ManageUnits extends Component {
   }
 
   static propTypes = {
-    titles: PropTypes.object.isRequired,
-    course: PropTypes.object.isRequired,
+    titles: PropTypes.object,
+    course: PropTypes.object,
   }
 
   componentDidMount() {
@@ -279,25 +279,23 @@ export class ManageUnits extends Component {
       reject,
       modalType,
       name,
-      table_title,
-      sub_title,
       description,
     } = this.state;
     // eslint-disable-next-line
-    let courseId, new_title, new_sub_title, year, courseName = null;
+    let courseId, newTitle, newSubTitle, year, courseName = null;
     if (course) {
       courseId = course._id;
-      year = course.details.year;
+      year = course.details.year; // eslint-disable-line
       courseName = course.name;
       Session.setPersistent('courseName', courseName);
     }
     if (titles) {
-      new_title = titles.title;
-      new_sub_title = titles.sub_title;
+      newTitle = titles.title;
+      newSubTitle = titles.sub_title;
       Session.setPersistent({
         unit_title_id: titles._id,
-        sub_unit_title: new_sub_title,
-        unit_title: new_title,
+        sub_unit_title: newSubTitle,
+        unit_title: newTitle,
       });
     }
 
@@ -319,7 +317,7 @@ export class ManageUnits extends Component {
             {modalType === 'del' ? (
               ''
             ) : (
-              <>'               '<div className="input-field">
+              <><div className="input-field">
                   <input
                     placeholder="Name of Unit"
                     type="text"
@@ -328,7 +326,8 @@ export class ManageUnits extends Component {
                     required
                     name="unit"
                   />
-                </div>'               '<div className="input-field">
+                </div>
+                <div className="input-field">
                   <textarea
                     name="descr"
                     className="unitdesc clear materialize-textarea"
@@ -337,7 +336,8 @@ export class ManageUnits extends Component {
                     onChange={e => this.getDescription(e)}
                     required
                   />
-                </div>'             '</>
+                </div>
+                </>
             )}
           </MainModal>
         )}
@@ -364,7 +364,7 @@ export class ManageUnits extends Component {
                 onClick={e => this.routeToCourses(e)}
               >
                 <a href={''} className="white-text">
-                  {` ${new_title}`}
+                  {` ${newTitle}`}
                 </a>
               </button>
             </div>
@@ -400,12 +400,12 @@ export class ManageUnits extends Component {
             <thead>
               <tr>
                 <th>#</th>
-                <th>{new_sub_title}</th>
+                <th>{newSubTitle}</th>
                 <th>
                   <T>common.actions.createdAt</T>
                 </th>
-                <th>{`Edit ${new_sub_title}`}</th>
-                <th>{`Manage sub-${new_sub_title}`}</th>
+                <th>{`Edit ${newSubTitle}`}</th>
+                <th>{`Manage sub-${newSubTitle}`}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
                   <input type="checkbox" className="filled-in chk-all" readOnly />
                   <label>
@@ -429,16 +429,24 @@ export class ManageUnits extends Component {
   }
 }
 
+const handleUrl = (e, id) => {
+  // id => unit_id
+  if (config.isHighSchool) {
+    FlowRouter.go(`/dashboard/isHighSchool/edit_unit/${id}`);
+  } else {
+    FlowRouter.go(`/dashboard/edit_unit/${id}`);
+  }
+};
 export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
   <tr key={_id} className="link-unit">
     <td>{count}</td>
-    <td onClick={e => this.handleUrl(e, _id)}>{name}</td>
+    <td onClick={e => handleUrl(e, _id)}>{name}</td>
     <td>{createdAt}</td>
     <td>
       <a href="" className="fa fa-pencil" onClick={EditUnit} />
     </td>
     <td>
-      <a href={''} onClick={e => this.handleUrl(e, _id)} className="fa fa-pencil" />
+      <a href={''} onClick={e => handleUrl(e, _id)} className="fa fa-pencil" />
     </td>
     <td onClick={handleCheckboxChange.bind(this, _id)}>
       <input type="checkbox" className={` filled-in chk chk${_id}`} id={_id} />
@@ -447,14 +455,6 @@ export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
   </tr>
 );
 
-handleUrl = (e, id) => {
-  // id => unit_id
-  if (config.isHighSchool) {
-    FlowRouter.go(`/dashboard/isHighSchool/edit_unit/${id}`);
-  } else {
-    FlowRouter.go(`/dashboard/edit_unit/${id}`);
-  }
-};
 
 export default withTracker(params => {
   Meteor.subscribe('searchUnits', Session.get('courseIde'));
