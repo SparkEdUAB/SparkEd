@@ -1,8 +1,10 @@
+/* eslint-disable no-case-declarations */
+/* eslint-disable default-case */
 import { Session } from 'meteor/session';
 import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import ReactPaginate from 'react-paginate';
 import i18n from 'meteor/universe:i18n';
+import PropTypes from 'prop-types';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
 import { Titles } from '../../../api/settings/titles';
@@ -46,6 +48,11 @@ export class ManageUnits extends Component {
     this.computation = '';
   }
 
+  static propTypes = {
+    titles: PropTypes.object.isRequired,
+    course: PropTypes.object.isRequired,
+  }
+
   componentDidMount() {
     this._ismounted = true;
     this.computation = Tracker.autorun(() => {
@@ -53,7 +60,6 @@ export class ManageUnits extends Component {
         this.setState({ data: Session.get('UNIT_RESULTS') });
         this.setState({ resultsCount: Session.get('UNIT_RESULTS_COUNT') });
       }
-      return;
     });
     // don't clean the courseId on unmount
     Session.setPersistent('courseId', FlowRouter.getQueryParam('cs'));
@@ -120,7 +126,7 @@ export class ManageUnits extends Component {
       case 'del':
         const unit = getCheckBoxValues('chk');
         const count = unit.length;
-        const name = count > 1 ? 'units' : 'unit';
+        const _name = count > 1 ? 'units' : 'unit';
         if (count < 1) {
           Materialize.toast('Please check atleast one unit', 4000, 'error-toast');
           return;
@@ -128,7 +134,7 @@ export class ManageUnits extends Component {
         this.setState({
           modalIdentifier: 'id',
           modalType: ide,
-          title: `Are you sure to delete ${count} ${name}`,
+          title: `Are you sure to delete ${count} ${_name}`,
           confirm: 'Yes',
           reject: 'No',
           ids: unit,
@@ -183,7 +189,9 @@ export class ManageUnits extends Component {
   // edit course unit
   handleSubmit(event) {
     event.preventDefault();
-    const { modalType, ids, modalIdentifier, table_title, sub_title, description } = this.state;
+    const {
+      modalType, ids, modalIdentifier, description,
+    } = this.state;
     const { target } = event;
     console.log(modalType);
     switch (modalType) {
@@ -192,12 +200,12 @@ export class ManageUnits extends Component {
         Meteor.call('unit.update', modalIdentifier, unit, description, err => {
           err
             ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call('logger', formatText(err.message, Meteor.userId(), 'unit-edit'), 'error'))
+            Meteor.call('logger', formatText(err.message, Meteor.userId(), 'unit-edit'), 'error'))
             : Meteor.call('updateSearch', modalIdentifier, unit, err => {
-                err
-                  ? Materialize.toast(err.reason, 3000, 'error-toast')
-                  : Materialize.toast(`${unit} successfully updated`, 3000, 'success-toast');
-              });
+              err
+                ? Materialize.toast(err.reason, 3000, 'error-toast')
+                : Materialize.toast(`${unit} successfully updated`, 3000, 'success-toast');
+            });
         });
         break;
 
@@ -209,24 +217,24 @@ export class ManageUnits extends Component {
             const name = count > 1 ? 'units' : 'unit';
             err
               ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-                Meteor.call(
-                  'logger',
-                  formatText(err.message, Meteor.userId(), 'unit-remove'),
-                  'error',
-                ))
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'unit-remove'),
+                'error',
+              ))
               : Meteor.call('removeSearchData', id, err => {
-                  err
-                    ? Materialize.toast(err.reason, 3000, 'error-toast')
-                    : Meteor.call('insertDeleted', id, err => {
-                        err
-                          ? Materialize.toast(err.reason, 3000, 'error-toast')
-                          : Materialize.toast(
-                              `${count} ${name} successfully deleted`,
-                              3000,
-                              'success-toast',
-                            );
-                      });
-                });
+                err
+                  ? Materialize.toast(err.reason, 3000, 'error-toast')
+                  : Meteor.call('insertDeleted', id, err => {
+                    err
+                      ? Materialize.toast(err.reason, 3000, 'error-toast')
+                      : Materialize.toast(
+                        `${count} ${name} successfully deleted`,
+                        3000,
+                        'success-toast',
+                      );
+                  });
+              });
           });
         });
         break;
@@ -240,9 +248,9 @@ export class ManageUnits extends Component {
   }
 
   getUnits() {
-    let query = getQuery(this.queryParams, true, true, 'q');
-    var searchParams = [{ name: query }];
-    if (query == '') {
+    const query = getQuery(this.queryParams, true, true, 'q');
+    let searchParams = [{ name: query }];
+    if (query === '') {
       searchParams = [{}];
     }
     return (
@@ -263,7 +271,7 @@ export class ManageUnits extends Component {
   };
 
   render() {
-    let { course, titles } = this.props;
+    const { course, titles } = this.props;
     const {
       isOpen,
       title,
@@ -275,8 +283,8 @@ export class ManageUnits extends Component {
       sub_title,
       description,
     } = this.state;
-    let courseId, new_title, new_sub_title, year;
-    courseName = null;
+    // eslint-disable-next-line
+    let courseId, new_title, new_sub_title, year, courseName = null;
     if (course) {
       courseId = course._id;
       year = course.details.year;
@@ -311,8 +319,7 @@ export class ManageUnits extends Component {
             {modalType === 'del' ? (
               ''
             ) : (
-              <>
-                <div className="input-field">
+              <>'               '<div className="input-field">
                   <input
                     placeholder="Name of Unit"
                     type="text"
@@ -321,8 +328,7 @@ export class ManageUnits extends Component {
                     required
                     name="unit"
                   />
-                </div>
-                <div className="input-field">
+                </div>'               '<div className="input-field">
                   <textarea
                     name="descr"
                     className="unitdesc clear materialize-textarea"
@@ -331,8 +337,7 @@ export class ManageUnits extends Component {
                     onChange={e => this.getDescription(e)}
                     required
                   />
-                </div>
-              </>
+                </div>'             '</>
             )}
           </MainModal>
         )}
@@ -436,7 +441,7 @@ export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
       <a href={''} onClick={e => this.handleUrl(e, _id)} className="fa fa-pencil" />
     </td>
     <td onClick={handleCheckboxChange.bind(this, _id)}>
-      <input type="checkbox" className={' filled-in chk chk' + _id} id={_id} />
+      <input type="checkbox" className={` filled-in chk chk${_id}`} id={_id} />
       <label />
     </td>
   </tr>
