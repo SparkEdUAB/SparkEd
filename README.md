@@ -153,3 +153,8 @@ The above command might take a while, make sure you have a good internet and jus
 The above command will deploy SparkEd on the specified server address
 
 Make sure you read more info [here](http://meteor-up.com) on meteor-up
+
+#### Issues
+
+Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute. 
+
