@@ -538,7 +538,7 @@ export default withTracker(() => {
   Meteor.subscribe('titles');
   Meteor.subscribe('courses');
   return {
-    courses: _Courses.find({}).fetch(),
+    courses: _Courses.find({}).fetch(), // query according to the language
     titles: Titles.findOne({}),
   };
 })(Courses);
