@@ -35,11 +35,13 @@ export class Courses extends Component {
       ids: [],
       tableTitle: 'Course',
       subTitle: 'Unit',
+      lang: 'English'
     };
     Session.set('language', 'english');
   }
 
   componentDidMount() {
+    $('ul.tabs').tabs(); // initialize the collapsible input
     Session.set('course', ' active');
     window.scrollTo(0, 0);
   }
@@ -356,6 +358,10 @@ export class Courses extends Component {
     ));
   }
 
+  handleLanguageChange = e => {
+    console.log(e)
+  }
+
   render() {
     const {
       isOpen,
@@ -368,6 +374,7 @@ export class Courses extends Component {
       language,
       tableTitle,
       subTitle,
+      lang,
     } = this.state;
     const { titles } = this.props;
     let newTitle = '';
@@ -465,7 +472,7 @@ export class Courses extends Component {
             {/* Add */}
           </div>
           <div className="row">
-            <div className="col m3">
+            <div className="col m2">
               <button
                 className="btn red darken-3 fa fa-remove"
                 onClick={e => this.toggleEditModal('del', e)}
@@ -474,7 +481,7 @@ export class Courses extends Component {
                 <T>common.actions.delete</T>
               </button>
             </div>
-            <div className="col m3">
+            <div className="col m2">
               <a href="">
                 <button
                   className="btn green darken-4 fa fa-plus"
@@ -484,6 +491,17 @@ export class Courses extends Component {
                   <T>common.actions.new</T>
                 </button>
               </a>
+            </div>
+            <div className="col m5">
+            {/* <div className="row"> */}
+              <div className="col s12">
+                <ul className="tabs">
+                  <li className="tab col s3"><a className="teal-text" href="#test1" onClick={() => Session.set('language', 'english') }> English</a></li>
+                  <li className="tab col s3"><a className="teal-text" href="#test2" onClick={() => Session.set('language', 'french') }> French</a></li>
+                  <li className="tab col s3"><a className="teal-text" href="#test4" onClick={() => Session.set('language', 'ethiopian') }> Ethiopia</a></li>
+                </ul>
+              </div>
+            {/* </div> */}
             </div>
           </div>
 
