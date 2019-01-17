@@ -29,7 +29,7 @@ export class Courses extends Component {
       title: '', // Add Course or Edit Course
       confirm: '',
       reject: '',
-      year: '',
+      language: '',
       name: '',
       owner: '',
       ids: [],
@@ -69,7 +69,7 @@ export class Courses extends Component {
     }
     this.name = name;
     this.code = code;
-    this.year = yr;
+    this.language = yr;
     this.owner = owner;
     switch (ide) {
       case 'edit':
@@ -81,7 +81,7 @@ export class Courses extends Component {
           reject: <T>common.actions.close</T>,
           name: this.name,
           code: this.code,
-          year: this.year,
+          language: this.language,
           owner: this.owner,
         });
         break;
@@ -130,10 +130,10 @@ export class Courses extends Component {
   };
 
   // route to whats contained in the course
-  static handleUrl(id, year, event) {
+  static handleUrl(id, language, event) {
     event.preventDefault();
     Session.setPersistent('courseIde', id);
-    FlowRouter.go(`/dashboard/units/${id}?y=${year}`);
+    FlowRouter.go(`/dashboard/units/${id}?y=${language}`);
   }
 
   // Adding new Course
@@ -141,7 +141,7 @@ export class Courses extends Component {
     e.preventDefault();
     let course;
     let courseCode;
-    let year;
+    let language;
     let details;
     const { target } = e;
     const {
@@ -157,8 +157,8 @@ export class Courses extends Component {
       case 'add':
         course = target.course.value;
         courseCode = target.courseCode.value;
-        year = target.year.value;
-        details = { year };
+        language = target.language.value;
+        details = { language };
         const reference = config.isHighSchool ? 'subject' : 'course';
         const courseId = new Meteor.Collection.ObjectID().valueOf();
         Meteor.call(
@@ -199,13 +199,13 @@ export class Courses extends Component {
       case 'edit':
         course = target.course.value;
         courseCode = target.courseCode.value;
-        year = target.year.value;
+        language = target.language.value;
         Meteor.call(
           'course.edit',
           modalIdentifier,
           course,
           courseCode,
-          year,
+          language,
           owner,
           err => {
             err
@@ -314,7 +314,7 @@ export class Courses extends Component {
           onClick={Courses.handleUrl.bind(
             this,
             course._id,
-            course.details.year,
+            course.details.language,
           )}
         >
           {course.name}
@@ -327,7 +327,7 @@ export class Courses extends Component {
             onClick={e =>
               this.toggleEditModal(
                 'edit',
-                course.details.year,
+                course.details.language,
                 course._id,
                 course.name,
                 course.code,
@@ -339,7 +339,7 @@ export class Courses extends Component {
         </td>
         <td>
           <a
-            href={`/dashboard/units/${course._id}&y=${course.details.year}`}
+            href={`/dashboard/units/${course._id}&y=${course.details.language}`}
             className="fa fa-pencil"
           />
         </td>
@@ -364,7 +364,7 @@ export class Courses extends Component {
       modalType,
       name,
       code,
-      year,
+      language,
       tableTitle,
       subTitle,
     } = this.state;
@@ -444,13 +444,12 @@ export class Courses extends Component {
               />
               <input
                 placeholder={`${newTitle} Language`}
-                defaultValue={year}
-                id="year"
+                defaultValue={language}
+                id="language"
                 type="text"
-                pattern="[1-9]"
                 className="validate clear"
                 required
-                name="year"
+                name="language"
               />
             </div>
           )}
