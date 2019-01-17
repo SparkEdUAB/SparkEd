@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
@@ -8,7 +8,6 @@ import * as config from '../../../../config.json';
 export class Unit extends Component {
   constructor() {
     super();
-    isHidden = false;
     this.state = {
       topics: [{ name: '' }],
       description: '',
@@ -46,9 +45,7 @@ export class Unit extends Component {
     event.preventDefault();
     const courseId = FlowRouter.getParam('_id');
     const year = FlowRouter.getQueryParam('y');
-    const user = Meteor.userId();
     const unitId = new Meteor.Collection.ObjectID().valueOf();
-    const _id = new Meteor.Collection.ObjectID().valueOf();
     let count = 0;
     let details = {};
     const { topics, description, unitName } = this.state;
@@ -59,44 +56,81 @@ export class Unit extends Component {
     // insert topic in collection from here 1 * 1
 
     const msg = `new course unit named ${unitName} has been added with ${count} topics`;
-    Meteor.call('unit.insert', unitId, unitName, count, description, details, err => {
-      err
-        ? Materialize.toast(err.reason, 4000, 'error-toast')
-        : Meteor.call('insert.search', unitId, {}, unitName, 'unit', err => {
+    Meteor.call(
+      'unit.insert',
+      unitId,
+      unitName,
+      count,
+      description,
+      details,
+      err => {
+        err
+          ? Materialize.toast(err.reason, 4000, 'error-toast')
+          : Meteor.call('insert.search', unitId, {}, unitName, 'unit', err => {
             err
               ? Materialize.toast(err.reason, 4000, 'error-toast')
-              : Meteor.call('insertNotification', msg, 'unit', unitId, err => {
-                  err
+              : Meteor.call(
+                'insertNotification',
+                msg,
+                'unit',
+                unitId,
+                err => {
+                  // eslint-disable-next-line
+                      err
                     ? Materialize.toast(err.reason, 4000, 'error-toast')
                     : (this.setState({
-                        topics: [{ name: '' }],
-                        description: '',
-                        unitName: '',
-                      }),
-                      Materialize.toast(
-                        `Added ${unitName} successfully and ${count} topics`,
-                        5000,
-                        'success-toast',
-                      ));
-                });
+                      topics: [{ name: '' }],
+                      description: '',
+                      unitName: '',
+                    }),
+                    Materialize.toast(
+                      `Added ${unitName} successfully and ${count} topics`,
+                      5000,
+                      'success-toast',
+                    ));
+                },
+              );
           });
-    });
+      },
+    );
+    if (!topics.length) {
+      return;
+    }
     if (!config.isHighSchool) {
-      for (topic of topics) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const topic of topics) {
+        // eslint-disable-line
         const { name } = topic;
         const _id = new Meteor.Collection.ObjectID().valueOf();
 
-        Meteor.call('topic.insert', _id, unitId, name, unitName, details, err => {
-          err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
-            : Meteor.call('insert.search', _id, { unitId }, name, 'topic', err => {
-                err ? Materialize.toast(err.reason, 4000, 'error-toast') : '';
-              });
-        });
+        Meteor.call(
+          'topic.insert',
+          _id,
+          unitId,
+          name,
+          unitName,
+          // details, this is temporaly removed
+          err => {
+            err
+              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              : Meteor.call(
+                'insert.search',
+                _id,
+                { unitId },
+                name,
+                'topic',
+                err => {
+                  // eslint-disable-next-line
+                    err
+                    ? Materialize.toast(err.reason, 4000, 'error-toast')
+                    : '';
+                },
+              );
+          },
+        );
         count++;
       }
     }
-    return;
   };
 
   getUnitName = ({ target: { value } }) => {
@@ -117,18 +151,25 @@ export class Unit extends Component {
     const { topics, description, unitName } = this.state;
     const name = Session.get('sub_unit_title');
     return (
-      <>
+      <Fragment>
         <div className="col m9 s11 ">
           <div className="card">
             <div className="card-panel">
               <div className="">
-                <button className="btn fa fa-arrow-left" onClick={this.backToUnits}>
+                <button
+                  className="btn fa fa-arrow-left"
+                  onClick={this.backToUnits}
+                >
                   {` ${name}`}
                 </button>
                 <h5 className="center large">{`Add New ${name}`}</h5>
               </div>
 
-              <form className="new-topic" name="new-topic" onSubmit={e => this.handleSubmit(e)}>
+              <form
+                className="new-topic"
+                name="new-topic"
+                onSubmit={e => this.handleSubmit(e)}
+              >
                 <div className="input-field">
                   <input
                     type="text"
@@ -164,6 +205,7 @@ export class Unit extends Component {
                         onChange={this.handleTopicChange(index)}
                         className={`${index}`}
                         name="topic"
+                        required
                       />
                     </div>
                   ))
@@ -172,7 +214,10 @@ export class Unit extends Component {
                 {config.isHighSchool ? (
                   <div className="row">
                     <span className="input-group-btn">
-                      <button className="btn fa fa-floppy-o pull-right s12" role="submit">
+                      <button
+                        className="btn fa fa-floppy-o pull-right s12"
+                        role="submit"
+                      >
                         {' '}
                         Save{' '}
                       </button>
@@ -195,7 +240,10 @@ export class Unit extends Component {
                       />
                     </span>
                     <span className="input-group-btn">
-                      <button className="btn fa fa-floppy-o pull-right s12" role="submit">
+                      <button
+                        className="btn fa fa-floppy-o pull-right s12"
+                        role="submit"
+                      >
                         {' '}
                         Save{' '}
                       </button>
@@ -206,7 +254,7 @@ export class Unit extends Component {
             </div>
           </div>
         </div>
-      </>
+      </Fragment>
     );
   }
 }

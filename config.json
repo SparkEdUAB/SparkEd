@@ -1,8 +1,8 @@
 {
-  "name": "Secondary School",
-  "tag": "Education is our goal",
+  "name": "SparkEd",
+  "tag": "The Institution above",
   "isUserAuth": false,
   "isHighSchool": false,
   "isConfigured": true,
-  "server": "http://13.232.61.192"
+  "server": "http://localhost:3000/setup"
 }

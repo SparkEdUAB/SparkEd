@@ -8,6 +8,11 @@ import '../imports/ui/stylesheets/overwrites.css';
 import '../imports/ui/stylesheets/register.css';
 import '../imports/ui/stylesheets/mainModal.css';
 import '../imports/api/languages/language';
+import './routes';
+import './main.css';
+import '../i18n/en.i18n.json';
+import '../i18n/es.i18n.json';
+import '../i18n/fr.i18n.json';
 // import { La }
 
 FlowRouter.wait();

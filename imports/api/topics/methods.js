@@ -52,7 +52,10 @@ Meteor.methods({
     if (Roles.userIsInRole(this.userId, ['admin']) && !resources.length) {
       _Topics.remove(id);
     } else if (resources.length) {
-      throw new Meteor.Error('sorry', 'The selected topic has resources that depend on it');
+      throw new Meteor.Error(
+        'sorry',
+        'The selected topic has resources that depend on it',
+      );
     } else {
       throw new Meteor.Error('oops', 'You are not allowed to not make changes');
     }

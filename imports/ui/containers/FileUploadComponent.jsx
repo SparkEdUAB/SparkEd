@@ -1,3 +1,5 @@
+/* eslint-disable one-var */
+/* eslint-disable no-case-declarations */
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
@@ -18,7 +20,7 @@ export class FileUploadComponent extends Component {
       progress: 0,
       inProgress: false,
       files: [],
-      uploaded: null,
+      // uploaded: null,
       uploaded: false,
     };
   }
@@ -34,18 +36,18 @@ export class FileUploadComponent extends Component {
 
         switch (route) {
           case 'EditResources':
-            let unitId, topicId;
+            let unitId, topicId, topic; // eslint-disable-line
             if (config.isHighSchool) {
               unitId = FlowRouter.getParam('_id');
               topicId = '';
             } else {
               topicId = FlowRouter.getParam('_id');
               topic = _Topics.findOne({ _id: topicId });
-              unitId = topic.unitId;
+              unitId = topic.unitId; // eslint-disable-line
             }
             uploadInstance = Resources.insert(
               {
-                file: file,
+                file,
                 meta: {
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
                   topicId,
@@ -64,7 +66,7 @@ export class FileUploadComponent extends Component {
             const programId = FlowRouter.getParam('_id') || 'pId';
             uploadInstance = References.insert(
               {
-                file: file,
+                file,
                 meta: {
                   locator: this.props.fileLocator,
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
@@ -82,7 +84,7 @@ export class FileUploadComponent extends Component {
           case 'Additional':
             uploadInstance = References.insert(
               {
-                file: file,
+                file,
                 meta: {
                   locator: this.props.fileLocator,
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
@@ -101,7 +103,7 @@ export class FileUploadComponent extends Component {
           case 'Slides':
             uploadInstance = Slides.insert(
               {
-                file: file,
+                file,
                 meta: {
                   locator: this.props.fileLocator,
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
@@ -120,7 +122,7 @@ export class FileUploadComponent extends Component {
             const name = Session.get('name');
             uploadInstance = Institution.insert(
               {
-                file: file,
+                file,
                 meta: {
                   locator: this.props.fileLocator,
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
@@ -145,11 +147,11 @@ export class FileUploadComponent extends Component {
         });
 
         // These are the event functions on the progress of the upload
-        uploadInstance.on('start', function() {
+        uploadInstance.on('start', () => {
           console.log('Starting');
         });
 
-        uploadInstance.on('end', function(error, fileObj) {
+        uploadInstance.on('end', (error, fileObj) => {
           console.log('ended upload');
         });
 
@@ -157,7 +159,7 @@ export class FileUploadComponent extends Component {
           if (error) {
             Materialize.toast(error.reason, 5000, 'error-toast');
           } else {
-            const title = `new reference material "${name}" was uploaded`;
+            const title = `new reference material ${name} was uploaded`;
             switch (route) {
               case 'EditResources':
                 const topic_id = FlowRouter.getParam('_id');
@@ -176,22 +178,22 @@ export class FileUploadComponent extends Component {
                     err
                       ? Materialize.toast(err.reason, 7000, 'error-toast')
                       : Meteor.call(
-                          'insertNotification',
-                          msg,
-                          'resource',
-                          unit_id,
-                          topic_id,
-                          fileObj._id,
-                          err => {
-                            err
-                              ? Materialize.toast(err.reason, 7000, 'error-toast')
-                              : Materialize.toast(
-                                  'successfully uploaded a file',
-                                  3000,
-                                  'success-toast',
-                                );
-                          },
-                        );
+                        'insertNotification',
+                        msg,
+                        'resource',
+                        unit_id,
+                        topic_id,
+                        fileObj._id,
+                        err => {
+                          err
+                            ? Materialize.toast(err.reason, 7000, 'error-toast')
+                            : Materialize.toast(
+                              'successfully uploaded a file',
+                              3000,
+                              'success-toast',
+                            );
+                        },
+                      );
                   },
                 );
                 break;
@@ -207,22 +209,22 @@ export class FileUploadComponent extends Component {
                     err
                       ? Materialize.toast(err.reason, 3000, 'error-toast')
                       : Meteor.call(
-                          'insertNotification',
-                          title,
-                          'reference',
-                          '',
-                          '',
-                          fileObj._id,
-                          err => {
-                            err
-                              ? Materialize.toast(err.reason, 4000, 'error-toast')
-                              : Materialize.toast(
-                                  'Successfuly uploaded a reference',
-                                  3000,
-                                  'success-toast',
-                                );
-                          },
-                        );
+                        'insertNotification',
+                        title,
+                        'reference',
+                        '',
+                        '',
+                        fileObj._id,
+                        err => {
+                          err
+                            ? Materialize.toast(err.reason, 4000, 'error-toast')
+                            : Materialize.toast(
+                              'Successfuly uploaded a reference',
+                              3000,
+                              'success-toast',
+                            );
+                        },
+                      );
                   },
                 );
                 break;
@@ -237,22 +239,22 @@ export class FileUploadComponent extends Component {
                     err
                       ? Materialize.toast(err.reason, 3000, 'error-toast')
                       : Meteor.call(
-                          'insertNotification',
-                          title,
-                          'reference',
-                          '',
-                          '',
-                          fileObj._id,
-                          err => {
-                            err
-                              ? Materialize.toast(err.reason, 4000, 'error-toast')
-                              : Materialize.toast(
-                                  'successfully uploaded a file',
-                                  3000,
-                                  'success-toast',
-                                );
-                          },
-                        );
+                        'insertNotification',
+                        title,
+                        'reference',
+                        '',
+                        '',
+                        fileObj._id,
+                        err => {
+                          err
+                            ? Materialize.toast(err.reason, 4000, 'error-toast')
+                            : Materialize.toast(
+                              'successfully uploaded a file',
+                              3000,
+                              'success-toast',
+                            );
+                        },
+                      );
                   },
                 );
                 break;
@@ -284,7 +286,7 @@ export class FileUploadComponent extends Component {
             }
 
             // Remove the filename from the upload box
-            this.refs['fileinput'].value = '';
+            this.refs.fileinput.value = '';
 
             // Reset our state for the next file
             this.setState({
@@ -296,14 +298,14 @@ export class FileUploadComponent extends Component {
           }
         });
 
-        uploadInstance.on('error', function(error, fileObj) {
+        uploadInstance.on('error', (error) => {
           Materialize.toast(error, 10000, 'error-toast');
         });
 
-        uploadInstance.on('progress', (progress, fileObj) => {
+        uploadInstance.on('progress', (progress) => {
           // Update our progress bar
           this.setState({
-            progress: progress,
+            progress,
           });
         });
 
@@ -321,7 +323,7 @@ export class FileUploadComponent extends Component {
 
           <div className="progress">
             <div
-              style={{ width: this.state.progress + '%' }}
+              style={{ width: `${this.state.progress }%` }}
               aria-valuemax="100"
               aria-valuemin="0"
               aria-valuenow={this.state.progress || 0}
@@ -345,13 +347,15 @@ export class FileUploadComponent extends Component {
     }
     const sum = all_size.reduce((a, b) => a + b, 0); // adds all values in the all_sizes array
     this.setState({
-      files: files,
+      files,
       files_size: convertUploadSize(sum),
     });
   };
 
   render() {
-    const { files, progress, files_size, uploaded } = this.state;
+    const {
+ files, progress, files_size, uploaded,
+    } = this.state;
     files.length <= 1 ? (name = 'file') : (name = 'files');
     const routeName = FlowRouter.getRouteName();
     return (
@@ -360,7 +364,7 @@ export class FileUploadComponent extends Component {
           <div className="col s12">
             <form onSubmit={this.uploadIt}>
               <div className="file-field input-field">
-                <div className="btn" style={{backgroundColor: '#006b76'}}>
+                <div className="btn" style={{ backgroundColor: '#006b76' }}>
                   <span>
                     {files.length >= 1
                       ? `${files.length} ${name} selected (${files_size})`
@@ -384,7 +388,7 @@ export class FileUploadComponent extends Component {
                   />
                 </div>
               </div>
-              <button role="submit" className="btn fa fa-upload" style={{ marginLeft: '42%',backgroundColor: '#006b76' }}>
+              <button role="submit" className="btn fa fa-upload" style={{ marginLeft: '42%', backgroundColor: '#006b76' }}>
                 {uploaded ? ' Done Uploading' : ' Upload'}
               </button>
             </form>
@@ -411,7 +415,7 @@ export class FileUploadComponent extends Component {
 // This is the HOC - included in this file just for convenience, but usually kept
 // in a separate file to provide separation of concerns.
 //
-export default withTracker(props => {
+export default withTracker(() => {
   Meteor.subscribe('files.all');
   Meteor.subscribe('resourcess');
   Meteor.subscribe('references');

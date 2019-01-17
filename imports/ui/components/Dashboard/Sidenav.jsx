@@ -10,9 +10,12 @@ const T = i18n.createComponent();
 
 const Sidenav = props => (
   <AppWrapper>
-    <div className="row" >
+    <div className="row">
       <Fragment>
-        <div className="col m3 s1 menu_simple" id={!config.isConfigured ? "outer-box": "" } >
+        <div
+          className="col m3 s1 menu_simple"
+          id={!config.isConfigured ? 'outer-box' : ''}
+        >
           {/* begin list */}
           <ul className="item-container">
             <li className="hide-on-med-and-down">
@@ -21,8 +24,11 @@ const Sidenav = props => (
               </a>
             </li>
             <li>
-              <a href="/dashboard/accounts" className={`  side-list ${props.accounts}`}>
-                <i className={`fa fa-user fa-lg icon-white `} />
+              <a
+                href="/dashboard/accounts"
+                className={`  side-list ${props.accounts}`}
+              >
+                <i className={'fa fa-user fa-lg icon-white '} />
                 <span className="hide-on-small-only">
                   &nbsp; <T>common.sidenav.accounts</T>
                 </span>
@@ -31,8 +37,11 @@ const Sidenav = props => (
 
             {config.isHighSchool ? (
               <li>
-                <a href="/dashboard/course" className={`  side-list ${props.course}`}>
-                  <i className={`fa fa-book fa-lg `} />
+                <a
+                  href="/dashboard/course"
+                  className={`  side-list ${props.course}`}
+                >
+                  <i className={'fa fa-book fa-lg '} />
                   <span className="hide-on-small-only">
                     &nbsp; <T>common.sidenav.subjects</T>
                   </span>
@@ -41,16 +50,22 @@ const Sidenav = props => (
             ) : (
               <Fragment>
                 <li>
-                  <a href="/dashboard/course" className={`  side-list ${props.course}`}>
-                    <i className={`fa fa-book fa-lg `} />
+                  <a
+                    href="/dashboard/course"
+                    className={`  side-list ${props.course}`}
+                  >
+                    <i className={'fa fa-book fa-lg '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.courses</T>
                     </span>
                   </a>
                 </li>
                 <li>
-                  <a href="/dashboard/list_topics" className={`  side-list ${props.topics}`}>
-                    <i className={`fa fa-text-width fa-lg `} />
+                  <a
+                    href="/dashboard/list_topics"
+                    className={`  side-list ${props.topics}`}
+                  >
+                    <i className={'fa fa-text-width fa-lg '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.alltopics</T>
                     </span>
@@ -59,16 +74,22 @@ const Sidenav = props => (
               </Fragment>
             )}
             <li>
-              <a href="/dashboard/extra" className={`  side-list ${props.extra}`}>
-                <i className={`fa fa-th fa-lg `} />
+              <a
+                href="/dashboard/extra"
+                className={`  side-list ${props.extra}`}
+              >
+                <i className={'fa fa-th fa-lg '} />
                 <span className="hide-on-small-only">
                   &nbsp; <T>common.sidenav.resourceLibrary</T>
                 </span>
               </a>
             </li>
             <li>
-              <a href="/externallinks" className={`side-list ${props.externallinks}`}>
-                <i className={`fa fa-link `} />
+              <a
+                href="/externallinks"
+                className={`side-list ${props.externallinks}`}
+              >
+                <i className={'fa fa-link '} />
                 <span className="hide-on-small-only">
                   &nbsp; <T>common.sidenav.externalLinks</T>
                 </span>
@@ -76,8 +97,11 @@ const Sidenav = props => (
             </li>
             {config.isUserAuth ? (
               <li>
-                <a href="/dashboard/overview" className={`  side-list ${props.stats}`}>
-                  <i className={`fa fa-bar-chart fa-lg `} />
+                <a
+                  href="/dashboard/overview"
+                  className={`  side-list ${props.stats}`}
+                >
+                  <i className={'fa fa-bar-chart fa-lg '} />
                   <span className="hide-on-small-only">
                     &nbsp; <T>common.sidenav.stats</T>
                   </span>
@@ -87,8 +111,11 @@ const Sidenav = props => (
               <span />
             )}
             <li>
-              <a href="/dashboard/feedback" className={`  side-list ${props.feedback}`}>
-                <i className={`fa fa-comments fa-lg `} />
+              <a
+                href="/dashboard/feedback"
+                className={`  side-list ${props.feedback}`}
+              >
+                <i className={'fa fa-comments fa-lg '} />
                 <span className="hide-on-small-only">
                   &nbsp; <T>common.sidenav.feedback</T>
                 </span>
@@ -97,33 +124,38 @@ const Sidenav = props => (
 
             {/* only show settings, sliders for admin only */}
             {Roles.userIsInRole(Meteor.userId(), ['admin']) ? (
-              <>
+              <Fragment>
                 <li>
                   <a href="/setup" className={`  side-list ${props.settings}`}>
-                    <i className={`fa fa-gear fa-lg `} />
+                    <i className={'fa fa-gear fa-lg '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.setup</T>
                     </span>
                   </a>
                 </li>
-
                 <li>
-                  <a href="/dashboard/slides" className={`  side-list ${props.slides}`}>
-                    <i className={`fa fa-picture-o `} />
+                  <a
+                    href="/dashboard/slides"
+                    className={`  side-list ${props.slides}`}
+                  >
+                    <i className={'fa fa-picture-o '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.changeSlides</T>
                     </span>
                   </a>
                 </li>
                 <li>
-                  <a href="/dashboard/updates" className={`  side-list ${props.slides}`}>
-                    <i className={`fa fa-download `} />
+                  <a
+                    href="/dashboard/updates"
+                    className={`  side-list ${props.slides}`}
+                  >
+                    <i className={'fa fa-download '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.updates</T>
                     </span>
                   </a>
                 </li>
-              </>
+              </Fragment>
             ) : (
               <span />
             )}
@@ -136,23 +168,19 @@ const Sidenav = props => (
             </li>
           </ul>
           {/* end list (ul) */}
-          {
-            !config.isConfigured 
-            ?
+          {!config.isConfigured ? (
             <div id="inner-box">
               <p>Finish Set up</p>
             </div>
-            :
-            <span/>  
-          }
+          ) : (
+            <span />
+          )}
         </div>
       </Fragment>
       <Fragment>{props.yield}</Fragment>
     </div>
   </AppWrapper>
-)
-
-
+);
 
 Sidenav.propTypes = {
   accounts: PropTypes.string,
@@ -165,6 +193,7 @@ Sidenav.propTypes = {
   sliding: PropTypes.string,
   course: PropTypes.string,
   externallinks: PropTypes.string,
+  yield: PropTypes.node,
 };
 
 export default Sidenav;

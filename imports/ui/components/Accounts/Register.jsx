@@ -18,7 +18,7 @@ export default class Register extends Component {
     const pwdResults = checkPassword(password, passwordConfirm);
 
     // even if an error shows make sure the user doesn't get created when 2 passwords don't match
-    if (!pwdResults.status) {
+    if (pwdResults.status === false) {
       return;
     }
 
