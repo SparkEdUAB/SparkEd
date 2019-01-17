@@ -474,7 +474,7 @@ export class Courses extends Component {
           <div className="row">
             <div className="col m2">
               <button
-                className="btn red darken-3 fa fa-remove"
+                className="btn red darken-4 "
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
@@ -484,7 +484,7 @@ export class Courses extends Component {
             <div className="col m2">
               <a href="">
                 <button
-                  className="btn green darken-4 fa fa-plus"
+                  className="btn green darken-4 "
                   onClick={e => this.toggleEditModal('add', e)}
                 >
                   {' '}
