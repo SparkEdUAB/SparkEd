@@ -559,7 +559,7 @@ export default withTracker(() => {
   return {
     courses: _Courses
       .find({ 'details.language': Session.get('language') })
-      .fetch(), // query according to the language
+      .fetch(),
     titles: Titles.findOne({}),
   };
 })(Courses);
