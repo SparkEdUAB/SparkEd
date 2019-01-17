@@ -36,6 +36,7 @@ export class Courses extends Component {
       tableTitle: 'Course',
       subTitle: 'Unit',
     };
+    Session.set('language', 'english');
   }
 
   componentDidMount() {
@@ -538,7 +539,9 @@ export default withTracker(() => {
   Meteor.subscribe('titles');
   Meteor.subscribe('courses');
   return {
-    courses: _Courses.find({ 'details.language': 'french' }).fetch(), // query according to the language
+    courses: _Courses
+      .find({ 'details.language': Session.get('language') })
+      .fetch(), // query according to the language
     titles: Titles.findOne({}),
   };
 })(Courses);
