@@ -1,6 +1,6 @@
 {
   "name": "SparkEd",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "meteor",
     "lint": "eslint .",
