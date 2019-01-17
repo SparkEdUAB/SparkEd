@@ -24,11 +24,11 @@ Meteor.methods({
     }
   },
   // eslint-disable-next-line
-  'course.edit'(id, course, courseCode, year, ownerId) {
+  'course.edit'(id, course, courseCode, language, ownerId) {
     check(id, String);
     check(course, String);
     check(courseCode, String);
-    check(year, String);
+    check(language, String);
     check(ownerId, String);
 
     if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
@@ -40,7 +40,7 @@ Meteor.methods({
           $set: {
             name: course,
             code: courseCode,
-            'details.year': year,
+            'details.language': language,
           },
         },
       );
@@ -59,11 +59,17 @@ Meteor.methods({
       .fetch();
     if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
       if (units.length >= 1) {
-        throw new Meteor.Error('sorry', 'The selected course has units that depend on it');
+        throw new Meteor.Error(
+          'sorry',
+          'The selected course has units that depend on it',
+        );
       } else if (units.length === 0) {
         _Courses.remove(id);
       } else {
-        throw new Meteor.Error('no-rights', 'You are not allowed to remove the selected course');
+        throw new Meteor.Error(
+          'no-rights',
+          'You are not allowed to remove the selected course',
+        );
       }
     }
   },

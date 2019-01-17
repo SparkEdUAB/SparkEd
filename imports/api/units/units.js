@@ -17,7 +17,7 @@ Schema.Details = new SimpleSchema({
     type: String,
     optional: true,
   },
-  year: String,
+  language: String,
 });
 
 Schema.unitSchema = new SimpleSchema({

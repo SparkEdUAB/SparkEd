@@ -285,10 +285,10 @@ export class ManageUnits extends Component {
       description,
     } = this.state;
     // eslint-disable-next-line
-    let courseId, newTitle, newSubTitle, year, courseName = null;
+    let courseId, newTitle, newSubTitle, language, courseName = null;
     if (course) {
       courseId = course._id;
-      year = course.details.year; // eslint-disable-line
+      language = course.details.language; // eslint-disable-line
       courseName = course.name;
       Session.setPersistent('courseName', courseName);
     }
@@ -382,7 +382,7 @@ export class ManageUnits extends Component {
               </button>
             </div>
             <div className="col m2">
-              <a href={`/dashboard/unit/${courseId}?y=${year}`}>
+              <a href={`/dashboard/unit/${courseId}?y=${language}`}>
                 <button className="btn grey fa fa-plus">
                   {' '}
                   <T>common.actions.new</T>
