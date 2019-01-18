@@ -29,16 +29,19 @@ export class Courses extends Component {
       title: '', // Add Course or Edit Course
       confirm: '',
       reject: '',
-      year: '',
+      language: '',
       name: '',
       owner: '',
       ids: [],
-      table_title: 'Course',
-      sub_title: 'Unit',
+      tableTitle: 'Course',
+      subTitle: 'Unit',
+      lang: 'English'
     };
+    Session.set('language', 'english');
   }
 
   componentDidMount() {
+    $('ul.tabs').tabs(); // initialize the collapsible input
     Session.set('course', ' active');
     window.scrollTo(0, 0);
   }
@@ -51,14 +54,25 @@ export class Courses extends Component {
   };
 
   // ide => modalType, id=> courseId
-  toggleEditModal = (ide, yr = '', id = '', name = '', code = '', owner = '') => {
+  toggleEditModal = (
+    ide,
+    yr = '',
+    id = '',
+    name = '',
+    code = '',
+    owner = '',
+  ) => {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      Materialize.toast('Only Admins and Content-Manager can edit Courses', 3000, 'error-toast');
+      Materialize.toast(
+        'Only Admins and Content-Manager can edit Courses',
+        3000,
+        'error-toast',
+      );
       return;
     }
     this.name = name;
     this.code = code;
-    this.year = yr;
+    this.language = yr;
     this.owner = owner;
     // eslint-disable-next-line
     switch (ide) {
@@ -71,7 +85,7 @@ export class Courses extends Component {
           reject: <T>common.actions.close</T>,
           name: this.name,
           code: this.code,
-          year: this.year,
+          language: this.language,
           owner: this.owner,
         });
         break;
@@ -90,7 +104,11 @@ export class Courses extends Component {
         const count = course.length;
         const name = count > 1 ? 'courses' : 'course';
         if (count < 1) {
-          Materialize.toast('Please check atleast one course', 3000, 'error-toast');
+          Materialize.toast(
+            'Please check atleast one course',
+            3000,
+            'error-toast',
+          );
           return;
         }
         this.setState({
@@ -108,8 +126,8 @@ export class Courses extends Component {
           confirm: <T>common.actions.save</T>,
           reject: <T>common.actions.close</T>,
           modalType: ide,
-          table_title: yr,
-          sub_title: id,
+          tableTitle: yr,
+          subTitle: id,
         });
         break;
     }
@@ -117,10 +135,10 @@ export class Courses extends Component {
   };
 
   // route to whats contained in the course
-  static handleUrl(id, year, event) {
+  static handleUrl(id, language, event) {
     event.preventDefault();
     Session.setPersistent('courseIde', id);
-    FlowRouter.go(`/dashboard/units/${id}?y=${year}`);
+    FlowRouter.go(`/dashboard/units/${id}?y=${language}`);
   }
 
   // Adding new Course
@@ -128,54 +146,91 @@ export class Courses extends Component {
     e.preventDefault();
     let course;
     let courseCode;
-    let year;
+    let language;
     let details;
     const { target } = e;
-    const { modalType, modalIdentifier, ids, owner, table_title, sub_title } = this.state;
+    const {
+      modalType,
+      modalIdentifier,
+      ids,
+      owner,
+      tableTitle,
+      subTitle,
+    } = this.state;
 
     switch (modalType) {
       case 'add':
         course = target.course.value;
         courseCode = target.courseCode.value;
-        year = target.year.value;
-        details = { year };
+        language = target.language.value;
+        details = { language };
         const reference = config.isHighSchool ? 'subject' : 'course';
         const courseId = new Meteor.Collection.ObjectID().valueOf();
-        Meteor.call('course.add', courseId, course, courseCode, details, (err, res) => {
-          err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+        Meteor.call(
+          'course.add',
+          courseId,
+          course,
+          courseCode,
+          details,
+          (err, res) => {
+            err
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'course-add'),
                 'error',
               ))
-            : Meteor.call('insert.search', courseId, { courseId }, course, reference, err => {
-                err
-                  ? Materialize.toast(err.reason, 3000, 'error-toast')
-                  : Materialize.toast(`Successfully added ${course} `, 3000, 'success-toast');
-              });
-        });
+              : Meteor.call(
+                'insert.search',
+                courseId,
+                { courseId },
+                course,
+                reference,
+                err => {
+                  err
+                    ? Materialize.toast(err.reason, 3000, 'error-toast')
+                    : Materialize.toast(
+                      `Successfully added ${course} `,
+                      3000,
+                      'success-toast',
+                    );
+                },
+              );
+          },
+        );
 
         break;
 
       case 'edit':
         course = target.course.value;
         courseCode = target.courseCode.value;
-        year = target.year.value;
-        Meteor.call('course.edit', modalIdentifier, course, courseCode, year, owner, err => {
-          err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+        language = target.language.value;
+        Meteor.call(
+          'course.edit',
+          modalIdentifier,
+          course,
+          courseCode,
+          language,
+          owner,
+          err => {
+            err
+              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'course-edit'),
                 'error',
               ))
-            : Meteor.call('updateSearch', modalIdentifier, course, err => {
+              : Meteor.call('updateSearch', modalIdentifier, course, err => {
                 err
                   ? Materialize.toast(err.reason, 3000, 'error-toast')
-                  : Materialize.toast(`${course} Successfully updated`, 3000, 'success-toast');
+                  : Materialize.toast(
+                    `${course} Successfully updated`,
+                    3000,
+                    'success-toast',
+                  );
               });
-        });
+          },
+        );
         break;
 
       case 'del':
@@ -187,25 +242,25 @@ export class Courses extends Component {
           Meteor.call('course.remove', v, err => {
             err
               ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-                Meteor.call(
-                  'logger',
-                  formatText(err.message, Meteor.userId(), 'course-remove'),
-                  'error',
-                ))
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'course-remove'),
+                'error',
+              ))
               : Meteor.call('removeSearchData', v),
-              err => {
-                err
-                  ? Materialize.toast(err.reason, 3000, 'error-toast')
-                  : Meteor.call('insertDeleted', v, err => {
-                      err
-                        ? Materialize.toast(err.reason, 3000, 'error-toast')
-                        : Materialize.toast(
-                            `${count} ${name} successfully deleted`,
-                            3000,
-                            'success-toast',
-                          );
-                    });
-              };
+            err => {
+              err
+                ? Materialize.toast(err.reason, 3000, 'error-toast')
+                : Meteor.call('insertDeleted', v, err => {
+                  err
+                    ? Materialize.toast(err.reason, 3000, 'error-toast')
+                    : Materialize.toast(
+                      `${count} ${name} successfully deleted`,
+                      3000,
+                      'success-toast',
+                    );
+                });
+            };
           });
         });
         break;
@@ -214,15 +269,19 @@ export class Courses extends Component {
         const name = target.course.value;
         const title_id = Session.get('title_id');
         // update.title'(id, title, sub)
-        Meteor.call('update.title', title_id, table_title, sub_title, err => {
+        Meteor.call('update.title', title_id, tableTitle, subTitle, err => {
           err
             ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'update-title'),
-                'error',
-              ))
-            : Materialize.toast('Successfully updated the titles', 3000, 'success-toast');
+            Meteor.call(
+              'logger',
+              formatText(err.message, Meteor.userId(), 'update-title'),
+              'error',
+            ))
+            : Materialize.toast(
+              'Successfully updated the titles',
+              3000,
+              'success-toast',
+            );
         });
     }
     // close modal when done;
@@ -235,13 +294,13 @@ export class Courses extends Component {
     switch (type) {
       case 'sub':
         this.setState({
-          sub_title: value,
+          subTitle: value,
         });
         break;
 
       default:
         this.setState({
-          table_title: value,
+          tableTitle: value,
         });
         break;
     }
@@ -256,7 +315,13 @@ export class Courses extends Component {
     return courses.map(course => (
       <tr key={course._id} className="link-section">
         <td>{count++}</td>
-        <td onClick={Courses.handleUrl.bind(this, course._id, course.details.year)}>
+        <td
+          onClick={Courses.handleUrl.bind(
+            this,
+            course._id,
+            course.details.language,
+          )}
+        >
           {course.name}
         </td>
         <td>{course.createdAt.toDateString()}</td>
@@ -267,7 +332,7 @@ export class Courses extends Component {
             onClick={e =>
               this.toggleEditModal(
                 'edit',
-                course.details.year,
+                course.details.language,
                 course._id,
                 course.name,
                 course.code,
@@ -279,16 +344,24 @@ export class Courses extends Component {
         </td>
         <td>
           <a
-            href={`/dashboard/units/${course._id}&y=${course.details.year}`}
+            href={`/dashboard/units/${course._id}&y=${course.details.language}`}
             className="fa fa-pencil"
           />
         </td>
         <td onClick={handleCheckboxChange.bind(this, course._id)}>
-          <input type="checkbox" className={`filled-in chk chk${course._id}`} id={course._id} />
+          <input
+            type="checkbox"
+            className={`filled-in chk chk${course._id}`}
+            id={course._id}
+          />
           <label />
         </td>
       </tr>
     ));
+  }
+
+  handleLanguageChange = e => {
+    console.log(e)
   }
 
   render() {
@@ -300,19 +373,20 @@ export class Courses extends Component {
       modalType,
       name,
       code,
-      year,
-      table_title,
-      sub_title,
+      language,
+      tableTitle,
+      subTitle,
+      lang,
     } = this.state;
     const { titles } = this.props;
-    let new_title = '';
-    let new_sub_title = '';
+    let newTitle = '';
+    let newSubTitle = '';
     if (titles) {
-      new_title = titles.title;
-      new_sub_title = titles.sub_title;
+      newTitle = titles.title;
+      newSubTitle = titles.subTitle;
       Session.setPersistent({
         title_id: titles._id,
-        course_title: new_title,
+        course_title: newTitle,
       });
     }
     return (
@@ -332,8 +406,8 @@ export class Courses extends Component {
               <div className="row">
                 <div className="input-field col s12 m4">
                   <input
-                    value={table_title}
-                    placeholder={table_title}
+                    value={tableTitle}
+                    placeholder={tableTitle}
                     name="course"
                     type="text"
                     className="validate"
@@ -342,7 +416,7 @@ export class Courses extends Component {
                 </div>
                 <div className="input-field col s12 m4">
                   <input
-                    value={`Edit ${table_title}`}
+                    value={`Edit ${tableTitle}`}
                     name="edit_course"
                     type="text"
                     className="validate"
@@ -351,7 +425,7 @@ export class Courses extends Component {
                 </div>
                 <div className="input-field col s12 m4">
                   <input
-                    value={sub_title}
+                    value={subTitle}
                     name="edit_course"
                     type="text"
                     className="validate"
@@ -363,7 +437,7 @@ export class Courses extends Component {
           ) : (
             <div className="input-field">
               <input
-                placeholder={`Name of ${new_title}`}
+                placeholder={`Name of ${newTitle}`}
                 defaultValue={name}
                 type="text"
                 className="validate clear"
@@ -371,7 +445,7 @@ export class Courses extends Component {
                 name="course"
               />
               <input
-                placeholder={`${new_title} Code`}
+                placeholder={`${newTitle} Code`}
                 defaultValue={code}
                 type="text"
                 className="validate clear"
@@ -379,15 +453,13 @@ export class Courses extends Component {
                 name="courseCode"
               />
               <input
-                placeholder={`${new_title} Year eg: 1-12`}
-                defaultValue={year}
-                id="year"
+                placeholder={`${newTitle} Language`}
+                defaultValue={language}
+                id="language"
                 type="text"
-                pattern="[1-9]"
                 className="validate clear"
                 required
-                name="year"
-                title={`${new_title} Year eg: 1-12`}
+                name="language"
               />
             </div>
           )}
@@ -397,24 +469,24 @@ export class Courses extends Component {
           <div className="">
             <h4>
               {' '}
-              <T>common.manage.manage</T> {new_title}
+              <T>common.manage.manage</T> {newTitle}
             </h4>{' '}
             {/* Add */}
           </div>
           <div className="row">
-            <div className="col m3">
+            <div className="col m2">
               <button
-                className="btn red darken-3 fa fa-remove"
+                className="btn red darken-4 "
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
                 <T>common.actions.delete</T>
               </button>
             </div>
-            <div className="col m3">
+            <div className="col m2">
               <a href="">
                 <button
-                  className="btn green darken-4 fa fa-plus"
+                  className="btn green darken-4 "
                   onClick={e => this.toggleEditModal('add', e)}
                 >
                   {' '}
@@ -422,21 +494,36 @@ export class Courses extends Component {
                 </button>
               </a>
             </div>
+            <div className="col m5">
+            {/* <div className="row"> */}
+              <div className="col s12">
+                <ul className="tabs">
+                  <li className="tab col s3"><a className="teal-text" href="#test1" onClick={() => Session.set('language', 'english') }> English</a></li>
+                  <li className="tab col s3"><a className="teal-text" href="#test2" onClick={() => Session.set('language', 'french') }> French</a></li>
+                  <li className="tab col s3"><a className="teal-text" href="#test4" onClick={() => Session.set('language', 'ethiopian') }> Ethiopia</a></li>
+                </ul>
+              </div>
+            {/* </div> */}
+            </div>
           </div>
 
           <table className="highlight">
             <thead>
               <tr>
                 <th>#</th>
-                <th>{new_title}</th>
+                <th>{newTitle}</th>
                 <th>
                   {' '}
                   <T>common.actions.createdAt</T>
                 </th>
-                <th>{`Edit ${new_title}`}</th>
-                <th>{new_sub_title}</th>
+                <th>{`Edit ${newTitle}`}</th>
+                <th>{newSubTitle}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
+                  <input
+                    type="checkbox"
+                    className="filled-in chk-all"
+                    readOnly
+                  />
                   <label>
                     {' '}
                     <T>common.actions.check</T>
@@ -445,7 +532,9 @@ export class Courses extends Component {
                 <th>
                   <a
                     href=""
-                    onClick={e => this.toggleEditModal('field', new_title, new_sub_title, e)}
+                    onClick={e =>
+                      this.toggleEditModal('field', newTitle, newSubTitle, e)
+                    }
                     className="fa fa-pencil"
                   />
                 </th>
@@ -461,6 +550,7 @@ export class Courses extends Component {
 
 Courses.propTypes = {
   courses: PropTypes.array.isRequired,
+  titles: PropTypes.object,
 };
 
 export default withTracker(() => {
@@ -469,7 +559,9 @@ export default withTracker(() => {
   Meteor.subscribe('titles');
   Meteor.subscribe('courses');
   return {
-    courses: _Courses.find({}).fetch(),
+    courses: _Courses
+      .find({ 'details.language': Session.get('language') })
+      .fetch(),
     titles: Titles.findOne({}),
   };
 })(Courses);

@@ -1,3 +1,4 @@
+/* eslint no-use-before-define: 0 */
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
@@ -25,7 +26,7 @@ export class Unit extends Component {
 
   render() {
     const {
-      details: { courseId, year, programId },
+      details: { courseId, language, programId },
       name,
       _id,
     } = this.props.unit;
@@ -34,11 +35,14 @@ export class Unit extends Component {
       <ThemeContext.Consumer>
         {color => (
           <div
-            className={`col m6 s12 l4 cse-unit ${courseId}yr${year}${programId}`}
+            className={`col m6 s12 l4 cse-unit ${courseId}yr${language}${programId}`}
             id={`r${_id}`}
             name={topics}
           >
-            <div className="card darken-2 homeCardColor" style={{ backgroundColor: color.main }}>
+            <div
+              className="card darken-2 homeCardColor"
+              style={{ backgroundColor: color.main }}
+            >
               <div className="card-content">
                 {/* if the screen size is smaller then redirect to small view components */}
                 <span className={'card-title '}>
@@ -72,7 +76,7 @@ export class Unit extends Component {
                       <h6>
                         {' '}
                         <a
-                          href={`/dashboard/units/${programId}?cs=${courseId}&y=${year}`}
+                          href={`/dashboard/units/${programId}?cs=${courseId}&y=${language}`}
                           id="cardListTitle"
                         >
                           {' '}
@@ -81,7 +85,10 @@ export class Unit extends Component {
                       </h6>
                     </span>
                     <span className="">
-                      <a href={`/dashBoard/edit_unit/${_id}`} id="cardListTitle">
+                      <a
+                        href={`/dashBoard/edit_unit/${_id}`}
+                        id="cardListTitle"
+                      >
                         {' '}
                         &#8667; # of Topics : {this.countTopics()}{' '}
                       </a>
@@ -117,7 +124,10 @@ export class ExtraResource extends Component {
         <div className="card-panel homeCardColor-2 teal">
           <span className={'card-title '}>
             <h5>
-              <a href={`/extra/view_resource/${courseId}?rs=${resourceId}`} id="cardListTitle">
+              <a
+                href={`/extra/view_resource/${courseId}?rs=${resourceId}`}
+                id="cardListTitle"
+              >
                 {name.replace(/\.[^/.]+$/, '')}
               </a>
             </h5>
@@ -152,7 +162,7 @@ ExtraResource.propTypes = {
   fileType: PropTypes.string.isRequired,
 };
 
-export default withTracker((params) => {
+export default withTracker(params => {
   Meteor.subscribe('topics');
   Meteor.subscribe('courses');
 

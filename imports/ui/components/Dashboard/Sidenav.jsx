@@ -135,6 +135,15 @@ const Sidenav = props => (
                 </li>
                 <li>
                   <a
+                    href="/dashboard/update_theme"
+                    className={`  side-list ${props.theme}`}
+                  >
+                    <i className={'fa fa-pencil fa-lg '} />
+                    <span className="hide-on-small-only">&nbsp; Theme</span>
+                  </a>
+                </li>
+                <li>
+                  <a
                     href="/dashboard/slides"
                     className={`  side-list ${props.slides}`}
                   >
@@ -193,6 +202,8 @@ Sidenav.propTypes = {
   sliding: PropTypes.string,
   course: PropTypes.string,
   externallinks: PropTypes.string,
+  setup: PropTypes.string,
+  theme: PropTypes.string,
   yield: PropTypes.node,
 };
 

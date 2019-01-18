@@ -1,3 +1,7 @@
+@font-face {
+  font-family: Roboto;
+  src: url(/fonts/Roboto/Roboto-Light.woff) format("woff");
+}
 /* for the index.html */
 
 .loader-container {
@@ -206,13 +210,6 @@
   padding-right: 20px;
 }
 
-@font-face {
-  font-family: Roboto;
-  src: url(/fonts/Roboto/Roboto-Light.woff) format("woff");
-}
-body {
-  font-weight: 300;
-}
 .badge {
   right: 0px;
   top: 23px;
@@ -449,7 +446,7 @@ nav ul a:hover {
 }
 #accounts-button {
   text-transform: capitalize;
-  background-color: #006b76
+  background-color: #006b76;
 }
 
 #usrIcon {
@@ -653,4 +650,14 @@ nav ul a:hover {
 }
 .success-toast {
   background-color: #4caf50;
+}
+
+/* course tabs */
+
+.tabs .indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: #276a76;
+  will-change: left, right;
 }

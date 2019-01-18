@@ -1,3 +1,4 @@
+/* eslint no-shadow: 0, no-plusplus: 0 */
 import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
@@ -44,13 +45,13 @@ export class Unit extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const courseId = FlowRouter.getParam('_id');
-    const year = FlowRouter.getQueryParam('y');
+    const language = FlowRouter.getQueryParam('y');
     const unitId = new Meteor.Collection.ObjectID().valueOf();
     let count = 0;
     let details = {};
     const { topics, description, unitName } = this.state;
     details = {
-      year,
+      language,
       courseId,
     };
     // insert topic in collection from here 1 * 1

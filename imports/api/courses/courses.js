@@ -3,7 +3,6 @@ import SimpleSchema from 'simpl-schema';
 
 export const _Courses = new Mongo.Collection('course');
 
-
 _Courses.deny({
   insert: () => true,
   update: () => true,
@@ -21,7 +20,7 @@ Schema.details = new SimpleSchema({
     type: String,
     optional: true,
   },
-  year: String,
+  language: String,
 });
 
 Schema.Course = new SimpleSchema({
