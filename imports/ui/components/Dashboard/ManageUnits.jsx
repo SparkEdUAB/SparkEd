@@ -374,7 +374,7 @@ export class ManageUnits extends Component {
             </div>
             <div className="col m3">
               <button
-                className="btn red darken-2 fa fa-remove"
+                className="btn red darken-2"
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
@@ -383,8 +383,8 @@ export class ManageUnits extends Component {
             </div>
             <div className="col m2">
               <a href={`/dashboard/unit/${courseId}?y=${language}`}>
-                <button className="btn grey fa fa-plus">
-                  {' '}
+                <button className="btn grey ">
+                  {' Add Unit '}
                   <T>common.actions.new</T>
                 </button>
               </a>

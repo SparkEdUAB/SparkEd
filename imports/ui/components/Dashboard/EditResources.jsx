@@ -197,6 +197,7 @@ export class EditResources extends Component {
         <td>
           <a
             href=""
+            className="fa fa-pencil"
             onClick={e => this.toggleEditModal('edit', resource._id, resource.name, e)}
           />
         </td>
@@ -314,7 +315,7 @@ export class EditResources extends Component {
           </div>
           <div className="row ">
             <div className="col s4 m3">
-              <button className="btn grey darken-3 " onClick={e => this.getBack(e)}>
+              <button className="btn grey darken-3 fa fa-angle-left" onClick={e => this.getBack(e)}>
                 {' '}
                 {config.isHighSchool ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
               </button>
