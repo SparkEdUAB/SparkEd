@@ -42,7 +42,11 @@ export default class Register extends Component {
             error: error.reason,
           });
         } else {
-          Materialize.toast('Account created successfully', 3000, 'success-toast');
+          Materialize.toast(
+            'Account created successfully',
+            3000,
+            'success-toast',
+          );
           return FlowRouter.go('/login');
         }
       });
@@ -79,7 +83,11 @@ export default class Register extends Component {
         <div className="register-page">
           <div className="container account-container">
             <div className="row">
-              <form className="col s12" id="reg-form" onSubmit={this.registerUser}>
+              <form
+                className="col s12"
+                id="reg-form"
+                onSubmit={this.registerUser}
+              >
                 <div className="row">
                   <div className="input-field col s12">
                     <input
@@ -94,7 +102,13 @@ export default class Register extends Component {
                 </div>
                 <div className="row">
                   <div className="input-field col s12">
-                    <input id="email" type="email" className="validate" required name="email" />
+                    <input
+                      id="email"
+                      type="email"
+                      className="validate"
+                      required
+                      name="email"
+                    />
                     <label htmlFor="email">Email</label>
                   </div>
                 </div>
@@ -127,11 +141,23 @@ export default class Register extends Component {
                 <div className="row">
                   <div className="col s6">
                     <p className="gender-male">
-                      <input name="gender" type="radio" id="male" value="male" required />
+                      <input
+                        name="gender"
+                        type="radio"
+                        id="male"
+                        value="male"
+                        required
+                      />
                       <label htmlFor="male">Male</label>
                     </p>
                     <p className="gender-female">
-                      <input name="gender" type="radio" id="female" value="female" required />
+                      <input
+                        name="gender"
+                        type="radio"
+                        id="female"
+                        value="female"
+                        required
+                      />
                       <label htmlFor="female">Female</label>
                     </p>
                   </div>
@@ -146,7 +172,13 @@ export default class Register extends Component {
                     </button>
                   </div>
                 </div>
-                {error ? <div className="row">{error}</div> : <span />}
+                {error ? (
+                  <div className="row">
+                    <p className="red-text">{error}</p>
+                  </div>
+                ) : (
+                  <span />
+                )}
               </form>
             </div>
             <a

@@ -48,7 +48,12 @@ export default class Login extends Component {
             <form className="col s12" id="reg-form" onSubmit={this.loginUser}>
               <div className="row">
                 <div className="input-field col s12">
-                  <input id="email" type="email" className="validate field" required />
+                  <input
+                    id="email"
+                    type="email"
+                    className="validate field"
+                    required
+                  />
                   <label htmlFor="email">
                     <T>common.accounts.Email</T>
                   </label>
@@ -80,7 +85,13 @@ export default class Login extends Component {
                   </button>
                 </div>
               </div>
-              {error ? <div className="row">{error}</div> : <span />}
+              {error ? (
+                <div className="row">
+                  <p className="red-text">{error}</p>
+                </div>
+              ) : (
+                <span />
+              )}
             </form>
           </div>
           <a
