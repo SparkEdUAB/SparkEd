@@ -330,7 +330,7 @@ export class ManageAccounts extends React.Component {
           <div className="row">
             <div className="col m3 s3">
               <button
-                className="btn red darken-3 fa fa-remove"
+                className="btn red darken-3"
                 onClick={e => this.openModal('delete', e)}
               >
                 {' '}
@@ -340,7 +340,7 @@ export class ManageAccounts extends React.Component {
             {isUserAuth ? (
               <Fragment>
                 <div className="col m3 s3">
-                  <button className="btn  fa fa-check" onClick={e => this.openModal('approve', e)}>
+                  <button className="btn " onClick={e => this.openModal('approve', e)}>
                     {' '}
                     Approve
                   </button>
@@ -348,7 +348,7 @@ export class ManageAccounts extends React.Component {
 
                 <div className="col m3 s3">
                   <button
-                    className="btn grey darken-3 fa fa-ban"
+                    className="btn grey darken-3"
                     onClick={e => this.openModal('suspend', e)}
                   >
                     {' '}
@@ -362,7 +362,7 @@ export class ManageAccounts extends React.Component {
 
             <div className="col m3 s3">
               <button
-                className="btn green darken-3 fa fa-user"
+                className="btn green darken-3"
                 onClick={e => this.openModal('roles', e)}
               >
                 {' '}
@@ -371,7 +371,7 @@ export class ManageAccounts extends React.Component {
             </div>
             <div className="col m3 s3">
               <button
-                className="btn teal  fa fa-lock"
+                className="btn teal "
                 onClick={e => this.openModal('pass', e)}
               >
                 {' '}
