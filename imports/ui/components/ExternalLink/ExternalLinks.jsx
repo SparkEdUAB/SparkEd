@@ -1,5 +1,5 @@
 // TODO:  properly route back to the programs, can do this by setting the id in session
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ExternalLink } from '../../../api/externallink/externallink';
@@ -43,7 +43,11 @@ export class ExternalLinks extends Component {
    */
   toggleEditModal = (ide, id = '', externalLinkTitle = '', url = '') => {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      Materialize.toast('Only Admins can edit the External links', 4000, 'error-toast');
+      Materialize.toast(
+        'Only Admins can edit the External links',
+        4000,
+        'error-toast',
+      );
       return;
     }
     this.externalLinkTitle = externalLinkTitle;
@@ -66,7 +70,7 @@ export class ExternalLinks extends Component {
         this.setState({
           modalIdentifier: id,
           modalType: ide,
-          title: `Add External Link`,
+          title: 'Add External Link',
           confirm: 'Save',
           reject: 'Close',
         });
@@ -106,7 +110,10 @@ export class ExternalLinks extends Component {
       <tr className="link-section" key={externallink._id}>
         <td>{count++}</td>
         <td>{externallink.name}</td>
-        <td className="blue-text" onClick={e => this.handleExternalLinkUrl(this, externallink.url)}>
+        <td
+          className="blue-text"
+          onClick={e => this.handleExternalLinkUrl(this, externallink.url)}
+        >
           {externallink.url}
         </td>
         <td>{externallink.createdAt.toDateString()}</td>
@@ -154,10 +161,10 @@ export class ExternalLinks extends Component {
           err
             ? Materialize.toast(err.reason, 4000, 'error-toast')
             : Materialize.toast(
-                `Successfully added ${externalLinkTitle} web address`,
-                4000,
-                'success-toast',
-              );
+              `Successfully added ${externalLinkTitle} web address`,
+              4000,
+              'success-toast',
+            );
         });
 
         break;
@@ -165,11 +172,21 @@ export class ExternalLinks extends Component {
       case 'edit':
         externalLinkTitle = e.target.externalLinkTitle.value;
         url = e.target.url.value;
-        Meteor.call('externallink.edit', modalIdentifier, externalLinkTitle, url, err => {
-          err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
-            : Materialize.toast(`Successfully updated ${externalLinkTitle}`, 4000, 'success-toast');
-        });
+        Meteor.call(
+          'externallink.edit',
+          modalIdentifier,
+          externalLinkTitle,
+          url,
+          err => {
+            err
+              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              : Materialize.toast(
+                `Successfully updated ${externalLinkTitle}`,
+                4000,
+                'success-toast',
+              );
+          },
+        );
         break;
 
       case 'del':
@@ -181,7 +198,11 @@ export class ExternalLinks extends Component {
           Meteor.call('externallink.remove', v, err => {
             err
               ? Materialize.toast(err.reason, 4000, 'error-toast')
-              : Materialize.toast(`${count} ${name} successfully deleted`, 4000, 'success-toast');
+              : Materialize.toast(
+                `${count} ${name} successfully deleted`,
+                4000,
+                'success-toast',
+              );
           });
         });
 
@@ -191,9 +212,17 @@ export class ExternalLinks extends Component {
   }
 
   render() {
-    const { isOpen, title, confirm, reject, modalType, externalLinkTitle, url } = this.state;
+    const {
+      isOpen,
+      title,
+      confirm,
+      reject,
+      modalType,
+      externalLinkTitle,
+      url,
+    } = this.state;
     return (
-      <>
+      <Fragment>
         <MainModal
           show={isOpen}
           onClose={this.close}
@@ -225,7 +254,6 @@ export class ExternalLinks extends Component {
             </div>
           )}
         </MainModal>
-
         <div className="col m9 s11">
           <div className="">
             <h4>Manage External Links</h4>
@@ -233,7 +261,7 @@ export class ExternalLinks extends Component {
           <div className="row">
             <div className="col m3">
               <button
-                className="btn red darken-3 fa fa-remove"
+                className="btn red darken-3 "
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
@@ -243,7 +271,7 @@ export class ExternalLinks extends Component {
             <div className="col m3">
               <a href="">
                 <button
-                  className="btn green darken-4 fa fa-plus"
+                  className="btn green darken-4 "
                   onClick={e => this.toggleEditModal('add', e)}
                 >
                   {' '}
@@ -262,7 +290,11 @@ export class ExternalLinks extends Component {
                 <th>Created At</th>
                 <th>Edit External Link</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
+                  <input
+                    type="checkbox"
+                    className="filled-in chk-all"
+                    readOnly
+                  />
                   <label>Check All</label>
                 </th>
               </tr>
@@ -270,7 +302,7 @@ export class ExternalLinks extends Component {
             <tbody>{this.renderExternalLinks()}</tbody>
           </table>
         </div>
-      </>
+      </Fragment>
     );
   }
 }

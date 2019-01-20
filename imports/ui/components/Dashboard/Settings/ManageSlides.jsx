@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
@@ -83,7 +83,7 @@ export class ManageSlides extends Component {
         this.setState({
           modalIdentifier: '',
           modalType: ide,
-          title: `Upload a slide`,
+          title: 'Upload a slide',
           confirm: 'Save', // this should be out
           reject: 'Close', // this too should be out
         });
@@ -158,12 +158,13 @@ export class ManageSlides extends Component {
   }
 
   render() {
-    const { isOpen, title, confirm, reject, modalType, name } = this.state;
+    const {
+ isOpen, title, confirm, reject, modalType, name 
+} = this.state;
 
     return (
-      <>
-        <>
-          {modalType === 'upload' ? (
+      <Fragment>
+      {modalType === 'upload' ? (
             <UploadWrapper show={isOpen} close={this.closeModal} title={title} />
           ) : (
             <MainModal
@@ -190,8 +191,7 @@ export class ManageSlides extends Component {
               )}
             </MainModal>
           )}
-        </>
-        <div className="col m9 s11">
+          <div className="col m9 s11">
           <div className="">
             <h4>Manage Slides</h4>
           </div>
@@ -199,7 +199,7 @@ export class ManageSlides extends Component {
           <div className="row">
             <div className="col m3">
               <button
-                className="btn red darken-3 fa fa-remove"
+                className="btn red darken-3 "
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 Delete
@@ -208,7 +208,7 @@ export class ManageSlides extends Component {
 
             <div className="col s4 m4">
               <button
-                className="btn fa fa-upload green darken-4 "
+                className="btn green darken-4 "
                 onClick={e => this.toggleEditModal('upload', e)}
               >
                 {' '}
@@ -235,7 +235,7 @@ export class ManageSlides extends Component {
             <tbody>{this.renderslides()}</tbody>
           </table>
         </div>
-      </>
+      </Fragment>
     );
   }
 }

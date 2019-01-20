@@ -193,7 +193,6 @@ export class Additional extends Component {
         <td>
           <a
             href=""
-            className="fa fa-pencil"
             onClick={e => this.toggleEditModal('edit', extra._id, extra.name, e)}
           />
         </td>
@@ -299,7 +298,7 @@ export class Additional extends Component {
           <div className="row">
             <div className="col m4">
               <button
-                className="btn red darken-3 fa fa-remove"
+                className="btn red darken-3"
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}

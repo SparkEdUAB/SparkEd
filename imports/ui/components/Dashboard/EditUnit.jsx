@@ -330,7 +330,7 @@ export class EditUnits extends Component {
             </div>
             <div className="col m3 ">
               <button
-                className="btn red darken-3 fa fa-remove "
+                className="btn red darken-3  "
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
@@ -340,7 +340,7 @@ export class EditUnits extends Component {
             <div className="col m3">
               <a href="">
                 <button
-                  className="btn green darken-4 fa fa-plus "
+                  className="btn green darken-4  "
                   onClick={e => this.toggleEditModal('add', e)}
                 >
                   {' '}

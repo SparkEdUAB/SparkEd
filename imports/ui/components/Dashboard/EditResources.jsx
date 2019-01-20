@@ -322,7 +322,7 @@ export class EditResources extends Component {
             </div>
             <div className="col s4 m3">
               <button
-                className="btn red darken-3 fa fa-remove "
+                className="btn red darken-3  "
                 onClick={e => this.toggleEditModal('del', e)}
               >
                 {' '}
@@ -332,7 +332,7 @@ export class EditResources extends Component {
 
             <div className="col s4 m3">
               <button
-                className="btn fa fa-upload green darken-4 "
+                className="btn green darken-4 "
                 onClick={e => this.toggleEditModal('upload', e)}
               >
                 {' '}

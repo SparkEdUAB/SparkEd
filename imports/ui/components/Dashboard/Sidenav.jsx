@@ -28,7 +28,6 @@ const Sidenav = props => (
                 href="/dashboard/accounts"
                 className={`  side-list ${props.accounts}`}
               >
-                <i className={'fa fa-user fa-lg icon-white '} />
                 <span className="hide-on-small-only">
                   &nbsp; <T>common.sidenav.accounts</T>
                 </span>
@@ -41,7 +40,6 @@ const Sidenav = props => (
                   href="/dashboard/course"
                   className={`  side-list ${props.course}`}
                 >
-                  <i className={'fa fa-book fa-lg '} />
                   <span className="hide-on-small-only">
                     &nbsp; <T>common.sidenav.subjects</T>
                   </span>
@@ -54,7 +52,6 @@ const Sidenav = props => (
                     href="/dashboard/course"
                     className={`  side-list ${props.course}`}
                   >
-                    <i className={'fa fa-book fa-lg '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.courses</T>
                     </span>
@@ -65,7 +62,6 @@ const Sidenav = props => (
                     href="/dashboard/list_topics"
                     className={`  side-list ${props.topics}`}
                   >
-                    <i className={'fa fa-text-width fa-lg '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.alltopics</T>
                     </span>
@@ -78,7 +74,6 @@ const Sidenav = props => (
                 href="/dashboard/extra"
                 className={`  side-list ${props.extra}`}
               >
-                <i className={'fa fa-th fa-lg '} />
                 <span className="hide-on-small-only">
                   &nbsp; <T>common.sidenav.resourceLibrary</T>
                 </span>
@@ -89,7 +84,6 @@ const Sidenav = props => (
                 href="/externallinks"
                 className={`side-list ${props.externallinks}`}
               >
-                <i className={'fa fa-link '} />
                 <span className="hide-on-small-only">
                   &nbsp; <T>common.sidenav.externalLinks</T>
                 </span>
@@ -101,7 +95,6 @@ const Sidenav = props => (
                   href="/dashboard/overview"
                   className={`  side-list ${props.stats}`}
                 >
-                  <i className={'fa fa-bar-chart fa-lg '} />
                   <span className="hide-on-small-only">
                     &nbsp; <T>common.sidenav.stats</T>
                   </span>
@@ -115,7 +108,6 @@ const Sidenav = props => (
                 href="/dashboard/feedback"
                 className={`  side-list ${props.feedback}`}
               >
-                <i className={'fa fa-comments fa-lg '} />
                 <span className="hide-on-small-only">
                   &nbsp; <T>common.sidenav.feedback</T>
                 </span>
@@ -127,7 +119,6 @@ const Sidenav = props => (
               <Fragment>
                 <li>
                   <a href="/setup" className={`  side-list ${props.settings}`}>
-                    <i className={'fa fa-gear fa-lg '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.setup</T>
                     </span>
@@ -138,7 +129,6 @@ const Sidenav = props => (
                     href="/dashboard/update_theme"
                     className={`  side-list ${props.theme}`}
                   >
-                    <i className={'fa fa-pencil fa-lg '} />
                     <span className="hide-on-small-only">&nbsp; Theme</span>
                   </a>
                 </li>
@@ -147,7 +137,6 @@ const Sidenav = props => (
                     href="/dashboard/slides"
                     className={`  side-list ${props.slides}`}
                   >
-                    <i className={'fa fa-picture-o '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.changeSlides</T>
                     </span>
@@ -158,7 +147,6 @@ const Sidenav = props => (
                     href="/dashboard/updates"
                     className={`  side-list ${props.slides}`}
                   >
-                    <i className={'fa fa-download '} />
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.updates</T>
                     </span>
@@ -171,7 +159,7 @@ const Sidenav = props => (
             <li>
               <a href="#" className="small">
                 <span className="sideHide item">
-                  <code>version 1.5</code>
+                  <code>version 1.7.5</code>
                 </span>
               </a>
             </li>
