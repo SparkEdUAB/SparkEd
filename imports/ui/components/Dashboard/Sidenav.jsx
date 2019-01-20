@@ -159,7 +159,7 @@ const Sidenav = props => (
             <li>
               <a href="#" className="small">
                 <span className="sideHide item">
-                  <code>version 1.5</code>
+                  <code>version 1.7.5</code>
                 </span>
               </a>
             </li>
