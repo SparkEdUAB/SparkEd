@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import * as config from '../../../../config.json';
-import AppWrapper from '../../containers/AppWrapper';
-import i18n from 'meteor/universe:i18n';
+import AppWrapper from '../../containers/AppWrapper'; // eslint-disable-line
+import i18n from 'meteor/universe:i18n'; // eslint-disable-line
 import '../../stylesheets/overlay.css';
 
 const T = i18n.createComponent();
