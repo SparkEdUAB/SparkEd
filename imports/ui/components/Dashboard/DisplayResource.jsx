@@ -71,7 +71,7 @@ export class DisplayResource extends Component {
     return (
       <ErrorBoundary>
         <div className="row">
-          <div className="col s12 m9">
+          <div className="col s12 m10">
             <h4 className="teal-text text-lighten-1 center">{resourceName}</h4>
             <span className="right grey-text" />
 
