@@ -1,6 +1,7 @@
 /* eslint class-methods-use-this: "off" */
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
+import M from 'materialize-css';
 import { PropTypes } from 'prop-types';
 import { Slides } from '../../../api/settings/slides';
 
@@ -10,6 +11,11 @@ export class ImgSlider extends Component {
     Meteor.clearTimeout(timeOut);
   }
 
+  componentDidMount() {
+    const elem = document.querySelector('.slider');
+    const instance = M.Slider.init(elem, {});
+    instance.start();
+  }
   renderSlider(slides) {
     if (!slides || !slides.length) {
       return (
@@ -20,9 +26,11 @@ export class ImgSlider extends Component {
               marginTop: 120,
             }}
           >
-            <h4 className="light white-text text-lighten-1">Welcome To SparkEd</h4>
+            <h4 className="light white-text text-lighten-1">
+              Welcome To SparkEd
+            </h4>
             <h5 className="light white-text text-lighten-1">
-               Upload Slides images From the Dashboard
+              Upload Slides images From the Dashboard
             </h5>
           </div>
         </li>
@@ -35,10 +43,6 @@ export class ImgSlider extends Component {
     ));
   }
   render() {
-    timeOut = Meteor.setTimeout(() => {
-      $('.slider').slider('start');
-      $('.slider').slider({ full_width: true, indicators: false });
-    }, 5);
     return (
       <div className="slider" style={{ marginTop: '-21px' }}>
         <ul className="slides">{this.renderSlider(this.props.slides)}</ul>

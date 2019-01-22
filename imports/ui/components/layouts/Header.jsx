@@ -170,15 +170,6 @@ export class Header extends Component {
   };
 
   componentDidMount() {
-    // $('.dropdown-button').dropdown({
-    //   inDuration: 0,
-    //   outDuration: 0,
-    //   constrainWidth: false, // Does not change width of dropdown to that of the activator
-    //   gutter: 0, // Spacing from edge
-    //   belowOrigin: true, // Displays dropdown below the button
-    //   alignment: 'left', // Displays dropdown with edge aligned to the left of button
-    //   stopPropagation: false, // Stops event propagation
-    // });
     M.AutoInit()
   }
 
