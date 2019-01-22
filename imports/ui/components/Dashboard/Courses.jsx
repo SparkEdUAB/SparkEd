@@ -347,12 +347,10 @@ export class Courses extends Component {
           />
         </td>
         <td onClick={handleCheckboxChange.bind(this, course._id)}>
-          <input
-            type="checkbox"
-            className={`filled-in chk chk${course._id}`}
-            id={course._id}
-          />
-          <label />
+        <label htmlFor={course._id}>
+          <input type="checkbox" id={course._id} className={`chk chk${course._id}`} />
+          <span/>
+        </label>
         </td>
       </tr>
     ));
@@ -381,7 +379,7 @@ export class Courses extends Component {
     let newSubTitle = '';
     if (titles) {
       newTitle = titles.title;
-      newSubTitle = titles.subTitle;
+      newSubTitle = titles.sub_title;
       Session.setPersistent({
         title_id: titles._id,
         course_title: newTitle,
@@ -517,13 +515,12 @@ export class Courses extends Component {
                 <th>{`Edit ${newTitle}`}</th>
                 <th>{newSubTitle}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                <label>
                   <input
                     type="checkbox"
-                    className="filled-in chk-all"
+                    className=" chk-all"
                     readOnly
                   />
-                  <label>
-                    {' '}
                     <T>common.actions.check</T>
                   </label>
                 </th>
