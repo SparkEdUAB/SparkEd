@@ -301,6 +301,7 @@ export class EditResources extends Component {
           </MainModal>
       // eslint-disable-next-line quotes
       )}
+      <div className='m1' />
         <div className="col m9 s11">
           <div className="">
             <h4>{this.getName()}</h4>

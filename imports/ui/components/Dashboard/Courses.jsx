@@ -440,7 +440,7 @@ export class Courses extends Component {
             </div>
           )}
         </MainModal>
-
+        <div className='m1' />
         <div className="col m9 s11">
           <div className="">
             <h4>

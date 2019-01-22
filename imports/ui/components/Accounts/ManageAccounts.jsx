@@ -280,6 +280,7 @@ export class ManageAccounts extends React.Component {
             <span />
           }
         </MainModal>
+        <div className='m1' />
         <div className="col m9 s11">
           <div className="row">
             <div>

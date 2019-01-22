@@ -13,7 +13,7 @@ const Sidenav = props => (
     <div className="row">
       <Fragment>
         <div
-          className="col m3 s1 menu_simple"
+          className="col m2 s1 menu_simple"
           id={!config.isConfigured ? 'outer-box' : ''}
         >
           {/* begin list */}

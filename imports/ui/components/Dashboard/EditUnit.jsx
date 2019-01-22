@@ -314,6 +314,7 @@ export class EditUnits extends Component {
             </div>
           )}
         </MainModal>
+        <div className='m1' />
         <div className="col m9 s11">
           <div className="">
             <h4>{unit.name}</h4>
