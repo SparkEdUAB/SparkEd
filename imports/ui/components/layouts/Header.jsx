@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import M from 'materialize-css'
+import M from 'materialize-css';
 import { SearchView } from '../Utilities/Utilities.jsx';
 import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 import { _Notifications } from '../../../api/notifications/notifications';
