@@ -243,13 +243,14 @@ export class Header extends Component {
           <Fragment>
             <div className="container-fluid " style={{ backgroundColor: color.main }}>
               <div className="row ">
-                <div className="col s12 m6">
+                <div className="col s12 m5">
                   <InstitutionDetail 
                     institution={institution} 
                     name={details.name} 
                     tagline={details.tag} 
                   />
                 </div>
+                <div className="m6 offset-m6">
                 <div className="col s12 m2 hide-on-small-only">
                   <SearchView
                     action={'/results'}
@@ -310,6 +311,7 @@ export class Header extends Component {
                     </a>
                     <UserInfo />
                   </div>
+                </div>
                 </div>
               </div>
             </div>
