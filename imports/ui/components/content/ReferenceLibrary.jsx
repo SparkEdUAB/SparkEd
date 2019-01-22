@@ -85,7 +85,7 @@ export class ReferenceLibrary extends Component {
     return (
       <Fragment>
         <div className="row">
-          <div className="col m3 s12 menu_simple">
+          <div className="col m2 s12 menu_simple">
             <ul className="item-container">
               <li className="hide-on-med-and-down">
                 <a id="dashtweek" href="/reference" className="center">
@@ -97,7 +97,7 @@ export class ReferenceLibrary extends Component {
             </ul>
           </div>
 
-          <div className="col m9 s12">
+          <div className="col m10 s12">
             {FlowRouter.getParam('_id') === undefined
               ? ReferenceLibrary.renderResources(this.props.extraResources)
               : ReferenceLibrary.renderResources(this.props.resources)}

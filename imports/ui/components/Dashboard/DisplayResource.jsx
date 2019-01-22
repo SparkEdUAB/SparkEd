@@ -4,10 +4,8 @@ import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
-import Header from '../layouts/Header.jsx';
 import ResourceRender from '../content/ResourceRender.jsx';
 import { courseName } from '../content/CourseContent.jsx';
-import Sidenav from './Sidenav.jsx';
 import { SideMenu } from '../content/ReferenceLibrary.jsx';
 import ErrorBoundary from '../ErrorBoundary';
 
@@ -85,10 +83,10 @@ export class DisplayResource extends Component {
               <span />
             ) : (
               <>
-                <div className="col m3 s12 menu_simple">
+                <div className="col m2 s12 menu_simple">
                   <ul className="item-container">
                     <li className="">
-                      <a disabled="true" id="dashtweek" href="" className="center">
+                      <a disabled={true} id="dashtweek" href="" className="center">
                         {courseName(this.props.courseName) || 'Anonymous'}
                       </a>
                     </li>
