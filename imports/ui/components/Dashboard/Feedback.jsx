@@ -5,15 +5,14 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 import ReactPaginate from 'react-paginate';
 import i18n from 'meteor/universe:i18n';
+import M from 'materialize-css';
 import { _Feedback } from '../../../api/feedback/feedback';
 
 export const T = i18n.createComponent();
 
 export class Feedback extends Component {
   componentDidMount() {
-    Meteor.setTimeout(() => {
-      $('.collapsible').collapsible();
-    }, 100);
+    M.AutoInit();
     Session.set('limit', 8);
   }
 
@@ -23,8 +22,8 @@ export class Feedback extends Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * Session.get('limit'));
+    const { selected } = data;
+    const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
@@ -57,11 +56,17 @@ export class Feedback extends Component {
   renderComments() {
     const { feeds } = this.props;
     if (!feeds || !feeds.length) {
-      return <span className="center">You have not received any feedback yet</span>;
+      return (
+        <span className="center">You have not received any feedback yet</span>
+      );
     }
 
     return feeds.map(feed => (
-      <ul key={feed._id} className="collapsible popout" data-collapsible="accordion">
+      <ul
+        key={feed._id}
+        className="collapsible popout"
+        data-collapsible="accordion"
+      >
         <li>
           <div className="collapsible-header">
             <i className="fa fa-user " />
@@ -81,23 +86,23 @@ export class Feedback extends Component {
 
   render() {
     return (
-      <>
+      <React.Fragment>
         <div className="col m9 s11">
           <h3 className="center blue-text">
             <T>common.titles.usersfeedback</T>
           </h3>
           <div className="row">
             <div className="">{this.renderComments()}</div>
-            
           </div>
-          { this.renderPagination() }
+          {this.renderPagination()}
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }
 Feedback.propTypes = {
   feeds: PropTypes.array.isRequired,
+  count: PropTypes.number,
 };
 
 export default withTracker(() => {
@@ -111,7 +116,11 @@ export default withTracker(() => {
         //     createdAt: -1,
         //   },
         // },
-        { skip: Session.get('skip'), limit: Session.get('limit'), sort :{ createdAt: -1 } },
+        {
+          skip: Session.get('skip'),
+          limit: Session.get('limit'),
+          sort: { createdAt: -1 },
+        },
       )
       .fetch(),
     count: _Feedback.find().count(),

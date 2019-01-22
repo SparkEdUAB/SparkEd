@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+/* eslint default-case: 0, no-case-declarations: 0, no-unused-expressions: 0 */
+import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { withTracker } from 'meteor/react-meteor-data';
 import i18n from 'meteor/universe:i18n';
 import { Session } from 'meteor/session';
+import M from 'materialize-css';
 import { _Courses } from '../../../api/courses/courses';
 import { References } from '../../../api/resources/resources';
 import {
@@ -53,7 +55,7 @@ export class Additional extends Component {
   toggleEditModal = (ide, id = '', name = '') => {
     // check if the user has full rights
     if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-      Materialize.toast('Only Admins can edit the resource', 3000, 'error-toast');
+      M.toast({ html: '<span>Only Admins can edit the resource</span>', classes: 'red' });
       return;
     }
 
@@ -79,7 +81,7 @@ export class Additional extends Component {
         const name = count > 1 ? 'resource' : 'resources';
 
         if (count < 1) {
-          Materialize.toast('Please check atleast one resource', 3000, 'error-toast');
+          M.toast({ html: '<span>Please check atleast one resource</span>', classes: 'red' });
           return;
         }
         this.setState({
@@ -95,7 +97,7 @@ export class Additional extends Component {
         this.setState({
           modalIdentifier: '',
           modalType: ide,
-          title: `Upload a Reference`,
+          title: 'Upload a Reference',
           confirm: 'Save',
           reject: 'Close',
         });
@@ -113,44 +115,40 @@ export class Additional extends Component {
         const reference = e.target.res.value;
         Meteor.call('updateReference', modalIdentifier, reference, err => {
           err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'reference-edit'),
-                'error',
-              ))
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+            Meteor.call(
+              'logger',
+              formatText(err.message, Meteor.userId(), 'reference-edit'),
+              'error',
+            ))
             : Meteor.call('updateSearch', modalIdentifier, reference, err => {
-                err
-                  ? Materialize.toast(err.reason, 3000, 'error-toast')
-                  : Materialize.toast('Successfully Updated', 3000, 'success-toast');
-              });
+              err
+                ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                : M.toast({ html: '<span>Successfully Updated</span>' });
+            });
         });
         break;
       case 'del':
         let count = 0;
 
-        for (let res of ids) {
+        ids.map(res => {
           count += 1;
           const name = count > 1 ? 'references' : 'reference';
           Meteor.call('removeReference', res, err => {
             err
-              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-                Meteor.call(
-                  'logger',
-                  formatText(err.message, Meteor.userId(), 'reference-remove'),
-                  'error',
-                ))
+              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'reference-remove'),
+                'error',
+              ))
               : Meteor.call('removeSearchData', res, err => {
-                  err
-                    ? Materialize.toast(err.reason, 3000, 'error-toast')
-                    : Materialize.toast(
-                        `${count} ${name} successfully deleted`,
-                        3000,
-                        'success-toast',
-                      );
-                });
+                err
+                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                  : M.toast({ html: `<span>${count} ${name} successfully deleted</span>` });
+              });
           });
-        }
+        });
 
         break;
     }
@@ -193,6 +191,7 @@ export class Additional extends Component {
         <td>
           <a
             href=""
+            className="fa fa-pencil"
             onClick={e => this.toggleEditModal('edit', extra._id, extra.name, e)}
           />
         </td>
@@ -209,8 +208,10 @@ export class Additional extends Component {
           </a>
         </td>
         <td onClick={handleCheckboxChange.bind(this, extra._id)}>
-          <input type="checkbox" className={` filled-in chk chk${extra._id}`} id={extra._id} />
-          <label />
+        <label htmlFor={extra._id}>
+          <input type="checkbox" id={extra._id} className={`chk chk${extra._id}`} />
+          <span/>
+        </label>
         </td>
       </tr>
     ));
@@ -222,8 +223,8 @@ export class Additional extends Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * Session.get('limit'));
+    const { selected } = data;
+    const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
@@ -256,11 +257,13 @@ export class Additional extends Component {
   }
 
   render() {
-    const { modalType, isOpen, title, confirm, reject, name } = this.state;
+    const {
+ modalType, isOpen, title, confirm, reject, name 
+} = this.state;
     return (
       <div className="">
         {/* Modals for Deleting  */}
-        <>
+        <Fragment>
           {modalType === 'upload' ? (
             <UploadWrapper show={isOpen} close={this.closeModal} title={title} />
           ) : (
@@ -288,7 +291,7 @@ export class Additional extends Component {
               )}
             </MainModal>
           )}
-        </>
+        </Fragment>
         <div className="col m9 s11">
           <div className="">
             <h4>
@@ -342,10 +345,10 @@ export class Additional extends Component {
                 </th>
                 <th>Course Name</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
                   <label>
-                    <T>common.actions.check</T>
-                  </label>
+                    <input type="checkbox" className=" chk-all" readOnly />
+                      <T>common.actions.check</T>
+                    </label>
                 </th>
               </tr>
             </thead>
@@ -360,6 +363,7 @@ export class Additional extends Component {
 
 Additional.propTypes = {
   extras: PropTypes.array,
+  count: PropTypes.number,
 };
 
 export default withTracker(() => {
