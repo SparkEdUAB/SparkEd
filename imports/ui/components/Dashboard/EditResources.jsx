@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+/* eslint default-case: 0, no-case-declarations: 0, no-unused-expressions: 0 */
+import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
 import i18n from 'meteor/universe:i18n';
+import M from 'materialize-css';
 import ReactPaginate from 'react-paginate';
 import { _Topics } from '../../../api/topics/topics';
 import {
@@ -60,7 +62,7 @@ export class EditResources extends Component {
 
   toggleEditModal = (ide, id = '', name = '') => {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      Materialize.toast('Only Admins and Content-Manager can edit the Topic', 4000, 'error-toast');
+      M.toast({ html: '<span>Only Admins and Content-Manager can edit the Topic</span>', classes: 'red' });
       return;
     }
     this.name = name;
@@ -89,7 +91,7 @@ export class EditResources extends Component {
         const count = resources.length;
         const name = count > 1 ? 'resources' : 'resource';
         if (count < 1) {
-          Materialize.toast('Please check at least one resource', 4000, 'error-toast');
+          M.toast('Please check at least one resource', 4000, 'error-toast');
           return;
         }
         this.setState({
@@ -118,7 +120,6 @@ export class EditResources extends Component {
   // callback for the modal ( When it is add, save or Yes )
   handleSubmit(event) {
     event.preventDefault();
-    const topicId = FlowRouter.getParam('_id');
     const { modalIdentifier, modalType } = this.state;
     // updating
     switch (modalType) {
@@ -126,21 +127,17 @@ export class EditResources extends Component {
         const resourceName = event.target.resource.value;
         Meteor.call('updateResource', modalIdentifier, resourceName, err => {
           err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'resource-update'),
-                'error',
-              ))
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+            Meteor.call(
+              'logger',
+              formatText(err.message, Meteor.userId(), 'resource-update'),
+              'error',
+            ))
             : Meteor.call('updateSearch', modalIdentifier, resourceName, err => {
-                err
-                  ? Materialize.toast(err.reason, 'error-toast')
-                  : Materialize.toast(
-                      `successfully updated ${resourceName} `,
-                      4000,
-                      'success-toast',
-                    );
-              });
+              err
+                ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                : M.toast({ html: `<span>successfully updated ${resourceName} </span>` });
+            });
         });
         break;
       // deleting (Yes)
@@ -152,25 +149,21 @@ export class EditResources extends Component {
           const name = count > 1 ? 'resources' : 'resource';
           Meteor.call('removeResource', v, err => {
             err
-              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-                Meteor.call(
-                  'logger',
-                  formatText(err.message, Meteor.userId(), 'resource-remove'),
-                  'error',
-                ))
+              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'resource-remove'),
+                'error',
+              ))
               : Meteor.call('removeSearchData', v, err => {
-                  err
-                    ? Materialize.toast(err.reason)
-                    : Meteor.call('insertDeleted', v, 'resource', err => {
-                        err
-                          ? Materialize.toast(err.reason, 3000, 'error-toast')
-                          : Materialize.toast(
-                              `${count} ${name} successfully deleted`,
-                              4000,
-                              'success-toast',
-                            );
-                      });
-                });
+                err
+                  ? M.toast(err.reason)
+                  : Meteor.call('insertDeleted', v, 'resource', err => {
+                    err
+                      ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                      : M.toast({ html: '<span>successfully deleted resources </span>' });
+                  });
+              });
             // });
           });
         });
@@ -203,13 +196,10 @@ export class EditResources extends Component {
         </td>
         <td>{resource.ext}</td>
         <td onClick={handleCheckboxChange.bind(this, resource._id)}>
-          <input
-            type="checkbox"
-            value={resource.name}
-            className={` filled-in chk chk${resource._id}`}
-            id={resource._id}
-          />
-          <label />
+        <label htmlFor={resource._id}>
+          <input type="checkbox" id={resource._id} className={`chk chk${resource._id}`} />
+          <span/>
+         </label>
         </td>
         {Session.set('filename', resource.name)}
       </tr>
@@ -242,8 +232,8 @@ export class EditResources extends Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * Session.get('limit'));
+    const { selected } = data;
+    const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
@@ -273,11 +263,12 @@ export class EditResources extends Component {
     );
   }
   render() {
-    const { isOpen, title, confirm, reject, modalType, name } = this.state;
+    const {
+ isOpen, title, confirm, reject, modalType, name 
+} = this.state;
     const limit = Session.get('limit');
     return (
-      <>
-        {modalType === 'upload' ? (
+      <Fragment>{modalType === 'upload' ? (
           <UploadWrapper
             show={isOpen}
             close={this.closeModal}
@@ -308,7 +299,8 @@ export class EditResources extends Component {
               </div>
             )}
           </MainModal>
-        )}
+      // eslint-disable-next-line quotes
+      )}
         <div className="col m9 s11">
           <div className="">
             <h4>{this.getName()}</h4>
@@ -367,8 +359,8 @@ export class EditResources extends Component {
                 </th>
                 <th>Type</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
                   <label>
+                  <input type="checkbox" className="filled-in chk-all" readOnly />
                     <T>common.actions.check</T>
                   </label>
                 </th>
@@ -378,7 +370,7 @@ export class EditResources extends Component {
           </table>
           {this.renderPagination()}
         </div>
-      </>
+        </Fragment>
     );
   }
 }

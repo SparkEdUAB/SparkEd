@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-expressions */
+/* eslint default-case: 0, no-case-declarations: 0 */
 import React, { Component } from 'react';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
+import { withTracker } from 'meteor/react-meteor-data';
 import ReactPaginate from 'react-paginate';
+import M from 'materialize-css';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
-import { withTracker } from 'meteor/react-meteor-data';
 import {
   handleCheckboxChange,
   handleCheckAll,
@@ -50,7 +53,7 @@ export class EditUnits extends Component {
 
   toggleEditModal = (ide, id = '', name = '') => {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      Materialize.toast('Only Admins and Content-Manager can edit Topics', 4000);
+      M.toast({ html: '<span>Only Admins and Content-Manager can edit Topics</span>', classes: 'red' });
       return;
     }
     this.name = name;
@@ -81,7 +84,7 @@ export class EditUnits extends Component {
         const count = topics.length;
         const name = count > 1 ? 'topics' : 'topic';
         if (count < 1) {
-          Materialize.toast('Please check at least one topic', 4000);
+          M.toast({ html: '<span>Please check at least one topic</span>', classes: 'red' });
           return;
         }
         this.setState({
@@ -129,8 +132,11 @@ export class EditUnits extends Component {
           <a className="fa fa-pencil" href={`/dashboard/edit_resources/${topic._id}`} />
         </td>
         <td onClick={handleCheckboxChange.bind(this, topic._id)}>
-          <input type="checkbox" className={' filled-in chk chk' + topic._id} id={topic._id} />
-          <label />
+        <label htmlFor={topic._id}>
+          <input type="checkbox" id={topic._id} className={`chk chk${topic._id}`} />
+          <span/>
+      </label>
+    
         </td>
       </tr>
     ));
@@ -151,7 +157,7 @@ export class EditUnits extends Component {
         _id: modalIdentifier,
       },
     ];
-    //insert search index
+    // insert search index
 
     switch (modalType) {
       case 'add':
@@ -159,22 +165,22 @@ export class EditUnits extends Component {
         newTopic = event.target.topic.value;
         Meteor.call('singletopic.insert', _id, unitId, newTopic, name, err => {
           err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topic-add'), 'error'))
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+            Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topic-add'), 'error'))
             : Meteor.call(
-                'insert.search',
-                _id,
-                {
-                  unitId,
-                },
-                newTopic,
-                'topic',
-                err => {
-                  err
-                    ? Materialize.toast(err.reason, 4000, 'error-toast')
-                    : Materialize.toast(`Successfully added ${newTopic}`, 4000, 'success-toast');
-                },
-              );
+              'insert.search',
+              _id,
+              {
+                unitId,
+              },
+              newTopic,
+              'topic',
+              err => { // eslint-disable-line
+                err
+                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                  : M.toast({ html: `Successfully added ${newTopic}` });
+              },
+            );
         });
 
         // Meteor.call('generateSyncTopics', topics);
@@ -184,17 +190,17 @@ export class EditUnits extends Component {
         // update the topic
         Meteor.call('topic.update', modalIdentifier, newTopic, err => {
           err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'topic-edit'),
-                'error',
-              ))
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+            Meteor.call(
+              'logger',
+              formatText(err.message, Meteor.userId(), 'topic-edit'),
+              'error',
+            ))
             : Meteor.call('updateSearch', modalIdentifier, newTopic, err => {
-                err
-                  ? Materialize.toast(err.reason, 4000, 'error-toast')
-                  : Materialize.toast(`Successfully updated ${newTopic}`, 4000, 'success-toast');
-              });
+              err
+                ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                : M.toast({ html: `<span>Successfully updated ${newTopic}</span>` });
+            });
         });
         break;
       // delete topic
@@ -205,25 +211,21 @@ export class EditUnits extends Component {
           count += 1;
           Meteor.call('topic.remove', v, err => {
             err
-              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
-                Meteor.call(
-                  'logger',
-                  formatText(err.message, Meteor.userId(), 'topic-remove'),
-                  'error',
-                ))
+              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              Meteor.call(
+                'logger',
+                formatText(err.message, Meteor.userId(), 'topic-remove'),
+                'error',
+              ))
               : Meteor.call('removeSearchData', v, err => {
-                  err
-                    ? Materialize.toast(err.reason, 4000, 'error-toast')
-                    : Meteor.call('removeSearchData', v, err => {
-                        err
-                          ? Materialize.toast(err.reason, 4000, 'error-toast')
-                          : Materialize.toast(
-                              `${count} topics successfully deleted`,
-                              4000,
-                              'success-toast',
-                            );
-                      });
-                });
+                err
+                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                  : Meteor.call('removeSearchData', v, err => {
+                    err
+                      ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                      : M.toast({ html: `<span>${count} topics successfully deleted</span>` });
+                  });
+              });
           });
         });
 
@@ -244,8 +246,8 @@ export class EditUnits extends Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * Session.get('limit'));
+    const selected = data.selected;
+    const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
@@ -276,7 +278,6 @@ export class EditUnits extends Component {
   }
 
 
-
   render() {
     let { unit } = this.props;
     const limit = Session.get('limit');
@@ -284,7 +285,7 @@ export class EditUnits extends Component {
       return null;
     }
     unit = unit;
-    let {
+    const {
       details: { courseId, programId },
     } = unit;
 
@@ -379,8 +380,8 @@ export class EditUnits extends Component {
                   <T>common.manage.resources</T>
                 </th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
                   <label>
+                  <input type="checkbox" className=" chk-all" readOnly />
                     {' '}
                     <T>common.actions.check</T>
                   </label>
@@ -397,7 +398,7 @@ export class EditUnits extends Component {
 }
 
 export function getUnitId() {
-  let unitId = FlowRouter.getParam('_id');
+  const unitId = FlowRouter.getParam('_id');
   return unitId;
 }
 
@@ -406,7 +407,8 @@ export default withTracker(() => {
   Meteor.subscribe('topics');
   return {
     topics: _Topics
-      .find({
+      .find(
+{
         unitId: getUnitId(),
       },
       { skip: Session.get('skip'), limit: Session.get('limit') },
@@ -416,7 +418,7 @@ export default withTracker(() => {
     count: _Topics
       .find({
         unitId: getUnitId(),
-      }, )
+      })
       .count(),
   };
 })(EditUnits);

@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
-import M from 'materialize-css'
+import M from 'materialize-css';
 import { _Units } from '../../../api/units/units';
 import * as config from '../../../../config.json';
 
@@ -203,7 +203,6 @@ export class Unit extends Component {
                         onChange={this.handleTopicChange(index)}
                         className={`${index}`}
                         name="topic"
-                        required
                       />
                     </div>
                   ))
