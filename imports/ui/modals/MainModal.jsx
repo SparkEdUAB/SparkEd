@@ -6,7 +6,7 @@ import { ThemeContext } from '../containers/AppWrapper';
 /**
  * @prop { subFunc } a callback function for different modals
  */
-const MainModal = (props) => {
+const MainModal = props => {
   if (!props.show) {
     return null;
   }
@@ -26,7 +26,11 @@ const MainModal = (props) => {
                       backgroundColor={color.main}
                       name={props.confirm}
                     />
-                    <a href="" onClick={props.onClose} className="btn grey darken-3 right">
+                    <a
+                      href=""
+                      onClick={props.onClose}
+                      className="btn grey darken-3 right"
+                    >
                       {' '}
                       {props.reject}
                     </a>
