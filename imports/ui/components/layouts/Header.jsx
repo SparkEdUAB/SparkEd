@@ -170,7 +170,7 @@ export class Header extends Component {
   };
 
   componentDidMount() {
-    M.AutoInit()
+    M.AutoInit();
   }
 
   markAllAsVisited = bool => {
@@ -304,9 +304,8 @@ export class Header extends Component {
                       <span className="new" />
                     </div>
                   </div>
-
                   <div className="col s2 m1 head-icons ">
-                    <a className="dropdown-button inst-link " href="#" data-activates="dropdown1">
+                    <a className="dropdown-button dropdown-trigger inst-link " data-target='dropdown1' href="#" data-activates="dropdown1">
                       <i className="fa fa-user fa-2x" id="usrIcon" />
                     </a>
                     <UserInfo />
