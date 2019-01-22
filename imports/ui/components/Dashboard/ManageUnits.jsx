@@ -5,6 +5,7 @@ import { Session } from 'meteor/session';
 import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import i18n from 'meteor/universe:i18n';
+import M from 'materialize-css';
 import PropTypes from 'prop-types';
 import { _Courses } from '../../../api/courses/courses';
 import { _Units } from '../../../api/units/units';
@@ -131,7 +132,7 @@ export class ManageUnits extends Component {
         const count = unit.length;
         const _name = count > 1 ? 'units' : 'unit';
         if (count < 1) {
-          Materialize.toast('Please check atleast one unit', 4000, 'error-toast');
+          M.toast({ html: '<span>Please check atleast one unit</span>', classes: 'red'  });
           return;
         }
         this.setState({
@@ -202,12 +203,12 @@ export class ManageUnits extends Component {
         Meteor.call('unit.update', modalIdentifier, unit, description, err => {
           err
           // eslint-disable-next-line
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
             Meteor.call('logger', formatText(err.message, Meteor.userId(), 'unit-edit'), 'error'))
             : Meteor.call('updateSearch', modalIdentifier, unit, err => {
               err
-                ? Materialize.toast(err.reason, 3000, 'error-toast')
-                : Materialize.toast(`${unit} successfully updated`, 3000, 'success-toast');
+                ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                : M.toast({ html: `<span>${unit} successfully updated</span>` });
             });
         });
         break;
@@ -217,9 +218,8 @@ export class ManageUnits extends Component {
         ids.forEach(id => {
           Meteor.call('unit.remove', id, err => {
             count += 1;
-            const name = count > 1 ? 'units' : 'unit';
             err
-              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'unit-remove'),
@@ -227,23 +227,18 @@ export class ManageUnits extends Component {
               ))
               : Meteor.call('removeSearchData', id, err => {
                 err
-                  ? Materialize.toast(err.reason, 3000, 'error-toast')
+                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
                   : Meteor.call('insertDeleted', id, err => {
                     err
-                      ? Materialize.toast(err.reason, 3000, 'error-toast')
-                      : Materialize.toast(
-                        `${count} ${name} successfully deleted`,
-                        3000,
-                        'success-toast',
-                      );
+                      ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                      : M.toast({ html: `<span>${unit} successfully Deleted</span>` });
                   });
               });
           });
         });
         break;
       case 'field':
-        const name = target.course.value;
-        const title_id = Session.get('title_id');
+        return;
     }
 
     // close the modal when done;
@@ -411,8 +406,8 @@ export class ManageUnits extends Component {
                 <th>{`Edit ${newSubTitle}`}</th>
                 <th>{`Manage sub-${newSubTitle}`}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
                   <label>
+                  <input type="checkbox" className=" chk-all" readOnly />
                     <T>common.actions.check</T>
                   </label>
                 </th>
@@ -453,8 +448,10 @@ export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
       <a href={''} onClick={e => handleUrl(e, _id)} className="fa fa-pencil" />
     </td>
     <td onClick={handleCheckboxChange.bind(this, _id)}>
-      <input type="checkbox" className={` filled-in chk chk${_id}`} id={_id} />
-      <label />
+    <label htmlFor={_id}>
+          <input type="checkbox" id={_id} className={`chk chk${_id}`} />
+          <span/>
+    </label>
     </td>
   </tr>
 );

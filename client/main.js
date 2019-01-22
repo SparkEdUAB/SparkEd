@@ -1,5 +1,7 @@
 // Essential for the roles package to initialise and check if the user is in roles for real
 import { Roles } from 'meteor/alanning:roles';
+import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/dist/js/materialize';
 import '../imports/ui/stylesheets/wizard.css';
 import '../imports/ui/stylesheets/loader.css';
 import '../imports/ui/stylesheets/landing.css';

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
+import M from 'materialize-css';
 import { SearchView } from '../Utilities/Utilities.jsx';
 import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 import { _Notifications } from '../../../api/notifications/notifications';
@@ -169,16 +170,7 @@ export class Header extends Component {
   };
 
   componentDidMount() {
-    $('.dropdown-button').dropdown({
-      inDuration: 0,
-      outDuration: 0,
-      hover: false, // opens just on hover
-      constrainWidth: false, // Does not change width of dropdown to that of the activator
-      gutter: 0, // Spacing from edge
-      belowOrigin: true, // Displays dropdown below the button
-      alignment: 'left', // Displays dropdown with edge aligned to the left of button
-      stopPropagation: false, // Stops event propagation
-    });
+    M.AutoInit();
   }
 
   markAllAsVisited = bool => {
@@ -251,13 +243,14 @@ export class Header extends Component {
           <Fragment>
             <div className="container-fluid " style={{ backgroundColor: color.main }}>
               <div className="row ">
-                <div className="col s12 m6">
-                  <InstitutionDetail
-                    institution={institution}
-                    name={details.name}
-                    tagline={details.tag}
+                <div className="col s12 m5">
+                  <InstitutionDetail 
+                    institution={institution} 
+                    name={details.name} 
+                    tagline={details.tag} 
                   />
                 </div>
+                <div className="m6 offset-m6">
                 <div className="col s12 m2 hide-on-small-only">
                   <SearchView
                     action={'/results'}
@@ -320,13 +313,13 @@ export class Header extends Component {
                       <span className="new" />
                     </div>
                   </div>
-
                   <div className="col s2 m1 head-icons ">
-                    <a className="dropdown-button inst-link " href="#" data-activates="dropdown1">
+                    <a className="dropdown-button dropdown-trigger inst-link " data-target='dropdown1' href="#" data-activates="dropdown1">
                       <i className="fa fa-user fa-2x" id="usrIcon" />
                     </a>
                     <UserInfo />
                   </div>
+                </div>
                 </div>
               </div>
             </div>

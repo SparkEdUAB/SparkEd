@@ -1,6 +1,7 @@
+/* eslint no-use-before-define:0 */
 import React, { Fragment } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
+import M from 'materialize-css';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
@@ -11,7 +12,7 @@ import {
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
 import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
-import { initInput, SearchField } from '../Utilities/Utilities.jsx';
+import { SearchField } from '../Utilities/Utilities.jsx';
 import AccountEditModal from '../Utilities/Modal/EditAccounts.jsx';
 import { UserRoles } from '../Utilities/Modal/UserRoles.jsx';
 import MainModal from '../../modals/MainModal.jsx';
@@ -54,6 +55,7 @@ export class ManageAccounts extends React.Component {
 
   componentDidMount() {
     Session.set('accounts', ' active');
+    M.AutoInit();
   }
   componentWillUnmount() {
     Session.set('accounts', '');
@@ -75,11 +77,11 @@ export class ManageAccounts extends React.Component {
     this.passConfirm = passwordConfirm;
 
     if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-      Materialize.toast('Only Admins can delete a user', 4000, 'error-toast');
+      M.toast({ html: '<span >Only Admins can delete a user</span>', classes: ' red ' });
       return;
     }
     if (type !== 'edit' && count < 1) {
-      Materialize.toast('Please check atleast one user', 4000, 'error-toast');
+      M.toast({ html: '<span >Please check atleast one user</span>', classes: ' red ' });
       return;
     }
 
@@ -151,56 +153,23 @@ export class ManageAccounts extends React.Component {
       case 'delete':
         ids.forEach((v) => {
           if (v === Meteor.userId()) {
-            Materialize.toast("You can't delete yourself", 3000, 'error-toast');
+            M.toast({ html: '<span >You can\'t delete yourself</span>', classes: 'red' });
             return;
           } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-            Materialize.toast('You can not delete the admin', 4000, 'error-toast');
+            M.toast({ html: '<span >You can not delete the admin</span>', classes: 'red' });
             return;
           }
           Meteor.call('removeUser', v, err => {
             // eslint-disable-next-line
             err
-              ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+              // ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
               Meteor.call(
                 'logger',
                 formatText(err.reason, Meteor.userId(), 'user-remove'),
                 'error',
               ))
-              : Materialize.toast(`${count} ${name} successfully deleted`, 4000, 'success-toast');
-          });
-        });
-        break;
-      // user.approve
-      case 'approve':
-        ids.forEach((v) => {
-          Meteor.call('user.approve', v, err => {
-            err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
-              : Materialize.toast(`${count} ${name} successfully approved`, 4000, 'success-toast');
-          });
-        });
-
-        break;
-
-      case 'suspend':
-        ids.forEach((v) => {
-          if (v === Meteor.userId()) {
-            Materialize.toast("You can't suspend the ", 3000, 'error-toast');
-            return;
-          } else if (Roles.userIsInRole(v, ['admin'])) {
-            Materialize.toast('You can not suspend the admin', 4000, 'error-toast');
-            return;
-          }
-          Meteor.call('user.suspend', v, err => {
-            // eslint-disable-next-line
-            err
-              ? (Materialize.toast(err.reason, 4000, 'error-toast'),
-              Meteor.call(
-                'logger',
-                formatText(err.reason, Meteor.userId(), 'user-suspend'),
-                'error',
-              ))
-              : Materialize.toast(`${count} ${name} successfully suspended`, 4000, 'success-toast');
+              : M.toast({ html: `<span>${count} ${name} successfully deleted</span>` });
           });
         });
         break;
@@ -210,13 +179,13 @@ export class ManageAccounts extends React.Component {
         Meteor.call('user.update', ids, fname, err => {
           // eslint-disable-next-line
           err
-            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
             Meteor.call(
               'logger',
               formatText(err.reason, Meteor.userId(), 'user-update'),
               'error',
             ))
-            : Materialize.toast('successfully updated', 4000, 'success-toast');
+            : M.toast({ html: '<span>Successfully updated</span>' });
         });
         break;
       // eslint-disable-next-line
@@ -225,13 +194,13 @@ export class ManageAccounts extends React.Component {
         Meteor.call('promoteUser', ids[0], roles, err => {
           // eslint-disable-next-line
           err
-            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
             Meteor.call(
               'logger',
               formatText(err.reason, Meteor.userId(), 'roles-update'),
               'error',
             ))
-            : Materialize.toast('Successfully updated user roles', 4000, 'success-toast');
+            : M.toast({ html: '<span>Successfully updated user roles</span>' });
         });
         break;
         // eslint-disable-next-line
@@ -246,13 +215,13 @@ export class ManageAccounts extends React.Component {
         Meteor.call('changeUserPassword', userID, password, err => {
           // eslint-disable-next-line
           err
-            ? (Materialize.toast(err.reason, 4000, 'error-toast'),
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
             Meteor.call(
               'logger',
               formatText(err.reason, Meteor.userId(), 'pass-change'),
               'error',
             ))
-            : Materialize.toast('Successfully created user password', 4000, 'success-toast');
+            : M.toast({ html: '<span>Successfully created user password</span>' });
         });
         break;
 
@@ -400,8 +369,8 @@ export class ManageAccounts extends React.Component {
                   <T>common.actions.edit</T>
                 </th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
                   <label>
+                  <input type="checkbox" className=" chk-all" readOnly />
                     <T>common.actions.check</T>
                   </label>
                 </th>
@@ -441,12 +410,10 @@ export class ManageAccounts extends React.Component {
                       />
                     </td>
                     <td onClick={handleCheckboxChange.bind(this, user._id)}>
-                      <input
-                        type="checkbox"
-                        className={`${chkboxStatus} filled-in chk chk${user._id}`}
-                        id={user._id}
-                      />
-                      <label />
+                    <label htmlFor={user._id}>
+                      <input type="checkbox" id={user._id} className={`${chkboxStatus} chk chk${user._id}`} />
+                      <span/>
+                    </label>
                     </td>
                   </tr>
                 );
@@ -459,7 +426,6 @@ export class ManageAccounts extends React.Component {
             query={getQuery(queryParams, true)}
             totalResults={this.props.count}
           />{' '}
-          {initInput()}
         </div>
         {/* </div> */}
       </div>
@@ -516,6 +482,7 @@ export const queryParams = [
 ]; // prepare search query paramaters
 ManageAccounts.propTypes = {
   users: PropTypes.array,
+  count: PropTypes.number,
 };
 
 export default withTracker(() => {

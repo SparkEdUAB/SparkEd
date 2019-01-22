@@ -31,25 +31,14 @@ export class Home extends Component {
 
   render() {
     const { courseReady } = this.props;
-    const headers = ['course', 'topics', 'numver'];
-    const rowData = [
-      {
-        name: 'course',
-        course: 'topics',
-        index: 2,
-      },
-      {
-        name: 'course',
-        course: 'topics',
-        index: 1,
-      },
-    ];
     return (
       <ErrorBoundary>
         <Fragment>
           <div>{<ImgSlider />}</div>
           <div className="container ">
-            <div className="row ">{courseReady ? this.renderCourses() : <Loader />}</div>
+            <div className="row ">
+              {courseReady ? this.renderCourses() : <Loader />}
+            </div>
             <FloatingButton />
           </div>
         </Fragment>
@@ -62,10 +51,11 @@ Home.propTypes = {
   unit: PropTypes.array,
   courses: PropTypes.array,
   subsReady: PropTypes.bool,
+  courseReady: PropTypes.bool,
 };
 
 export default withTracker(() => {
-  let handle = Meteor.subscribe('courses');
+  const handle = Meteor.subscribe('courses');
   Meteor.subscribe('slides');
   Meteor.subscribe('titles');
   return {

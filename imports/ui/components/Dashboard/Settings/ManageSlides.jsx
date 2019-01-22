@@ -1,18 +1,17 @@
+/* eslint default-case: 0, no-case-declarations: 0, no-unused-expressions: 0 */
 import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Session } from 'meteor/session';
-import { _Slides, Slides } from '../../../../api/settings/slides';
-import Header from '../../layouts/Header.jsx';
+import M from 'materialize-css';
+import { Slides } from '../../../../api/settings/slides';
 import {
   handleCheckboxChange,
   handleCheckAll,
   getCheckBoxValues,
 } from '../../Utilities/CheckBoxHandler.jsx';
-import Sidenav from '../Sidenav.jsx';
 import UploadWrapper from '../../../../ui/modals/UploadWrapper';
 import MainModal from '../../../../ui/modals/MainModal';
-import { closeModal, schoolStates } from '../../../../ui/modals/methods.js';
+import { closeModal } from '../../../../ui/modals/methods.js';
 
 export class ManageSlides extends Component {
   constructor(props) {
@@ -32,7 +31,7 @@ export class ManageSlides extends Component {
   }
 
   componentDidMount() {
-    $('.materialboxed').materialbox();
+    M.AutoInit();
   }
 
   closeModal = () => {
@@ -42,7 +41,7 @@ export class ManageSlides extends Component {
   toggleEditModal = (ide, id = '', name = '') => {
     // check if the user has full rights
     if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-      Materialize.toast('Only Admins can edit the Manage', 4000, 'error-toast');
+      M.toast({ html: '<span>Only Admins can edit the Manage</span>' });
       return;
     }
     this.name = name;
@@ -67,7 +66,7 @@ export class ManageSlides extends Component {
         const SlideName = count > 1 ? 'slide' : 'slides';
 
         if (count < 1) {
-          Materialize.toast('Please check atleast one resource', 4000, 'error-toast');
+          M.toast({ html: '<span>Please check atleast one resource</span>' });
           return;
         }
         this.setState({
@@ -101,22 +100,21 @@ export class ManageSlides extends Component {
         const name = e.target.slide.value;
         Meteor.call('editSlides', modalIdentifier, name, err => {
           err
-            ? Materialize.toast(err.reason, 3000, 'error-toast')
-            : Materialize.toast('Successfully Updated', 3000, 'success-toast');
+            ? M.toast({ html: `<span>${err.reason}</span>` })
+            : M.toast({ html: '<span>Successfully Updated</span>' });
         });
         break;
       case 'del':
         let count = 0;
-        for (const id of ids) {
+        ids.map(id => {
           count += 1;
           const sName = count > 1 ? 'slides' : 'slide';
           Meteor.call('removeSlides', id, err => {
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
-              : Materialize.toast(`${count} ${sName} successfully deleted`, 4000, 'success-toast');
+              ? M.toast({ html: `<span>${err.reason}</span>` })
+              : M.toast({ html: `<span>${count} ${sName} successfully deleted</span>` });
           });
-        }
-
+        });
         break;
     }
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
@@ -150,8 +148,10 @@ export class ManageSlides extends Component {
         </td>
 
         <td onClick={handleCheckboxChange.bind(this, slide._id)}>
-          <input type="checkbox" className={` filled-in chk chk${slide._id}`} id={slide._id} />
-          <label />
+          <label htmlFor={slide._id}>
+            <input type="checkbox" id={slide._id} className={`chk chk${slide._id}`} />
+            <span/>
+          </label>
         </td>
       </tr>
     ));
@@ -227,8 +227,14 @@ export class ManageSlides extends Component {
                 <th>Slides Image</th>
 
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
-                  <label>Check All</label>
+                <label>
+                  <input
+                    type="checkbox"
+                    className=" chk-all"
+                    
+                  />
+                    Check All
+                  </label>
                 </th>
               </tr>
             </thead>

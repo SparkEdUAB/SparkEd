@@ -1,7 +1,9 @@
 // TODO:  properly route back to the programs, can do this by setting the id in session
+/* eslint default-case: 0, no-case-declarations: 0, no-unused-expressions: 0 */
 import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import M from 'materialize-css';
 import { _ExternalLink } from '../../../api/externallink/externallink';
 import {
   handleCheckboxChange,
@@ -43,11 +45,7 @@ export class ExternalLinks extends Component {
    */
   toggleEditModal = (ide, id = '', externalLinkTitle = '', url = '') => {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      Materialize.toast(
-        'Only Admins can edit the External links',
-        4000,
-        'error-toast',
-      );
+      M.toast({ html: '<span>Only Admins can edit the External links</span>', classes: 'red' });
       return;
     }
     this.externalLinkTitle = externalLinkTitle;
@@ -81,7 +79,7 @@ export class ExternalLinks extends Component {
         const count = externallink.length;
         const name = count > 1 ? 'external links' : 'links';
         if (count < 1) {
-          Materialize.toast('Please check atleast one ex', 4000, 'error-toast');
+          M.toast({ html: '<span>Please check atleast one external link</span>', classes: 'red' });
           return;
         }
         this.setState({
@@ -135,12 +133,14 @@ export class ExternalLinks extends Component {
           />
         </td>
         <td onClick={handleCheckboxChange.bind(this, externallink._id)}>
-          <input
-            type="checkbox"
-            className={` filled-in chk chk${externallink._id}`}
-            id={externallink._id}
-          />
-          <label />
+          <label>
+            <input
+              type="checkbox"
+              className={` chk chk${externallink._id}`}
+              id={externallink._id}
+            />
+            <span />
+          </label>
         </td>
       </tr>
     ));
@@ -159,12 +159,10 @@ export class ExternalLinks extends Component {
         url = e.target.url.value;
         Meteor.call('externallink.add', id, externalLinkTitle, url, err => {
           err
-            ? Materialize.toast(err.reason, 4000, 'error-toast')
-            : Materialize.toast(
-              `Successfully added ${externalLinkTitle} web address`,
-              4000,
-              'success-toast',
-            );
+            ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+            : M.toast({
+              html: `<span>Successfully added ${externalLinkTitle} web address</span>`,
+            });
         });
 
         break;
@@ -179,12 +177,10 @@ export class ExternalLinks extends Component {
           url,
           err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
-              : Materialize.toast(
-                `Successfully updated ${externalLinkTitle}`,
-                4000,
-                'success-toast',
-              );
+              ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+              : M.toast({
+                html: `<span>Successfully updated ${externalLinkTitle} </span>`,
+              });
           },
         );
         break;
@@ -197,15 +193,12 @@ export class ExternalLinks extends Component {
           const name = count > 1 ? 'external links' : 'external link';
           Meteor.call('externallink.remove', v, err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
-              : Materialize.toast(
-                `${count} ${name} successfully deleted`,
-                4000,
-                'success-toast',
-              );
+              ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+              : M.toast({
+                html: `<span>${count} ${name} successfully deleted </span>`,
+              });
           });
         });
-
         break;
     }
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
@@ -290,12 +283,14 @@ export class ExternalLinks extends Component {
                 <th>Created At</th>
                 <th>Edit External Link</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                <label>
                   <input
                     type="checkbox"
-                    className="filled-in chk-all"
+                    className="chk-all"
                     readOnly
                   />
-                  <label>Check All</label>
+                    Check All
+                    </label>
                 </th>
               </tr>
             </thead>

@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
+import M from 'materialize-css';
 import { _Units } from '../../../api/units/units';
 import * as config from '../../../../config.json';
 
@@ -66,10 +67,10 @@ export class Unit extends Component {
       details,
       err => {
         err
-          ? Materialize.toast(err.reason, 4000, 'error-toast')
+          ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
           : Meteor.call('insert.search', unitId, {}, unitName, 'unit', err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
               : Meteor.call(
                 'insertNotification',
                 msg,
@@ -78,17 +79,13 @@ export class Unit extends Component {
                 err => {
                   // eslint-disable-next-line
                       err
-                    ? Materialize.toast(err.reason, 4000, 'error-toast')
+                    ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
                     : (this.setState({
                       topics: [{ name: '' }],
                       description: '',
                       unitName: '',
                     }),
-                    Materialize.toast(
-                      `Added ${unitName} successfully and ${count} topics`,
-                      5000,
-                      'success-toast',
-                    ));
+                    M.toast({ html: `<span>Added ${unitName} successfully and ${count} topics</span>` }));
                 },
               );
           });
@@ -113,7 +110,7 @@ export class Unit extends Component {
           // details, this is temporaly removed
           err => {
             err
-              ? Materialize.toast(err.reason, 4000, 'error-toast')
+              ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
               : Meteor.call(
                 'insert.search',
                 _id,
@@ -123,7 +120,7 @@ export class Unit extends Component {
                 err => {
                   // eslint-disable-next-line
                     err
-                    ? Materialize.toast(err.reason, 4000, 'error-toast')
+                    ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
                     : '';
                 },
               );
@@ -206,7 +203,6 @@ export class Unit extends Component {
                         onChange={this.handleTopicChange(index)}
                         className={`${index}`}
                         name="topic"
-                        required
                       />
                     </div>
                   ))

@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-expressions */
 // TODO:  properly route back to the programs, can do this by setting the id in session
+/* eslint default-case: 0, no-case-declarations: 0 */
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
 import i18n from 'meteor/universe:i18n';
+import M from 'materialize-css';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../../api/courses/courses';
 import { Titles } from '../../../api/settings/titles';
@@ -35,13 +38,13 @@ export class Courses extends Component {
       ids: [],
       tableTitle: 'Course',
       subTitle: 'Unit',
-      lang: 'English'
+      lang: 'English',
     };
     Session.set('language', 'english');
   }
 
   componentDidMount() {
-    $('ul.tabs').tabs(); // initialize the collapsible input
+    M.AutoInit();
     Session.set('course', ' active');
     window.scrollTo(0, 0);
   }
@@ -63,11 +66,10 @@ export class Courses extends Component {
     owner = '',
   ) => {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      Materialize.toast(
-        'Only Admins and Content-Manager can edit Courses',
-        3000,
-        'error-toast',
-      );
+      M.toast({
+        html: '<span>Only Admins and Content-Manager can edit Courses</span>',
+        classes: 'red',
+      });
       return;
     }
     this.name = name;
@@ -104,11 +106,7 @@ export class Courses extends Component {
         const count = course.length;
         const name = count > 1 ? 'courses' : 'course';
         if (count < 1) {
-          Materialize.toast(
-            'Please check atleast one course',
-            3000,
-            'error-toast',
-          );
+          M.toast({ html: '<span>Please check atleast one course</span>', classes: 'red' });
           return;
         }
         this.setState({
@@ -172,9 +170,9 @@ export class Courses extends Component {
           course,
           courseCode,
           details,
-          (err, res) => {
+          err => {
             err
-              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'course-add'),
@@ -186,14 +184,10 @@ export class Courses extends Component {
                 { courseId },
                 course,
                 reference,
-                err => {
-                  err
-                    ? Materialize.toast(err.reason, 3000, 'error-toast')
-                    : Materialize.toast(
-                      `Successfully added ${course} `,
-                      3000,
-                      'success-toast',
-                    );
+                error => {
+                  error
+                    ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                    : M.toast({ html: `<span>Successfully added ${course} </span>` });
                 },
               );
           },
@@ -214,7 +208,7 @@ export class Courses extends Component {
           owner,
           err => {
             err
-              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'course-edit'),
@@ -222,12 +216,8 @@ export class Courses extends Component {
               ))
               : Meteor.call('updateSearch', modalIdentifier, course, err => {
                 err
-                  ? Materialize.toast(err.reason, 3000, 'error-toast')
-                  : Materialize.toast(
-                    `${course} Successfully updated`,
-                    3000,
-                    'success-toast',
-                  );
+                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                  : M.toast({ html: `<span>${course} Successfully updated</span>` });
               });
           },
         );
@@ -241,47 +231,41 @@ export class Courses extends Component {
           const name = count > 1 ? 'courses' : 'course';
           Meteor.call('course.remove', v, err => {
             err
-              ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'course-remove'),
                 'error',
               ))
-              : Meteor.call('removeSearchData', v),
-            err => {
-              err
-                ? Materialize.toast(err.reason, 3000, 'error-toast')
-                : Meteor.call('insertDeleted', v, err => {
+              : Meteor.call(
+                'removeSearchData', v,
+                err => { // eslint-disable-line
                   err
-                    ? Materialize.toast(err.reason, 3000, 'error-toast')
-                    : Materialize.toast(
-                      `${count} ${name} successfully deleted`,
-                      3000,
-                      'success-toast',
-                    );
-                });
-            };
+                    ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                    : Meteor.call('insertDeleted', v, err => {
+                      err
+                        ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                        : M.toast({ html: `${count} ${name} successfully deleted` });
+                    });
+                },
+              );
           });
         });
         break;
-
+        // eslint-disable-next-line
       case 'field':
         const name = target.course.value;
         const title_id = Session.get('title_id');
         // update.title'(id, title, sub)
         Meteor.call('update.title', title_id, tableTitle, subTitle, err => {
           err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
             Meteor.call(
               'logger',
               formatText(err.message, Meteor.userId(), 'update-title'),
               'error',
             ))
-            : Materialize.toast(
-              'Successfully updated the titles',
-              3000,
-              'success-toast',
-            );
+            : M.toast({ html: '<span>Successfully updated the titles</span>' });
         });
     }
     // close modal when done;
@@ -349,19 +333,13 @@ export class Courses extends Component {
           />
         </td>
         <td onClick={handleCheckboxChange.bind(this, course._id)}>
-          <input
-            type="checkbox"
-            className={`filled-in chk chk${course._id}`}
-            id={course._id}
-          />
-          <label />
+        <label htmlFor={course._id}>
+          <input type="checkbox" id={course._id} className={`chk chk${course._id}`} />
+          <span/>
+        </label>
         </td>
       </tr>
     ));
-  }
-
-  handleLanguageChange = e => {
-    console.log(e)
   }
 
   render() {
@@ -383,7 +361,7 @@ export class Courses extends Component {
     let newSubTitle = '';
     if (titles) {
       newTitle = titles.title;
-      newSubTitle = titles.subTitle;
+      newSubTitle = titles.sub_title;
       Session.setPersistent({
         title_id: titles._id,
         course_title: newTitle,
@@ -519,13 +497,12 @@ export class Courses extends Component {
                 <th>{`Edit ${newTitle}`}</th>
                 <th>{newSubTitle}</th>
                 <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                <label>
                   <input
                     type="checkbox"
-                    className="filled-in chk-all"
+                    className=" chk-all"
                     readOnly
                   />
-                  <label>
-                    {' '}
                     <T>common.actions.check</T>
                   </label>
                 </th>
