@@ -33,6 +33,7 @@ class UserInfo extends Component {
     oldPassword: '',
     passwordConfirm: '',
     error: '',
+    checked: false,
   };
 
   handleOldPasswordChange = e => {
@@ -74,6 +75,11 @@ class UserInfo extends Component {
         : FlowRouter.go('/login');
     });
   };
+  handleNightMode = () => {
+    const { checked } = this.state;
+    this.setState({ checked: !checked });
+    // change the color theme from here
+  };
 
   render() {
     const user = Meteor.user();
@@ -87,6 +93,7 @@ class UserInfo extends Component {
       oldPassword,
       passwordConfirm,
       error,
+      checked,
     } = this.state; // eslint-disable-line
     return (
       <Fragment>
@@ -140,10 +147,12 @@ class UserInfo extends Component {
                 </li>
               ) : null}
 
+              <br />
+              <br />
               <li>
                 <Languages />
               </li>
-              <li id="dropFooter">
+              <li>
                 {Roles.userIsInRole(Meteor.userId(), [
                   'admin',
                   'content-manager',
@@ -159,16 +168,27 @@ class UserInfo extends Component {
           ) : (
             <li id="dropBody">
               <div id="accName">
-                <span
-                  className="btn-flat"
-                  id="accounts-button"
+                <button
+                  className="btn teal"
                   onClick={() => FlowRouter.go('/login')}
                 >
                   You are not Logged in
-                </span>
+                </button>
               </div>
             </li>
           )}
+          <div className="switch">
+            <label>
+              Day Mode
+              <input
+                type="checkbox"
+                onChange={this.handleNightMode}
+                checked={checked}
+              />
+              <span className="lever" />
+              Night Mode
+            </label>
+          </div>
         </ul>
       </Fragment>
     );
