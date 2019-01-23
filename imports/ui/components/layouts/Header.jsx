@@ -171,6 +171,11 @@ export class Header extends Component {
 
   componentDidMount() {
     M.AutoInit();
+    var elems = document.querySelector('.sidenav');
+    var instances = M.Sidenav.init(elems, {
+      edge: 'right'
+    });
+    // instances.open()
   }
 
   markAllAsVisited = bool => {
@@ -314,10 +319,11 @@ export class Header extends Component {
                     </div>
                   </div>
                   <div className="col s2 m1 head-icons ">
-                    <a className="dropdown-button dropdown-trigger inst-link " data-target='dropdown1' href="#" data-activates="dropdown1">
+                    {/* <a className="dropdown-button dropdown-trigger inst-link " data-target='dropdown1' href="#" data-activates="dropdown1">
                       <i className="fa fa-user fa-2x" id="usrIcon" />
-                    </a>
-                    <UserInfo />
+                    </a> */}
+                     <a href="#" data-target="slide-out" className="sidenav-trigger fa fa-user fa-2x"/>
+                   
                   </div>
                 </div>
                 </div>
@@ -366,8 +372,11 @@ export class Header extends Component {
                 ''
               )}
             </MainModal>
+              <UserInfo />
+           
           </Fragment>
         )}
+     
       </ThemeContext.Consumer>
     );
   }

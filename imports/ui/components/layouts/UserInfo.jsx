@@ -108,7 +108,7 @@ class UserInfo extends Component {
             error={error}
           />
         </MainModal>
-        <ul id="dropdown1" className="dropdown-content">
+        <ul id="slide-out" className="sidenav">
           {user ? (
             <Fragment>
               <li id="dropBody">
@@ -116,25 +116,21 @@ class UserInfo extends Component {
                   {`${user.profile.name} `}
                   <span id="userEmail">{user.emails[0].address}</span>
                   <span id="uiWrapper">
-                    <a href="#" onClick={logUserOut}>
-                      <span className="btn-flat" id="accounts-button">
-                        <T>common.accounts.Logout</T>
-                      </span>
-                    </a>
+                    <button className="btn teal" onClick={logUserOut}>
+                      <T>common.accounts.Logout</T>
+                    </button>
                   </span>
                   <span id="uiWrapper">
-                    <a
-                      href="#"
+                    <button
+                      className="btn teal"
                       onClick={() =>
                         this.setState(prevState => ({
                           isOpen: !prevState.isOpen,
                         }))
                       }
                     >
-                      <span className="btn-flat" id="accounts-button">
-                        Change Password
-                      </span>
-                    </a>
+                      Change Password
+                    </button>
                   </span>
                 </div>
               </li>
@@ -144,7 +140,7 @@ class UserInfo extends Component {
                 </li>
               ) : null}
 
-              <li id="dropBody">
+              <li>
                 <Languages />
               </li>
               <li id="dropFooter">
@@ -152,14 +148,9 @@ class UserInfo extends Component {
                   'admin',
                   'content-manager',
                 ]) ? (
-                  <div className="valign center-align" id="dashStylesDrop">
-                    <span
-                      className="dashLink link waves-effect teal btn-flat"
-                      onClick={takeToDashboard}
-                    >
-                      dashboard
-                    </span>
-                  </div>
+                  <button className="btn teal" onClick={takeToDashboard}>
+                    Dashboard
+                  </button>
                 ) : (
                   <span />
                 )}
