@@ -119,4 +119,16 @@ Meteor.methods({
       },
     );
   },
+  setDarkMode(isSet) {
+    check(isSet, Boolean);
+    _Settings.update(
+      {},
+      {
+        $set: {
+          isDark: isSet,
+        },
+      },
+      { upsert: true },
+    );
+  },
 });
