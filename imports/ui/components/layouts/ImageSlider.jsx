@@ -43,9 +43,22 @@ export class ImgSlider extends Component {
     ));
   }
   render() {
+    const { isDark } = this.props;
     return (
-      <div className="slider" style={{ marginTop: '-21px' }}>
-        <ul className="slides">{this.renderSlider(this.props.slides)}</ul>
+      <div
+        className="slider"
+        style={{
+          marginTop: '-21px',
+        }}
+      >
+        <ul
+          className="slides"
+          style={{
+            backgroundColor: isDark ? '#0c0c0c' : '#9e9e9e',
+          }}
+        >
+          {this.renderSlider(this.props.slides)}
+        </ul>
       </div>
     );
   }
@@ -53,6 +66,7 @@ export class ImgSlider extends Component {
 
 ImgSlider.propTypes = {
   slides: PropTypes.array.isRequired,
+  isDark: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {

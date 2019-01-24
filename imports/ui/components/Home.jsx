@@ -9,7 +9,8 @@ import { FloatingButton } from './Utilities/Utilities.jsx';
 import ImgSlider from '../components/layouts/ImageSlider';
 import * as Config from '../../../config.json';
 import { Loader } from './Loader';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from './ErrorBoundary'; // eslint-disable-line
+import { ThemeContext } from '../containers/AppWrapper';
 
 export class Home extends Component {
   componentDidMount() {
@@ -33,15 +34,19 @@ export class Home extends Component {
     const { courseReady } = this.props;
     return (
       <ErrorBoundary>
-        <Fragment>
-          <div>{<ImgSlider />}</div>
-          <div className="container ">
-            <div className="row ">
-              {courseReady ? this.renderCourses() : <Loader />}
-            </div>
-            <FloatingButton />
-          </div>
-        </Fragment>
+        <ThemeContext.Consumer>
+          {color => (
+            <Fragment>
+              <ImgSlider isDark={color.isDark} />
+              <div className="container ">
+                <div className="row ">
+                  {courseReady ? this.renderCourses() : <Loader />}
+                </div>
+                <FloatingButton />
+              </div>
+            </Fragment>
+          )}
+        </ThemeContext.Consumer>
       </ErrorBoundary>
     );
   }
