@@ -33,7 +33,7 @@ class UserInfo extends Component {
     oldPassword: '',
     passwordConfirm: '',
     error: '',
-    checked: false,
+    checked: localStorage.getItem('isDark') || false,
   };
 
   handleOldPasswordChange = e => {
@@ -79,6 +79,7 @@ class UserInfo extends Component {
     const { checked } = await this.state;
     await this.setState({ checked: !checked });
     // change the color theme from here
+    localStorage.setItem('isDark', await this.state.checked);
     Meteor.call('setDarkMode', await this.state.checked, err => {
       if (err) {
         console.log(err.reason);
@@ -101,6 +102,7 @@ class UserInfo extends Component {
       error,
       checked,
     } = this.state; // eslint-disable-line
+    // const isChecked = 
     return (
       <Fragment>
         <MainModal
