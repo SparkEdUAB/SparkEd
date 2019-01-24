@@ -33,7 +33,7 @@ class UserInfo extends Component {
     oldPassword: '',
     passwordConfirm: '',
     error: '',
-    checked: localStorage.getItem('isDark') || false,
+    checked: Boolean(localStorage.getItem('isDark')) || false,
   };
 
   handleOldPasswordChange = e => {
@@ -102,7 +102,6 @@ class UserInfo extends Component {
       error,
       checked,
     } = this.state; // eslint-disable-line
-    // const isChecked = 
     return (
       <Fragment>
         <MainModal
