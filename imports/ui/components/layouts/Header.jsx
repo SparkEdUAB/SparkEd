@@ -246,13 +246,13 @@ export class Header extends Component {
       <ThemeContext.Consumer>
         {color => (
           <Fragment>
-            <div className="container-fluid " style={{ backgroundColor: color.main }}>
+            <div className="container-fluid " style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}>
               <div className="row ">
                 <div className="col s12 m5">
-                  <InstitutionDetail 
-                    institution={institution} 
-                    name={details.name} 
-                    tagline={details.tag} 
+                  <InstitutionDetail
+                    institution={institution}
+                    name={details.name}
+                    tagline={details.tag}
                   />
                 </div>
                 <div className="m6 offset-m6">

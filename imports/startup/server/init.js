@@ -10,6 +10,7 @@ Meteor.startup(() => {
   if (!_Settings.find().count()) {
     _Settings.insert({
       main: '#006b76',
+      mainDark: '#0c0c0c',
     });
   }
 });

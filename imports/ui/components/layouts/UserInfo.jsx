@@ -75,11 +75,11 @@ class UserInfo extends Component {
         : FlowRouter.go('/login');
     });
   };
-  handleNightMode = () => {
-    const { checked } = this.state;
-    this.setState({ checked: !checked });
+  handleNightMode = async () => {
+    const { checked } = await this.state;
+    await this.setState({ checked: !checked });
     // change the color theme from here
-    Meteor.call('setDarkMode', this.state.checked, err => {
+    Meteor.call('setDarkMode', await this.state.checked, err => {
       if (err) {
         console.log(err.reason);
       }
