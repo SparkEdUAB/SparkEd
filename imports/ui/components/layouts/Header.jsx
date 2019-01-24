@@ -319,8 +319,10 @@ export class Header extends Component {
                     <span className="fa fa-link fa-2x white-text dropdown-trigger " data-target='dropdown1' />
                   </div>
                   <div id='dropdown1' className='dropdown-content'>
+                    {/* <li className="collection-header">
+                    </li> */}
+                    <h6 className='center'>External links</h6>
                     <ul className='collection'>
-                    <li className="collection-header"><h6>External links</h6></li>
                       <ExternalLinksView externallinks={externallinks} />
                     </ul>
                   </div>

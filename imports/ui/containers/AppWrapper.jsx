@@ -9,24 +9,24 @@ import Header from '../components/layouts/Header';
 
 export const ThemeContext = React.createContext();
 
-export const AppWrapper = ({ children, colors }) => {
-  if (!colors) {
+export const AppWrapper = ({ children, color }) => {
+  if (!color) {
     return 'loading';
   }
   return (
-    <ThemeContext.Provider value={colors}>
-      <Fragment>
+    <ThemeContext.Provider value={color}>
+      <div style={{ backgroundColor: color.isDark ? '#000' : '#fff' }}>
         <Header />
         <Fragment>{children}</Fragment>
-      </Fragment>
+      </div>
     </ThemeContext.Provider>
   );
 };
 AppWrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  colors: PropTypes.object,
+  color: PropTypes.object,
 };
 
 export default withTracker(() => ({
-  colors: _Settings.findOne(), // get the current main color
+  color: _Settings.findOne(), // get the current main color
 }))(AppWrapper);
