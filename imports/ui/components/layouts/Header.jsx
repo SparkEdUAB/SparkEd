@@ -222,6 +222,7 @@ export class Header extends Component {
           confirm: '',
           reject: '',
         });
+        break;
       default:
         break;
     }
@@ -241,7 +242,7 @@ export class Header extends Component {
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
     const { externallinks, institution, details } = this.props;
-    const { name, tag, isUserAuth } = config;
+    // const { name, tag, isUserAuth } = config;
     return (
       <ThemeContext.Consumer>
         {color => (
@@ -322,7 +323,7 @@ export class Header extends Component {
                     {/* <a className="dropdown-button dropdown-trigger inst-link " data-target='dropdown1' href="#" data-activates="dropdown1">
                       <i className="fa fa-user fa-2x" id="usrIcon" />
                     </a> */}
-                     <a href="#" data-target="slide-out" className="sidenav-trigger fa fa-user fa-2x"/>
+                     <a href="#" data-target="slide-out" id="usrIcon" className="sidenav-trigger fa fa-user fa-2x"/>
                    
                   </div>
                 </div>
@@ -387,6 +388,9 @@ Header.propTypes = {
   institution: PropTypes.object,
   notificationsCount: PropTypes.number,
   notifications: PropTypes.array,
+  externallinks: PropTypes.array,
+  details: PropTypes.object,
+  query: PropTypes.string,
 };
 
 export default withTracker(() => {

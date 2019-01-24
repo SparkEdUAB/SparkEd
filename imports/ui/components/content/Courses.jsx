@@ -12,9 +12,7 @@ export const T = i18n.createComponent();
 export class Courses extends Component {
   countUnits() {
     const { units } = this.props;
-    if (!units) {
-      return null;
-    }
+    if (!units) return null;
     return units;
   }
   static redirectToUnits(id, event) {
@@ -34,7 +32,12 @@ export class Courses extends Component {
       <ThemeContext.Consumer>
         {color => (
           <div className={'col m6 s12 l4 '}>
-            <div className="card darken-2 homeCardColor" style={{ backgroundColor: color.main }}>
+            <div
+              className="card darken-2 homeCardColor"
+              style={{
+                backgroundColor: color.isDark ? color.mainDark : color.main,
+              }}
+            >
               <div className="card-content">
                 <span className={'card-title '}>
                   <h5>
@@ -51,7 +54,8 @@ export class Courses extends Component {
                   <span className="" />
                   <span className="">
                     <a href="" id="cardListTitle">
-                      &#8667; # of <T>common.manage.unit</T> : {this.countUnits()}
+                      &#8667; # of <T>common.manage.unit</T> :{' '}
+                      {this.countUnits()}
                     </a>
                   </span>
                 </span>
