@@ -33,7 +33,7 @@ class UserInfo extends Component {
     oldPassword: '',
     passwordConfirm: '',
     error: '',
-    checked: Boolean(localStorage.getItem('isDark')) || false,
+    checked: Boolean(localStorage.getItem('isDark')),
   };
 
   handleOldPasswordChange = e => {

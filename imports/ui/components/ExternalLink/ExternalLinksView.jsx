@@ -6,20 +6,17 @@ const ExternalLinksView = ({ externallinks }) => {
     return <li className={'collection-item'}> No External links!</li>;
   }
   return externallinks.map(externallink => (
-    <span key={externallink._id}>
+    <li className="collection-item" key={externallink._id}>
+      <span>{externallink.name}</span>
       <a
-        style={{ padding: '1px 10px 5px', cursor: 'pointer' }}
-        onClick={() => window.open(externallink.url, '_blank')}
+        href={externallink.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="secondary-content"
       >
-        <span>
-          <b> {externallink.name}</b> <br />
-          <span className="fa fa-link fa-2x" style={{ fontSize: '10px', color: 'blue' }}>
-            {' '}
-            <b> {externallink.url}</b>
-          </span>
-        </span>
+        {externallink.url}
       </a>
-    </span>
+    </li>
   ));
 };
 

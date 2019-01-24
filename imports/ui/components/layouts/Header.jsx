@@ -301,30 +301,31 @@ export class Header extends Component {
                         )
                     }
 
-                  <div className="col s2 m1 head-icons">
+                  {/* <div className="col s2 m1 head-icons">
                     <div href="#" data-activates="slide-out">
                       <div className="dropdownLink">
-                        <button className="dropbtnLink fa fa-link fa-2x inst-link" style={{ backgroundColor: color.main }}/>
-                        <div className="dropdownLink-content" >
-                          <a href="/externallinkpages" className="openLinks">
-                            Click here to Open all the external links in a page
-                          </a>
-                          <p className=" blue-text externalLink">
-                            <b> External Links</b>
-                          </p>
-                          <hr />
-                          <ExternalLinksView externallinks={externallinks} />
-                        </div>
-                      </div>
-                      <span className="new" />
-                    </div>
+                        <div className="col s2 m1 head-icons hide-on-med-and-up">
+                            <a
+                              href=""
+                              className="inst-link fa fa-link fa-2x"
+                              // onClick={e => this.toggleEditModal(e, 'search')}
+                            />
+                          </div>
+                          </div>
+                          <span className="new" />
+                          </div>
+                        </div> */}
+                  <div className="col s2 m1 head-icons ">
+                    <span className="fa fa-link fa-2x white-text dropdown-trigger " data-target='dropdown1' />
+                  </div>
+                  <div id='dropdown1' className='dropdown-content'>
+                    <ul className='collection'>
+                    <li className="collection-header"><h6>External links</h6></li>
+                      <ExternalLinksView externallinks={externallinks} />
+                    </ul>
                   </div>
                   <div className="col s2 m1 head-icons ">
-                    {/* <a className="dropdown-button dropdown-trigger inst-link " data-target='dropdown1' href="#" data-activates="dropdown1">
-                      <i className="fa fa-user fa-2x" id="usrIcon" />
-                    </a> */}
-                     <a href="#" data-target="slide-out" id="usrIcon" className="sidenav-trigger fa fa-user fa-2x"/>
-                   
+                     <span data-target="slide-out" id="usrIcon" className="white-text sidenav-trigger fa fa-user fa-2x"/>
                   </div>
                 </div>
                 </div>
