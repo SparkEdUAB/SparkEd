@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
+import { ThemeContext } from '../../containers/AppWrapper';
 
 export default class Resource extends Component {
   static viewResource(url) {
@@ -29,24 +30,31 @@ export default class Resource extends Component {
       const fileTypeData = fileType.split('/');
       [fileType] = fileTypeData;
       fileType = Resource.getIcon(fileType);
-      fileType = fileType === undefined ? Resource.getIcon(fileTypeData[1]) : fileType;
+      fileType =
+        fileType === undefined ? Resource.getIcon(fileTypeData[1]) : fileType;
     }
     const { resource, resourceId, topicId } = this.props;
     return (
-      <Fragment>
-        <div className="col m4">
-          <span
-            className="link"
-            onClick={Resource.viewResource.bind(
-              this,
-              `/view_resource/${topicId}?rs=${resourceId}&scid=${FlowRouter.getParam('_id')}`,
-            )}
-          >
-            <span className={`resource-item fa ${fileType}`} />
-            {resource.replace(/\.[^/.]+$/, '')}
-          </span>
-        </div>
-      </Fragment>
+      <ThemeContext.Consumer>
+        {color => (
+          <Fragment>
+            <div className="col m4">
+              <span
+                className="link"
+                onClick={Resource.viewResource.bind(
+                  this,
+                  `/view_resource/${topicId}?rs=${resourceId}&scid=${FlowRouter.getParam('_id')}`,
+                )}
+              >
+                <span className={`resource-item fa ${fileType}`} />
+                <span style={{ color: color.isDark ? '#fff' : '#000' }}>
+                  {resource.replace(/\.[^/.]+$/, '')}
+                </span>
+              </span>
+            </div>
+          </Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
