@@ -41,7 +41,7 @@ export class Unit extends Component {
           >
             <div
               className="card darken-2 homeCardColor"
-              style={{ backgroundColor: color.main }}
+              style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}
             >
               <div className="card-content">
                 {/* if the screen size is smaller then redirect to small view components */}
