@@ -171,11 +171,11 @@ export class Header extends Component {
 
   componentDidMount() {
     M.AutoInit();
-    var elems = document.querySelector('.sidenav');
-    var instances = M.Sidenav.init(elems, {
-      edge: 'right'
+    // used var intentionally
+    var elems = document.querySelector('.sidenav');  // eslint-disable-line
+    var instances = M.Sidenav.init(elems, {  // eslint-disable-line
+      edge: 'right',
     });
-    // instances.open()
   }
 
   markAllAsVisited = bool => {
