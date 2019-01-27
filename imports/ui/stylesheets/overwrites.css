@@ -24,7 +24,7 @@ nav {
   padding-top: 1%;
 }
 .topics-container {
-  background-color: #9dcde2;
+  /* background-color: #9dcde2; */
   height: 100vh;
   margin-top: -10px;
   position: sticky;

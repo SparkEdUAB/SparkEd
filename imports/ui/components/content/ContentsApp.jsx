@@ -105,7 +105,9 @@ export class ContentsApp extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col s12 m4 l3 topics-container">
+              <div className="col s12 m4 l3 topics-container"
+                style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}
+              >
                 <div className="sideNavHeadingUnderline">
                   <a
                     title="Go back to Topics"
