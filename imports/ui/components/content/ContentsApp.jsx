@@ -97,7 +97,7 @@ export class ContentsApp extends Component {
         {color => (
           <Fragment>
             <div className="row">
-              <div className=" unit-container" style={{ backgroundColor: color.main }}>
+              <div className=" unit-container" style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}>
                 <h4 className="center unit-name">{unitName}</h4>
                 <div className="container">
                   <p className="center">{desc}</p>
