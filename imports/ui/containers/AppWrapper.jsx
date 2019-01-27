@@ -15,7 +15,7 @@ export const AppWrapper = ({ children, color }) => {
   }
   return (
     <ThemeContext.Provider value={color}>
-      <div style={{ backgroundColor: color.isDark ? '#000' : '#fff' }}>
+      <div style={{ backgroundColor: color.isDark ? '#252829' : '#fff' }}>
         <Header />
         <Fragment>{children}</Fragment>
       </div>

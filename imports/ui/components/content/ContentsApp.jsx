@@ -115,7 +115,7 @@ export class ContentsApp extends Component {
                     href={''}
                     onClick={e => this.getBack(e)}
                   >
-                    <i className="fa fa-chevron-circle-left fa-lg" />
+                    <i className={`fa fa-chevron-circle-left fa-lg ${color.isDark && 'white-text'}`} />
                   </a>
                   <p className="sideNavHeading">
                     {config.isHighSchool ? title : <T>common.manage.topics</T>}
