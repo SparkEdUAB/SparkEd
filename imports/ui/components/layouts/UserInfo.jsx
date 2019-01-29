@@ -83,6 +83,7 @@ class UserInfo extends Component {
     Meteor.call('setDarkMode', await this.state.checked, err => {
       if (err) {
         console.log(err.reason);
+        return;
       }
       console.log('changed the mode');
     });
