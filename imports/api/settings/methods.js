@@ -119,16 +119,20 @@ Meteor.methods({
       },
     );
   },
+  // prevent Updating when user is not logged in
   setDarkMode(isSet) {
     check(isSet, Boolean);
-    _Settings.update(
-      {},
-      {
-        $set: {
-          isDark: isSet,
+    if (this.userId) {
+      return _Settings.update(
+        { _id: this.userId },
+        {
+          $set: {
+            isDark: isSet,
+          },
         },
-      },
-      { upsert: true },
-    );
+        // { upsert: true },
+      );
+    }
+    throw new Meteor.Error('Auth', 'You are not authenticated');
   },
 });

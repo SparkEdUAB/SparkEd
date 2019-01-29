@@ -5,6 +5,7 @@ import { _Settings } from '../../api/settings/settings';
   The file contains the initial database of the Institution and the users
 */
 
+// eslint-disable-next-line func-names
 Meteor.startup(() => {
   // initialize the main color
   if (!_Settings.find().count()) {

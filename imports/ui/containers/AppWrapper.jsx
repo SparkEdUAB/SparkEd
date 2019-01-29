@@ -4,14 +4,23 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Session } from 'meteor/session';
 import { _Settings } from '../../api/settings/settings';
 import Header from '../components/layouts/Header';
 
 export const ThemeContext = React.createContext();
 
+const colors = {
+  main: '#005555',
+  isDark: false,
+  mainDark: '#212121',
+  bodyBackground: '',
+};
+
 export const AppWrapper = ({ children, color }) => {
   if (!color) {
-    return 'loading';
+    color = colors; //eslint-disable-line
+    // return 'loading';
   }
   return (
     <ThemeContext.Provider value={color}>
@@ -28,5 +37,5 @@ AppWrapper.propTypes = {
 };
 
 export default withTracker(() => ({
-  color: _Settings.findOne(), // get the current main color
+  color: _Settings.findOne({ _id: Meteor.userId() }), // get the current main color
 }))(AppWrapper);
