@@ -124,7 +124,7 @@ Meteor.methods({
     check(isSet, Boolean);
     if (this.userId) {
       return _Settings.update(
-        { _id: this.userId },
+        {},
         {
           $set: {
             isDark: isSet,

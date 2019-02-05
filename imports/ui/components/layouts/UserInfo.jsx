@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
 import { Roles } from 'meteor/alanning:roles';
 import i18n from 'meteor/universe:i18n';
 import Languages from '../Language/Languages';
@@ -78,8 +79,11 @@ class UserInfo extends Component {
   handleNightMode = async () => {
     const { checked } = await this.state;
     await this.setState({ checked: !checked });
+    // Session.setPersistent({
+    //   isDark: await checked,
+    // });
     // change the color theme from here
-    localStorage.setItem('isDark', await this.state.checked);
+    // localStorage.setItem('isDark', await this.state.checked);
     Meteor.call('setDarkMode', await this.state.checked, err => {
       if (err) {
         console.log(err.reason);
