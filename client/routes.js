@@ -17,6 +17,7 @@ import EditResources from '../imports/ui/components/Dashboard/EditResources.jsx'
 import NotFound from '../imports/ui/components/layouts/NotFound';
 import OverView from '../imports/ui/components/Dashboard/Statistics/Overview.jsx';
 import UserStatistics from '../imports/ui/components/Dashboard/Statistics/UserStatistics';
+import Stats from '../imports/ui/components/Dashboard/Statistics/Stats';
 import AllTopics from '../imports/ui/components/Dashboard/AllTopics.jsx';
 import Feedback from '../imports/ui/components/Dashboard/Feedback.jsx';
 import Additional from '../imports/ui/components/Dashboard/Additional.jsx';
@@ -53,7 +54,9 @@ const adminRoutes = FlowRouter.group({
     () => {
       if (!(Meteor.loggingIn() || Meteor.userId())) {
         return FlowRouter.go('/login');
-      } else if (!Roles.userIsInRole(Meteor.userId(), ['content-manager', 'admin'])) {
+      } else if (
+        !Roles.userIsInRole(Meteor.userId(), ['content-manager', 'admin'])
+      ) {
         return FlowRouter.go('/');
       }
     },
@@ -256,6 +259,12 @@ adminRoutes.route('/dashboard/settings', {
   name: 'Institution',
   action() {
     mount(WrappedSidenav, { yield: <Institution /> });
+  },
+});
+adminRoutes.route('/dashboard/stats', {
+  name: 'Stats',
+  action() {
+    mount(WrappedSidenav, { yield: <Stats /> });
   },
 });
 

@@ -25,6 +25,14 @@ const Sidenav = props => (
             </li>
             <li>
               <a
+                href="/dashboard/stats"
+                className={`  side-list ${props.stats}`}
+              >
+                <span className="hide-on-small-only">&nbsp; Stats</span>
+              </a>
+            </li>
+            <li>
+              <a
                 href="/dashboard/accounts"
                 className={`  side-list ${props.accounts}`}
               >
@@ -124,14 +132,7 @@ const Sidenav = props => (
                     </span>
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="/dashboard/update_theme"
-                    className={`  side-list ${props.theme}`}
-                  >
-                    <span className="hide-on-small-only">&nbsp; Theme</span>
-                  </a>
-                </li>
+
                 <li>
                   <a
                     href="/dashboard/slides"
