@@ -75,22 +75,7 @@ class UserInfo extends Component {
         : FlowRouter.go('/login');
     });
   };
-  // handleNightMode = async () => {
-  //   const { checked } = await this.state;
-  //   await this.setState({ checked: !checked });
-  //   // Session.setPersistent({
-  //   //   isDark: await checked,
-  //   // });
-  //   // change the color theme from here
-  //   // localStorage.setItem('isDark', await this.state.checked);
-  //   Meteor.call('setDarkMode', await this.state.checked, err => {
-  //     if (err) {
-  //       console.log(err.reason);
-  //       return;
-  //     }
-  //     console.log('changed the mode');
-  //   });
-  // };
+
 
   render() {
     const user = Meteor.user();

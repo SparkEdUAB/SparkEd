@@ -30,12 +30,12 @@ export class Courses extends Component {
     } = this.props;
     return (
       <ThemeContext.Consumer>
-        {color => (
+        {({ state }) => (
           <div className={'col m6 s12 l4 '}>
             <div
               className="card darken-2 homeCardColor"
               style={{
-                backgroundColor: color.isDark ? color.mainDark : color.main,
+                backgroundColor: state.isDark ? state.mainDark : state.main,
               }}
             >
               <div className="card-content">
