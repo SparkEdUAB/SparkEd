@@ -35,9 +35,9 @@ export class Home extends Component {
     return (
       <ErrorBoundary>
         <ThemeContext.Consumer>
-          {color => (
+          {({ state }) => (
             <Fragment>
-              <ImgSlider isDark={color.isDark} />
+              <ImgSlider isDark={state.isDark} />
               <div className="container ">
                 <div className="row ">
                   {courseReady ? this.renderCourses() : <Loader />}
