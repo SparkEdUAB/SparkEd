@@ -36,7 +36,7 @@ nav {
   font-size: 17px;
 }
 .menu_simple {
-  background-color: #005555;
+  /* background-color: #005555; */
   margin-top: -11px;
   position: sticky;
   height: 100vh;
