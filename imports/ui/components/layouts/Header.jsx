@@ -95,18 +95,19 @@ export class Header extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
-  renderNotifications(nameClass) {
+  renderNotifications(nameClass, color) {
     const { notifications } = this.props;
     if (!notifications || !notifications.length) {
-      return <li className={`collection-item ${nameClass}`}> No new notifications!</li>;
+      return <span className={`collection-item ${nameClass}`}> No new notifications!</span>;
     }
     notifications.length = 5;
     return notifications.map(notification => (
-      <li key={notification._id}>
+      <div key={notification._id} 
+        style={{backgroundColor: color}}>
         {notification.read ? (
           <ul>
             <li
-              style={{ backgroundColor: 'white', padding: '1px 10px 5px', cursor: 'pointer' }}
+              style={{ padding: '1px 10px 5px', cursor: 'pointer' }}
               onClick={e =>
                 this.handleUrl(
                   this,
@@ -159,7 +160,7 @@ export class Header extends Component {
           </ul>
         )}
         <hr />
-      </li>
+      </div>
     ));
   }
 
@@ -334,12 +335,12 @@ export class Header extends Component {
                       href=""
                       className=" blue-text "
                       style={{ fontSize: '11px' }}
-                      onClick={e => this.markAllAsVisited(true)}
+                      onClick={() => this.markAllAsVisited(true)}
                     >
                       <u> Mark opened as read</u>
                     </a>
                   </div>
-                  <ul className="collection">{this.renderNotifications('')}</ul>
+                  {this.renderNotifications('', state.isDark && state.mainDark)}
                 </div>
               ) : modalType === 'bookmark' ? (
                 <Bookmark />

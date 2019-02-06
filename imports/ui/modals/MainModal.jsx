@@ -12,9 +12,15 @@ const MainModal = props => {
   }
   return (
     <ThemeContext.Consumer>
-      {color => (
+      {({ state }) => (
         <div id="notifications">
-          <div id="notificationsStyle" className="main_modal">
+          <div
+            id="notificationsStyle"
+            className="main_modal"
+            style={{
+              backgroundColor: state.isDark ? state.mainDark : '#ffffff',
+            }}
+          >
             <h5>{props.title}</h5>
             <div className="row">
               <form onSubmit={props.subFunc}>
@@ -23,7 +29,7 @@ const MainModal = props => {
                   <div className="modal-footer">
                     <Button
                       title={props.confirm}
-                      backgroundColor={color.main}
+                      backgroundColor={state.main}
                       name={props.confirm}
                     />
                     <a

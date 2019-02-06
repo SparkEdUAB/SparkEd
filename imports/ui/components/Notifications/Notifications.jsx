@@ -32,8 +32,8 @@ export class Notifications extends Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * Session.get('limit'));
+    const selected = data.selected;
+    const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
@@ -91,10 +91,11 @@ export class Notifications extends Component {
 
   markAllAsVisited(bool) {
     const allNotifications = this.props.notifications;
-    return allNotifications.map(function(notifications) {
-      id = notifications._id;
-      userId = Meteor.userId();
-      Meteor.call('markRead', id, bool);
+    // eslint-disable-next-line
+    return allNotifications.map(notifications => {
+      let id = notifications._id; // eslint-disable-line
+      userId = Meteor.userId(); // eslint-disable-line
+      Meteor.call('markRead', id, bool); // eslint-disable-next-line
     });
   }
 
@@ -105,7 +106,11 @@ export class Notifications extends Component {
     } else if (notificationsCount === 0) {
       return (
         <li className="collection-item col m12 s12">
-          <a className="notification-item" href="#" style={{ fontSize: '16px' }}>
+          <a
+            className="notification-item"
+            href="#"
+            style={{ fontSize: '16px' }}
+          >
             You have no new notifications
           </a>
         </li>
@@ -116,7 +121,11 @@ export class Notifications extends Component {
         {notification.read === true ? (
           <ul>
             <li
-              style={{ backgroundColor: 'white', padding: '1px 10px 5px', cursor: 'pointer' }}
+              style={{
+                backgroundColor: 'white',
+                padding: '1px 10px 5px',
+                cursor: 'pointer',
+              }}
               onClick={Notifications.handleUrl.bind(
                 this,
                 notification.unitId,
@@ -141,7 +150,11 @@ export class Notifications extends Component {
         ) : (
           <ul>
             <li
-              style={{ backgroundColor: '#edf2fa', padding: '1px 10px 5px', cursor: 'pointer' }}
+              style={{
+                backgroundColor: '#edf2fa',
+                padding: '1px 10px 5px',
+                cursor: 'pointer',
+              }}
               onClick={Notifications.handleUrl.bind(
                 this,
                 notification.unitId,
@@ -187,7 +200,9 @@ export class Notifications extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { modalType } = this.state;
-    const notes = _Notifications.find({ read: true, userId: Meteor.userId() }).fetch();
+    const notes = _Notifications
+      .find({ read: true, userId: Meteor.userId() })
+      .fetch();
     const allNotes = _Notifications.find({ userId: Meteor.userId() }).fetch();
     const notesCount = notes.length;
     switch (modalType) {
@@ -195,14 +210,22 @@ export class Notifications extends Component {
         Meteor.call('dropAllUserNotifications', err => {
           err
             ? Materialize.toast(err.reason, 3000, 'error-toast')
-            : Materialize.toast(`cleared ${allNotes.length} notifications`, 3000, 'success-toast');
+            : Materialize.toast(
+              `cleared ${allNotes.length} notifications`,
+              3000,
+              'success-toast',
+            );
         });
         break;
       case 'read only':
         Meteor.call('dropUserNotifications', err => {
           err
             ? Materialize.toast(err.reason, 3000, 'error-toast')
-            : Materialize.toast(`cleared ${notesCount} notifications`, 3000, 'success-toast');
+            : Materialize.toast(
+              `cleared ${notesCount} notifications`,
+              3000,
+              'success-toast',
+            );
         });
         break;
       default:
@@ -260,7 +283,8 @@ export class Notifications extends Component {
               <div>
                 <br /> <br />
                 <span className=" blue-text" style={{ fontSize: '16px' }}>
-                  <b>Your Notifications</b> ({this.props.unreadNotificationsCount})
+                  <b>Your Notifications</b> (
+                  {this.props.unreadNotificationsCount})
                 </span>
                 <div className=" right">
                   <a
@@ -297,12 +321,11 @@ export class Notifications extends Component {
 }
 
 export function getuserId() {
-  let user = Meteor.user();
+  const user = Meteor.user();
   if (user) {
     return user._id;
-  } else {
-    return '';
   }
+  return '';
 }
 
 Notifications.propTypes = {
@@ -316,10 +339,15 @@ export default withTracker(() => {
   return {
     // Show the newly created N notifications
     notifications: _Notifications
-      .find({ userId: getuserId() }, { skip: Session.get('skip'), limit: Session.get('limit') })
+      .find(
+        { userId: getuserId() },
+        { skip: Session.get('skip'), limit: Session.get('limit') },
+      )
       .fetch()
       .reverse(),
     notificationsCount: _Notifications.find({ userId: getuserId() }).count(),
-    unreadNotificationsCount: _Notifications.find({ userId: getuserId(), read: false }).count(),
+    unreadNotificationsCount: _Notifications
+      .find({ userId: getuserId(), read: false })
+      .count(),
   };
 })(Notifications);
