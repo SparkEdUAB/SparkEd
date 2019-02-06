@@ -245,9 +245,9 @@ export class Header extends Component {
     // const { name, tag, isUserAuth } = config;
     return (
       <ThemeContext.Consumer>
-        {color => (
+        {({ state }) => (
           <Fragment>
-            <div className="container-fluid " style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}>
+            <div className="container-fluid " style={{ backgroundColor: state.isDark ? state.mainDark : state.main }}>
               <div className="row ">
                 <div className="col s12 m5">
                   <InstitutionDetail
