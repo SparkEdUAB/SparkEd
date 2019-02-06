@@ -7,6 +7,7 @@ import Languages from '../Language/Languages';
 import ChangePassword from './ChangePassword';
 import MainModal from '../../modals/MainModal';
 import { checkPassword } from '../Accounts/AccountFunction';
+import { ThemeContext } from '../../containers/AppWrapper';
 
 const T = i18n.createComponent();
 
@@ -76,7 +77,6 @@ class UserInfo extends Component {
     });
   };
 
-
   render() {
     const user = Meteor.user();
     const {
@@ -91,101 +91,109 @@ class UserInfo extends Component {
       error,
     } = this.state; // eslint-disable-line
     return (
-      <Fragment>
-        <MainModal
-          show={isOpen}
-          onClose={this.close}
-          subFunc={this.handleSubmit}
-          title={title}
-          confirm={confirm}
-          reject={reject}
-        >
-          <ChangePassword
-            handleOldPassword={this.handleOldPasswordChange}
-            handleNewPassword={this.handlePasswordConfirm}
-            validatePassword={this.validatePassword}
-            oldPassword={oldPassword}
-            newPassword={password}
-            validatedPassword={passwordConfirm}
-            error={error}
-          />
-        </MainModal>
-        <ul id="slide-out" className="sidenav">
-          {user ? (
-            <Fragment>
-              <li id="dropBody">
-                <div id="accName">
-                  {`${user.profile.name} `}
-                  <span id="userEmail">{user.emails[0].address}</span>
-                  <span id="uiWrapper">
-                    <button className="btn teal" onClick={logUserOut}>
-                      <T>common.accounts.Logout</T>
-                    </button>
-                  </span>
-                  <span id="uiWrapper">
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <div >
+            <MainModal
+              show={isOpen}
+              onClose={this.close}
+              subFunc={this.handleSubmit}
+              title={title}
+              confirm={confirm}
+              reject={reject}
+            >
+              <ChangePassword
+                handleOldPassword={this.handleOldPasswordChange}
+                handleNewPassword={this.handlePasswordConfirm}
+                validatePassword={this.validatePassword}
+                oldPassword={oldPassword}
+                newPassword={password}
+                validatedPassword={passwordConfirm}
+                error={error}
+              />
+            </MainModal>
+            <ul id="slide-out" className="sidenav"
+                style={{
+                  backgroundColor: state.isDark ? state.mainDark : '#ffffff',
+                }}
+            >
+              {user ? (
+                <Fragment>
+                  <li id="dropBody">
+                    <div id="accName">
+                      {`${user.profile.name} `}
+                      <span id="userEmail">{user.emails[0].address}</span>
+                      <span id="uiWrapper">
+                        <button className="btn teal" onClick={logUserOut}>
+                          <T>common.accounts.Logout</T>
+                        </button>
+                      </span>
+                      <span id="uiWrapper">
+                        <button
+                          className="btn teal"
+                          onClick={() =>
+                            this.setState(prevState => ({
+                              isOpen: !prevState.isOpen,
+                            }))
+                          }
+                        >
+                          Change Password
+                        </button>
+                      </span>
+                    </div>
+                  </li>
+                  {Meteor.userId() && isVisible ? (
+                    <li>
+                      <ChangePassword />
+                    </li>
+                  ) : null}
+
+                  <br />
+                  <br />
+                  <li>
+                    <Languages />
+                  </li>
+                  <li>
+                    {Roles.userIsInRole(Meteor.userId(), [
+                      'admin',
+                      'content-manager',
+                    ]) ? (
+                      <button className="btn teal" onClick={takeToDashboard}>
+                        Dashboard
+                      </button>
+                    ) : (
+                      <span />
+                    )}
+                  </li>
+                </Fragment>
+              ) : (
+                <li id="dropBody">
+                  <div id="accName">
                     <button
                       className="btn teal"
-                      onClick={() =>
-                        this.setState(prevState => ({
-                          isOpen: !prevState.isOpen,
-                        }))
-                      }
+                      onClick={() => FlowRouter.go('/login')}
                     >
-                      Change Password
+                      You are not Logged in
                     </button>
-                  </span>
-                </div>
-              </li>
-              {Meteor.userId() && isVisible ? (
-                <li>
-                  <ChangePassword />
+                  </div>
                 </li>
-              ) : null}
-
-              <br />
-              <br />
-              <li>
-                <Languages />
-              </li>
-              <li>
-                {Roles.userIsInRole(Meteor.userId(), [
-                  'admin',
-                  'content-manager',
-                ]) ? (
-                  <button className="btn teal" onClick={takeToDashboard}>
-                    Dashboard
-                  </button>
-                ) : (
-                  <span />
-                )}
-              </li>
-            </Fragment>
-          ) : (
-            <li id="dropBody">
-              <div id="accName">
-                <button
-                  className="btn teal"
-                  onClick={() => FlowRouter.go('/login')}
-                >
-                  You are not Logged in
-                </button>
+              )}
+              <div className="switch">
+                <label>
+                  Day Mode
+                  <input
+                    type="checkbox"
+                    onChange={this.props.handleNightMode}
+                    checked={this.props.checked}
+                  />
+                  <span className="lever" />
+                  Night Mode
+                </label>
               </div>
-            </li>
-          )}
-          <div className="switch">
-            <label>
-              Day Mode
-              <input
-                type="checkbox"
-                onChange={this.props.handleNightMode}
-                checked={this.props.checked}
-              />
-              <span className="lever" />
-              Night Mode
-            </label>
+            </ul>
           </div>
-        </ul>
-      </Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
