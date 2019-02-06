@@ -95,20 +95,24 @@ export class Header extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
-  renderNotifications(nameClass, color) {
+  renderNotifications(nameClass, color, backgroundColor) {
     const { notifications } = this.props;
     if (!notifications || !notifications.length) {
       return <span className={`collection-item ${nameClass}`}> No new notifications!</span>;
     }
     notifications.length = 5;
     return notifications.map(notification => (
-      <div key={notification._id} 
-        style={{backgroundColor: color}}>
+      <div key={ notification._id }
+        style={{ backgroundColor: color }}>
         {notification.read ? (
-          <ul>
+          <ul
+          style={{
+            backgroundColor,
+          }}
+          >
             <li
-              style={{ padding: '1px 10px 5px', cursor: 'pointer' }}
-              onClick={e =>
+              style={{ padding: '1px 10px 5px', cursor: 'pointer', color }}
+              onClick={() =>
                 this.handleUrl(
                   this,
                   notification.unitId,
@@ -132,10 +136,12 @@ export class Header extends Component {
             </li>
           </ul>
         ) : (
-          <ul>
+          <ul style={{
+            backgroundColor,
+          }}>
             <li
-              style={{ backgroundColor: '#edf2fa', padding: '1px 10px 5px', cursor: 'pointer' }}
-              onClick={e =>
+              style={{ padding: '1px 10px 5px', cursor: 'pointer', color }}
+              onClick={() =>
                 this.handleUrl(
                   this,
                   notification.unitId,
@@ -340,7 +346,7 @@ export class Header extends Component {
                       <u> Mark opened as read</u>
                     </a>
                   </div>
-                  {this.renderNotifications('', state.isDark && state.mainDark)}
+                  {this.renderNotifications('', state.isDark && '#ffffff', state.isDark && state.mainDark)}
                 </div>
               ) : modalType === 'bookmark' ? (
                 <Bookmark />
