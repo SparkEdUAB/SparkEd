@@ -93,7 +93,7 @@ class UserInfo extends Component {
     return (
       <ThemeContext.Consumer>
         {({ state }) => (
-          <div >
+          <div>
             <MainModal
               show={isOpen}
               onClose={this.close}
@@ -112,10 +112,12 @@ class UserInfo extends Component {
                 error={error}
               />
             </MainModal>
-            <ul id="slide-out" className="sidenav"
-                style={{
-                  backgroundColor: state.isDark ? state.mainDark : '#ffffff',
-                }}
+            <ul
+              id="slide-out"
+              className="sidenav"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : '#ffffff',
+              }}
             >
               {user ? (
                 <Fragment>
@@ -124,7 +126,7 @@ class UserInfo extends Component {
                       {`${user.profile.name} `}
                       <span id="userEmail">{user.emails[0].address}</span>
                       <span id="uiWrapper">
-                        <button className="btn teal" onClick={logUserOut}>
+                        <button className="btn" onClick={logUserOut}>
                           <T>common.accounts.Logout</T>
                         </button>
                       </span>
