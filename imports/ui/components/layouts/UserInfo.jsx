@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 import { Roles } from 'meteor/alanning:roles';
+import PropTypes from 'prop-types';
 import i18n from 'meteor/universe:i18n';
 import Languages from '../Language/Languages';
 import ChangePassword from './ChangePassword';
@@ -34,7 +34,6 @@ class UserInfo extends Component {
     oldPassword: '',
     passwordConfirm: '',
     error: '',
-    checked: Boolean(localStorage.getItem('isDark')),
   };
 
   handleOldPasswordChange = e => {
@@ -105,7 +104,6 @@ class UserInfo extends Component {
       oldPassword,
       passwordConfirm,
       error,
-      checked,
     } = this.state; // eslint-disable-line
     return (
       <Fragment>
@@ -195,7 +193,7 @@ class UserInfo extends Component {
               <input
                 type="checkbox"
                 onChange={this.props.handleNightMode}
-                checked={checked}
+                checked={this.props.checked}
               />
               <span className="lever" />
               Night Mode
@@ -206,5 +204,9 @@ class UserInfo extends Component {
     );
   }
 }
+UserInfo.propTypes = {
+  handleNightMode: PropTypes.func.isRequired,
+  checked: PropTypes.bool.isRequired,
+};
 
 export default UserInfo;

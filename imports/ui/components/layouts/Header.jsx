@@ -361,7 +361,7 @@ export class Header extends Component {
                 ''
               )}
             </MainModal>
-              <UserInfo handleNightMode={toggle} />
+              <UserInfo handleNightMode={toggle} checked={state.isDark}/>
            
           </Fragment>
         )}
