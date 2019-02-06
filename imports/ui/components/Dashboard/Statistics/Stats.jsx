@@ -7,6 +7,7 @@ import { _Courses } from '../../../../api/courses/courses';
 import { _Units } from '../../../../api/units/units';
 import { _Topics } from '../../../../api/topics/topics';
 import { Resources, References } from '../../../../api/resources/resources';
+import { ThemeContext } from '../../../containers/AppWrapper'; // eslint-disable-line
 
 export function StatsView({
   users,
@@ -30,15 +31,24 @@ export function StatsView({
 
 function StatCard({ count, type }) {
   return (
-    <div className="col s6 m4">
-      <div className="card-panel teal">
-        <h1 className="white-text center-align">
-          <CountUp start={0} end={count} />
-        </h1>
-        <br />
-        <h5 className="white-text center-align">{type}</h5>
-      </div>
-    </div>
+    <ThemeContext.Consumer>
+      {({ state }) => (
+        <div className="col s6 m4">
+          <div
+            className="card-panel"
+            style={{
+              backgroundColor: state.isDark ? state.mainDark : state.main,
+            }}
+          >
+            <h1 className="white-text center-align">
+              <CountUp start={0} end={count} />
+            </h1>
+            <br />
+            <h5 className="white-text center-align">{type}</h5>
+          </div>
+        </div>
+      )}
+    </ThemeContext.Consumer>
   );
 }
 
@@ -72,4 +82,3 @@ export default withTracker(() => {
     references: References.find().count(),
   };
 })(StatsView);
-// export default StatsView;
