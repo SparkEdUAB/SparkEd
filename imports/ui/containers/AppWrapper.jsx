@@ -18,11 +18,8 @@ export default class AppWrapper extends React.Component {
     }));
   };
   render() {
-    const { color, children } = this.props;
+    const { children } = this.props;
     const { isDark } = this.state;
-    if (!color) {
-      return 'loading';
-    }
     return (
       <ThemeContext.Provider
         value={{ state: this.state, toggle: this.toggleDarkMode }}
