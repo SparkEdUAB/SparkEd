@@ -116,31 +116,44 @@ export class ExtraResource extends Component {
   render() {
     const { courseId, resourceId, name, fileType } = this.props;
     return (
-      <div
-        className={'col m6 s12 l4 homeCards cse-unit link-unit '}
-        title={fileType}
-        onClick={ExtraResource.handleClickCard.bind(this, courseId, resourceId)}
-      >
-        <div className="card-panel homeCardColor-2 teal">
-          <span className={'card-title '}>
-            <h5>
-              <a
-                href={`/extra/view_resource/${courseId}?rs=${resourceId}`}
-                id="cardListTitle"
-              >
-                {name.replace(/\.[^/.]+$/, '')}
-              </a>
-            </h5>
-          </span>
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <div
+            className={'col m6 s12 l4 homeCards cse-unit link-unit '}
+            title={fileType}
+            onClick={ExtraResource.handleClickCard.bind(
+              this,
+              courseId,
+              resourceId,
+            )}
+          >
+            <div
+              className="card-panel homeCardColor-2"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : state.main,
+              }}
+            >
+              <span className={'card-title '}>
+                <h5>
+                  <a
+                    href={`/extra/view_resource/${courseId}?rs=${resourceId}`}
+                    id="cardListTitle"
+                  >
+                    {name.replace(/\.[^/.]+$/, '')}
+                  </a>
+                </h5>
+              </span>
 
-          <span className="">
-            <a href="" id="cardListTitle">
-              {' '}
-              &#8667; Type : {fileType}{' '}
-            </a>
-          </span>
-        </div>
-      </div>
+              <span className="">
+                <a href="" id="cardListTitle">
+                  {' '}
+                  &#8667; Type : {fileType}{' '}
+                </a>
+              </span>
+            </div>
+          </div>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
