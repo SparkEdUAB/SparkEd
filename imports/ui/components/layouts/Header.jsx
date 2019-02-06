@@ -245,7 +245,7 @@ export class Header extends Component {
     // const { name, tag, isUserAuth } = config;
     return (
       <ThemeContext.Consumer>
-        {({ state }) => (
+        {({ state, toggle }) => (
           <Fragment>
             <div className="container-fluid " style={{ backgroundColor: state.isDark ? state.mainDark : state.main }}>
               <div className="row ">
@@ -300,21 +300,6 @@ export class Header extends Component {
                         </div>
                         )
                     }
-
-                  {/* <div className="col s2 m1 head-icons">
-                    <div href="#" data-activates="slide-out">
-                      <div className="dropdownLink">
-                        <div className="col s2 m1 head-icons hide-on-med-and-up">
-                            <a
-                              href=""
-                              className="inst-link fa fa-link fa-2x"
-                              // onClick={e => this.toggleEditModal(e, 'search')}
-                            />
-                          </div>
-                          </div>
-                          <span className="new" />
-                          </div>
-                        </div> */}
                   <div className="col s2 m1 head-icons ">
                     <span className="fa fa-link fa-2x white-text dropdown-trigger " data-target='dropdown1' />
                   </div>
@@ -376,7 +361,7 @@ export class Header extends Component {
                 ''
               )}
             </MainModal>
-              <UserInfo />
+              <UserInfo handleNightMode={toggle} />
            
           </Fragment>
         )}
