@@ -8,14 +8,15 @@ export const ThemeContext = React.createContext();
 
 export default class AppWrapper extends React.Component {
   state = {
-    isDark: false,
+    isDark: JSON.parse(localStorage.getItem('isDark')),
     mainDark: '#212121',
     main: '#005555',
   };
-  toggleDarkMode = () => {
-    this.setState(state => ({
+  toggleDarkMode = async () => {
+    await this.setState(state => ({
       isDark: !state.isDark,
     }));
+    await localStorage.setItem('isDark', JSON.parse(this.state.isDark));
   };
   render() {
     const { children } = this.props;

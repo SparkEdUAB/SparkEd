@@ -5,7 +5,7 @@ import * as config from '../../../../config.json';
 import AppWrapper from '../../containers/AppWrapper'; // eslint-disable-line
 import i18n from 'meteor/universe:i18n'; // eslint-disable-line
 import '../../stylesheets/overlay.css';
-import { ThemeContext } from '../../containers/AppWrapper';  // eslint-disable-line
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 const T = i18n.createComponent();
 
