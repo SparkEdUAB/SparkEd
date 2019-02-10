@@ -7,6 +7,7 @@ const PasswordEdit = ({
   validatePassword,
   confirmPassword,
   error,
+  color,
 }) => (
   <Fragment>
     <div className="row">
@@ -16,6 +17,7 @@ const PasswordEdit = ({
           defaultValue={password}
           className="validate field"
           placeholder="New Password"
+          style={{ color }}
           name="password"
           onChange={validatePassword}
         />
@@ -28,6 +30,7 @@ const PasswordEdit = ({
           defaultValue={passwordConfirm}
           className="validate field"
           placeholder="Confirm Password"
+          style={{ color }}
           name="confirm-password"
           onChange={confirmPassword}
         />
@@ -42,6 +45,7 @@ const PasswordEdit = ({
 PasswordEdit.propTypes = {
   password: PropTypes.string.isRequired,
   passwordConfirm: PropTypes.string.isRequired,
+  color: PropTypes.string,
   error: PropTypes.string.isRequired,
   validatePassword: PropTypes.func.isRequired,
   confirmPassword: PropTypes.func.isRequired,

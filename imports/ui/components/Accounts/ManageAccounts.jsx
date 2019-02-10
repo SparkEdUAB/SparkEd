@@ -265,10 +265,11 @@ export class ManageAccounts extends React.Component {
           reject={reject}
           >
           {modalType === 'edit' ? (
-            <AccountEditModal email={email} fname={fname} />
+            <AccountEditModal email={email} fname={fname} color={ state.isDark ? '#F5FAF8' : '#000000' } />
             ) : modalType === 'roles' ? (
               <div className="input-field">
-              <UserRoles value={this.state.role} />
+              <UserRoles value={this.state.role}
+                color={ state.isDark ? '#F5FAF8' : '#000000' } />
             </div>
           ) :
             modalType === 'pass' ? (
@@ -277,6 +278,7 @@ export class ManageAccounts extends React.Component {
               validatePassword={this.validatePassword}
               confirmPassword={this.confirmPassword}
               error={error}
+              color={ state.isDark ? '#F5FAF8' : '#000000' }
               />
               ) :
             <span />
