@@ -481,7 +481,7 @@ export class Courses extends Component {
             <div className="col m9 s11"
               style={{
                 backgroundColor: state.isDark ? state.mainDark : state.main,
-                color: state.isDark ? '#ffffff' : '#000000',
+                color: state.isDark ? '#F5FAF8' : '#000000',
               }}
             >
               <div className="">
