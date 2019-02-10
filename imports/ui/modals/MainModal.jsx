@@ -19,6 +19,7 @@ const MainModal = props => {
             className="main_modal"
             style={{
               backgroundColor: state.isDark ? state.mainDark : '#ffffff',
+              color: state.isDark ? '#F5FAF8' : '#000000',
             }}
           >
             <h5>{props.title}</h5>

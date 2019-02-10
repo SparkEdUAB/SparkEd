@@ -422,6 +422,7 @@ export class Courses extends Component {
                         value={tableTitle}
                         placeholder={tableTitle}
                         name="course"
+                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                         type="text"
                         className="validate"
                         onChange={e => this.saveTitle(e, 'title')}
@@ -433,6 +434,7 @@ export class Courses extends Component {
                         name="edit_course"
                         type="text"
                         className="validate"
+                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                         readOnly
                       />
                     </div>
@@ -442,6 +444,7 @@ export class Courses extends Component {
                         name="edit_course"
                         type="text"
                         className="validate"
+                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                         onChange={e => this.saveTitle(e, 'sub')}
                       />
                     </div>
@@ -454,6 +457,7 @@ export class Courses extends Component {
                     defaultValue={name}
                     type="text"
                     className="validate clear"
+                    style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                     required
                     name="course"
                   />
@@ -462,6 +466,7 @@ export class Courses extends Component {
                     defaultValue={code}
                     type="text"
                     className="validate clear"
+                    style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                     required
                     name="courseCode"
                   />
@@ -471,6 +476,7 @@ export class Courses extends Component {
                     id="language"
                     type="text"
                     className="validate clear"
+                    style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                     required
                     name="language"
                   />
@@ -480,7 +486,7 @@ export class Courses extends Component {
             <div className="m1" />
             <div className="col m9 s11"
               style={{
-                backgroundColor: state.isDark ? state.mainDark : state.main,
+                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
                 color: state.isDark ? '#F5FAF8' : '#000000',
               }}
             >
