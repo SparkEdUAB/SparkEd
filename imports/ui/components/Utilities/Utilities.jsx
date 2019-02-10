@@ -73,6 +73,7 @@ export class SearchField extends Component {
             name={'search'}
             type="search"
             defaultValue={this.getQuery()}
+            style={{ color: this.props.color }}
             id="searchField"
             placeholder={this.props.placeholder}
           />
@@ -88,6 +89,7 @@ SearchField.propTypes = {
   query: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   formName: PropTypes.string,
+  color: PropTypes.string,
 };
 
 export function initInput() {
@@ -148,24 +150,37 @@ export class FloatingButton extends Component {
       ? 'anonymous'
       : `${Meteor.user().profile.name} `;
 
-    const { modalType, feed_desc, feed_title, book_title, book_desc } = this.state;
+    const {
+      modalType,
+      feed_desc,
+      feed_title,
+      book_title,
+      book_desc,
+    } = this.state;
 
     switch (modalType) {
       case 'feedback':
         const _id = new Meteor.Collection.ObjectID().valueOf();
         const link = window.location.href;
         const feedlink = '/feedback';
-        Meteor.call('feedback.insert', feed_title, feed_desc, link, userName, err => {
-          if (err) {
-            Materialize.toast(err.reason, 3000, 'error-toast');
-          } else {
-            Materialize.toast(
-              'Your feedback has successfully been submitted',
-              3000,
-              'success-toast',
-            );
-          }
-        });
+        Meteor.call(
+          'feedback.insert',
+          feed_title,
+          feed_desc,
+          link,
+          userName,
+          err => {
+            if (err) {
+              Materialize.toast(err.reason, 3000, 'error-toast');
+            } else {
+              Materialize.toast(
+                'Your feedback has successfully been submitted',
+                3000,
+                'success-toast',
+              );
+            }
+          },
+        );
         break;
       case 'bookmark':
         const { book_color } = this.state;
@@ -173,7 +188,10 @@ export class FloatingButton extends Component {
         const path = window.location.pathname;
         const bookmarkData = _Bookmark.findOne({ url });
         let bookmark = null;
-        if (typeof bookmarkData === 'object' && Meteor.userId() === bookmarkData.user) {
+        if (
+          typeof bookmarkData === 'object' &&
+          Meteor.userId() === bookmarkData.user
+        ) {
           bookmark = bookmarkData._id;
         }
         Meteor.call(
@@ -336,7 +354,12 @@ export class FloatingButton extends Component {
                       onClick={this.setColor.bind(this, '#9c27b0')}
                       id="bmk-color-purple"
                     />
-                    <input type="hidden" defaultValue="#9c27b0" disabled id="bmk-color" />
+                    <input
+                      type="hidden"
+                      defaultValue="#9c27b0"
+                      disabled
+                      id="bmk-color"
+                    />
                   </div>
                 </div>
                 <div className="row">
@@ -358,7 +381,10 @@ export class FloatingButton extends Component {
         </MainModal>
 
         <div className="fixed-action-btn plus-icon">
-          <a href="" className="btn-floating btn-large waves-effect waves-light teal darken-1">
+          <a
+            href=""
+            className="btn-floating btn-large waves-effect waves-light teal darken-1"
+          >
             <i className="fa fa-plus center more-items" />
           </a>
           <ul>

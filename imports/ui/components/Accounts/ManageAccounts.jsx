@@ -299,6 +299,7 @@ export class ManageAccounts extends React.Component {
               <SearchField
                 action={'/dashboard/accounts'}
                 name={'accounts'}
+                color={ state.isDark ? '#F5FAF8' : '#000000' }
                 placeholder={'search user by name,email'}
                 query={'q'}
                 />
