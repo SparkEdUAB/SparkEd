@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate';
 import i18n from 'meteor/universe:i18n';
 import M from 'materialize-css';
 import { _Feedback } from '../../../api/feedback/feedback';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -53,7 +54,7 @@ export class Feedback extends Component {
     );
   }
 
-  renderComments() {
+  renderComments(color) {
     const { feeds } = this.props;
     if (!feeds || !feeds.length) {
       return (
@@ -68,7 +69,10 @@ export class Feedback extends Component {
         data-collapsible="accordion"
       >
         <li>
-          <div className="collapsible-header">
+          <div
+            className="collapsible-header"
+            style={{ backgroundColor: color }}
+          >
             <i className="fa fa-user " />
             <span style={{ marginRight: '2%' }}>{feed.createdBy}</span>
             <span style={{ marginRight: '40%' }}>Title: {feed.title}</span>
@@ -76,7 +80,7 @@ export class Feedback extends Component {
               <T>common.titles.source</T>
             </a>
           </div>
-          <div className="collapsible-body">
+          <div className="collapsible-body" style={{ backgroundColor: color }}>
             <p className="flow-text">{feed.feedback}</p>
           </div>
         </li>
@@ -86,17 +90,27 @@ export class Feedback extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <div className="col m9 s11">
-          <h3 className="center blue-text">
-            <T>common.titles.usersfeedback</T>
-          </h3>
-          <div className="row">
-            <div className="">{this.renderComments()}</div>
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <div
+            className="col m9 s11"
+            style={{
+              backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+              color: state.isDark ? '#F5FAF8' : '#000000',
+            }}
+          >
+            <h3 className="center blue-text">
+              <T>common.titles.usersfeedback</T>
+            </h3>
+            <div className="row">
+              <div className="">
+                {this.renderComments(state.isDark ? '#F5FAF8' : '#000000')}
+              </div>
+            </div>
+            {this.renderPagination()}
           </div>
-          {this.renderPagination()}
-        </div>
-      </React.Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
@@ -111,11 +125,6 @@ export default withTracker(() => {
     feeds: _Feedback
       .find(
         {},
-        // {
-        //   sort: {
-        //     createdAt: -1,
-        //   },
-        // },
         {
           skip: Session.get('skip'),
           limit: Session.get('limit'),
