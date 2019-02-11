@@ -168,7 +168,6 @@ export class Unit extends Component {
             <div
               className="col m9 s11 "
               style={{
-                // backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
                 color: state.isDark ? '#F5FAF8' : '#000000',
               }}
             >
