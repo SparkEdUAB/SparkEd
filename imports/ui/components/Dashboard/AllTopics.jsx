@@ -1,13 +1,17 @@
 /* eslint class-methods-use-this: "off" */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 import i18n from 'meteor/universe:i18n';
 import { _Topics } from '../../../api/topics/topics';
-import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
+import Pagination, {
+  getPageNumber,
+  getQuery,
+} from '../Utilities/Pagination/Pagination.jsx';
 import Search from '../Utilities/Search/Search.jsx';
-import { SearchField } from '../Utilities/Utilities';
-import ErrorBoundary from '../../../ui/components/ErrorBoundary';
+import { SearchField } from '../Utilities/Utilities'; // eslint-disable-line
+import ErrorBoundary from '../../../ui/components/ErrorBoundary'; // eslint-disable-line
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -90,43 +94,53 @@ export class AllTopics extends Component {
   render() {
     return (
       <ErrorBoundary>
-        <div>
-          {this.getTopics()}
-          <div className="col m9 s11">
-            <h4>
-              List of <T>common.manage.topics</T>
-            </h4>
-            <div className="col m8 offset-m2">
-              <SearchField
-                action={'/dashboard/list_topics'}
-                name={'topics'}
-                placeholder={'search for topics'}
-                query={'q'}
-              />
-            </div>
+        <ThemeContext.Consumer>
+          {({ state }) => (
+            <Fragment>
+              {this.getTopics()}
+              <div
+                className="col m9 s11"
+                style={{
+                  backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                  color: state.isDark ? '#F5FAF8' : '#000000',
+                }}
+              >
+                <h4>
+                  List of <T>common.manage.topics</T>
+                </h4>
+                <div className="col m8 offset-m2">
+                  <SearchField
+                    action={'/dashboard/list_topics'}
+                    name={'topics'}
+                    placeholder={'search for topics'}
+                    query={'q'}
+                  />
+                </div>
 
-            <table className="highlight">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>
-                    <T>common.manage.topics</T>
-                  </th>
-                  <th>
-                    <T>common.manage.unit</T> <T>common.accounts.name</T>{' '}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>{this.renderAllTopics()}</tbody>
-            </table>
-          </div>
-          <Pagination
-            path={'/dashboard/list_topics'}
-            itemPerPage={this.itemPerPage}
-            query={getQuery(this.queryParams, true)}
-            totalResults={this.totalResults}
-          />
-        </div>
+                <table className="highlight">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>
+                        <T>common.manage.topics</T>
+                      </th>
+                      <th>
+                        <T>common.manage.unit</T> <T>common.accounts.name</T>{' '}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>{this.renderAllTopics()}</tbody>
+                </table>
+              </div>
+              <Pagination
+                path={'/dashboard/list_topics'}
+                itemPerPage={this.itemPerPage}
+                query={getQuery(this.queryParams, true)}
+                totalResults={this.totalResults}
+              />
+            </Fragment>
+          )}
+        </ThemeContext.Consumer>
       </ErrorBoundary>
     );
   }
