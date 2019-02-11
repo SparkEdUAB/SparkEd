@@ -12,6 +12,7 @@ import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
 import { formatText } from '../../utils/utils';
 import * as config from '../../../../config.json';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
 const { server } = config;
@@ -291,68 +292,78 @@ export class SyncUpdates extends Component {
     } = this.state;
     const { courses, units, topics } = this.props;
     return (
-      <Fragment>
-        <div className="col m9 s11">
-          <p>
-            The Sync Address is <span className="red-text">{server}</span>
-            <a href="/setup"> click here</a> if you wish to change the address
-          </p>
-          {!data ? (
-            <InputPassword
-              authenticateFunc={this.serverAuthenticate}
-              onChange={this.getPassword}
-              error={error}
-            />
-          ) : (
-            <Fragment>
-              <table className="highlight">
-                <thead>
-                  <tr>
-                    <th>Collections</th>
-                    <th>Local Count</th>
-                    <th>Server Count</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td>Courses</td>
-                    <td>{courses.length}</td>
-                    <td>{coursesData.length}</td>
-                  </tr>
-                  <tr>
-                    <td>Units</td>
-                    <td>{units.length}</td>
-                    <td>{unitsData.length}</td>
-                  </tr>
-                  <tr>
-                    <td>Topics</td>
-                    <td>{topics.length}</td>
-                    <td>{topicsData.length}</td>
-                  </tr>
-                </tbody>
-              </table>
-              {error.length > 0 ? (
-                <p className="red-text">{`${error} Please check your internet connection`}</p>
-              ) : loading ? (
-                <Fragment>
-                  <p>{status}</p>
-                  <div className="progress">
-                    <div className="indeterminate" />
-                  </div>
-                </Fragment>
-              ) : (
-                <button className="btn " onClick={this._syncContents}>
-                  Sync
-                </button>
-              )}
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <Fragment>
+            <div
+              className="col m9 s11"
+              style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+            >
               <p>
-                Resources and other references will be synced in the background.
+                The Sync Address is <span className="red-text">{server}</span>
+                <a href="/setup"> click here</a> if you wish to change the
+                address
               </p>
-            </Fragment>
-          )}
-        </div>
-      </Fragment>
+              {data ? (
+                <InputPassword
+                  authenticateFunc={this.serverAuthenticate}
+                  onChange={this.getPassword}
+                  error={error}
+                  isDark={state.isDark}
+                />
+              ) : (
+                <Fragment>
+                  <table className="highlight">
+                    <thead>
+                      <tr>
+                        <th>Collections</th>
+                        <th>Local Count</th>
+                        <th>Server Count</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td>Courses</td>
+                        <td>{courses.length}</td>
+                        <td>{coursesData.length}</td>
+                      </tr>
+                      <tr>
+                        <td>Units</td>
+                        <td>{units.length}</td>
+                        <td>{unitsData.length}</td>
+                      </tr>
+                      <tr>
+                        <td>Topics</td>
+                        <td>{topics.length}</td>
+                        <td>{topicsData.length}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  {error.length > 0 ? (
+                    <p className="red-text">{`${error} Please check your internet connection`}</p>
+                  ) : loading ? (
+                    <Fragment>
+                      <p>{status}</p>
+                      <div className="progress">
+                        <div className="indeterminate" />
+                      </div>
+                    </Fragment>
+                  ) : (
+                    <button className="btn " onClick={this._syncContents}>
+                      Sync
+                    </button>
+                  )}
+                  <p>
+                    Resources and other references will be synced in the
+                    background.
+                  </p>
+                </Fragment>
+              )}
+            </div>
+          </Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
@@ -366,6 +377,7 @@ const InputPassword = props => (
           type="text"
           className="validate"
           required
+          style={{ color: props.isDark ? '#F5FAF8' : '#000000' }}
           onChange={props.onChange}
         />
         <label htmlFor="inst_tag">
@@ -396,6 +408,7 @@ InputPassword.propTypes = {
   authenticateFunc: PropTypes.func,
   onChange: PropTypes.func,
   error: PropTypes.string,
+  isDark: PropTypes.bool,
 };
 
 // todo: consider making these into server calls
