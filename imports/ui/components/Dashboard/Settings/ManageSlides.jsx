@@ -12,7 +12,7 @@ import {
 import UploadWrapper from '../../../../ui/modals/UploadWrapper'; // eslint-disable-line
 import MainModal from '../../../../ui/modals/MainModal'; // eslint-disable-line
 import { closeModal } from '../../../../ui/modals/methods.js';
-import { ThemeContext } from '../../../containers/AppWrapper';
+import { ThemeContext } from '../../../containers/AppWrapper'; // eslint-disable-line
 
 export class ManageSlides extends Component {
   constructor(props) {
@@ -170,81 +170,96 @@ export class ManageSlides extends Component {
     const { isOpen, title, confirm, reject, modalType, name } = this.state;
 
     return (
-      <Fragment>
-        {modalType === 'upload' ? (
-          <UploadWrapper show={isOpen} close={this.closeModal} title={title} />
-        ) : (
-          <MainModal
-            show={isOpen}
-            onClose={this.closeModal}
-            subFunc={this.handleSubmit}
-            title={title}
-            confirm={confirm}
-            reject={reject}
-          >
-            {modalType === 'del' ? (
-              <span />
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <Fragment>
+            {modalType === 'upload' ? (
+              <UploadWrapper
+                show={isOpen}
+                close={this.closeModal}
+                title={title}
+              />
             ) : (
-              <div className="input-field">
-                <input
-                  placeholder="Name of Slide"
-                  type="text"
-                  defaultValue={name}
-                  className="validate clear"
-                  required
-                  name="slide"
-                />
-              </div>
+              <MainModal
+                show={isOpen}
+                onClose={this.closeModal}
+                subFunc={this.handleSubmit}
+                title={title}
+                confirm={confirm}
+                reject={reject}
+              >
+                {modalType === 'del' ? (
+                  <span />
+                ) : (
+                  <div className="input-field">
+                    <input
+                      placeholder="Name of Slide"
+                      type="text"
+                      defaultValue={name}
+                      className="validate clear"
+                      style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                      required
+                      name="slide"
+                    />
+                  </div>
+                )}
+              </MainModal>
             )}
-          </MainModal>
+            <div
+              className="col m9 s11"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                color: state.isDark ? '#F5FAF8' : '#000000',
+              }}
+            >
+              <div className="">
+                <h4>Manage Slides</h4>
+              </div>
+
+              <div className="row">
+                <div className="col m3">
+                  <button
+                    className="btn red darken-3 "
+                    onClick={e => this.toggleEditModal('del', e)}
+                  >
+                    Delete
+                  </button>
+                </div>
+
+                <div className="col s4 m4">
+                  <button
+                    className="btn green darken-4 "
+                    onClick={e => this.toggleEditModal('upload', e)}
+                  >
+                    {' '}
+                    Upload New Slider
+                  </button>
+                </div>
+              </div>
+
+              <table className="highlight">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Slides Motto</th>
+                    <th>Edit Motto</th>
+                    <th>Uploaded At</th>
+                    <th>Slides Image</th>
+
+                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                      <label>
+                        <input type="checkbox" className=" chk-all" />
+                        Check All
+                      </label>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{this.renderslides()}</tbody>
+              </table>
+            </div>
+          </Fragment>
         )}
-        <div className="col m9 s11">
-          <div className="">
-            <h4>Manage Slides</h4>
-          </div>
-
-          <div className="row">
-            <div className="col m3">
-              <button
-                className="btn red darken-3 "
-                onClick={e => this.toggleEditModal('del', e)}
-              >
-                Delete
-              </button>
-            </div>
-
-            <div className="col s4 m4">
-              <button
-                className="btn green darken-4 "
-                onClick={e => this.toggleEditModal('upload', e)}
-              >
-                {' '}
-                Upload New Slider
-              </button>
-            </div>
-          </div>
-
-          <table className="highlight">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Slides Motto</th>
-                <th>Edit Motto</th>
-                <th>Uploaded At</th>
-                <th>Slides Image</th>
-
-                <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <label>
-                    <input type="checkbox" className=" chk-all" />
-                    Check All
-                  </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>{this.renderslides()}</tbody>
-          </table>
-        </div>
-      </Fragment>
+      </ThemeContext.Consumer>
     );
   }
 }
