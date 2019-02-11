@@ -1,4 +1,4 @@
-/* eslint default-case: 0, no-case-declarations: 0, no-unused-expressions: 0 */
+/* eslint default-case: 0, no-case-declarations: 0, no-unused-expressions: 0, no-shadow: 0 */
 import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import ReactPaginate from 'react-paginate';
@@ -14,9 +14,10 @@ import {
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
 import UploadWrapper from '../../../ui/modals/UploadWrapper.jsx';
-import MainModal from '../../../ui/modals/MainModal';
+import MainModal from '../../../ui/modals/MainModal'; // eslint-disable-line
 import { closeModal } from '../../../ui/modals/methods.js';
 import { formatText } from '../../utils/utils';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -55,7 +56,10 @@ export class Additional extends Component {
   toggleEditModal = (ide, id = '', name = '') => {
     // check if the user has full rights
     if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-      M.toast({ html: '<span>Only Admins can edit the resource</span>', classes: 'red' });
+      M.toast({
+        html: '<span>Only Admins can edit the resource</span>',
+        classes: 'red',
+      });
       return;
     }
 
@@ -81,7 +85,10 @@ export class Additional extends Component {
         const name = count > 1 ? 'resource' : 'resources';
 
         if (count < 1) {
-          M.toast({ html: '<span>Please check atleast one resource</span>', classes: 'red' });
+          M.toast({
+            html: '<span>Please check atleast one resource</span>',
+            classes: 'red',
+          });
           return;
         }
         this.setState({
@@ -123,7 +130,10 @@ export class Additional extends Component {
             ))
             : Meteor.call('updateSearch', modalIdentifier, reference, err => {
               err
-                ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                ? M.toast({
+                  html: `<span>${err.reason}</span>`,
+                  classes: 'red',
+                })
                 : M.toast({ html: '<span>Successfully Updated</span>' });
             });
         });
@@ -136,7 +146,10 @@ export class Additional extends Component {
           const name = count > 1 ? 'references' : 'reference';
           Meteor.call('removeReference', res, err => {
             err
-              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              ? (M.toast({
+                html: `<span>${err.reason}</span>`,
+                classes: 'red',
+              }),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'reference-remove'),
@@ -144,8 +157,13 @@ export class Additional extends Component {
               ))
               : Meteor.call('removeSearchData', res, err => {
                 err
-                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
-                  : M.toast({ html: `<span>${count} ${name} successfully deleted</span>` });
+                  ? M.toast({
+                    html: `<span>${err.reason}</span>`,
+                    classes: 'red',
+                  })
+                  : M.toast({
+                    html: `<span>${count} ${name} successfully deleted</span>`,
+                  });
               });
           });
         });
@@ -192,7 +210,9 @@ export class Additional extends Component {
           <a
             href=""
             className="fa fa-pencil"
-            onClick={e => this.toggleEditModal('edit', extra._id, extra.name, e)}
+            onClick={e =>
+              this.toggleEditModal('edit', extra._id, extra.name, e)
+            }
           />
         </td>
         <td>
@@ -208,10 +228,14 @@ export class Additional extends Component {
           </a>
         </td>
         <td onClick={handleCheckboxChange.bind(this, extra._id)}>
-        <label htmlFor={extra._id}>
-          <input type="checkbox" id={extra._id} className={`chk chk${extra._id}`} />
-          <span/>
-        </label>
+          <label htmlFor={extra._id}>
+            <input
+              type="checkbox"
+              id={extra._id}
+              className={`chk chk${extra._id}`}
+            />
+            <span />
+          </label>
         </td>
       </tr>
     ));
@@ -219,7 +243,9 @@ export class Additional extends Component {
 
   getPageCount() {
     const { count } = this.props;
-    return count === 0 || Session.get('limit') === 0 ? 0 : Math.ceil(count / Session.get('limit'));
+    return count === 0 || Session.get('limit') === 0
+      ? 0
+      : Math.ceil(count / Session.get('limit'));
   }
 
   handlePageClick = data => {
@@ -257,106 +283,128 @@ export class Additional extends Component {
   }
 
   render() {
-    const {
- modalType, isOpen, title, confirm, reject, name 
-} = this.state;
+    const { modalType, isOpen, title, confirm, reject, name } = this.state;
     return (
-      <div className="">
+      <ThemeContext.Consumer>
         {/* Modals for Deleting  */}
-        <Fragment>
-          {modalType === 'upload' ? (
-            <UploadWrapper show={isOpen} close={this.closeModal} title={title} />
-          ) : (
-            <MainModal
-              show={isOpen}
-              onClose={this.closeModal}
-              subFunc={this.handleSubmit}
-              title={title}
-              confirm={confirm}
-              reject={reject}
-            >
-              {modalType === 'del' ? (
-                <span />
+        {({ state }) => (
+          <Fragment>
+            <Fragment>
+              {modalType === 'upload' ? (
+                <UploadWrapper
+                  show={isOpen}
+                  close={this.closeModal}
+                  title={title}
+                />
               ) : (
-                <div className="input-field">
-                  <input
-                    placeholder="Name of Unit"
-                    type="text"
-                    defaultValue={name}
-                    className="validate clear"
-                    required
-                    name="res"
-                  />
-                </div>
+                <MainModal
+                  show={isOpen}
+                  onClose={this.closeModal}
+                  subFunc={this.handleSubmit}
+                  title={title}
+                  confirm={confirm}
+                  reject={reject}
+                >
+                  {modalType === 'del' ? (
+                    <span />
+                  ) : (
+                    <div className="input-field">
+                      <input
+                        placeholder="Name of Unit"
+                        type="text"
+                        defaultValue={name}
+                        className="validate clear"
+                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                        required
+                        name="res"
+                      />
+                    </div>
+                  )}
+                </MainModal>
               )}
-            </MainModal>
-          )}
-        </Fragment>
-        <div className="col m9 s11">
-          <div className="">
-            <h4>
-              <T>common.sidenav.resourceLibrary</T>{' '}
-            </h4>
-          </div>
-          <div className="row">
-            <div className="col m4">
-              <button
-                className="btn red darken-3"
-                onClick={e => this.toggleEditModal('del', e)}
-              >
-                {' '}
-                <T>common.actions.delete</T>
-              </button>
-            </div>
-            <div className="col m4">
-              <button
-                className="btn fa fa-upload green darken-4 "
-                onClick={e => this.toggleEditModal('upload', e)}
-              >
-                {' '}
-                Add Reference
-              </button>
-            </div>
-            <div className="col m4">
-              <T>common.titles.referenceDisplaced</T>
-              <div className="row">
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 5)}>
-                  <u>{Session.get('limit') === 5 ? <b>5</b> : 5}</u>
-                </a>
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 10)}>
-                  <u>{Session.get('limit') === 10 ? <b>10</b> : 10}</u>
-                </a>
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 20)}>
-                  <u>{Session.get('limit') === 20 ? <b>20</b> : 20}</u>
-                </a>
+            </Fragment>
+            <div
+              className="col m9 s11"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                color: state.isDark ? '#F5FAF8' : '#000000',
+              }}
+            >
+              <div className="">
+                <h4>
+                  <T>common.sidenav.resourceLibrary</T>{' '}
+                </h4>
               </div>
-            </div>
-          </div>
+              <div className="row">
+                <div className="col m4">
+                  <button
+                    className="btn red darken-3"
+                    onClick={e => this.toggleEditModal('del', e)}
+                  >
+                    {' '}
+                    <T>common.actions.delete</T>
+                  </button>
+                </div>
+                <div className="col m4">
+                  <button
+                    className="btn fa fa-upload green darken-4 "
+                    onClick={e => this.toggleEditModal('upload', e)}
+                  >
+                    {' '}
+                    Add Reference
+                  </button>
+                </div>
+                <div className="col m4">
+                  <T>common.titles.referenceDisplaced</T>
+                  <div className="row">
+                    <a
+                      className="col s2 link"
+                      onClick={e => this.getEntriesCount(e, 5)}
+                    >
+                      <u>{Session.get('limit') === 5 ? <b>5</b> : 5}</u>
+                    </a>
+                    <a
+                      className="col s2 link"
+                      onClick={e => this.getEntriesCount(e, 10)}
+                    >
+                      <u>{Session.get('limit') === 10 ? <b>10</b> : 10}</u>
+                    </a>
+                    <a
+                      className="col s2 link"
+                      onClick={e => this.getEntriesCount(e, 20)}
+                    >
+                      <u>{Session.get('limit') === 20 ? <b>20</b> : 20}</u>
+                    </a>
+                  </div>
+                </div>
+              </div>
 
-          <table className="highlight">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>
-                  <T>common.manage.reference</T>
-                </th>
-                <th>
-                  <T>common.actions.edit</T> <T>common.manage.reference</T>
-                </th>
-                <th>Course Name</th>
-                <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <label>
-                    <input type="checkbox" className=" chk-all" readOnly />
-                      <T>common.actions.check</T>
-                    </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>{this.renderExtra()}</tbody>
-          </table>
-          {this.renderPagination()}
-        </div>
-      </div>
+              <table className="highlight">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>
+                      <T>common.manage.reference</T>
+                    </th>
+                    <th>
+                      <T>common.actions.edit</T> <T>common.manage.reference</T>
+                    </th>
+                    <th>Course Name</th>
+                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                      <label>
+                        <input type="checkbox" className=" chk-all" readOnly />
+                        <T>common.actions.check</T>
+                      </label>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{this.renderExtra()}</tbody>
+              </table>
+              {this.renderPagination()}
+            </div>
+          </Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
@@ -371,7 +419,10 @@ export default withTracker(() => {
   Meteor.subscribe('references');
 
   return {
-    extras: References.find({}, { skip: Session.get('skip'), limit: Session.get('limit') }).fetch(),
+    extras: References.find(
+      {},
+      { skip: Session.get('skip'), limit: Session.get('limit') },
+    ).fetch(),
     count: References.find().count(),
   };
 })(Additional);
