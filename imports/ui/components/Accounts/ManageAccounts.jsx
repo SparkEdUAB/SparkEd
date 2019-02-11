@@ -21,6 +21,7 @@ import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
 import PasswordEdit from '../Utilities/Modal/PasswordEdit.jsx';
 import { checkPassword } from './AccountFunction';
+import { ThemeContext } from '../../containers/AppWrapper'
 
 const T = i18n.createComponent();
 
@@ -251,9 +252,10 @@ export class ManageAccounts extends React.Component {
     } = this.state;
 
     return (
+      <ThemeContext.Consumer>
+        {
+          ({ state }) => (
       <div>
-        {/* <Header /> */}
-
         <MainModal
           show={isOpen}
           onClose={this.close}
@@ -261,27 +263,34 @@ export class ManageAccounts extends React.Component {
           title={title}
           confirm={confirm}
           reject={reject}
-        >
+          >
           {modalType === 'edit' ? (
-            <AccountEditModal email={email} fname={fname} />
-          ) : modalType === 'roles' ? (
-            <div className="input-field">
-              <UserRoles value={this.state.role} />
+            <AccountEditModal email={email} fname={fname} color={ state.isDark ? '#F5FAF8' : '#000000' } />
+            ) : modalType === 'roles' ? (
+              <div className="input-field">
+              <UserRoles value={this.state.role}
+                color={ state.isDark ? '#F5FAF8' : '#000000' } />
             </div>
           ) :
             modalType === 'pass' ? (
               <PasswordEdit password={password}
-                passwordConfirm={passwordConfirm}
-                validatePassword={this.validatePassword}
-                confirmPassword={this.confirmPassword}
-                error={error}
-                />
-            ) :
+              passwordConfirm={passwordConfirm}
+              validatePassword={this.validatePassword}
+              confirmPassword={this.confirmPassword}
+              error={error}
+              color={ state.isDark ? '#F5FAF8' : '#000000' }
+              />
+              ) :
             <span />
           }
         </MainModal>
         <div className='m1' />
-        <div className="col m9 s11">
+        <div className="col m9 s11"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                color: state.isDark ? '#F5FAF8' : '#000000',
+              }}
+        >
           <div className="row">
             <div>
               <h4>
@@ -292,9 +301,10 @@ export class ManageAccounts extends React.Component {
               <SearchField
                 action={'/dashboard/accounts'}
                 name={'accounts'}
+                color={ state.isDark ? '#F5FAF8' : '#000000' }
                 placeholder={'search user by name,email'}
                 query={'q'}
-              />
+                />
             </div>
           </div>
           <div className="row">
@@ -302,7 +312,7 @@ export class ManageAccounts extends React.Component {
               <button
                 className="btn red darken-3"
                 onClick={e => this.openModal('delete', e)}
-              >
+                >
                 {' '}
                 <T>common.actions.delete</T>
               </button>
@@ -320,7 +330,7 @@ export class ManageAccounts extends React.Component {
                   <button
                     className="btn grey darken-3"
                     onClick={e => this.openModal('suspend', e)}
-                  >
+                    >
                     {' '}
                     Suspend
                   </button>
@@ -334,7 +344,7 @@ export class ManageAccounts extends React.Component {
               <button
                 className="btn green darken-3"
                 onClick={e => this.openModal('roles', e)}
-              >
+                >
                 {' '}
                 <T>common.actions.changeRole</T>
               </button>
@@ -343,7 +353,7 @@ export class ManageAccounts extends React.Component {
               <button
                 className="btn teal "
                 onClick={e => this.openModal('pass', e)}
-              >
+                >
                 {' '}
                 <T>Change Password</T>
               </button>
@@ -390,7 +400,7 @@ export class ManageAccounts extends React.Component {
                 } else if (status === 2) {
                   statusIcon = 'fa-ban ';
                 }
-
+                
                 return (
                   <tr key={user._id}>
                     <td>{count++}</td>
@@ -408,7 +418,7 @@ export class ManageAccounts extends React.Component {
                         href=""
                         onClick={e => this.openModal('edit', user._id, email, user.profile.name, e)}
                         className="fa fa-pencil"
-                      />
+                        />
                     </td>
                     <td onClick={handleCheckboxChange.bind(this, user._id)}>
                     <label htmlFor={user._id}>
@@ -426,10 +436,13 @@ export class ManageAccounts extends React.Component {
             itemPerPage={limit}
             query={getQuery(queryParams, true)}
             totalResults={this.props.count}
-          />{' '}
+            />{' '}
         </div>
         {/* </div> */}
       </div>
+    )
+  }
+</ThemeContext.Consumer>
     );
   }
 }

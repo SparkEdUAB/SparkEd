@@ -1,5 +1,7 @@
 // Essential for the roles package to initialise and check if the user is in roles for real
 import { Roles } from 'meteor/alanning:roles';
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
 import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/dist/js/materialize';
 import '../imports/ui/stylesheets/wizard.css';
@@ -16,6 +18,15 @@ import '../i18n/en.i18n.json';
 import '../i18n/es.i18n.json';
 import '../i18n/fr.i18n.json';
 // import { La }
+
+Meteor.startup(() => {
+  Session.setPersistent({
+    main: '#005555',
+    isDark: false,
+    mainDark: '#212121',
+    bodyBackground: '',
+  });
+});
 
 FlowRouter.wait();
 

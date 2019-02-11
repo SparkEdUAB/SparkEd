@@ -1,32 +1,40 @@
 /* eslint class-methods-use-this: "off" */
 /* eslint import/no-unresolved: "off" */
-
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
-import { withTracker } from 'meteor/react-meteor-data';
-import { _Settings } from '../../api/settings/settings';
 import Header from '../components/layouts/Header';
 
 export const ThemeContext = React.createContext();
 
-export const AppWrapper = ({ children, colors }) => {
-  if (!colors) {
-    return 'loading';
+export default class AppWrapper extends React.Component {
+  state = {
+    isDark: JSON.parse(localStorage.getItem('isDark')),
+    mainDark: '#212121',
+    main: '#005555',
+  };
+  toggleDarkMode = async () => {
+    await this.setState(state => ({
+      isDark: !state.isDark,
+    }));
+    await localStorage.setItem('isDark', JSON.parse(this.state.isDark));
+  };
+  render() {
+    const { children } = this.props;
+    const { isDark } = this.state;
+    return (
+      <ThemeContext.Provider
+        value={{ state: this.state, toggle: this.toggleDarkMode }}
+      >
+        <div style={{ backgroundColor: isDark ? '#252829' : '#fff' }}>
+          <Header />
+          <Fragment>{children}</Fragment>
+        </div>
+      </ThemeContext.Provider>
+    );
   }
-  return (
-    <ThemeContext.Provider value={colors}>
-      <Fragment>
-        <Header />
-        <Fragment>{children}</Fragment>
-      </Fragment>
-    </ThemeContext.Provider>
-  );
-};
+}
+
 AppWrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  colors: PropTypes.object,
+  color: PropTypes.object,
 };
-
-export default withTracker(() => ({
-  colors: _Settings.findOne(), // get the current main color
-}))(AppWrapper);

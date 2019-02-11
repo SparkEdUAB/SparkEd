@@ -32,16 +32,14 @@ export default class ViewResource extends Component {
     const { resource } = this.props;
     // keep sessions in case, there is need to reactively get file id from parent componenr
     Session.set('file_id', resource._id);
-    FlowRouter.go(
-      `/view_resource/${FlowRouter.getParam('_id')}?rs=${
-        resource._id
-      }&scid=${FlowRouter.getQueryParam('scid')}`,
-    );
+    FlowRouter.go(`/view_resource/${FlowRouter.getParam('_id')}?rs=${
+      resource._id
+    }&scid=${FlowRouter.getQueryParam('scid')}`);
   };
 
   render() {
     let fileType = this.props.resource.type;
-    const { resource } = this.props;
+    const { resource, color } = this.props;
     if (!fileType) {
       fileType = '';
     } else {
@@ -50,14 +48,21 @@ export default class ViewResource extends Component {
     }
 
     return (
-      <li className={`${ViewResource.setActiveItem(resource._id)} item${resource._id}`}>
+      <li
+        className={`${ViewResource.setActiveItem(resource._id)} item${
+          resource._id
+        }`}
+      >
         <a
           target={'_top'}
           href={''}
           onClick={e => this.changeFile(e)}
+          style={{ color }}
           className={`customAtag ${ViewResource.changeTextColor(resource._id)}`}
         >
-          <span className={'resourceName truncate'}>{resource.name.replace(/\.[^/.]+$/, '')}</span>
+          <span className={'resourceName truncate'}>
+            {resource.name.replace(/\.[^/.]+$/, '')}
+          </span>
         </a>
       </li>
     );
@@ -66,4 +71,5 @@ export default class ViewResource extends Component {
 
 ViewResource.propTypes = {
   resource: PropTypes.object.isRequired,
+  color: PropTypes.string.isRequired,
 };

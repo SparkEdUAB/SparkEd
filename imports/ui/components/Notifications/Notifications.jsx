@@ -32,8 +32,8 @@ export class Notifications extends Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * Session.get('limit'));
+    const selected = data.selected;
+    const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
   getEntriesCount = (e, count) => {
@@ -91,10 +91,8 @@ export class Notifications extends Component {
 
   markAllAsVisited(bool) {
     const allNotifications = this.props.notifications;
-    return allNotifications.map(function(notifications) {
-      id = notifications._id;
-      userId = Meteor.userId();
-      Meteor.call('markRead', id, bool);
+    return allNotifications.map(notifications => {
+      Meteor.call('markRead', notifications._id, bool);
     });
   }
 
@@ -300,9 +298,9 @@ export function getuserId() {
   let user = Meteor.user();
   if (user) {
     return user._id;
-  } else {
+  } 
     return '';
-  }
+  
 }
 
 Notifications.propTypes = {

@@ -199,7 +199,7 @@
 #dashtweek {
   padding-bottom: 75px;
   padding-top: 25px;
-  background-color: #1e4847;
+  /* background-color: #1e4847; */
   margin-top: 10px;
   font-size: 30px;
   color: white;
@@ -215,7 +215,7 @@
   top: 23px;
 }
 .notification-item {
-  color: #0893d2;
+  /* color: #0893d2; */
   padding: 10px;
 }
 .notification-date {
@@ -660,4 +660,8 @@ nav ul a:hover {
   height: 2px;
   background-color: #276a76;
   will-change: left, right;
+}
+
+.slider .indicators {
+  display: none;
 }

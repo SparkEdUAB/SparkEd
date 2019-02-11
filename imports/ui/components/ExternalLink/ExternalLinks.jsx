@@ -12,6 +12,7 @@ import {
 } from '../Utilities/CheckBoxHandler.jsx';
 import MainModal from '../../../ui/modals/MainModal.jsx';
 import { closeModal } from '../../../ui/modals/methods.js';
+import { ThemeContext } from '../../containers/AppWrapper'
 
 export class ExternalLinks extends Component {
   constructor(props) {
@@ -215,89 +216,103 @@ export class ExternalLinks extends Component {
       url,
     } = this.state;
     return (
-      <Fragment>
-        <MainModal
-          show={isOpen}
-          onClose={this.close}
-          subFunc={this.handleSubmit}
-          title={title}
-          confirm={confirm}
-          reject={reject}
-        >
-          {modalType === 'del' ? (
-            ''
-          ) : (
-            <div className="input-field">
-              <input
-                placeholder="Name of the Link"
-                type="text"
-                defaultValue={externalLinkTitle}
-                className="validate clear"
-                required
-                name="externalLinkTitle"
-              />
-              <input
-                placeholder="url"
-                type="url"
-                defaultValue={url}
-                className="validate clear"
-                required
-                name="url"
-              />
-            </div>
-          )}
-        </MainModal>
-        <div className="col m9 s11">
-          <div className="">
-            <h4>Manage External Links</h4>
-          </div>
-          <div className="row">
-            <div className="col m3">
-              <button
-                className="btn red darken-3 "
-                onClick={e => this.toggleEditModal('del', e)}
-              >
-                {' '}
-                Delete
-              </button>
-            </div>
-            <div className="col m3">
-              <a href="">
-                <button
-                  className="btn green darken-4 "
-                  onClick={e => this.toggleEditModal('add', e)}
-                >
-                  {' '}
-                  New
-                </button>
-              </a>
-            </div>
-          </div>
+      <ThemeContext.Consumer>
+        {
+          ({ state }) => (
+            <Fragment>
 
-          <table className="highlight bordered">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Link Name</th>
-                <th>Link URL</th>
-                <th>Created At</th>
-                <th>Edit External Link</th>
-                <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                <label>
-                  <input
-                    type="checkbox"
-                    className="chk-all"
-                    readOnly
-                  />
-                    Check All
-                    </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>{this.renderExternalLinks()}</tbody>
-          </table>
-        </div>
-      </Fragment>
+              <MainModal
+                show={isOpen}
+                onClose={this.close}
+                subFunc={this.handleSubmit}
+                title={title}
+                confirm={confirm}
+                reject={reject}
+              >
+                {modalType === 'del' ? (
+                  ''
+                ) : (
+                  <div className="input-field">
+                    <input
+                      placeholder="Name of the Link"
+                      type="text"
+                      defaultValue={externalLinkTitle}
+                      className="validate clear"
+                      style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                      required
+                      name="externalLinkTitle"
+                    />
+                    <input
+                      placeholder="url"
+                      type="url"
+                      defaultValue={url}
+                      className="validate clear"
+                      style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                      required
+                      name="url"
+                    />
+                  </div>
+                )}
+              </MainModal>
+              <div className="col m9 s11"
+                    style={{
+                      backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                      color: state.isDark ? '#F5FAF8' : '#000000',
+                    }}
+              >
+                <div className="">
+                  <h4>Manage External Links</h4>
+                </div>
+                <div className="row">
+                  <div className="col m3">
+                    <button
+                      className="btn red darken-3 "
+                      onClick={e => this.toggleEditModal('del', e)}
+                    >
+                      {' '}
+                      Delete
+                    </button>
+                  </div>
+                  <div className="col m3">
+                    <a href="">
+                      <button
+                        className="btn green darken-4 "
+                        onClick={e => this.toggleEditModal('add', e)}
+                      >
+                        {' '}
+                        New
+                      </button>
+                    </a>
+                  </div>
+                </div>
+
+                <table className="highlight bordered">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Link Name</th>
+                      <th>Link URL</th>
+                      <th>Created At</th>
+                      <th>Edit External Link</th>
+                      <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          className="chk-all"
+                          readOnly
+                        />
+                          Check All
+                          </label>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>{this.renderExternalLinks()}</tbody>
+                </table>
+              </div>
+            </Fragment>
+          )
+        }
+      </ThemeContext.Consumer>
     );
   }
 }

@@ -95,19 +95,24 @@ export class Header extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
-  renderNotifications(nameClass) {
+  renderNotifications(nameClass, color, backgroundColor) {
     const { notifications } = this.props;
     if (!notifications || !notifications.length) {
-      return <li className={`collection-item ${nameClass}`}> No new notifications!</li>;
+      return <span className={`collection-item ${nameClass}`}> No new notifications!</span>;
     }
     notifications.length = 5;
     return notifications.map(notification => (
-      <li key={notification._id}>
+      <div key={ notification._id }
+        style={{ backgroundColor: color }}>
         {notification.read ? (
-          <ul>
+          <ul
+          style={{
+            backgroundColor,
+          }}
+          >
             <li
-              style={{ backgroundColor: 'white', padding: '1px 10px 5px', cursor: 'pointer' }}
-              onClick={e =>
+              style={{ padding: '1px 10px 5px', cursor: 'pointer', color }}
+              onClick={() =>
                 this.handleUrl(
                   this,
                   notification.unitId,
@@ -131,10 +136,12 @@ export class Header extends Component {
             </li>
           </ul>
         ) : (
-          <ul>
+          <ul style={{
+            backgroundColor,
+          }}>
             <li
-              style={{ backgroundColor: '#edf2fa', padding: '1px 10px 5px', cursor: 'pointer' }}
-              onClick={e =>
+              style={{ padding: '1px 10px 5px', cursor: 'pointer', color }}
+              onClick={() =>
                 this.handleUrl(
                   this,
                   notification.unitId,
@@ -159,7 +166,7 @@ export class Header extends Component {
           </ul>
         )}
         <hr />
-      </li>
+      </div>
     ));
   }
 
@@ -171,6 +178,11 @@ export class Header extends Component {
 
   componentDidMount() {
     M.AutoInit();
+    // used var intentionally
+    var elems = document.querySelector('.sidenav');  // eslint-disable-line
+    var instances = M.Sidenav.init(elems, {  // eslint-disable-line
+      edge: 'right',
+    });
   }
 
   markAllAsVisited = bool => {
@@ -217,6 +229,7 @@ export class Header extends Component {
           confirm: '',
           reject: '',
         });
+        break;
       default:
         break;
     }
@@ -236,18 +249,18 @@ export class Header extends Component {
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
     const { externallinks, institution, details } = this.props;
-    const { name, tag, isUserAuth } = config;
+    // const { name, tag, isUserAuth } = config;
     return (
       <ThemeContext.Consumer>
-        {color => (
+        {({ state, toggle }) => (
           <Fragment>
-            <div className="container-fluid " style={{ backgroundColor: color.main }}>
+            <div className="container-fluid " style={{ backgroundColor: state.isDark ? state.mainDark : state.main }}>
               <div className="row ">
                 <div className="col s12 m5">
-                  <InstitutionDetail 
-                    institution={institution} 
-                    name={details.name} 
-                    tagline={details.tag} 
+                  <InstitutionDetail
+                    institution={institution}
+                    name={details.name}
+                    tagline={details.tag}
                   />
                 </div>
                 <div className="m6 offset-m6">
@@ -294,30 +307,19 @@ export class Header extends Component {
                         </div>
                         )
                     }
-
-                  <div className="col s2 m1 head-icons">
-                    <div href="#" data-activates="slide-out">
-                      <div className="dropdownLink">
-                        <button className="dropbtnLink fa fa-link fa-2x inst-link" style={{ backgroundColor: color.main }}/>
-                        <div className="dropdownLink-content" >
-                          <a href="/externallinkpages" className="openLinks">
-                            Click here to Open all the external links in a page
-                          </a>
-                          <p className=" blue-text externalLink">
-                            <b> External Links</b>
-                          </p>
-                          <hr />
-                          <ExternalLinksView externallinks={externallinks} />
-                        </div>
-                      </div>
-                      <span className="new" />
-                    </div>
+                  <div className="col s2 m1 head-icons ">
+                    <span className="fa fa-link fa-2x white-text dropdown-trigger " data-target='dropdown1' />
+                  </div>
+                  <div id='dropdown1' className='dropdown-content'>
+                    {/* <li className="collection-header">
+                    </li> */}
+                    <h6 className='center'>External links</h6>
+                    <ul className='collection'>
+                      <ExternalLinksView externallinks={externallinks} />
+                    </ul>
                   </div>
                   <div className="col s2 m1 head-icons ">
-                    <a className="dropdown-button dropdown-trigger inst-link " data-target='dropdown1' href="#" data-activates="dropdown1">
-                      <i className="fa fa-user fa-2x" id="usrIcon" />
-                    </a>
-                    <UserInfo />
+                     <span data-target="slide-out" id="usrIcon" className="white-text sidenav-trigger fa fa-user fa-2x"/>
                   </div>
                 </div>
                 </div>
@@ -339,12 +341,12 @@ export class Header extends Component {
                       href=""
                       className=" blue-text "
                       style={{ fontSize: '11px' }}
-                      onClick={e => this.markAllAsVisited(true)}
+                      onClick={() => this.markAllAsVisited(true)}
                     >
                       <u> Mark opened as read</u>
                     </a>
                   </div>
-                  <ul className="collection">{this.renderNotifications('')}</ul>
+                  {this.renderNotifications('', state.isDark && '#ffffff', state.isDark && state.mainDark)}
                 </div>
               ) : modalType === 'bookmark' ? (
                 <Bookmark />
@@ -366,8 +368,11 @@ export class Header extends Component {
                 ''
               )}
             </MainModal>
+              <UserInfo handleNightMode={toggle} checked={state.isDark}/>
+           
           </Fragment>
         )}
+     
       </ThemeContext.Consumer>
     );
   }
@@ -378,6 +383,9 @@ Header.propTypes = {
   institution: PropTypes.object,
   notificationsCount: PropTypes.number,
   notifications: PropTypes.array,
+  externallinks: PropTypes.array,
+  details: PropTypes.object,
+  query: PropTypes.string,
 };
 
 export default withTracker(() => {

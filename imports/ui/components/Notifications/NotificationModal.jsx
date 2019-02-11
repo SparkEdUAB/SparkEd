@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
+import PropTypes from 'prop-types';
 
 export default class NotificationModal extends Component {
   state = {
@@ -36,7 +37,11 @@ export default class NotificationModal extends Component {
         {notification.read ? (
           <ul>
             <li
-              style={{ backgroundColor: 'white', padding: '1px 10px 5px', cursor: 'pointer' }}
+              style={{
+                backgroundColor: 'white',
+                padding: '1px 10px 5px',
+                cursor: 'pointer',
+              }}
               onClick={e =>
                 this.handleUrl(
                   notification.unitId,
@@ -54,7 +59,7 @@ export default class NotificationModal extends Component {
                   style={{ fontSize: '12px', color: '#90949c' }}
                 >
                   {' '}
-                  <b> {moment(note.createdAt).fromNow()}</b>
+                  <b> {moment(notification.createdAt).fromNow()}</b>
                 </span>
               </span>
             </li>
@@ -62,7 +67,11 @@ export default class NotificationModal extends Component {
         ) : (
           <ul>
             <li
-              style={{ backgroundColor: '#edf2fa', padding: '1px 10px 5px', cursor: 'pointer' }}
+              style={{
+                backgroundColor: '#edf2fa',
+                padding: '1px 10px 5px',
+                cursor: 'pointer',
+              }}
               onClick={e =>
                 this.handleUrl(
                   notification.unitId,
@@ -92,3 +101,7 @@ export default class NotificationModal extends Component {
     ));
   }
 }
+
+NotificationModal.propTypes = {
+  notifications: PropTypes.array,
+};

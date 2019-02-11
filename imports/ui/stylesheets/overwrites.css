@@ -24,7 +24,7 @@ nav {
   padding-top: 1%;
 }
 .topics-container {
-  background-color: #9dcde2;
+  /* background-color: #9dcde2; */
   height: 100vh;
   margin-top: -10px;
   position: sticky;
@@ -36,7 +36,7 @@ nav {
   font-size: 17px;
 }
 .menu_simple {
-  background-color: #005555;
+  /* background-color: #005555; */
   margin-top: -11px;
   position: sticky;
   height: 100vh;

@@ -8,7 +8,13 @@ export class UserRoles extends React.Component {
   }
   render() {
     return (
-      <select id="auth" required defaultValue={this.props.value} name="roles">
+      <select
+        id="auth"
+        required
+        defaultValue={this.props.value}
+        name="roles"
+        style={{ color: this.props.color }}
+      >
         <option value="admin">Admin</option>
         <option value="content-manager">Content-Manager</option>
         <option value="student">Student</option>
@@ -19,4 +25,5 @@ export class UserRoles extends React.Component {
 
 UserRoles.propTypes = {
   value: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 };

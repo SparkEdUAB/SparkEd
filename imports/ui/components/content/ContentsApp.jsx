@@ -97,7 +97,7 @@ export class ContentsApp extends Component {
         {color => (
           <Fragment>
             <div className="row">
-              <div className=" unit-container" style={{ backgroundColor: color.main }}>
+              <div className=" unit-container" style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}>
                 <h4 className="center unit-name">{unitName}</h4>
                 <div className="container">
                   <p className="center">{desc}</p>
@@ -105,7 +105,9 @@ export class ContentsApp extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col s12 m4 l3 topics-container">
+              <div className="col s12 m4 l3 topics-container"
+                style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}
+              >
                 <div className="sideNavHeadingUnderline">
                   <a
                     title="Go back to Topics"
@@ -113,7 +115,7 @@ export class ContentsApp extends Component {
                     href={''}
                     onClick={e => this.getBack(e)}
                   >
-                    <i className="fa fa-chevron-circle-left fa-lg" />
+                    <i className={`fa fa-chevron-circle-left fa-lg ${color.isDark && 'white-text'}`} />
                   </a>
                   <p className="sideNavHeading">
                     {config.isHighSchool ? title : <T>common.manage.topics</T>}

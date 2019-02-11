@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-expressions */
 /* eslint default-case: 0, no-case-declarations: 0 */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types';
 import M from 'materialize-css';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
@@ -14,8 +15,9 @@ import {
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
-import MainModal from '../../../ui/modals/MainModal';
+import MainModal from '../../../ui/modals/MainModal'; // eslint-disable-line
 import { formatText } from '../../utils/utils';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 export class EditUnits extends Component {
@@ -53,7 +55,10 @@ export class EditUnits extends Component {
 
   toggleEditModal = (ide, id = '', name = '') => {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      M.toast({ html: '<span>Only Admins and Content-Manager can edit Topics</span>', classes: 'red' });
+      M.toast({
+        html: '<span>Only Admins and Content-Manager can edit Topics</span>',
+        classes: 'red',
+      });
       return;
     }
     this.name = name;
@@ -84,7 +89,10 @@ export class EditUnits extends Component {
         const count = topics.length;
         const name = count > 1 ? 'topics' : 'topic';
         if (count < 1) {
-          M.toast({ html: '<span>Please check at least one topic</span>', classes: 'red' });
+          M.toast({
+            html: '<span>Please check at least one topic</span>',
+            classes: 'red',
+          });
           return;
         }
         this.setState({
@@ -111,8 +119,8 @@ export class EditUnits extends Component {
 
   renderTopics() {
     let count = 1;
-    const topics = this.props.topics;
-    const unitId = FlowRouter.getParam('_id');
+    const { topics } = this.props;
+    // const unitId = FlowRouter.getParam('_id');
     if (!topics) {
       return null;
     }
@@ -124,19 +132,27 @@ export class EditUnits extends Component {
         <td>
           <a
             href=""
-            onClick={e => this.toggleEditModal('edit', topic._id, topic.name, e)}
+            onClick={e =>
+              this.toggleEditModal('edit', topic._id, topic.name, e)
+            }
             className="fa fa-pencil"
           />
         </td>
         <td>
-          <a className="fa fa-pencil" href={`/dashboard/edit_resources/${topic._id}`} />
+          <a
+            className="fa fa-pencil"
+            href={`/dashboard/edit_resources/${topic._id}`}
+          />
         </td>
         <td onClick={handleCheckboxChange.bind(this, topic._id)}>
-        <label htmlFor={topic._id}>
-          <input type="checkbox" id={topic._id} className={`chk chk${topic._id}`} />
-          <span/>
-      </label>
-    
+          <label htmlFor={topic._id}>
+            <input
+              type="checkbox"
+              id={topic._id}
+              className={`chk chk${topic._id}`}
+            />
+            <span />
+          </label>
         </td>
       </tr>
     ));
@@ -166,7 +182,11 @@ export class EditUnits extends Component {
         Meteor.call('singletopic.insert', _id, unitId, newTopic, name, err => {
           err
             ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
-            Meteor.call('logger', formatText(err.message, Meteor.userId(), 'topic-add'), 'error'))
+            Meteor.call(
+              'logger',
+              formatText(err.message, Meteor.userId(), 'topic-add'),
+              'error',
+            ))
             : Meteor.call(
               'insert.search',
               _id,
@@ -175,9 +195,13 @@ export class EditUnits extends Component {
               },
               newTopic,
               'topic',
-              err => { // eslint-disable-line
+              err => {
+                  // eslint-disable-line
                 err
-                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                  ? M.toast({
+                    html: `<span>${err.reason}</span>`,
+                    classes: 'red',
+                  })
                   : M.toast({ html: `Successfully added ${newTopic}` });
               },
             );
@@ -198,8 +222,13 @@ export class EditUnits extends Component {
             ))
             : Meteor.call('updateSearch', modalIdentifier, newTopic, err => {
               err
-                ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
-                : M.toast({ html: `<span>Successfully updated ${newTopic}</span>` });
+                ? M.toast({
+                  html: `<span>${err.reason}</span>`,
+                  classes: 'red',
+                })
+                : M.toast({
+                  html: `<span>Successfully updated ${newTopic}</span>`,
+                });
             });
         });
         break;
@@ -211,7 +240,10 @@ export class EditUnits extends Component {
           count += 1;
           Meteor.call('topic.remove', v, err => {
             err
-              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              ? (M.toast({
+                html: `<span>${err.reason}</span>`,
+                classes: 'red',
+              }),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'topic-remove'),
@@ -219,11 +251,19 @@ export class EditUnits extends Component {
               ))
               : Meteor.call('removeSearchData', v, err => {
                 err
-                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                  ? M.toast({
+                    html: `<span>${err.reason}</span>`,
+                    classes: 'red',
+                  })
                   : Meteor.call('removeSearchData', v, err => {
                     err
-                      ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
-                      : M.toast({ html: `<span>${count} topics successfully deleted</span>` });
+                      ? M.toast({
+                        html: `<span>${err.reason}</span>`,
+                        classes: 'red',
+                      })
+                      : M.toast({
+                        html: `<span>${count} topics successfully deleted</span>`,
+                      });
                   });
               });
           });
@@ -246,7 +286,7 @@ export class EditUnits extends Component {
   }
 
   handlePageClick = data => {
-    const selected = data.selected;
+    const { selected } = data;
     const offset = Math.ceil(selected * Session.get('limit'));
     Session.set('skip', offset);
   };
@@ -277,7 +317,6 @@ export class EditUnits extends Component {
     );
   }
 
-
   render() {
     let { unit } = this.props;
     const limit = Session.get('limit');
@@ -290,114 +329,140 @@ export class EditUnits extends Component {
     } = unit;
 
     return (
-      <div>
-        <MainModal
-          show={this.state.isOpen}
-          onClose={this.closeModal}
-          subFunc={this.handleSubmit}
-          title={this.state.title}
-          confirm={this.state.confirm}
-          reject={this.state.reject}
-        >
-          {this.state.modalType === 'del' ? (
-            ''
-          ) : (
-            <div className="input-field">
-              <input
-                placeholder="Name of Topic"
-                type="text"
-                defaultValue={this.state.name}
-                className="validate clear"
-                required
-                name="topic"
-              />
-            </div>
-          )}
-        </MainModal>
-        <div className='m1' />
-        <div className="col m9 s11">
-          <div className="">
-            <h4>{unit.name}</h4>
-          </div>
-          <div className="row ">
-            <div className="col m3 ">
-              <button
-                className="btn grey darken-3 fa fa-angle-left"
-                onClick={e => this.backToUnits(programId, courseId, e)}
-              >
-                <a href={''} className="white-text">
-                  {` ${Session.get('unit_title') || 'Back'}`}
-                </a>
-              </button>
-            </div>
-            <div className="col m3 ">
-              <button
-                className="btn red darken-3  "
-                onClick={e => this.toggleEditModal('del', e)}
-              >
-                {' '}
-                <T>common.actions.delete</T>
-              </button>
-            </div>
-            <div className="col m3">
-              <a href="">
-                <button
-                  className="btn green darken-4  "
-                  onClick={e => this.toggleEditModal('add', e)}
+      <ThemeContext.Consumer>
+        {
+          ({ state }) => (
+            <Fragment>
+                <MainModal
+                  show={this.state.isOpen}
+                  onClose={this.closeModal}
+                  subFunc={this.handleSubmit}
+                  title={this.state.title}
+                  confirm={this.state.confirm}
+                  reject={this.state.reject}
                 >
-                  {' '}
-                  <T>common.actions.add</T>
-                </button>
-              </a>
-            </div>
-            <div className="col m3">
-              Units displayed
-              <div className="row">
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 5)}>
-                  <u>{limit === 5 ? <b>5</b> : 5}</u>
-                </a>
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 10)}>
-                  <u>{limit === 10 ? <b>10</b> : 10}</u>
-                </a>
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 20)}>
-                  <u>{limit === 20 ? <b>20</b> : 20}</u>
-                </a>
-              </div>
-            </div>
-          </div>
+                  {this.state.modalType === 'del' ? (
+                    ''
+                  ) : (
+                    <div className="input-field">
+                      <input
+                        placeholder="Name of Topic"
+                        type="text"
+                        defaultValue={this.state.name}
+                        className="validate clear"
+                        style={{
+                          color: state.isDark ? '#F5FAF8' : '#000000',
+                        }}
+                        required
+                        name="topic"
+                      />
+                    </div>
+                  )}
+                </MainModal>
+                <div className="m1" />
+                <div className="col m9 s11"
+                      style={{
+                        backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                        color: state.isDark ? '#F5FAF8' : '#000000',
+                      }}
+                  >
+                  <div className="">
+                    <h4>{unit.name}</h4>
+                  </div>
+                  <div className="row ">
+                    <div className="col m3 ">
+                      <button
+                        className="btn grey darken-3 fa fa-angle-left"
+                        onClick={e => this.backToUnits(programId, courseId, e)}
+                      >
+                        <a href={''} className="white-text">
+                          {` ${Session.get('unit_title') || 'Back'}`}
+                        </a>
+                      </button>
+                    </div>
+                    <div className="col m3 ">
+                      <button
+                        className="btn red darken-3  "
+                        onClick={e => this.toggleEditModal('del', e)}
+                      >
+                        {' '}
+                        <T>common.actions.delete</T>
+                      </button>
+                    </div>
+                    <div className="col m3">
+                      <a href="">
+                        <button
+                          className="btn green darken-4  "
+                          onClick={e => this.toggleEditModal('add', e)}
+                        >
+                          {' '}
+                          <T>common.actions.add</T>
+                        </button>
+                      </a>
+                    </div>
+                    <div className="col m3">
+                      Units displayed
+                      <div className="row">
+                        <a
+                          className="col s2 link"
+                          onClick={e => this.getEntriesCount(e, 5)}
+                        >
+                          <u>{limit === 5 ? <b>5</b> : 5}</u>
+                        </a>
+                        <a
+                          className="col s2 link"
+                          onClick={e => this.getEntriesCount(e, 10)}
+                        >
+                          <u>{limit === 10 ? <b>10</b> : 10}</u>
+                        </a>
+                        <a
+                          className="col s2 link"
+                          onClick={e => this.getEntriesCount(e, 20)}
+                        >
+                          <u>{limit === 20 ? <b>20</b> : 20}</u>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
 
-          <table className="highlight">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>{`${Session.get('sub_unit_title') || 'Topics'}`}</th>
-                <th>
-                  {' '}
-                  <T>common.actions.createdAt</T>
-                </th>
-                <th>Edit Topics</th>
-                <th>
-                  {' '}
-                  <T>common.manage.resources</T>
-                </th>
-                <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <label>
-                  <input type="checkbox" className=" chk-all" readOnly />
-                    {' '}
-                    <T>common.actions.check</T>
-                  </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>{this.renderTopics()}</tbody>
-          </table>
-        {/* {this.renderPagination()} */}
-        </div>
-      </div>
+                  <table className="highlight">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>{`${Session.get('sub_unit_title') || 'Topics'}`}</th>
+                        <th>
+                          {' '}
+                          <T>common.actions.createdAt</T>
+                        </th>
+                        <th>Edit Topics</th>
+                        <th>
+                          {' '}
+                          <T>common.manage.resources</T>
+                        </th>
+                        <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                          <label>
+                            <input type="checkbox" className=" chk-all" readOnly />{' '}
+                            <T>common.actions.check</T>
+                          </label>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>{this.renderTopics()}</tbody>
+                  </table>
+                  {/* {this.renderPagination()} */}
+                </div>
+            </Fragment>
+          )
+        }
+      </ThemeContext.Consumer>
     );
   }
 }
-
+EditUnits.propTypes = {
+  count: PropTypes.number,
+  unit: PropTypes.object,
+  topics: PropTypes.array,
+};
 export function getUnitId() {
   const unitId = FlowRouter.getParam('_id');
   return unitId;
@@ -409,10 +474,10 @@ export default withTracker(() => {
   return {
     topics: _Topics
       .find(
-{
-        unitId: getUnitId(),
-      },
-      { skip: Session.get('skip'), limit: Session.get('limit') },
+        {
+          unitId: getUnitId(),
+        },
+        { skip: Session.get('skip'), limit: Session.get('limit') },
       )
       .fetch(),
     unit: _Units.findOne({ _id: getUnitId() }),

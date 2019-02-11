@@ -18,6 +18,7 @@ import { Resources } from '../../../api/resources/resources';
 import * as config from '../../../../config.json';
 import { _Units } from '../../../api/units/units';
 import { formatText } from '../../utils/utils';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -62,7 +63,10 @@ export class EditResources extends Component {
 
   toggleEditModal = (ide, id = '', name = '') => {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
-      M.toast({ html: '<span>Only Admins and Content-Manager can edit the Topic</span>', classes: 'red' });
+      M.toast({
+        html: '<span>Only Admins and Content-Manager can edit the Topic</span>',
+        classes: 'red',
+      });
       return;
     }
     this.name = name;
@@ -133,11 +137,21 @@ export class EditResources extends Component {
               formatText(err.message, Meteor.userId(), 'resource-update'),
               'error',
             ))
-            : Meteor.call('updateSearch', modalIdentifier, resourceName, err => {
-              err
-                ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
-                : M.toast({ html: `<span>successfully updated ${resourceName} </span>` });
-            });
+            : Meteor.call(
+              'updateSearch',
+              modalIdentifier,
+              resourceName,
+              err => {
+                err
+                  ? M.toast({
+                    html: `<span>${err.reason}</span>`,
+                    classes: 'red',
+                  })
+                  : M.toast({
+                    html: `<span>successfully updated ${resourceName} </span>`,
+                  });
+              },
+            );
         });
         break;
       // deleting (Yes)
@@ -149,7 +163,10 @@ export class EditResources extends Component {
           const name = count > 1 ? 'resources' : 'resource';
           Meteor.call('removeResource', v, err => {
             err
-              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              ? (M.toast({
+                html: `<span>${err.reason}</span>`,
+                classes: 'red',
+              }),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'resource-remove'),
@@ -160,8 +177,14 @@ export class EditResources extends Component {
                   ? M.toast(err.reason)
                   : Meteor.call('insertDeleted', v, 'resource', err => {
                     err
-                      ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
-                      : M.toast({ html: '<span>successfully deleted resources </span>' });
+                      ? M.toast({
+                        html: `<span>${err.reason}</span>`,
+                        classes: 'red',
+                      })
+                      : M.toast({
+                        html:
+                                '<span>successfully deleted resources </span>',
+                      });
                   });
               });
             // });
@@ -191,15 +214,21 @@ export class EditResources extends Component {
           <a
             href=""
             className="fa fa-pencil"
-            onClick={e => this.toggleEditModal('edit', resource._id, resource.name, e)}
+            onClick={e =>
+              this.toggleEditModal('edit', resource._id, resource.name, e)
+            }
           />
         </td>
         <td>{resource.ext}</td>
         <td onClick={handleCheckboxChange.bind(this, resource._id)}>
-        <label htmlFor={resource._id}>
-          <input type="checkbox" id={resource._id} className={`chk chk${resource._id}`} />
-          <span/>
-         </label>
+          <label htmlFor={resource._id}>
+            <input
+              type="checkbox"
+              id={resource._id}
+              className={`chk chk${resource._id}`}
+            />
+            <span />
+          </label>
         </td>
         {Session.set('filename', resource.name)}
       </tr>
@@ -263,120 +292,153 @@ export class EditResources extends Component {
     );
   }
   render() {
-    const {
- isOpen, title, confirm, reject, modalType, name 
-} = this.state;
+    const { isOpen, title, confirm, reject, modalType, name } = this.state;
     const limit = Session.get('limit');
     return (
-      <Fragment>{modalType === 'upload' ? (
-          <UploadWrapper
-            show={isOpen}
-            close={this.closeModal}
-            title={title}
-            submit={this.submitFile}
-          />
-        ) : (
-          <MainModal
-            show={isOpen}
-            onClose={this.closeModal}
-            subFunc={this.handleSubmit}
-            title={title}
-            confirm={confirm}
-            reject={reject}
-          >
-            {modalType === 'del' ? (
-              ''
+      <ThemeContext.Consumer>
+        {
+          ({ state }) => (
+
+          <Fragment>
+            {modalType === 'upload' ? (
+              <UploadWrapper
+                show={isOpen}
+                close={this.closeModal}
+                title={title}
+                submit={this.submitFile}
+              />
             ) : (
-              <div className="input-field">
-                <input
-                  placeholder="Name of Resource"
-                  type="text"
-                  defaultValue={name}
-                  className="validate clear"
-                  required
-                  name="resource"
-                />
-              </div>
+              <MainModal
+                show={isOpen}
+                onClose={this.closeModal}
+                subFunc={this.handleSubmit}
+                title={title}
+                confirm={confirm}
+                reject={reject}
+              >
+                {modalType === 'del' ? (
+                  ''
+                ) : (
+                  <div className="input-field">
+                    <input
+                      placeholder="Name of Resource"
+                      type="text"
+                      defaultValue={name}
+                      className="validate clear"
+                      style={{
+                        color: state.isDark ? '#F5FAF8' : '#000000',
+                      }}
+                      required
+                      name="resource"
+                    />
+                  </div>
+                )}
+              </MainModal>
+              // eslint-disable-next-line quotes
             )}
-          </MainModal>
-      // eslint-disable-next-line quotes
-      )}
-      <div className='m1' />
-        <div className="col m9 s11">
-          <div className="">
-            <h4>{this.getName()}</h4>
-          </div>
-          <div className="row ">
-            <div className="col s4 m3">
-              <button className="btn grey darken-3 fa fa-angle-left" onClick={e => this.getBack(e)}>
-                {' '}
-                {config.isHighSchool ? Session.get('sub_unit_title') || ' Units' : ' Topics'}
-              </button>
-            </div>
-            <div className="col s4 m3">
-              <button
-                className="btn red darken-3  "
-                onClick={e => this.toggleEditModal('del', e)}
-              >
-                {' '}
-                <T>common.actions.delete</T>
-              </button>
-            </div>
-
-            <div className="col s4 m3">
-              <button
-                className="btn green darken-4 "
-                onClick={e => this.toggleEditModal('upload', e)}
-              >
-                {' '}
-                Upload New
-              </button>
-            </div>
-            <div className="col m3">
-              Resources displayed
-              <div className="row">
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 5)}>
-                  <u>{limit === 5 ? <b>5</b> : 5}</u>
-                </a>
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 10)}>
-                  <u>{limit === 10 ? <b>10</b> : 10}</u>
-                </a>
-                <a className="col s2 link" onClick={e => this.getEntriesCount(e, 20)}>
-                  <u>{limit === 20 ? <b>20</b> : 20}</u>
-                </a>
+            <div className="m1" />
+            <div className="col m9 s11"
+                    style={{
+                      backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                      color: state.isDark ? '#F5FAF8' : '#000000',
+                    }}
+            >
+              <div className="">
+                <h4>{this.getName()}</h4>
               </div>
-            </div>
-          </div>
+              <div className="row ">
+                <div className="col s4 m3">
+                  <button
+                    className="btn grey darken-3 fa fa-angle-left"
+                    onClick={e => this.getBack(e)}
+                  >
+                    {' '}
+                    {config.isHighSchool
+                      ? Session.get('sub_unit_title') || ' Units'
+                      : ' Topics'}
+                  </button>
+                </div>
+                <div className="col s4 m3">
+                  <button
+                    className="btn red darken-3  "
+                    onClick={e => this.toggleEditModal('del', e)}
+                  >
+                    {' '}
+                    <T>common.actions.delete</T>
+                  </button>
+                </div>
 
-          <table className="striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>
-                  <T>common.manage.resources</T>
-                </th>
-                <th>
-                  <T>common.actions.edit</T> <T>common.manage.resources</T>
-                </th>
-                <th>Type</th>
-                <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <label>
-                  <input type="checkbox" className="filled-in chk-all" readOnly />
-                    <T>common.actions.check</T>
-                  </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>{this.renderResources()}</tbody>
-          </table>
-          {this.renderPagination()}
-        </div>
-        </Fragment>
+                <div className="col s4 m3">
+                  <button
+                    className="btn green darken-4 "
+                    onClick={e => this.toggleEditModal('upload', e)}
+                  >
+                    {' '}
+                    Upload New
+                  </button>
+                </div>
+                <div className="col m3">
+                  Resources displayed
+                  <div className="row">
+                    <a
+                      className="col s2 link"
+                      onClick={e => this.getEntriesCount(e, 5)}
+                    >
+                      <u>{limit === 5 ? <b>5</b> : 5}</u>
+                    </a>
+                    <a
+                      className="col s2 link"
+                      onClick={e => this.getEntriesCount(e, 10)}
+                    >
+                      <u>{limit === 10 ? <b>10</b> : 10}</u>
+                    </a>
+                    <a
+                      className="col s2 link"
+                      onClick={e => this.getEntriesCount(e, 20)}
+                    >
+                      <u>{limit === 20 ? <b>20</b> : 20}</u>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <table className="striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>
+                      <T>common.manage.resources</T>
+                    </th>
+                    <th>
+                      <T>common.actions.edit</T> <T>common.manage.resources</T>
+                    </th>
+                    <th>Type</th>
+                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          className="filled-in chk-all"
+                          readOnly
+                        />
+                        <T>common.actions.check</T>
+                      </label>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{this.renderResources()}</tbody>
+              </table>
+              {this.renderPagination()}
+            </div>
+          </Fragment>
+          )
+        }
+      </ThemeContext.Consumer>
     );
   }
 }
 EditResources.propTypes = {
   topic: PropTypes.object,
+  resources: PropTypes.array,
 };
 export function getId() {
   return FlowRouter.getParam('_id');

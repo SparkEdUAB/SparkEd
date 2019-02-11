@@ -9,9 +9,10 @@ import {
   handleCheckAll,
   getCheckBoxValues,
 } from '../../Utilities/CheckBoxHandler.jsx';
-import UploadWrapper from '../../../../ui/modals/UploadWrapper';
-import MainModal from '../../../../ui/modals/MainModal';
+import UploadWrapper from '../../../../ui/modals/UploadWrapper'; // eslint-disable-line
+import MainModal from '../../../../ui/modals/MainModal'; // eslint-disable-line
 import { closeModal } from '../../../../ui/modals/methods.js';
+import { ThemeContext } from '../../../containers/AppWrapper'; // eslint-disable-line
 
 export class ManageSlides extends Component {
   constructor(props) {
@@ -112,7 +113,9 @@ export class ManageSlides extends Component {
           Meteor.call('removeSlides', id, err => {
             err
               ? M.toast({ html: `<span>${err.reason}</span>` })
-              : M.toast({ html: `<span>${count} ${sName} successfully deleted</span>` });
+              : M.toast({
+                html: `<span>${count} ${sName} successfully deleted</span>`,
+              });
           });
         });
         break;
@@ -134,7 +137,9 @@ export class ManageSlides extends Component {
           <a
             href=""
             className="fa fa-pencil"
-            onClick={e => this.toggleEditModal('edit', slide._id, slide.name, e)}
+            onClick={e =>
+              this.toggleEditModal('edit', slide._id, slide.name, e)
+            }
           />
         </td>
         <td>{slide.meta.createdAt.toDateString()}</td>
@@ -149,8 +154,12 @@ export class ManageSlides extends Component {
 
         <td onClick={handleCheckboxChange.bind(this, slide._id)}>
           <label htmlFor={slide._id}>
-            <input type="checkbox" id={slide._id} className={`chk chk${slide._id}`} />
-            <span/>
+            <input
+              type="checkbox"
+              id={slide._id}
+              className={`chk chk${slide._id}`}
+            />
+            <span />
           </label>
         </td>
       </tr>
@@ -158,90 +167,99 @@ export class ManageSlides extends Component {
   }
 
   render() {
-    const {
- isOpen, title, confirm, reject, modalType, name 
-} = this.state;
+    const { isOpen, title, confirm, reject, modalType, name } = this.state;
 
     return (
-      <Fragment>
-      {modalType === 'upload' ? (
-            <UploadWrapper show={isOpen} close={this.closeModal} title={title} />
-          ) : (
-            <MainModal
-              show={isOpen}
-              onClose={this.closeModal}
-              subFunc={this.handleSubmit}
-              title={title}
-              confirm={confirm}
-              reject={reject}
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <Fragment>
+            {modalType === 'upload' ? (
+              <UploadWrapper
+                show={isOpen}
+                close={this.closeModal}
+                title={title}
+              />
+            ) : (
+              <MainModal
+                show={isOpen}
+                onClose={this.closeModal}
+                subFunc={this.handleSubmit}
+                title={title}
+                confirm={confirm}
+                reject={reject}
+              >
+                {modalType === 'del' ? (
+                  <span />
+                ) : (
+                  <div className="input-field">
+                    <input
+                      placeholder="Name of Slide"
+                      type="text"
+                      defaultValue={name}
+                      className="validate clear"
+                      style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                      required
+                      name="slide"
+                    />
+                  </div>
+                )}
+              </MainModal>
+            )}
+            <div
+              className="col m9 s11"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                color: state.isDark ? '#F5FAF8' : '#000000',
+              }}
             >
-              {modalType === 'del' ? (
-                <span />
-              ) : (
-                <div className="input-field">
-                  <input
-                    placeholder="Name of Slide"
-                    type="text"
-                    defaultValue={name}
-                    className="validate clear"
-                    required
-                    name="slide"
-                  />
+              <div className="">
+                <h4>Manage Slides</h4>
+              </div>
+
+              <div className="row">
+                <div className="col m3">
+                  <button
+                    className="btn red darken-3 "
+                    onClick={e => this.toggleEditModal('del', e)}
+                  >
+                    Delete
+                  </button>
                 </div>
-              )}
-            </MainModal>
-          )}
-          <div className="col m9 s11">
-          <div className="">
-            <h4>Manage Slides</h4>
-          </div>
 
-          <div className="row">
-            <div className="col m3">
-              <button
-                className="btn red darken-3 "
-                onClick={e => this.toggleEditModal('del', e)}
-              >
-                Delete
-              </button>
+                <div className="col s4 m4">
+                  <button
+                    className="btn green darken-4 "
+                    onClick={e => this.toggleEditModal('upload', e)}
+                  >
+                    {' '}
+                    Upload New Slider
+                  </button>
+                </div>
+              </div>
+
+              <table className="highlight">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Slides Motto</th>
+                    <th>Edit Motto</th>
+                    <th>Uploaded At</th>
+                    <th>Slides Image</th>
+
+                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                      <label>
+                        <input type="checkbox" className=" chk-all" />
+                        Check All
+                      </label>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{this.renderslides()}</tbody>
+              </table>
             </div>
-
-            <div className="col s4 m4">
-              <button
-                className="btn green darken-4 "
-                onClick={e => this.toggleEditModal('upload', e)}
-              >
-                {' '}
-                Upload New Slider
-              </button>
-            </div>
-          </div>
-
-          <table className="highlight">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Slides Motto</th>
-                <th>Edit Motto</th>
-                <th>Uploaded At</th>
-                <th>Slides Image</th>
-
-                <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                <label>
-                  <input
-                    type="checkbox"
-                    className=" chk-all"
-                    
-                  />
-                    Check All
-                  </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>{this.renderslides()}</tbody>
-          </table>
-        </div>
-      </Fragment>
+          </Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }

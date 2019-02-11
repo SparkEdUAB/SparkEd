@@ -1,11 +1,13 @@
 import React, { Fragment, Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
+import PropTypes from 'prop-types';
 import i18n from 'meteor/universe:i18n';
 import Languages from '../Language/Languages';
 import ChangePassword from './ChangePassword';
 import MainModal from '../../modals/MainModal';
 import { checkPassword } from '../Accounts/AccountFunction';
+import { ThemeContext } from '../../containers/AppWrapper';
 
 const T = i18n.createComponent();
 
@@ -89,99 +91,117 @@ class UserInfo extends Component {
       error,
     } = this.state; // eslint-disable-line
     return (
-      <Fragment>
-        <MainModal
-          show={isOpen}
-          onClose={this.close}
-          subFunc={this.handleSubmit}
-          title={title}
-          confirm={confirm}
-          reject={reject}
-        >
-          <ChangePassword
-            handleOldPassword={this.handleOldPasswordChange}
-            handleNewPassword={this.handlePasswordConfirm}
-            validatePassword={this.validatePassword}
-            oldPassword={oldPassword}
-            newPassword={password}
-            validatedPassword={passwordConfirm}
-            error={error}
-          />
-        </MainModal>
-        <ul id="dropdown1" className="dropdown-content">
-          {user ? (
-            <Fragment>
-              <li id="dropBody">
-                <div id="accName">
-                  {`${user.profile.name} `}
-                  <span id="userEmail">{user.emails[0].address}</span>
-                  <span id="uiWrapper">
-                    <a href="#" onClick={logUserOut}>
-                      <span className="btn-flat" id="accounts-button">
-                        <T>common.accounts.Logout</T>
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <div>
+            <MainModal
+              show={isOpen}
+              onClose={this.close}
+              subFunc={this.handleSubmit}
+              title={title}
+              confirm={confirm}
+              reject={reject}
+            >
+              <ChangePassword
+                handleOldPassword={this.handleOldPasswordChange}
+                handleNewPassword={this.handlePasswordConfirm}
+                validatePassword={this.validatePassword}
+                oldPassword={oldPassword}
+                newPassword={password}
+                validatedPassword={passwordConfirm}
+                error={error}
+              />
+            </MainModal>
+            <ul
+              id="slide-out"
+              className="sidenav"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : '#ffffff',
+              }}
+            >
+              {user ? (
+                <Fragment>
+                  <li id="dropBody">
+                    <div id="accName">
+                      {`${user.profile.name} `}
+                      <span id="userEmail">{user.emails[0].address}</span>
+                      <span id="uiWrapper">
+                        <button className="btn" onClick={logUserOut}>
+                          <T>common.accounts.Logout</T>
+                        </button>
                       </span>
-                    </a>
-                  </span>
-                  <span id="uiWrapper">
-                    <a
-                      href="#"
-                      onClick={() =>
-                        this.setState(prevState => ({
-                          isOpen: !prevState.isOpen,
-                        }))
-                      }
-                    >
-                      <span className="btn-flat" id="accounts-button">
-                        Change Password
+                      <span id="uiWrapper">
+                        <button
+                          className="btn teal"
+                          onClick={() =>
+                            this.setState(prevState => ({
+                              isOpen: !prevState.isOpen,
+                            }))
+                          }
+                        >
+                          Change Password
+                        </button>
                       </span>
-                    </a>
-                  </span>
-                </div>
-              </li>
-              {Meteor.userId() && isVisible ? (
-                <li>
-                  <ChangePassword />
-                </li>
-              ) : null}
+                    </div>
+                  </li>
+                  {Meteor.userId() && isVisible ? (
+                    <li>
+                      <ChangePassword />
+                    </li>
+                  ) : null}
 
-              <li id="dropBody">
-                <Languages />
-              </li>
-              <li id="dropFooter">
-                {Roles.userIsInRole(Meteor.userId(), [
-                  'admin',
-                  'content-manager',
-                ]) ? (
-                  <div className="valign center-align" id="dashStylesDrop">
-                    <span
-                      className="dashLink link waves-effect teal btn-flat"
-                      onClick={takeToDashboard}
+                  <br />
+                  <br />
+                  <li>
+                    <Languages />
+                  </li>
+                  <li>
+                    {Roles.userIsInRole(Meteor.userId(), [
+                      'admin',
+                      'content-manager',
+                    ]) ? (
+                      <button className="btn teal" onClick={takeToDashboard}>
+                        Dashboard
+                      </button>
+                    ) : (
+                      <span />
+                    )}
+                  </li>
+                </Fragment>
+              ) : (
+                <li id="dropBody">
+                  <div id="accName">
+                    <button
+                      className="btn teal"
+                      onClick={() => FlowRouter.go('/login')}
                     >
-                      dashboard
-                    </span>
+                      You are not Logged in
+                    </button>
                   </div>
-                ) : (
-                  <span />
-                )}
-              </li>
-            </Fragment>
-          ) : (
-            <li id="dropBody">
-              <div id="accName">
-                <span
-                  className="btn-flat"
-                  id="accounts-button"
-                  onClick={() => FlowRouter.go('/login')}
-                >
-                  You are not Logged in
-                </span>
+                </li>
+              )}
+              <div className="switch">
+                <label>
+                  Day Mode
+                  <input
+                    type="checkbox"
+                    onChange={this.props.handleNightMode}
+                    checked={this.props.checked}
+                  />
+                  <span className="lever" />
+                  Night Mode
+                </label>
               </div>
-            </li>
-          )}
-        </ul>
-      </Fragment>
+            </ul>
+          </div>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
+UserInfo.propTypes = {
+  handleNightMode: PropTypes.func.isRequired,
+  checked: PropTypes.bool.isRequired,
+};
 
 export default UserInfo;

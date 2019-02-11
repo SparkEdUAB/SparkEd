@@ -7,6 +7,7 @@ import i18n from 'meteor/universe:i18n';
 import { References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import { ExtraResource } from './Unit.jsx';
+import { ThemeContext } from '../../containers/AppWrapper';
 
 export const T = i18n.createComponent();
 
@@ -16,7 +17,11 @@ export class ReferenceLibrary extends Component {
       return null;
     }
     return this.props.courses.map(course => (
-      <SideMenu key={course._id} address={`/reference/${course._id}`} name={course.name} />
+      <SideMenu
+        key={course._id}
+        address={`/reference/${course._id}`}
+        name={course.name}
+      />
     ));
   }
 
@@ -83,27 +88,34 @@ export class ReferenceLibrary extends Component {
   render() {
     Session.set('limit', 10);
     return (
-      <Fragment>
-        <div className="row">
-          <div className="col m2 s12 menu_simple">
-            <ul className="item-container">
-              <li className="hide-on-med-and-down">
-                <a id="dashtweek" href="/reference" className="center">
-                  <T>common.sidenav.resourceLibrary</T>
-                </a>
-              </li>
-              {this.renderCourses()}
-              {this.renderPagination()}
-            </ul>
-          </div>
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <div className="row">
+            <div
+              className="col m2 s12 menu_simple"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : state.main,
+              }}
+            >
+              <ul className="item-container">
+                <li className="hide-on-med-and-down">
+                  <a id="dashtweek" href="/reference" className="center">
+                    <T>common.sidenav.resourceLibrary</T>
+                  </a>
+                </li>
+                {this.renderCourses()}
+                {this.renderPagination()}
+              </ul>
+            </div>
 
-          <div className="col m10 s12">
-            {FlowRouter.getParam('_id') === undefined
-              ? ReferenceLibrary.renderResources(this.props.extraResources)
-              : ReferenceLibrary.renderResources(this.props.resources)}
+            <div className="col m10 s12">
+              {FlowRouter.getParam('_id') === undefined
+                ? ReferenceLibrary.renderResources(this.props.extraResources)
+                : ReferenceLibrary.renderResources(this.props.resources)}
+            </div>
           </div>
-        </div>
-      </Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
@@ -144,7 +156,9 @@ export default withTracker(() => {
   Meteor.subscribe('courses');
   Meteor.subscribe('references');
   return {
-    courses: _Courses.find({}, { skip: Session.get('skip'), limit: Session.get('limit') }).fetch(),
+    courses: _Courses
+      .find({}, { skip: Session.get('skip'), limit: Session.get('limit') })
+      .fetch(),
     resources: References.find({ 'meta.courseId': getCourseId() }).fetch(),
     extraResources: References.find({ 'meta.courseId': null }).fetch(),
     count: _Courses.find().count(),

@@ -33,7 +33,7 @@ export class Unit extends Component {
     const { topics } = this.props;
     return (
       <ThemeContext.Consumer>
-        {color => (
+        {({ state }) => (
           <div
             className={`col m6 s12 l4 cse-unit ${courseId}yr${language}${programId}`}
             id={`r${_id}`}
@@ -41,7 +41,9 @@ export class Unit extends Component {
           >
             <div
               className="card darken-2 homeCardColor"
-              style={{ backgroundColor: color.main }}
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : state.main,
+              }}
             >
               <div className="card-content">
                 {/* if the screen size is smaller then redirect to small view components */}
@@ -112,35 +114,46 @@ export class ExtraResource extends Component {
     return false;
   }
   render() {
-    const {
-      courseId, resourceId, name, fileType,
-    } = this.props;
+    const { courseId, resourceId, name, fileType } = this.props;
     return (
-      <div
-        className={'col m6 s12 l4 homeCards cse-unit link-unit '}
-        title={fileType}
-        onClick={ExtraResource.handleClickCard.bind(this, courseId, resourceId)}
-      >
-        <div className="card-panel homeCardColor-2 teal">
-          <span className={'card-title '}>
-            <h5>
-              <a
-                href={`/extra/view_resource/${courseId}?rs=${resourceId}`}
-                id="cardListTitle"
-              >
-                {name.replace(/\.[^/.]+$/, '')}
-              </a>
-            </h5>
-          </span>
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <div
+            className={'col m6 s12 l4 homeCards cse-unit link-unit '}
+            title={fileType}
+            onClick={ExtraResource.handleClickCard.bind(
+              this,
+              courseId,
+              resourceId,
+            )}
+          >
+            <div
+              className="card-panel homeCardColor-2"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : state.main,
+              }}
+            >
+              <span className={'card-title '}>
+                <h5>
+                  <a
+                    href={`/extra/view_resource/${courseId}?rs=${resourceId}`}
+                    id="cardListTitle"
+                  >
+                    {name.replace(/\.[^/.]+$/, '')}
+                  </a>
+                </h5>
+              </span>
 
-          <span className="">
-            <a href="" id="cardListTitle">
-              {' '}
-              &#8667; Type : {fileType}{' '}
-            </a>
-          </span>
-        </div>
-      </div>
+              <span className="">
+                <a href="" id="cardListTitle">
+                  {' '}
+                  &#8667; Type : {fileType}{' '}
+                </a>
+              </span>
+            </div>
+          </div>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
