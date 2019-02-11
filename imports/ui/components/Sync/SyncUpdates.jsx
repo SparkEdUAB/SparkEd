@@ -304,7 +304,7 @@ export class SyncUpdates extends Component {
                 <a href="/setup"> click here</a> if you wish to change the
                 address
               </p>
-              {data ? (
+              {!data ? (
                 <InputPassword
                   authenticateFunc={this.serverAuthenticate}
                   onChange={this.getPassword}

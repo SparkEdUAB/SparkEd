@@ -15,13 +15,17 @@ import {
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
-import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
+import Pagination, {
+  getPageNumber,
+  getQuery,
+} from '../Utilities/Pagination/Pagination.jsx';
 import { SearchField } from '../Utilities/Utilities.jsx';
 import Search from '../Utilities/Search/Search.jsx';
 import UploadWrapper from '../../../ui/modals/UploadWrapper.jsx';
-import MainModal from '../../../ui/modals/MainModal';
+import MainModal from '../../../ui/modals/MainModal'; // eslint-disable-line
 import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export const T = i18n.createComponent();
 // this lists what a specific course contains
@@ -53,7 +57,7 @@ export class ManageUnits extends Component {
   static propTypes = {
     titles: PropTypes.object,
     course: PropTypes.object,
-  }
+  };
 
   componentDidMount() {
     this._ismounted = true;
@@ -132,7 +136,10 @@ export class ManageUnits extends Component {
         const count = unit.length;
         const _name = count > 1 ? 'units' : 'unit';
         if (count < 1) {
-          M.toast({ html: '<span>Please check atleast one unit</span>', classes: 'red'  });
+          M.toast({
+            html: '<span>Please check atleast one unit</span>',
+            classes: 'red',
+          });
           return;
         }
         this.setState({
@@ -185,7 +192,9 @@ export class ManageUnits extends Component {
           createdBy: unit.createdBy,
           createdAt: moment(unit.createdAt).format('YYYY-MM-DD'),
         }}
-        EditUnit={e => this.toggleEditModal('edit', unit._id, unit.name, unit.unitDesc, e)}
+        EditUnit={e =>
+          this.toggleEditModal('edit', unit._id, unit.name, unit.unitDesc, e)
+        }
       />
     ));
   }
@@ -193,22 +202,29 @@ export class ManageUnits extends Component {
   // edit course unit
   handleSubmit(event) {
     event.preventDefault();
-    const {
-      modalType, ids, modalIdentifier, description,
-    } = this.state;
+    const { modalType, ids, modalIdentifier, description } = this.state;
     const { target } = event;
     switch (modalType) {
       case 'edit':
         const unit = target.unit.value;
         Meteor.call('unit.update', modalIdentifier, unit, description, err => {
           err
-          // eslint-disable-next-line
-            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
-            Meteor.call('logger', formatText(err.message, Meteor.userId(), 'unit-edit'), 'error'))
+            ? // eslint-disable-next-line
+              (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+            Meteor.call(
+              'logger',
+              formatText(err.message, Meteor.userId(), 'unit-edit'),
+              'error',
+            ))
             : Meteor.call('updateSearch', modalIdentifier, unit, err => {
               err
-                ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
-                : M.toast({ html: `<span>${unit} successfully updated</span>` });
+                ? M.toast({
+                  html: `<span>${err.reason}</span>`,
+                  classes: 'red',
+                })
+                : M.toast({
+                  html: `<span>${unit} successfully updated</span>`,
+                });
             });
         });
         break;
@@ -219,7 +235,10 @@ export class ManageUnits extends Component {
           Meteor.call('unit.remove', id, err => {
             count += 1;
             err
-              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              ? (M.toast({
+                html: `<span>${err.reason}</span>`,
+                classes: 'red',
+              }),
               Meteor.call(
                 'logger',
                 formatText(err.message, Meteor.userId(), 'unit-remove'),
@@ -227,11 +246,19 @@ export class ManageUnits extends Component {
               ))
               : Meteor.call('removeSearchData', id, err => {
                 err
-                  ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+                  ? M.toast({
+                    html: `<span>${err.reason}</span>`,
+                    classes: 'red',
+                  })
                   : Meteor.call('insertDeleted', id, err => {
                     err
-                      ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
-                      : M.toast({ html: `<span>${unit} successfully Deleted</span>` });
+                      ? M.toast({
+                        html: `<span>${err.reason}</span>`,
+                        classes: 'red',
+                      })
+                      : M.toast({
+                        html: `<span>${unit} successfully Deleted</span>`,
+                      });
                   });
               });
           });
@@ -280,7 +307,11 @@ export class ManageUnits extends Component {
       description,
     } = this.state;
     // eslint-disable-next-line
-    let courseId, newTitle, newSubTitle, language, courseName = null;
+    let courseId,
+      newTitle,
+      newSubTitle,
+      language,
+      courseName = null;
     if (course) {
       courseId = course._id;
       language = course.details.language; // eslint-disable-line
@@ -298,132 +329,154 @@ export class ManageUnits extends Component {
     }
 
     return (
-      <Fragment>
-        {this.getUnits()}
+      <ThemeContext.Consumer>
+        {({ state }) => (
+          <Fragment>
+            {this.getUnits()}
 
-        {this.state.modalType === 'upload' ? (
-          <UploadWrapper show={isOpen} close={this.closeModal} title={title} />
-        ) : (
-          <MainModal
-            show={isOpen}
-            onClose={this.closeModal}
-            subFunc={this.handleSubmit}
-            title={title}
-            confirm={confirm}
-            reject={reject}
-          >
-            {modalType === 'del' ? (
-              ''
+            {this.state.modalType === 'upload' ? (
+              <UploadWrapper
+                show={isOpen}
+                close={this.closeModal}
+                title={title}
+              />
             ) : (
-              <Fragment>
-              <div className="input-field">
-                  <input
-                    placeholder="Name of Unit"
-                    type="text"
-                    defaultValue={name}
-                    className="validate clear"
-                    required
-                    name="unit"
-                  />
-                </div>
-                <div className="input-field">
-                  <textarea
-                    name="descr"
-                    className="unitdesc clear materialize-textarea"
-                    placeholder="Add Unit Description"
-                    value={description}
-                    onChange={e => this.getDescription(e)}
-                    required
-                  />
-                </div>
-                </Fragment>
+              <MainModal
+                show={isOpen}
+                onClose={this.closeModal}
+                subFunc={this.handleSubmit}
+                title={title}
+                confirm={confirm}
+                reject={reject}
+              >
+                {modalType === 'del' ? (
+                  ''
+                ) : (
+                  <Fragment>
+                    <div className="input-field">
+                      <input
+                        placeholder="Name of Unit"
+                        type="text"
+                        defaultValue={name}
+                        className="validate clear"
+                        style={{
+                          color: state.isDark ? '#F5FAF8' : '#000000',
+                        }}
+                        required
+                        name="unit"
+                      />
+                    </div>
+                    <div className="input-field">
+                      <textarea
+                        name="descr"
+                        className="unitdesc clear materialize-textarea"
+                        style={{
+                          color: state.isDark ? '#F5FAF8' : '#000000',
+                        }}
+                        placeholder="Add Unit Description"
+                        value={description}
+                        onChange={e => this.getDescription(e)}
+                        required
+                      />
+                    </div>
+                  </Fragment>
+                )}
+              </MainModal>
             )}
-          </MainModal>
-        )}
-        <div className='m1' />
-        <div className="col m9 s11">
-          <div className="row">
-            <div className="">
-              <h4>{`${Session.get('sub_unit_title')} for ${courseName}`} </h4>
-            </div>
-            <div className="col m8 ">
-              <SearchField
-                action={'/dashboard/Units/'}
-                name={'units'}
-                placeholder={'search unit by name'}
-                query={'q'}
+            <div className="m1" />
+            <div
+              className="col m9 s11"
+              style={{
+                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
+                color: state.isDark ? '#F5FAF8' : '#000000',
+              }}
+            >
+              <div className="row">
+                <div className="">
+                  <h4>
+                    {`${Session.get('sub_unit_title')} for ${courseName}`}{' '}
+                  </h4>
+                </div>
+                <div className="col m8 ">
+                  <SearchField
+                    action={'/dashboard/Units/'}
+                    name={'units'}
+                    placeholder={'search unit by name'}
+                    query={'q'}
+                  />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col m3">
+                  <button
+                    className="btn grey darken-3 fa fa-angle-left"
+                    onClick={e => this.routeToCourses(e)}
+                  >
+                    <a href={''} className="white-text">
+                      {` ${newTitle}`}
+                    </a>
+                  </button>
+                </div>
+                <div className="col m3">
+                  <button
+                    className="btn red darken-2"
+                    onClick={e => this.toggleEditModal('del', e)}
+                  >
+                    {' '}
+                    <T>common.actions.delete</T>
+                  </button>
+                </div>
+                <div className="col m2">
+                  <a href={`/dashboard/unit/${courseId}?y=${language}`}>
+                    <button className="btn grey ">
+                      {' Add Unit '}
+                      <T>common.actions.new</T>
+                    </button>
+                  </a>
+                </div>
+                <div className="col 4">
+                  <button
+                    className="btn fa fa-upload green darken-4 "
+                    onClick={e => this.toggleEditModal('upload', e)}
+                  >
+                    {' '}
+                    <T>common.actions.addreference</T>
+                  </button>
+                </div>
+              </div>
+
+              <table className="highlight">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>{newSubTitle}</th>
+                    <th>
+                      <T>common.actions.createdAt</T>
+                    </th>
+                    <th>{`Edit ${newSubTitle}`}</th>
+                    <th>{`Manage sub-${newSubTitle}`}</th>
+                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                      <label>
+                        <input type="checkbox" className=" chk-all" readOnly />
+                        <T>common.actions.check</T>
+                      </label>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{this.renderUnits()}</tbody>
+              </table>
+
+              <Pagination
+                path={'/dashboard/Units'}
+                itemPerPage={this.itemPerPage}
+                query={getQuery(this.queryParams, true)}
+                totalResults={this.totalResults}
               />
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col m3">
-              <button
-                className="btn grey darken-3 fa fa-angle-left"
-                onClick={e => this.routeToCourses(e)}
-              >
-                <a href={''} className="white-text">
-                  {` ${newTitle}`}
-                </a>
-              </button>
-            </div>
-            <div className="col m3">
-              <button
-                className="btn red darken-2"
-                onClick={e => this.toggleEditModal('del', e)}
-              >
-                {' '}
-                <T>common.actions.delete</T>
-              </button>
-            </div>
-            <div className="col m2">
-              <a href={`/dashboard/unit/${courseId}?y=${language}`}>
-                <button className="btn grey ">
-                  {' Add Unit '}
-                  <T>common.actions.new</T>
-                </button>
-              </a>
-            </div>
-            <div className="col 4">
-              <button
-                className="btn fa fa-upload green darken-4 "
-                onClick={e => this.toggleEditModal('upload', e)}
-              >
-                {' '}
-                <T>common.actions.addreference</T>
-              </button>
-            </div>
-          </div>
-
-          <table className="highlight striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>{newSubTitle}</th>
-                <th>
-                  <T>common.actions.createdAt</T>
-                </th>
-                <th>{`Edit ${newSubTitle}`}</th>
-                <th>{`Manage sub-${newSubTitle}`}</th>
-                <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <label>
-                  <input type="checkbox" className=" chk-all" readOnly />
-                    <T>common.actions.check</T>
-                  </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>{this.renderUnits()}</tbody>
-          </table>
-
-          <Pagination
-            path={'/dashboard/Units'}
-            itemPerPage={this.itemPerPage}
-            query={getQuery(this.queryParams, true)}
-            totalResults={this.totalResults}
-          />
-        </div>
-      </Fragment>
+          </Fragment>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
@@ -448,10 +501,10 @@ export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
       <a href={''} onClick={e => handleUrl(e, _id)} className="fa fa-pencil" />
     </td>
     <td onClick={handleCheckboxChange.bind(this, _id)}>
-    <label htmlFor={_id}>
-          <input type="checkbox" id={_id} className={`chk chk${_id}`} />
-          <span/>
-    </label>
+      <label htmlFor={_id}>
+        <input type="checkbox" id={_id} className={`chk chk${_id}`} />
+        <span />
+      </label>
     </td>
   </tr>
 );
