@@ -2,11 +2,11 @@
 import React, { Component, Fragment } from 'react';
 import { Session } from 'meteor/session';
 import M from 'materialize-css';
-import FileUploadComponent from '../../containers/FileUploadComponent';
+import FileUploadComponent from '../../containers/FileUploadComponent'; // eslint-disable-line
 import * as config from '../../../../config.json';
-import { Button } from '../../utils/Buttons';
-import { _Settings } from '../../../api/settings/settings';
-import { ThemeContext } from '../../containers/AppWrapper';
+import { Button } from '../../utils/Buttons'; // eslint-disable-line
+import { _Settings } from '../../../api/settings/settings'; // eslint-disable-line
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export default class SetUp extends Component {
   state = {
@@ -21,6 +21,9 @@ export default class SetUp extends Component {
     server: '',
   };
 
+  componentDidMount() {
+    M.AutoInit();
+  }
   toggleModal = e => {
     e.preventDefault();
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
@@ -40,7 +43,7 @@ export default class SetUp extends Component {
           tag: value,
         });
         break;
-        // eslint-disable-next-line
+      // eslint-disable-next-line
       case 'auth':
         const isUserAuth = value === 'true';
         this.setState({
@@ -53,7 +56,7 @@ export default class SetUp extends Component {
           structure: value,
         });
         break;
-        // eslint-disable-next-line
+      // eslint-disable-next-line
       case 'server':
         const lastSubstring = value.slice(-1);
         const address =
@@ -68,9 +71,7 @@ export default class SetUp extends Component {
 
   saveConfig = e => {
     e.preventDefault();
-    const {
-      name, tag, structure, auth, server,
-    } = this.state;
+    const { name, tag, structure, auth, server } = this.state;
     let isHighSchool;
     const isSet = config.isConfigured;
     switch (structure) {
@@ -141,10 +142,12 @@ export default class SetUp extends Component {
     const isSet = config.isConfigured;
     return (
       <ThemeContext.Consumer>
-        {color => (
+        {({ state }) => (
           <Fragment>
             {/* <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} /> */}
-            <div className="col s11 m9">
+            <div className="col s11 m9"
+                style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+            >
               <form className="">
                 <div className="row">
                   <div className="input-field col s12 m6">
@@ -152,7 +155,8 @@ export default class SetUp extends Component {
                       id="inst_name"
                       type="text"
                       className="validate"
-                      required="true"
+                      style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                      required
                       value={name}
                       onChange={e => this.saveChange(e, 'name')}
                     />
@@ -165,6 +169,7 @@ export default class SetUp extends Component {
                       id="inst_tag"
                       type="text"
                       className="validate"
+                      style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                       required
                       onChange={e => this.saveChange(e, 'tag')}
                     />
@@ -179,6 +184,7 @@ export default class SetUp extends Component {
                       id="server-address"
                       type="text"
                       className="validate"
+                      style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                       required
                       onChange={e => this.saveChange(e, 'server')}
                     />
@@ -197,17 +203,19 @@ export default class SetUp extends Component {
                       <input
                         name="gender"
                         type="radio"
-                        id="requred"
+                        id="required"
+                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                         value={true}
                         required
                       />
-                      <label htmlFor="requred">Required</label>
+                      <label htmlFor="required">Required</label>
                     </p>
                     <p className="gender-female">
                       <input
                         name="gender"
                         type="radio"
                         id="not-required"
+                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
                         value={false}
                         required
                       />
@@ -218,7 +226,7 @@ export default class SetUp extends Component {
                 {/* Hide the structure in case it has already been set */}
                 {!isSet ? (
                   <Fragment>
-                  <span>
+                    <span>
                       Structure (Note: You won't be able to change this
                       afterwards)
                     </span>
@@ -233,6 +241,9 @@ export default class SetUp extends Component {
                             name="struct"
                             type="radio"
                             id="courses"
+                            style={{
+                              color: state.isDark ? '#F5FAF8' : '#000000',
+                            }}
                             value="course"
                             required
                           />
@@ -244,13 +255,16 @@ export default class SetUp extends Component {
                             type="radio"
                             id="high-school"
                             value="isHighSchool"
+                            style={{
+                              color: state.isDark ? '#F5FAF8' : '#000000',
+                            }}
                             required
                           />
                           <label htmlFor="high-school">High School</label>
                         </p>
                       </div>
                     </div>
-                    </Fragment>
+                  </Fragment>
                 ) : (
                   <span />
                 )}
@@ -261,7 +275,7 @@ export default class SetUp extends Component {
               <Button
                 actionFunc={e => this.saveConfig(e)}
                 title={'Save and Upload the Institution Logo'}
-                backgroundColor={color.main}
+                backgroundColor={state.main}
                 name={'Save'}
                 extraClass={'pulse'}
               />
