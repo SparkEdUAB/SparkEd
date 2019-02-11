@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types';
 import M from 'materialize-css';
 import { _Units } from '../../../api/units/units';
 import { _Topics } from '../../../api/topics/topics';
@@ -457,7 +458,11 @@ export class EditUnits extends Component {
     );
   }
 }
-
+EditUnits.propTypes = {
+  count: PropTypes.number,
+  unit: PropTypes.object,
+  topics: PropTypes.array,
+};
 export function getUnitId() {
   const unitId = FlowRouter.getParam('_id');
   return unitId;
