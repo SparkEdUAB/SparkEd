@@ -384,10 +384,8 @@ export class Courses extends Component {
       modalType,
       name,
       code,
-      language,
       tableTitle,
       subTitle,
-      lang,
     } = this.state;
     const { titles } = this.props;
     let newTitle = '';
@@ -470,18 +468,8 @@ export class Courses extends Component {
                     required
                     name="courseCode"
                   />
-                  {/* <input
-                    placeholder={`${newTitle} Language`}
-                    defaultValue={language}
-                    id="language"
-                    type="text"
-                    className="validate clear"
-                    style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
-                    required
-                    name="language"
-                  /> */}
+
                   <div className="input-field col s12">
-                    {/* <label>Choose Language</label> */}
                     <select
                       required
                       className="browser-default"
