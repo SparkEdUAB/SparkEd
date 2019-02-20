@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
 import React, { Component, Fragment } from 'react';
+import { Session } from 'meteor/session';
+import M from 'materialize-css';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _Courses } from '../../api/courses/courses';
 import { _Units } from '../../api/units/units';
@@ -17,6 +19,8 @@ export class Home extends Component {
     if (!Config.isConfigured) {
       FlowRouter.go('/setup');
     }
+    M.AutoInit();
+    Session.set('language', 'english');
   }
 
   renderCourses() {
@@ -39,6 +43,21 @@ export class Home extends Component {
             <Fragment>
               <ImgSlider isDark={state.isDark} />
               <div className="container ">
+                <div className="row ">
+                  <div className="input-field col s12">
+                    <select
+                      onChange={e => Session.set('language', e.target.value)}
+                    >
+                      <option value="" disabled defaultValue>
+                        Choose your Language
+                      </option>
+                      <option value="english">English</option>
+                      <option value="french">French</option>
+                      <option value="ethiopian">Ethiopian</option>
+                    </select>
+                    <label>Language Options</label>
+                  </div>
+                </div>
                 <div className="row ">
                   {courseReady ? this.renderCourses() : <Loader />}
                 </div>
@@ -68,7 +87,7 @@ export default withTracker(() => {
     unit: _Units.find().fetch(),
     courses: _Courses
       .find(
-        {},
+        { 'details.language': Session.get('language') },
         {
           fields: {
             name: 1,
