@@ -6,11 +6,11 @@ import { _Courses } from '../../api/courses/courses';
 import { _Units } from '../../api/units/units';
 import Courses from './content/Courses.jsx';
 import { FloatingButton } from './Utilities/Utilities.jsx';
-import ImgSlider from '../components/layouts/ImageSlider';
+import ImgSlider from '../components/layouts/ImageSlider'; // eslint-disable-line
 import * as Config from '../../../config.json';
-import { Loader } from './Loader';
+import { Loader } from './Loader'; // eslint-disable-line
 import ErrorBoundary from './ErrorBoundary'; // eslint-disable-line
-import { ThemeContext } from '../containers/AppWrapper';
+import { ThemeContext } from '../containers/AppWrapper'; // eslint-disable-line
 
 export class Home extends Component {
   componentDidMount() {
