@@ -148,7 +148,7 @@ export class Courses extends Component {
     e.preventDefault();
     let course;
     let courseCode;
-    let language;
+    // let language;
     let details;
     const { target } = e;
     const {
@@ -158,13 +158,14 @@ export class Courses extends Component {
       owner,
       tableTitle,
       subTitle,
+      language,
     } = this.state;
 
     switch (modalType) {
       case 'add':
         course = target.course.value;
         courseCode = target.courseCode.value;
-        language = target.language.value;
+        // language = target.language.value;
         details = { language };
         const reference = config.isHighSchool ? 'subject' : 'course';
         const courseId = new Meteor.Collection.ObjectID().valueOf();
@@ -210,7 +211,6 @@ export class Courses extends Component {
       case 'edit':
         course = target.course.value;
         courseCode = target.courseCode.value;
-        language = target.language.value;
         Meteor.call(
           'course.edit',
           modalIdentifier,
@@ -384,10 +384,8 @@ export class Courses extends Component {
       modalType,
       name,
       code,
-      language,
       tableTitle,
       subTitle,
-      lang,
     } = this.state;
     const { titles } = this.props;
     let newTitle = '';
@@ -470,21 +468,29 @@ export class Courses extends Component {
                     required
                     name="courseCode"
                   />
-                  <input
-                    placeholder={`${newTitle} Language`}
-                    defaultValue={language}
-                    id="language"
-                    type="text"
-                    className="validate clear"
-                    style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
-                    required
-                    name="language"
-                  />
+
+                  <div className="input-field col s12">
+                    <select
+                      required
+                      className="browser-default"
+                      onChange={e =>
+                        this.setState({ language: e.target.value })
+                      }
+                    >
+                      <option value="" disabled defaultValue>
+                        Choose your option
+                      </option>
+                      <option value="french">French</option>
+                      <option value="english">English </option>
+                      <option value="ethiopian">Ethiopian </option>
+                    </select>
+                  </div>
                 </div>
               )}
             </MainModal>
             <div className="m1" />
-            <div className="col m9 s11"
+            <div
+              className="col m9 s11"
               style={{
                 backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
                 color: state.isDark ? '#F5FAF8' : '#000000',
