@@ -43,9 +43,6 @@ export class Home extends Component {
             <Fragment>
               <ImgSlider isDark={state.isDark} />
               <div className="container ">
-              {
-
-              }
                 <div className="row ">
                   <div className="input-field col s12">
                     <select
