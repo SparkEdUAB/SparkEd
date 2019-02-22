@@ -29,7 +29,7 @@ export class Home extends Component {
     if (!courses) {
       return <span> No Courses </span>;
     } else if (courses.length === 0) {
-      return <p className="center"> There are no Contents yet </p>;
+      return <p className="center"> There are no contents yet </p>;
     }
     return courses.map(cours => <Courses key={index++} course={cours} />);
   }
@@ -43,6 +43,9 @@ export class Home extends Component {
             <Fragment>
               <ImgSlider isDark={state.isDark} />
               <div className="container ">
+              {
+
+              }
                 <div className="row ">
                   <div className="input-field col s12">
                     <select

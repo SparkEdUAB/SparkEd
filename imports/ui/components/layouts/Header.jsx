@@ -181,7 +181,7 @@ export class Header extends Component {
     // used var intentionally
     var elems = document.querySelector('.sidenav');  // eslint-disable-line
     var instances = M.Sidenav.init(elems, {  // eslint-disable-line
-      edge: 'right',
+      edge: 'left',
     });
   }
 
