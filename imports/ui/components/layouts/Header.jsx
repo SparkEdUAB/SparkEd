@@ -16,7 +16,6 @@ import ExternalLinksView from '../ExternalLink/ExternalLinksView';
 import InstitutionDetail from './InstitutionDetail';
 import { T } from '../Language/Languages';
 import { ThemeContext } from '../../containers/AppWrapper';
-import * as config from '../../../../config.json';
 
 export class Header extends Component {
   constructor(props) {
@@ -103,14 +102,10 @@ export class Header extends Component {
     notifications.length = 5;
     return notifications.map(notification => (
       <div key={ notification._id }
-        style={{ backgroundColor: color }}>
+        style={{ backgroundColor, color }}>
         {notification.read ? (
-          <ul
-          style={{
-            backgroundColor,
-          }}
-          >
-            <li
+            <div>
+            <span
               style={{ padding: '1px 10px 5px', cursor: 'pointer', color }}
               onClick={() =>
                 this.handleUrl(
@@ -123,23 +118,19 @@ export class Header extends Component {
                 )
               }
             >
-              <span>
-                {notification.title} <br />
+              {notification.title} <br />
                 <span
                   className="fa fa-clock-o fa-2x"
-                  style={{ fontSize: '12px', color: '#90949c' }}
+                  style={{ fontSize: '12px', color }}
                 >
                   {' '}
                   <b> {moment(notification.createdAt).fromNow()}</b>
                 </span>
-              </span>
-            </li>
-          </ul>
+            </span>
+          </div>
         ) : (
-          <ul style={{
-            backgroundColor,
-          }}>
-            <li
+          <div>
+            <span
               style={{ padding: '1px 10px 5px', cursor: 'pointer', color }}
               onClick={() =>
                 this.handleUrl(
@@ -152,18 +143,16 @@ export class Header extends Component {
                 )
               }
             >
-              <span>
-                {notification.title} <br />
+              {notification.title} <br />
                 <span
                   className="fa fa-clock-o fa-2x"
-                  style={{ fontSize: '12px', color: '#90949c' }}
+                  style={{ fontSize: '12px', color }}
                 >
                   {' '}
                   <b> {moment(notification.createdAt).fromNow()}</b>
                 </span>
-              </span>
-            </li>
-          </ul>
+            </span>
+          </div>
         )}
         <hr />
       </div>
@@ -249,7 +238,6 @@ export class Header extends Component {
   render() {
     const { isOpen, title, confirm, reject, modalType } = this.state;
     const { externallinks, institution, details } = this.props;
-    // const { name, tag, isUserAuth } = config;
     return (
       <ThemeContext.Consumer>
         {({ state, toggle }) => (
@@ -346,6 +334,7 @@ export class Header extends Component {
                       <u> Mark opened as read</u>
                     </a>
                   </div>
+                  <br />
                   {this.renderNotifications('', state.isDark && '#ffffff', state.isDark && state.mainDark)}
                 </div>
               ) : modalType === 'bookmark' ? (
