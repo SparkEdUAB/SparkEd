@@ -10,13 +10,9 @@ function Backup() {
           className="col m9 s11"
           style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
         >
-          Backup
-          <button
-            className="btn"
-            onClick={() => Meteor.call('restoreDbChunks')}
-          >
-            Download backup
-          </button>
+          <a href="dump.tar.gz" download>
+            Download{' '}
+          </a>
         </div>
       )}
     </ThemeContext.Consumer>
