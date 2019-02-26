@@ -18,14 +18,17 @@ export default class Languages extends Component {
       case 'fr':
         i18n.setLocale('fr-FR');
         localStorage.setItem('locale', 'fr-FR');
+        Session.set('language', 'french')
         break;
       case 'en':
         i18n.setLocale('en-US');
         localStorage.setItem('locale', 'en-US');
+        Session.set('language', 'english')
         break;
       case 'es':
         i18n.setLocale('es-Es');
         localStorage.setItem('locale', 'es-ES');
+        Session.set('language', 'ethiopian')
         break;
       default:
         break;
