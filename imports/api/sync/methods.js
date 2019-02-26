@@ -1,24 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { check } from 'meteor/check';
-import { execFile, exec } from 'child_process';
+import { execFile } from 'child_process';
 import { syncData } from './syncData';
 import * as config from '../../../config.json';
 // check internet connection
 
 const { server } = config;
-const collections = [
-  'course',
-  'unit',
-  'topic',
-  'resources',
-  'references',
-  'search',
-  'search',
-];
-const dumpCmd = 'mongodump -h localhost:3001 ';
-// # mongodump -h 127.0.0.1:4001 -d meteor -c $coll # Testing on the local server
-// mongodump -h localhost:27017 -d sparked -c $coll # for the remote main server
+const collections = ['course', 'unit', 'topic', 'resources', 'references', 'search', 'search'];
 
 Meteor.methods({
   checkNetwork: () => {
@@ -90,25 +79,13 @@ Meteor.methods({
   },
   // restore the dumped files from the server
   restoreDbChunks: () => {
-    execFile(
-      `${process.env.PWD}/scripts/importdbs.sh`,
-      [server],
-      (error, stdout) => {
-        if (error) {
-          console.log(error); // eslint-disable-line
-        }
-        console.log(stdout); // eslint-disable-line
-      },
-    );
+    execFile(`${process.env.PWD}/scripts/importdbs.sh`, [server], (error, stdout) => {
+      if (error) {
+        console.log(error); // eslint-disable-line
+      }
+      console.log(stdout); // eslint-disable-line
+    });
     // return response;
     // return execFileSync(`${process.env.PWD}/scripts/importdbs.sh`, [server]);
-  },
-  backupDb: () => {
-    exec(dumpCmd, (err, stdout, stderr) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log(stderr);
-    });
   },
 });
