@@ -1,5 +1,4 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { ThemeContext } from '../../../containers/AppWrapper'; // eslint-disable-line
 
 function Backup() {
@@ -10,6 +9,7 @@ function Backup() {
           className="col m9 s11"
           style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
         >
+          Download the latest backup here <br />
           <a href="dump.tar.gz" download>
             Download{' '}
           </a>
