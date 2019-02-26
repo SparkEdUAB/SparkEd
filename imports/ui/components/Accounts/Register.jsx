@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import M from 'materialize-css';
 import { checkPassword } from './AccountFunction.js';
 
 export default class Register extends Component {
@@ -7,6 +8,9 @@ export default class Register extends Component {
     this.state = {
       error: '',
     };
+  }
+  componentDidMount() {
+    M.AutoInit();
   }
   registerUser = e => {
     e.preventDefault();
@@ -42,16 +46,13 @@ export default class Register extends Component {
             error: error.reason,
           });
         } else {
-          Materialize.toast(
-            'Account created successfully',
-            3000,
-            'success-toast',
-          );
+          M.toast({
+            html: '<span>Account created successfully</span>',
+          });
           return FlowRouter.go('/login');
         }
       });
     });
-    // FocalLoc0
   };
 
   checkEnteredPassword = ({ target: { value } }) => {
@@ -141,24 +142,28 @@ export default class Register extends Component {
                 <div className="row">
                   <div className="col s6">
                     <p className="gender-male">
-                      <input
-                        name="gender"
-                        type="radio"
-                        id="male"
-                        value="male"
-                        required
-                      />
-                      <label htmlFor="male">Male</label>
+                      <label>
+                        <input
+                          name="gender"
+                          type="radio"
+                          id="male"
+                          value="male"
+                          required
+                        />
+                        <span>Male</span>
+                      </label>
                     </p>
                     <p className="gender-female">
-                      <input
-                        name="gender"
-                        type="radio"
-                        id="female"
-                        value="female"
-                        required
-                      />
-                      <label htmlFor="female">Female</label>
+                      <label>
+                        <input
+                          name="gender"
+                          type="radio"
+                          id="female"
+                          value="female"
+                          required
+                        />
+                        <span>Female</span>
+                      </label>
                     </p>
                   </div>
 
