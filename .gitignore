@@ -1,6 +1,8 @@
 .deploy/
 .deploy/mup.js
 node_modules/
+dump/
+public/dump.tar.gz
 .uploads/
 uploads/
 upload/

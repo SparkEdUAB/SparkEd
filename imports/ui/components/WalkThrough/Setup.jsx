@@ -145,8 +145,9 @@ export default class SetUp extends Component {
         {({ state }) => (
           <Fragment>
             {/* <UploadWrapper show={isOpen} close={this.toggleModal} title={'Upload Logo'} /> */}
-            <div className="col s11 m9"
-                style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+            <div
+              className="col s11 m9"
+              style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
             >
               <form className="">
                 <div className="row">
@@ -200,26 +201,34 @@ export default class SetUp extends Component {
                     onChange={e => this.saveChange(e, 'auth')}
                   >
                     <p className="gender-male">
-                      <input
-                        name="gender"
-                        type="radio"
-                        id="required"
-                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
-                        value={true}
-                        required
-                      />
-                      <label htmlFor="required">Required</label>
+                      <label>
+                        <input
+                          name="gender"
+                          type="radio"
+                          id="required"
+                          style={{
+                            color: state.isDark ? '#F5FAF8' : '#000000',
+                          }}
+                          value={true}
+                          required
+                        />
+                        <span>Required</span>
+                      </label>
                     </p>
                     <p className="gender-female">
-                      <input
-                        name="gender"
-                        type="radio"
-                        id="not-required"
-                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
-                        value={false}
-                        required
-                      />
-                      <label htmlFor="not-required">Not Required</label>
+                      <label>
+                        <input
+                          name="gender"
+                          type="radio"
+                          id="not-required"
+                          style={{
+                            color: state.isDark ? '#F5FAF8' : '#000000',
+                          }}
+                          value={false}
+                          required
+                        />
+                        <span>Not Required</span>
+                      </label>
                     </p>
                   </div>
                 </div>

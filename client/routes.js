@@ -35,6 +35,7 @@ import SetUp from '../imports/ui/components/WalkThrough/Setup';
 import ExternalLinks from '../imports/ui/components/ExternalLink/ExternalLinks.jsx';
 import ExternalLinksPage from '../imports/ui/components/ExternalLink/ListExternalLinkPage.jsx';
 import SyncUpdates from '../imports/ui/components/Sync/SyncUpdates';
+import Backup from '../imports/ui/components/Dashboard/Backup/Backup.jsx';
 const config = require('../config.json');
 
 const exposed = FlowRouter.group({});
@@ -350,5 +351,12 @@ FlowRouter.route('/fileupload', {
   name: 'FileUploadComponent',
   action() {
     mount(FileUploadComponent, {});
+  },
+});
+
+isAuthRequired().route('/dashboard/backup', {
+  name: 'Backup',
+  action() {
+    mount(WrappedSidenav, { yield: <Backup /> });
   },
 });
