@@ -121,9 +121,8 @@ export class Header extends Component {
               {notification.title} <br />
                 <span
                   className="fa fa-clock-o fa-2x"
-                  style={{ fontSize: '12px', color }}
+                  style={{ fontSize: '12px', color, marginLeft: 10 }}
                 >
-                  {' '}
                   <b> {moment(notification.createdAt).fromNow()}</b>
                 </span>
             </span>
@@ -142,19 +141,19 @@ export class Header extends Component {
                   notification.fileId,
                 )
               }
+              
             >
-              {notification.title} <br />
+              <span className='center-align'>{notification.title} </span><br />
                 <span
                   className="fa fa-clock-o fa-2x"
-                  style={{ fontSize: '12px', color }}
+                  style={{ fontSize: '12px', color, marginLeft: 10 }}
                 >
-                  {' '}
                   <b> {moment(notification.createdAt).fromNow()}</b>
                 </span>
             </span>
           </div>
         )}
-        <hr />
+        <hr  />
       </div>
     ));
   }
