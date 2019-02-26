@@ -7,18 +7,17 @@ import * as config from '../../../config.json';
 // check internet connection
 
 const { server } = config;
-const collections = ['course', 'unit', 'topic', 'resources', 'references', 'search', 'search'];
+const collections = [
+  'course',
+  'unit',
+  'topic',
+  'resources',
+  'references',
+  'search',
+  'search',
+];
 
 Meteor.methods({
-  checkNetwork: () => {
-    try {
-      const url = 'http://date.jsontest.com/';
-      HTTP.call('GET', url);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  },
   authenticate: (email, password) => {
     check(email, String);
     check(password, String);
@@ -79,12 +78,16 @@ Meteor.methods({
   },
   // restore the dumped files from the server
   restoreDbChunks: () => {
-    execFile(`${process.env.PWD}/scripts/importdbs.sh`, [server], (error, stdout) => {
-      if (error) {
-        console.log(error); // eslint-disable-line
-      }
-      console.log(stdout); // eslint-disable-line
-    });
+    execFile(
+      `${process.env.PWD}/scripts/importdbs.sh`,
+      [server],
+      (error, stdout) => {
+        if (error) {
+          console.log(error); // eslint-disable-line
+        }
+        console.log(stdout); // eslint-disable-line
+      },
+    );
     // return response;
     // return execFileSync(`${process.env.PWD}/scripts/importdbs.sh`, [server]);
   },

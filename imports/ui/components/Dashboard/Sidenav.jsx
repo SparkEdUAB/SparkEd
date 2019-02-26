@@ -166,6 +166,16 @@ const Sidenav = props => (
                         </span>
                       </a>
                     </li>
+                    <li>
+                      <a
+                        href="/dashboard/backup"
+                        className={`  side-list ${props.slides}`}
+                      >
+                        <span className="hide-on-small-only">
+                          &nbsp; <T>common.sidenav.backup</T>
+                        </span>
+                      </a>
+                    </li>
                   </Fragment>
                 ) : (
                   <span />
