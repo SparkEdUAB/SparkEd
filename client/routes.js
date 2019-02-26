@@ -352,3 +352,10 @@ FlowRouter.route('/fileupload', {
     mount(FileUploadComponent, {});
   },
 });
+
+isAuthRequired().route('/dashboard/backup', {
+  name: 'Backup',
+  action() {
+    mount(WrappedSidenav, { yield: <p>Backup page </p> });
+  },
+});
