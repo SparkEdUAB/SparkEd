@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import M from 'materialize-css';
 import { _ } from 'lodash';
 import { Resources, References } from '../../../api/resources/resources';
 import { _SearchData } from '../../../api/search/search';
@@ -63,17 +64,18 @@ export class SyncUpdates extends Component {
         course.details,
         err => {
           err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            ? (M.toast({
+              html: `<span>${err.reason}</span>`,
+              classes: 'red',
+            }),
             Meteor.call(
               'logger',
               formatText(err.message, Meteor.userId(), 'course'),
               'error',
             ))
-            : Materialize.toast(
-              `Successfully synced ${coursesSync.length} `,
-              3000,
-              'success-toast',
-            );
+            : M.toast({
+              html: `<span>Successfully synced ${coursesSync.length}</span>`,
+            });
         },
       );
     });
@@ -91,17 +93,18 @@ export class SyncUpdates extends Component {
         unit.details,
         err => {
           err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            ? (M.toast({
+              html: `<span>${err.reason}</span>`,
+              classes: 'red',
+            }),
             Meteor.call(
               'logger',
               formatText(err.message, Meteor.userId(), 'units'),
               'error',
             ))
-            : Materialize.toast(
-              `Successfully synced ${unitsData.length} `,
-              3000,
-              'success-toast',
-            );
+            : M.toast({
+              html: `<span>Successfully synced ${unitsData.length}</span>`,
+            });
         },
       );
     });
@@ -117,17 +120,18 @@ export class SyncUpdates extends Component {
         topic.unit,
         err => {
           err
-            ? (Materialize.toast(err.reason, 3000, 'error-toast'),
+            ? (M.toast({
+              html: `<span>${err.reason}</span>`,
+              classes: 'red',
+            }),
             Meteor.call(
               'logger',
               formatText(err.message, Meteor.userId(), 'topics'),
               'error',
             ))
-            : Materialize.toast(
-              `Successfully synced ${topicsData.length} `,
-              3000,
-              'success-toast',
-            );
+            : M.toast({
+              html: `<span>Successfully synced ${topicsData.length}</span>`,
+            });
         },
       );
     });
@@ -374,7 +378,7 @@ const InputPassword = props => (
       <div className="input-field col s12 m6">
         <input
           id="inst_tag"
-          type="text"
+          type="password"
           className="validate"
           required
           style={{ color: props.isDark ? '#F5FAF8' : '#000000' }}
