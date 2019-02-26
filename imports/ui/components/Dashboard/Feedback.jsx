@@ -54,7 +54,7 @@ export class Feedback extends Component {
     );
   }
 
-  renderComments(color) {
+  renderComments(isDark) {
     const { feeds } = this.props;
     if (!feeds || !feeds.length) {
       return (
@@ -63,28 +63,30 @@ export class Feedback extends Component {
     }
 
     return feeds.map(feed => (
-      <ul
+      <div
         key={feed._id}
-        className="collapsible popout"
-        data-collapsible="accordion"
+        className="card"
+        style={{
+          backgroundColor: isDark ? '#252829' : '#FFFFFF',
+          color: isDark ? '#F5FAF8' : '#000000',
+        }}
       >
-        <li>
-          <div
-            className="collapsible-header"
-            style={{ backgroundColor: color }}
+        <div className="card-content white-text">
+          <span
+            style={{ color: isDark ? '#F5FAF8' : '#000000' }}
+            className="card-title"
           >
-            <i className="fa fa-user " />
-            <span style={{ marginRight: '2%' }}>{feed.createdBy}</span>
-            <span style={{ marginRight: '40%' }}>Title: {feed.title}</span>
-            <a href={feed.link} className="blue-text right">
-              <T>common.titles.source</T>
-            </a>
-          </div>
-          <div className="collapsible-body" style={{ backgroundColor: color }}>
-            <p className="flow-text">{feed.feedback}</p>
-          </div>
-        </li>
-      </ul>
+            {feed.title}
+          </span>
+          <p style={{ color: isDark ? '#F5FAF8' : '#000000' }}>
+            {feed.feedback}
+          </p>
+        </div>
+        <div className="card-action">
+          <a href="#">{feed.createdBy}</a>
+          <a href={feed.link}>Source</a>
+        </div>
+      </div>
     ));
   }
 
@@ -102,11 +104,7 @@ export class Feedback extends Component {
             <h3 className="center blue-text">
               <T>common.titles.usersfeedback</T>
             </h3>
-            <div className="row">
-              <div className="">
-                {this.renderComments(state.isDark ? '#F5FAF8' : '#000000')}
-              </div>
-            </div>
+            {this.renderComments(state.isDark)}
             {this.renderPagination()}
           </div>
         )}
