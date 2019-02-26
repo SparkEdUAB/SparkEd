@@ -1,6 +1,7 @@
 .deploy/
 .deploy/mup.js
 node_modules/
+dump/
 .uploads/
 uploads/
 upload/
