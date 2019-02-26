@@ -378,7 +378,7 @@ const InputPassword = props => (
       <div className="input-field col s12 m6">
         <input
           id="inst_tag"
-          type="text"
+          type="password"
           className="validate"
           required
           style={{ color: props.isDark ? '#F5FAF8' : '#000000' }}
