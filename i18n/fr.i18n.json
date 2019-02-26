@@ -8,11 +8,11 @@
     "Language": "Language"
   },
 
-  "header":{
+  "header": {
     "openExternalLink": "Click here to Open all the external links in a page",
     "externalLink": "External Links"
   },
-  "notFound":"ውይይይ፣ የከፈቱት ገጽ አልተገኘም።",
+  "notFound": "ውይይይ፣ የከፈቱት ገጽ አልተገኘም።",
   "titles": {
     "addreference": "Add Reference",
     "referenceDisplaced": "References displayed",
@@ -31,10 +31,10 @@
     "Email": "Addresse Email",
     "Gender": "Gender",
     "dashboard": "Dashboard",
-    "notlogedIn" : "You are not Logged in"
+    "notlogedIn": "You are not Logged in"
   },
   "manage": {
-    "Under" : "የሚገኘው",
+    "Under": "የሚገኘው",
     "accounts": "compte",
     "courses": "coursos",
     "unit": "unito",
@@ -72,6 +72,7 @@
     "changeSlides": "Change Slides",
     "updates": "Updates",
     "subjects": "Subjects",
-    "stats": "Statistics"
+    "stats": "Statistics",
+    "backup": "Backuped"
   }
 }
