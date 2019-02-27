@@ -249,7 +249,7 @@ export class Header extends Component {
         {({ state, toggle }) => (
           <Fragment>
             <div className="container-fluid " style={{
-                backgroundColor: state.isDark ? state.mainDark : Meteor.status().connected ? state.main : 'red',
+                backgroundColor: state.isDark ? state.mainDark : Meteor.status().connected ? state.main : '#757575',
               }}>
               <div className="row ">
                 <div className="col s12 m5">
