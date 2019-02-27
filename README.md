@@ -39,6 +39,27 @@ Run the application
 
 `meteor`
 
+### Contribution
+
+Fork this repo
+
+Clone your forked repo
+
+`git clone https://github.com/your-github-username/SparkEd.git`
+
+Add this repo to your remotes as upstream.
+
+`git remote add upstream https://github.com/SparkEdUAB/SparkEd`
+
+Before pushing anything to your fork, always
+
+`git pull upstream`
+
+> Make sure your commit messages should be clear not vague e.g "Changes and Updates made"  
+> Work from a branch other than master whenever possible and branch name should be clear  
+> Write clean and transparent code which is easy to maintain  
+> When making PRs, give clear descriptions of the changes you made.
+
 ### Testing
 
 `npm run test` or `yarn run test`
