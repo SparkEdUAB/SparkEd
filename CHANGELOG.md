@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased version]
+### v1.7.5 (January 20,2019)
+### Removed Icons on most components 
+
+- Removed icons on sidenav in dashboard 7121ffa @OlivierJM
+
+- Removed icons on manage accounts e26f057 @OlivierJM
+
+- Removed icon on editresource page 71d598c @OlivierJM
+
+- Removed icons on manage units 7e30687 @OlivierJM
+
+- Removed icons on manage slides 537a54e @OlivierJM
+
+- Bumped version a174bfa
+
 ### v1.7.0 (January 14, 2019)
 ### Updated Meteor to v1.8
 
