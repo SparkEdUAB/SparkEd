@@ -31,13 +31,13 @@ Download and install Git
 
  Use **PowerSell** in Administrator Mode
  
- > go through the **Requirements** found  [here](https://chocolatey.org/install) Before installing **Meteor**
+ > Go through the **Requirements** found  [here](https://chocolatey.org/install) Before installing **Meteor**
 
-- After Doing the above Now you can install **meteor**
+- After Doing The Above Now You Can install **meteor**
 
 `choco install meteor`
 
- 
+ After Installing **meteor** Use Git to Clone the repo **WINDOWS USERS**
  
  
 
