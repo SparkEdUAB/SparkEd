@@ -198,6 +198,8 @@ Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent is
 
 ### Contributors
 
+We acknowledge contributors who added value to this project in any way.
+
 <a href="https://github.com/olivierjm"><img src="https://avatars0.githubusercontent.com/u/11255454?s=460&v=4" title="olivierjm" width="80" height="80"></a>
 <a href="https://github.com/Big-Zude"><img src="https://avatars2.githubusercontent.com/u/40924941?s=460&v=4" title="Big-Zude" width="80" height="80"></a>
 <a href="https://github.com/kazashim"><img src="https://avatars0.githubusercontent.com/u/12492093?s=460&v=4" title="kazashim" width="80" height="80"></a>
