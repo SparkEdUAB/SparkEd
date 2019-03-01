@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased version
+## [Unreleased version]
 ### v1.7.6 (January 20,2019)
 - @OlivierJM changed the error color on login dc43d66
 
