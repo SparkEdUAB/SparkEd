@@ -26,6 +26,21 @@ if you don't have meteor run the script below
 
 `curl https://install.meteor.com/ | sh`
 
+### For Windows Users
+Download and install Git
+
+ Use **PowerSell** in Administrator Mode
+ 
+ > go through the **Requirements** found  [here](https://chocolatey.org/install) Before installing **Meteor**
+
+- After Doing the above Now you can install **meteor**
+
+`choco install meteor`
+
+ 
+ 
+ 
+
 Clone the repo
 
 `git clone https://github.com/SparkEdUAB/SparkEd.git`  
