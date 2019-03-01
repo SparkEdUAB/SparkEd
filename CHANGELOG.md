@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased version]
+
+### v1.8.2 (February 26, 2019)
+### changes in this version include
+- Re-designed the notification modal to best fit the dark mode #78 by OlivierJM
+- Re-designed the feedback page in the dashboard #79 by OlivierJM
+- Added scripts to help backup the database #76 by OlivierJM
+- Refactored the sync page #75
+
+### v1.8.1 (February 25, 2019)
+### New changes in 1.8.1
+### Major changes are only language addition and bug fixes
+- Added Language filter when creating a course/grade subject and on home page #65 @OlivierJM
+- Replaced the text input with the language select 0601b8a @OlivierJM .
+- Added a language filter on home page 5647b77 @OlivierJM .
+- Fixed the sidenav conflict #73 (Bug) @BongoHive.
+- Merge pull request #1 from BongoHive/fix-conf #68 (removal of unused config files) @BongoHive
+
+### v1.8.0 (February 11, 2019)
+### The Following are the new changes
+- Added new dark mode to all the pages
+- Added Stats for all collections
+- cleaned the sidenav
+- You can check this #59 PR which included major changes in the new release, It would be good to check the following issues too.
+- #51
+- #52
+- #41
+
+### v1.7.8.0-alpha (February 6, 2019)
+- This release contains bugs, that will be fixed in the final release, use it only for testing.
+
+- #55 Dark mode
+
+- #52 Stats
+
+### v1.7.7 (January 22, 2019)
+### Updated to Materializecss v1.0.0
+
+### v1.7.6 (January 20, 2019)
+- @OlivierJM changed the error color on login dc43d66
+
+- @OlivierJM changed the error text color on register
+
+### v1.7.5 (January 20, 2019)
+### Removed Icons on most components 
+
+- Removed icons on sidenav in dashboard 7121ffa @OlivierJM
+
+- Removed icons on manage accounts e26f057 @OlivierJM
+
+- Removed icon on editresource page 71d598c @OlivierJM
+
+- Removed icons on manage units 7e30687 @OlivierJM
+
+- Removed icons on manage slides 537a54e @OlivierJM
+
+- Bumped version a174bfa
+
 ### v1.7.0 (January 14, 2019)
 ### Updated Meteor to v1.8
 
