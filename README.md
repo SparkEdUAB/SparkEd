@@ -196,3 +196,9 @@ Make sure you read more info [here](http://meteor-up.com) on meteor-up
 
 Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute. 
 
+### Contributors
+
+<a href="https://github.com/olivierjm"><img src="https://avatars0.githubusercontent.com/u/11255454?s=460&v=4" title="olivierjm" width="80" height="80"></a>
+<a href="https://github.com/Big-Zude"><img src="https://avatars2.githubusercontent.com/u/40924941?s=460&v=4" title="Big-Zude" width="80" height="80"></a>
+<a href="https://github.com/kazashim"><img src="https://avatars0.githubusercontent.com/u/12492093?s=460&v=4" title="kazashim" width="80" height="80"></a>
+<a href="https://github.com/supedplc"><img src="https://avatars2.githubusercontent.com/u/26572527?s=460&v=4" title="supedplc" width="80" height="80"></a>
