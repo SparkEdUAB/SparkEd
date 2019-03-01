@@ -26,11 +26,13 @@ if you don't have meteor run the script below
 
 `curl https://install.meteor.com/ | sh`
 
-# For Windows Users
+### For Windows Users
 Download and install Git
-Use PowerShell to install **Meteor**
- > go through the **Requirements** found  [here](https://chocolatey.org/install) Before installing **Meteor**
+
  Use **PowerSell** in Administrator Mode
+ 
+ > go through the **Requirements** found  [here](https://chocolatey.org/install) Before installing **Meteor**
+ 
 `choco install meteor`
 
  
