@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased version]
 
+### v1.8.1 (February 25,2019)
+### New changes in 1.8.1
+### Major changes are only language addition and bug fixes
+- Added Language filter when creating a course/grade subject and on home page #65 @OlivierJM
+- Replaced the text input with the language select 0601b8a @OlivierJM .
+- Added a language filter on home page 5647b77 @OlivierJM .
+- Fixed the sidenav conflict #73 (Bug) @BongoHive.
+- Merge pull request #1 from BongoHive/fix-conf #68 (removal of unused config files) @BongoHive
+
 ### v1.8.0 (February 11, 2019)
 ### The Following are the new changes
 - Added new dark mode to all the pages
