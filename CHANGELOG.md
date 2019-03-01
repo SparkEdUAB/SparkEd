@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased version]
 
-### v1.8.1 (February 25,2019)
+### v1.8.2 (February 26, 2019)
+### changes in this version include
+- Re-designed the notification modal to best fit the dark mode #78 by OlivierJM
+- Re-designed the feedback page in the dashboard #79 by OlivierJM
+- Added scripts to help backup the database #76 by OlivierJM
+- Refactored the sync page #75
+
+### v1.8.1 (February 25, 2019)
 ### New changes in 1.8.1
 ### Major changes are only language addition and bug fixes
 - Added Language filter when creating a course/grade subject and on home page #65 @OlivierJM
