@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased version]
 
+### v1.8.0 (February 11, 2019)
+### The Following are the new changes
+- Added new dark mode to all the pages
+- Added Stats for all collections
+- cleaned the sidenav
+- You can check this #59 PR which included major changes in the new release, It would be good to check the following issues too.
+- #51
+- #52
+- #41
+
 ### v1.7.8.0-alpha (February 6, 2019)
 - This release contains bugs, that will be fixed in the final release, use it only for testing.
 
