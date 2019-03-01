@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased version]
+
+### v1.7.8.0-alpha (February 6, 2019)
+- This release contains bugs, that will be fixed in the final release, use it only for testing.
+
+- What is new?
+
+- #55 Dark mode
+
+- #52 Stats
+
 ### v1.7.7 (January 22, 2019)
 ### Updated to Materializecss v1.0.0
 
