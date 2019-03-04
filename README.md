@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.com/SparkEdUAB/SparkEd.svg?branch=master)](https://travis-ci.com/SparkEdUAB/SparkEd)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-> Current Stats
 SparkEd was depolyed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to  deploy the system in a school with more than 600 students. 
 
 > Software for organizing and presenting educational and training content for delivery on most platforms.
