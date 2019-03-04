@@ -1,11 +1,11 @@
 # SparkEd
 
 [![Build Status](https://travis-ci.com/SparkEdUAB/SparkEd.svg?branch=master)](https://travis-ci.com/SparkEdUAB/SparkEd)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
-SparkEd was depolyed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to  deploy the system in a school with more than 600 students. 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
 
 > Software for organizing and presenting educational and training content for delivery on most platforms.
+
+SparkEd was depolyed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to  deploy the system in a school with more than 600 students. 
 
 To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)  
 
