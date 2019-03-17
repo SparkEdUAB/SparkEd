@@ -212,26 +212,26 @@ adminRoutes.route('/dashboard/unit/:_id', {
 adminRoutes.route('/dashboard/accounts', {
   name: 'ManageAccounts',
   action() {
-    mount(WrappedSidenav, { yield: <ManageAccounts />, accounts: true });
+    mount(WrappedSidenav, { yield: <ManageAccounts />, isAtAccounts: true });
   },
 });
 adminRoutes.route('/dashboard/extra', {
   name: 'Additional',
   action() {
-    mount(WrappedSidenav, { yield: <Additional /> });
+    mount(WrappedSidenav, { yield: <Additional />, isAtextra: true });
   },
 });
 adminRoutes.route('/dashboard/overview', {
   name: 'OverView',
   action() {
-    mount(WrappedSidenav, { yield: <OverView /> });
+    mount(WrappedSidenav, { yield: <OverView />, isAtStats_: true });
   },
 });
 
 isAuthRequired().route('/dashboard/feedback', {
   name: 'Feedback',
   action() {
-    mount(WrappedSidenav, { yield: <Feedback /> });
+    mount(WrappedSidenav, { yield: <Feedback />, isAtFeedback: true });
   },
 });
 
@@ -259,13 +259,13 @@ adminRoutes.route('/dashboard/course', {
 adminRoutes.route('/dashboard/settings', {
   name: 'Institution',
   action() {
-    mount(WrappedSidenav, { yield: <Institution /> });
+    mount(WrappedSidenav, { yield: <Institution />, isAtSettings: true });
   },
 });
 adminRoutes.route('/dashboard/stats', {
   name: 'Stats',
   action() {
-    mount(WrappedSidenav, { yield: <Stats />, stats: true });
+    mount(WrappedSidenav, { yield: <Stats />, isAtStats: true });
   },
 });
 

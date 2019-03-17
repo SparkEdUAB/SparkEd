@@ -38,8 +38,8 @@ const Sidenav = props => (
                     href="/dashboard/stats"
                     className={'side-list'}
                     style={{
-                      fontSize: props.stats && 25,
-                      color: props.stats && 'mediumturquoise',
+                      fontSize: props.isAtStats && 25,
+                      color: props.isAtStats && 'mediumturquoise',
                     }}
                   >
                     <span className="hide-on-small-only">&nbsp; Stats</span>
@@ -50,8 +50,8 @@ const Sidenav = props => (
                     href="/dashboard/accounts"
                     className={' side-list '}
                     style={{
-                      fontSize: props.accounts && 25,
-                      color: props.accounts && 'mediumturquoise',
+                      fontSize: props.isAtAccounts && 25,
+                      color: props.isAtAccounts && 'mediumturquoise',
                     }}
                   >
                     <span className="hide-on-small-only">
@@ -66,8 +66,8 @@ const Sidenav = props => (
                       href="/dashboard/course"
                       className={' side-list '}
                       style={{
-                        fontSize: props.course && 25,
-                        color: props.course && 'mediumturquoise',
+                        fontSize: props.isAtCourse && 25,
+                        color: props.isAtCourse && 'mediumturquoise',
                       }}
                     >
                       <span className="hide-on-small-only">
@@ -82,8 +82,8 @@ const Sidenav = props => (
                         href="/dashboard/course"
                         className={'  side-list '}
                         style={{
-                          fontSize: props.course && 25,
-                          color: props.course && 'mediumturquoise',
+                          fontSize: props.isAtCourse && 25,
+                          color: props.isAtCourse && 'mediumturquoise',
                         }}
                       >
                         <span className="hide-on-small-only">
@@ -96,8 +96,8 @@ const Sidenav = props => (
                         href="/dashboard/list_topics"
                         className={'  side-list '}
                         style={{
-                          fontSize: props.topics && 25,
-                          color: props.topics && 'mediumturquoise',
+                          fontSize: props.isAtTopics && 25,
+                          color: props.isAtTopics && 'mediumturquoise',
                         }}
                       >
                         <span className="hide-on-small-only">
@@ -112,8 +112,8 @@ const Sidenav = props => (
                     href="/dashboard/extra"
                     className={'  side-list '}
                     style={{
-                      fontSize: props.extra && 25,
-                      color: props.extra && 'mediumturquoise',
+                      fontSize: props.isAtExtra && 25,
+                      color: props.isAtExtra && 'mediumturquoise',
                     }}
                   >
                     <span className="hide-on-small-only">
@@ -126,8 +126,8 @@ const Sidenav = props => (
                     href="/externallinks"
                     className={'side-list'}
                     style={{
-                      fontSize: props.externallinks && 25,
-                      color: props.externallinks && 'mediumturquoise',
+                      fontSize: props.isAtExternallinks && 25,
+                      color: props.isAtExternallinks && 'mediumturquoise',
                     }}
                   >
                     <span className="hide-on-small-only">
@@ -141,8 +141,8 @@ const Sidenav = props => (
                       href="/dashboard/overview"
                       className={'  side-list '}
                       style={{
-                        fontSize: props.stats_ && 25,
-                        color: props.stats_ && 'mediumturquoise',
+                        fontSize: props.isAtStats_ && 25,
+                        color: props.isAtStats_ && 'mediumturquoise',
                       }}
                     >
                       <span className="hide-on-small-only">
@@ -158,8 +158,8 @@ const Sidenav = props => (
                     href="/dashboard/feedback"
                     className={'  side-list '}
                     style={{
-                      fontSize: props.feedback && 25,
-                      color: props.feedback && 'mediumturquoise',
+                      fontSize: props.isAtFeedback && 25,
+                      color: props.isAtFeedback && 'mediumturquoise',
                     }}
                   >
                     <span className="hide-on-small-only">
@@ -176,8 +176,8 @@ const Sidenav = props => (
                         href="/setup"
                         className={'  side-list '}
                         style={{
-                          fontSize: props.settings && 25,
-                          color: props.settings && 'mediumturquoise',
+                          fontSize: props.isAtSettings && 25,
+                          color: props.isAtSettings && 'mediumturquoise',
                         }}
                       >
                         <span className="hide-on-small-only">
@@ -191,8 +191,8 @@ const Sidenav = props => (
                         href="/dashboard/slides"
                         className={'  side-list'}
                         style={{
-                          fontSize: props.slides && 25,
-                          color: props.slides && 'mediumturquoise',
+                          fontSize: props.isAtSlides && 25,
+                          color: props.isAtSlides && 'mediumturquoise',
                         }}
                       >
                         <span className="hide-on-small-only">
@@ -205,8 +205,8 @@ const Sidenav = props => (
                         href="/dashboard/updates"
                         className={'  side-list'}
                         style={{
-                          fontSize: props.updates && 25,
-                          color: props.updates && 'mediumturquoise',
+                          fontSize: props.isAtUpdates && 25,
+                          color: props.isAtUpdates && 'mediumturquoise',
                         }}
                       >
                         <span className="hide-on-small-only">
@@ -219,8 +219,8 @@ const Sidenav = props => (
                         href="/dashboard/backup"
                         className={'  side-list'}
                         style={{
-                          fontSize: props.backup && 25,
-                          color: props.backup && 'mediumturquoise',
+                          fontSize: props.isAtBackup && 25,
+                          color: props.isAtBackup && 'mediumturquoise',
                         }}
                       >
                         <span className="hide-on-small-only">
@@ -258,17 +258,20 @@ const Sidenav = props => (
 );
 
 Sidenav.propTypes = {
-  accounts: PropTypes.string,
-  extra: PropTypes.string,
-  stats: PropTypes.bool,
-  feedback: PropTypes.string,
-  topics: PropTypes.string,
-  resources: PropTypes.string,
-  settings: PropTypes.string,
-  sliding: PropTypes.string,
-  course: PropTypes.string,
-  externallinks: PropTypes.string,
-  setup: PropTypes.string,
+  isAtAccounts: PropTypes.bool.isRequired,
+  isAtExtra: PropTypes.bool.isRequired,
+  isAtStats: PropTypes.bool.isRequired,
+  isAtFeedback: PropTypes.bool.isRequired,
+  isAtTopics: PropTypes.bool.isRequired,
+  isAtResources: PropTypes.bool.isRequired,
+  isAtSettings: PropTypes.bool.isRequired,
+  isAtSliding: PropTypes.bool.isRequired,
+  isAtCourse: PropTypes.bool.isRequired,
+  isAtExternallinks: PropTypes.bool.isRequired,
+  isAtSetup: PropTypes.bool.isRequired,
+  isAtBackup: PropTypes.bool.isRequired,
+  isAtUpdates: PropTypes.bool.isRequired,
+  isAtSlides: PropTypes.bool.isRequired,
   theme: PropTypes.string,
   yield: PropTypes.node,
 };
