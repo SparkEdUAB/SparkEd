@@ -1,9 +1,11 @@
 # SparkEd
 
 [![Build Status](https://travis-ci.com/SparkEdUAB/SparkEd.svg?branch=master)](https://travis-ci.com/SparkEdUAB/SparkEd)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
 
 > Software for organizing and presenting educational and training content for delivery on most platforms.
+
+SparkEd was depolyed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to  deploy the system in a school with more than 600 students. 
 
 To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)  
 
@@ -26,6 +28,21 @@ if you don't have meteor run the script below
 
 `curl https://install.meteor.com/ | sh`
 
+### For Windows Users
+Download and install Git
+
+ Use **PowerSell** in Administrator Mode
+ 
+ > Go through the **Requirements** found  [here](https://chocolatey.org/install) Before installing **Meteor**
+
+- After Doing The Above Now You Can install **meteor**
+
+`choco install meteor`
+
+ After Installing **meteor** Use Git to Clone the repo **WINDOWS USERS**
+ 
+ 
+
 Clone the repo
 
 `git clone https://github.com/SparkEdUAB/SparkEd.git`  
@@ -38,6 +55,27 @@ Install dependencies
 Run the application
 
 `meteor`
+
+### Contribution
+
+Fork this repo
+
+Clone your forked repo
+
+`git clone https://github.com/your-github-username/SparkEd.git`
+
+Add this repo to your remotes as upstream.
+
+`git remote add upstream https://github.com/SparkEdUAB/SparkEd`
+
+Before pushing anything to your fork, always
+
+`git pull upstream`
+
+> Make sure your commit messages should be clear not vague e.g "Changes and Updates made"  
+> Work from a branch other than master whenever possible and branch name should be clear  
+> Write clean and transparent code which is easy to maintain  
+> When making PRs, give clear descriptions of the changes you made.
 
 ### Testing
 
@@ -160,3 +198,11 @@ Make sure you read more info [here](http://meteor-up.com) on meteor-up
 
 Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute. 
 
+### Contributors
+
+We acknowledge contributors who added value to this project in any way.
+
+<a href="https://github.com/olivierjm"><img src="https://avatars0.githubusercontent.com/u/11255454?s=460&v=4" title="olivierjm" width="80" height="80"></a>
+<a href="https://github.com/Big-Zude"><img src="https://avatars2.githubusercontent.com/u/40924941?s=460&v=4" title="Big-Zude" width="80" height="80"></a>
+<a href="https://github.com/kazashim"><img src="https://avatars0.githubusercontent.com/u/12492093?s=460&v=4" title="kazashim" width="80" height="80"></a>
+<a href="https://github.com/supedplc"><img src="https://avatars2.githubusercontent.com/u/26572527?s=460&v=4" title="supedplc" width="80" height="80"></a>
