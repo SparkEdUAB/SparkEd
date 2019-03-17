@@ -10,12 +10,12 @@ import { Institution } from '../../../api/settings/institution';
 import { _ExternalLink } from '../../../api/externallink/externallink';
 import { _Settings } from '../../../api/settings/settings';
 import Bookmark from '../Bookmark/Bookmark.jsx';
-import MainModal from '../../modals/MainModal';
-import UserInfo from './UserInfo';
-import ExternalLinksView from '../ExternalLink/ExternalLinksView';
-import InstitutionDetail from './InstitutionDetail';
-import { T } from '../Language/Languages';
-import { ThemeContext } from '../../containers/AppWrapper';
+import MainModal from '../../modals/MainModal'; // eslint-disable-line
+import UserInfo from './UserInfo'; // eslint-disable-line
+import ExternalLinksView from '../ExternalLink/ExternalLinksView'; // eslint-disable-line
+import InstitutionDetail from './InstitutionDetail'; // eslint-disable-line
+import { T } from '../Language/Languages'; // eslint-disable-line
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 export class Header extends Component {
   constructor(props) {
@@ -171,6 +171,13 @@ export class Header extends Component {
     var instances = M.Sidenav.init(elems, {  // eslint-disable-line
       edge: 'left',
     });
+    if (!Meteor.status().connected) {
+      M.toast({
+        html: '<span>You have been disconnected from the server</span>',
+        classes: 'red',
+        displayLength: 10000,
+      });
+    }
   }
 
   markAllAsVisited = bool => {
@@ -241,7 +248,9 @@ export class Header extends Component {
       <ThemeContext.Consumer>
         {({ state, toggle }) => (
           <Fragment>
-            <div className="container-fluid " style={{ backgroundColor: state.isDark ? state.mainDark : state.main }}>
+            <div className="container-fluid " style={{
+                backgroundColor: state.isDark ? state.mainDark : Meteor.status().connected ? state.main : '#757575',
+              }}>
               <div className="row ">
                 <div className="col s12 m5">
                   <InstitutionDetail

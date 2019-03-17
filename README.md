@@ -1,11 +1,13 @@
 # SparkEd
 
 [![Build Status](https://travis-ci.com/SparkEdUAB/SparkEd.svg?branch=master)](https://travis-ci.com/SparkEdUAB/SparkEd)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
 
 > Software for organizing and presenting educational and training content for delivery on most platforms.
 
-To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
+SparkEd was deployed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to  deploy the system in a school with more than 600 students. 
+
+To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)  
 
 [Check here](https://sparkeduab.github.io/sparked-manual/) for the online documentation how to use this project.
 
@@ -25,6 +27,21 @@ The project uses the following stack
 if you don't have meteor run the script below
 
 `curl https://install.meteor.com/ | sh`
+
+### For Windows Users
+Download and install Git
+
+ Use **PowerSell** in Administrator Mode
+ 
+ > Go through the **Requirements** found  [here](https://chocolatey.org/install) Before installing **Meteor**
+
+- After Doing The Above Now You Can install **meteor**
+
+`choco install meteor`
+
+ After Installing **meteor** Use Git to Clone the repo **WINDOWS USERS**
+ 
+ 
 
 Clone the repo
 
@@ -183,4 +200,14 @@ Make sure you read more info [here](http://meteor-up.com) on meteor-up
 
 #### Issues
 
-Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute.
+Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute. 
+
+### Contributors
+
+We acknowledge contributors who added value to this project in any way.
+
+<a href="https://github.com/olivierjm"><img src="https://avatars0.githubusercontent.com/u/11255454?s=460&v=4" title="olivierjm" width="80" height="80"></a>
+<a href="https://github.com/Big-Zude"><img src="https://avatars2.githubusercontent.com/u/40924941?s=460&v=4" title="Big-Zude" width="80" height="80"></a>
+<a href="https://github.com/kazashim"><img src="https://avatars0.githubusercontent.com/u/12492093?s=460&v=4" title="kazashim" width="80" height="80"></a>
+<a href="https://github.com/marieram"><img src="https://avatars3.githubusercontent.com/u/34839209?s=400&v=4" title="marieram" width="80" height="80"></a>
+<a href="https://github.com/supedplc"><img src="https://avatars2.githubusercontent.com/u/26572527?s=460&v=4" title="supedplc" width="80" height="80"></a>
