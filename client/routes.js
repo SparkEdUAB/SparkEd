@@ -74,7 +74,7 @@ export default function isAuthRequired() {
 adminRoutes.route('/setup', {
   name: 'WalkThrough',
   action() {
-    mount(WrappedSidenav, { yield: <SetUp /> });
+    mount(WrappedSidenav, { yield: <SetUp />, isAtSetup: true });
   },
 });
 
@@ -165,47 +165,47 @@ isAuthRequired().route('/request', {
 adminRoutes.route('/dashboard/edit_resources/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
-    mount(WrappedSidenav, { yield: <EditResources /> });
+    mount(WrappedSidenav, { yield: <EditResources />, isAtCourse: true });
   },
 });
 adminRoutes.route('/dashboard/isHighSchool/edit_unit/:_id', {
   name: 'EditResources',
   action(params, queryParams) {
-    mount(WrappedSidenav, { yield: <EditResources /> });
+    mount(WrappedSidenav, { yield: <EditResources />, isAtCourse: true });
   },
 });
 
 adminRoutes.route('/dashboard/edit_unit/:_id', {
   name: 'EditUnit',
   action() {
-    mount(WrappedSidenav, { yield: <EditUnit /> });
+    mount(WrappedSidenav, { yield: <EditUnit />, isAtCourse: true });
   },
 });
 
 adminRoutes.route('/dashboard/units/:_id', {
   name: 'ManageUnits',
   action(params, queryParams) {
-    mount(WrappedSidenav, { yield: <ManageUnits /> });
+    mount(WrappedSidenav, { yield: <ManageUnits />, isAtCourse: true });
   },
 });
 
 adminRoutes.route('/dashboard/units/prog/:_id', {
   name: 'SearchUnits',
   action(params, queryParams) {
-    mount(WrappedSidenav, { yield: <ManageUnits /> });
+    mount(WrappedSidenav, { yield: <ManageUnits />, isAtCourse: true });
   },
 });
 
 isAuthRequired().route('/dashboard/units/', {
   name: 'SearchUnits',
   action(params, queryParams) {
-    mount(WrappedSidenav, { yield: <ManageUnits /> });
+    mount(WrappedSidenav, { yield: <ManageUnits />, isAtCourse: true });
   },
 });
 adminRoutes.route('/dashboard/unit/:_id', {
   name: 'New Unit',
   action(params, queryParams) {
-    mount(WrappedSidenav, { yield: <Unit /> });
+    mount(WrappedSidenav, { yield: <Unit />, isAtCourse: true });
   },
 });
 
@@ -218,7 +218,7 @@ adminRoutes.route('/dashboard/accounts', {
 adminRoutes.route('/dashboard/extra', {
   name: 'Additional',
   action() {
-    mount(WrappedSidenav, { yield: <Additional />, isAtextra: true });
+    mount(WrappedSidenav, { yield: <Additional />, isAtExtra: true });
   },
 });
 adminRoutes.route('/dashboard/overview', {
@@ -238,21 +238,21 @@ isAuthRequired().route('/dashboard/feedback', {
 adminRoutes.route('/dashboard/list_topics', {
   name: 'AllTopics',
   action() {
-    mount(WrappedSidenav, { yield: <AllTopics /> });
+    mount(WrappedSidenav, { yield: <AllTopics />, isAtTopics: true });
   },
 });
 
 adminRoutes.route('/dashboard/course/:_id', {
   name: 'Courses',
   action(params, queryParams) {
-    mount(WrappedSidenav, { yield: <Courses /> });
+    mount(WrappedSidenav, { yield: <Courses />, isAtCourse: true });
   },
 });
 
 adminRoutes.route('/dashboard/course', {
   name: 'Courses',
   action(params) {
-    mount(WrappedSidenav, { yield: <Courses /> });
+    mount(WrappedSidenav, { yield: <Courses />, isAtCourse: true });
   },
 });
 
@@ -272,35 +272,38 @@ adminRoutes.route('/dashboard/stats', {
 adminRoutes.route('/dashboard/view_resource/:_id', {
   name: 'DisplayResource',
   action(queryParams) {
-    mount(WrappedSidenav, { yield: <DisplayResource /> });
+    mount(WrappedSidenav, { yield: <DisplayResource />, isAtExtra: true });
   },
 });
 
 isAuthRequired().route('/dashboard/slides', {
   name: 'Slides',
   action() {
-    mount(WrappedSidenav, { yield: <ManageSlides /> });
+    mount(WrappedSidenav, { yield: <ManageSlides />, isAtSlides: true });
   },
 });
 
 isAuthRequired().route('/externallinks', {
   name: 'External',
   action() {
-    mount(WrappedSidenav, { yield: <ExternalLinks /> });
+    mount(WrappedSidenav, {
+      yield: <ExternalLinks />,
+      isAtExternallinks: true,
+    });
   },
 });
 
 isAuthRequired().route('/user_details/:_id', {
   name: 'UserStatistics',
   action() {
-    mount(WrappedSidenav, { yield: <UserStatistics /> });
+    mount(WrappedSidenav, { yield: <UserStatistics />, isAtStats_: true });
   },
 });
 
 isAuthRequired().route('/dashboard/updates', {
   name: 'Sync Updates',
   action() {
-    mount(WrappedSidenav, { yield: <SyncUpdates /> });
+    mount(WrappedSidenav, { yield: <SyncUpdates />, isAtUpdates: true });
   },
 });
 
@@ -357,6 +360,6 @@ FlowRouter.route('/fileupload', {
 isAuthRequired().route('/dashboard/backup', {
   name: 'Backup',
   action() {
-    mount(WrappedSidenav, { yield: <Backup /> });
+    mount(WrappedSidenav, { yield: <Backup />, isAtBackup: true });
   },
 });

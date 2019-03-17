@@ -112,7 +112,7 @@ const Sidenav = props => (
                     href="/dashboard/extra"
                     className={'  side-list '}
                     style={{
-                      fontSize: props.isAtExtra && 25,
+                      fontSize: props.isAtExtra && 19,
                       color: props.isAtExtra && 'mediumturquoise',
                     }}
                   >
@@ -126,7 +126,7 @@ const Sidenav = props => (
                     href="/externallinks"
                     className={'side-list'}
                     style={{
-                      fontSize: props.isAtExternallinks && 25,
+                      fontSize: props.isAtExternallinks && 19,
                       color: props.isAtExternallinks && 'mediumturquoise',
                     }}
                   >
@@ -176,8 +176,8 @@ const Sidenav = props => (
                         href="/setup"
                         className={'  side-list '}
                         style={{
-                          fontSize: props.isAtSettings && 25,
-                          color: props.isAtSettings && 'mediumturquoise',
+                          fontSize: props.isAtSetup && 25,
+                          color: props.isAtSetup && 'mediumturquoise',
                         }}
                       >
                         <span className="hide-on-small-only">
@@ -191,7 +191,7 @@ const Sidenav = props => (
                         href="/dashboard/slides"
                         className={'  side-list'}
                         style={{
-                          fontSize: props.isAtSlides && 25,
+                          fontSize: props.isAtSlides && 19,
                           color: props.isAtSlides && 'mediumturquoise',
                         }}
                       >
@@ -264,7 +264,7 @@ Sidenav.propTypes = {
   isAtFeedback: PropTypes.bool.isRequired,
   isAtTopics: PropTypes.bool.isRequired,
   isAtResources: PropTypes.bool.isRequired,
-  isAtSettings: PropTypes.bool.isRequired,
+  isAtStats_: PropTypes.bool.isRequired,
   isAtSliding: PropTypes.bool.isRequired,
   isAtCourse: PropTypes.bool.isRequired,
   isAtExternallinks: PropTypes.bool.isRequired,
