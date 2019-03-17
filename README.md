@@ -5,7 +5,7 @@
 
 > Software for organizing and presenting educational and training content for delivery on most platforms.
 
-To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)  
+To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 
 [Check here](https://sparkeduab.github.io/sparked-manual/) for the online documentation how to use this project.
 
@@ -38,6 +38,10 @@ Install dependencies
 Run the application
 
 `meteor`
+
+If you have challenges with language translations, you need to set the environment variables
+
+`export UNIVERSE_I18N_LOCALES = all`
 
 ### Contribution
 
@@ -179,5 +183,4 @@ Make sure you read more info [here](http://meteor-up.com) on meteor-up
 
 #### Issues
 
-Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute. 
-
+Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute.
