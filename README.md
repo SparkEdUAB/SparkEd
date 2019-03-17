@@ -5,7 +5,7 @@
 
 > Software for organizing and presenting educational and training content for delivery on most platforms.
 
-SparkEd was depolyed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to  deploy the system in a school with more than 600 students. 
+SparkEd was deployed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to  deploy the system in a school with more than 600 students. 
 
 To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)  
 
@@ -55,6 +55,10 @@ Install dependencies
 Run the application
 
 `meteor`
+
+If you have challenges with language translations, you need to set the environment variables
+
+`export UNIVERSE_I18N_LOCALES = all`
 
 ### Contribution
 
