@@ -207,5 +207,3 @@ We acknowledge contributors who added value to this project in any way.
 <a href="https://github.com/kazashim"><img src="https://avatars0.githubusercontent.com/u/12492093?s=460&v=4" title="kazashim" width="80" height="80"></a>
 <a href="https://github.com/marieram"><img src="https://avatars3.githubusercontent.com/u/34839209?s=400&v=4" title="marieram" width="80" height="80"></a>
 <a href="https://github.com/supedplc"><img src="https://avatars2.githubusercontent.com/u/26572527?s=460&v=4" title="supedplc" width="80" height="80"></a>
-
-
