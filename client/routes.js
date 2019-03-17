@@ -212,7 +212,7 @@ adminRoutes.route('/dashboard/unit/:_id', {
 adminRoutes.route('/dashboard/accounts', {
   name: 'ManageAccounts',
   action() {
-    mount(WrappedSidenav, { yield: <ManageAccounts /> });
+    mount(WrappedSidenav, { yield: <ManageAccounts />, accounts: true });
   },
 });
 adminRoutes.route('/dashboard/extra', {
@@ -265,7 +265,7 @@ adminRoutes.route('/dashboard/settings', {
 adminRoutes.route('/dashboard/stats', {
   name: 'Stats',
   action() {
-    mount(WrappedSidenav, { yield: <Stats /> });
+    mount(WrappedSidenav, { yield: <Stats />, stats: true });
   },
 });
 
