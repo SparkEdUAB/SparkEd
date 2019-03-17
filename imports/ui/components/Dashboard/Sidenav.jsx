@@ -36,7 +36,11 @@ const Sidenav = props => (
                 <li>
                   <a
                     href="/dashboard/stats"
-                    className={`  side-list ${props.stats}`}
+                    className={'side-list'}
+                    style={{
+                      fontSize: props.isAtStats && 25,
+                      color: props.isAtStats && 'mediumturquoise',
+                    }}
                   >
                     <span className="hide-on-small-only">&nbsp; Stats</span>
                   </a>
@@ -44,7 +48,11 @@ const Sidenav = props => (
                 <li>
                   <a
                     href="/dashboard/accounts"
-                    className={`  side-list ${props.accounts}`}
+                    className={' side-list '}
+                    style={{
+                      fontSize: props.isAtAccounts && 25,
+                      color: props.isAtAccounts && 'mediumturquoise',
+                    }}
                   >
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.accounts</T>
@@ -56,7 +64,11 @@ const Sidenav = props => (
                   <li>
                     <a
                       href="/dashboard/course"
-                      className={`  side-list ${props.course}`}
+                      className={' side-list '}
+                      style={{
+                        fontSize: props.isAtCourse && 25,
+                        color: props.isAtCourse && 'mediumturquoise',
+                      }}
                     >
                       <span className="hide-on-small-only">
                         &nbsp; <T>common.sidenav.subjects</T>
@@ -68,7 +80,11 @@ const Sidenav = props => (
                     <li>
                       <a
                         href="/dashboard/course"
-                        className={`  side-list ${props.course}`}
+                        className={'  side-list '}
+                        style={{
+                          fontSize: props.isAtCourse && 25,
+                          color: props.isAtCourse && 'mediumturquoise',
+                        }}
                       >
                         <span className="hide-on-small-only">
                           &nbsp; <T>common.sidenav.courses</T>
@@ -78,7 +94,11 @@ const Sidenav = props => (
                     <li>
                       <a
                         href="/dashboard/list_topics"
-                        className={`  side-list ${props.topics}`}
+                        className={'  side-list '}
+                        style={{
+                          fontSize: props.isAtTopics && 25,
+                          color: props.isAtTopics && 'mediumturquoise',
+                        }}
                       >
                         <span className="hide-on-small-only">
                           &nbsp; <T>common.sidenav.alltopics</T>
@@ -90,7 +110,11 @@ const Sidenav = props => (
                 <li>
                   <a
                     href="/dashboard/extra"
-                    className={`  side-list ${props.extra}`}
+                    className={'  side-list '}
+                    style={{
+                      fontSize: props.isAtExtra && 19,
+                      color: props.isAtExtra && 'mediumturquoise',
+                    }}
                   >
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.resourceLibrary</T>
@@ -100,7 +124,11 @@ const Sidenav = props => (
                 <li>
                   <a
                     href="/externallinks"
-                    className={`side-list ${props.externallinks}`}
+                    className={'side-list'}
+                    style={{
+                      fontSize: props.isAtExternallinks && 19,
+                      color: props.isAtExternallinks && 'mediumturquoise',
+                    }}
                   >
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.externalLinks</T>
@@ -111,7 +139,11 @@ const Sidenav = props => (
                   <li>
                     <a
                       href="/dashboard/overview"
-                      className={`  side-list ${props.stats}`}
+                      className={'  side-list '}
+                      style={{
+                        fontSize: props.isAtStats_ && 25,
+                        color: props.isAtStats_ && 'mediumturquoise',
+                      }}
                     >
                       <span className="hide-on-small-only">
                         &nbsp; <T>common.sidenav.stats</T>
@@ -124,7 +156,11 @@ const Sidenav = props => (
                 <li>
                   <a
                     href="/dashboard/feedback"
-                    className={`  side-list ${props.feedback}`}
+                    className={'  side-list '}
+                    style={{
+                      fontSize: props.isAtFeedback && 25,
+                      color: props.isAtFeedback && 'mediumturquoise',
+                    }}
                   >
                     <span className="hide-on-small-only">
                       &nbsp; <T>common.sidenav.feedback</T>
@@ -138,7 +174,11 @@ const Sidenav = props => (
                     <li>
                       <a
                         href="/setup"
-                        className={`  side-list ${props.settings}`}
+                        className={'  side-list '}
+                        style={{
+                          fontSize: props.isAtSetup && 25,
+                          color: props.isAtSetup && 'mediumturquoise',
+                        }}
                       >
                         <span className="hide-on-small-only">
                           &nbsp; <T>common.sidenav.setup</T>
@@ -149,7 +189,11 @@ const Sidenav = props => (
                     <li>
                       <a
                         href="/dashboard/slides"
-                        className={`  side-list ${props.slides}`}
+                        className={'  side-list'}
+                        style={{
+                          fontSize: props.isAtSlides && 19,
+                          color: props.isAtSlides && 'mediumturquoise',
+                        }}
                       >
                         <span className="hide-on-small-only">
                           &nbsp; <T>common.sidenav.changeSlides</T>
@@ -159,7 +203,11 @@ const Sidenav = props => (
                     <li>
                       <a
                         href="/dashboard/updates"
-                        className={`  side-list ${props.slides}`}
+                        className={'  side-list'}
+                        style={{
+                          fontSize: props.isAtUpdates && 25,
+                          color: props.isAtUpdates && 'mediumturquoise',
+                        }}
                       >
                         <span className="hide-on-small-only">
                           &nbsp; <T>common.sidenav.updates</T>
@@ -169,7 +217,11 @@ const Sidenav = props => (
                     <li>
                       <a
                         href="/dashboard/backup"
-                        className={`  side-list ${props.slides}`}
+                        className={'  side-list'}
+                        style={{
+                          fontSize: props.isAtBackup && 25,
+                          color: props.isAtBackup && 'mediumturquoise',
+                        }}
                       >
                         <span className="hide-on-small-only">
                           &nbsp; <T>common.sidenav.backup</T>
@@ -206,17 +258,20 @@ const Sidenav = props => (
 );
 
 Sidenav.propTypes = {
-  accounts: PropTypes.string,
-  extra: PropTypes.string,
-  stats: PropTypes.string,
-  feedback: PropTypes.string,
-  topics: PropTypes.string,
-  resources: PropTypes.string,
-  settings: PropTypes.string,
-  sliding: PropTypes.string,
-  course: PropTypes.string,
-  externallinks: PropTypes.string,
-  setup: PropTypes.string,
+  isAtAccounts: PropTypes.bool,
+  isAtExtra: PropTypes.bool,
+  isAtStats: PropTypes.bool,
+  isAtFeedback: PropTypes.bool,
+  isAtTopics: PropTypes.bool,
+  isAtResources: PropTypes.bool,
+  isAtStats_: PropTypes.bool,
+  isAtSliding: PropTypes.bool,
+  isAtCourse: PropTypes.bool,
+  isAtExternallinks: PropTypes.bool,
+  isAtSetup: PropTypes.bool,
+  isAtBackup: PropTypes.bool,
+  isAtUpdates: PropTypes.bool,
+  isAtSlides: PropTypes.bool,
   theme: PropTypes.string,
   yield: PropTypes.node,
 };
