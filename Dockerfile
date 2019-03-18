@@ -1,1 +1,1 @@
-FROM aedm/minimeteor
+FROM jshimko/meteor-launchpad:latest
