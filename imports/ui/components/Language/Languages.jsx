@@ -18,18 +18,18 @@ export default class Languages extends Component {
   changeLangauge = (e, lang) => {
     switch (lang) {
       case 'fr':
-        i18n.setLocale('fr-FR');
-        localStorage.setItem('locale', 'fr-FR');
+        i18n.setLocale('fr-fr');
+        localStorage.setItem('locale', 'fr-fr');
         Session.set('language', 'french');
         break;
       case 'en':
-        i18n.setLocale('en-US');
-        localStorage.setItem('locale', 'en-US');
+        i18n.setLocale('en-us');
+        localStorage.setItem('locale', 'en-us');
         Session.set('language', 'english');
         break;
       case 'es':
-        i18n.setLocale('es-Es');
-        localStorage.setItem('locale', 'es-ES');
+        i18n.setLocale('es-es');
+        localStorage.setItem('locale', 'es-us');
         Session.set('language', 'ethiopian');
         break;
       default:
