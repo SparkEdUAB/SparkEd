@@ -1,13 +1,13 @@
 # SparkEd
 
 [![Build Status](https://travis-ci.com/SparkEdUAB/SparkEd.svg?branch=master)](https://travis-ci.com/SparkEdUAB/SparkEd)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 > Software for organizing and presenting educational and training content for delivery on most platforms.
 
-SparkEd was deployed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to  deploy the system in a school with more than 600 students. 
+SparkEd was deployed on a server and it loaded more than 1,500 resources. It worked very well in an office setting and was tested with 20 hosts. We plan to deploy the system in a school with more than 600 students.
 
-To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)  
+To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 
 [Check here](https://sparkeduab.github.io/sparked-manual/) for the online documentation how to use this project.
 
@@ -29,19 +29,18 @@ if you don't have meteor run the script below
 `curl https://install.meteor.com/ | sh`
 
 ### For Windows Users
-Download and install Git
 
- Use **PowerSell** in Administrator Mode
- 
- > Go through the **Requirements** found  [here](https://chocolatey.org/install) Before installing **Meteor**
+Download and install `git`
 
-- After Doing The Above Now You Can install **meteor**
+Use **PowerSell** in administrator mode
+
+> Go through the **Requirements** found [here](https://chocolatey.org/install) before installing **Meteor**
+
+- After doing the above now you can install **meteor**
 
 `choco install meteor`
 
- After Installing **meteor** Use Git to Clone the repo **WINDOWS USERS**
- 
- 
+After installing **meteor** use git to clone the repo **WINDOWS USERS**
 
 Clone the repo
 
@@ -198,9 +197,68 @@ The above command will deploy SparkEd on the specified server address
 
 Make sure you read more info [here](http://meteor-up.com) on meteor-up
 
-#### Issues
+### Docker
 
-Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute. 
+To run the current image built
+
+`docker pull olivierjm/spark` 
+
+and run it as specified 
+
+#### Build an image
+
+You can build a docker image in 2 ways
+
+- You can use the provided `launchpad.conf` file
+
+      `docker build -t yourname/sparked:tag .`
+
+- You can use build args to pass args when building the image
+
+  ```bash
+  docker build \
+  --build-arg APT_GET_INSTALL="curl git wget" \
+  --build-arg INSTALL_MONGO=true \
+  --build-arg NODE_VERSION=8.11.4 \
+  -t yourname/sparked:tag .
+
+  ```
+
+  The above will install mongodb and meteor will use that instance to run but If you are building for production it is best to use an external mongodb, you provide a url when run the built image.
+
+#### Running the image
+
+In the normal way you would run the image as follows
+
+`docker run imagename:tag`
+
+but we need to provide environment vairables that meteor can pick up and use like _ROOT_URL_, _PORT_, _MONGO_URL_ and any other envs that you might want to pass along.
+
+If you are using an external mongodb then you can provide the link to connect to when running the image.
+
+```bash
+  docker run -d \
+  -e ROOT_URL=http://your_url \
+  -e MONGO_URL=mongodb://url:dbname \
+  -e MONGO_OPLOG_URL=mongodb://oplog_url \
+  -p 80:3000 \
+  yourname/sparked:tag
+```
+
+If you set `INSTALL_MONGO` to true when building the image or in the `launchpad.conf` then you don't need to set the _MONGO_URL_
+
+```bash
+  docker run -d \
+  -e ROOT_URL=http://your_url \
+  -p 80:3000 \
+  yourname/sparked:tag
+```
+
+check `http://your_url` in your browser if the image run successfully then you should be able to have everything workin.
+
+### Issues
+
+Check [here](https://github.com/SparkEdUAB/SparkEd/issues) for issues, urgent issues that need attention are pinned on top of other issues. feel free to file an issue if you are experiencing a problem or dive in the existing ones to contribute.
 
 ### Contributors
 
