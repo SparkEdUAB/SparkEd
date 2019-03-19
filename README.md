@@ -199,6 +199,12 @@ Make sure you read more info [here](http://meteor-up.com) on meteor-up
 
 ### Docker
 
+To run the current image built
+
+`docker pull olivierjm/spark` 
+
+and run it as specified 
+
 #### Build an image
 
 You can build a docker image in 2 ways
