@@ -203,7 +203,7 @@ To run the current image built
 
 `docker pull olivierjm/spark` 
 
-and run it as specified 
+and run it as specified [here](#running-the-image)
 
 #### Build an image
 
