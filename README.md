@@ -21,6 +21,7 @@ The project uses the following stack
 - **React** as the User Interface library
 - **eslint** to lint files
 - **Jest** for testing
+- **MongoDB** as a noSql Database
 
 ### Development
 
@@ -34,9 +35,9 @@ Download and install `git`
 
 Use **PowerSell** in administrator mode
 
-> Go through the **Requirements** found [here](https://chocolatey.org/install) before installing **Meteor**
+> Go through the **requirements** found [here](https://chocolatey.org/install) before installing **meteorjs**
 
-- After doing the above now you can install **meteor**
+After doing the above now you can install **meteor**
 
 `choco install meteor`
 
@@ -73,7 +74,7 @@ Add this repo to your remotes as upstream.
 
 Before pushing anything to your fork, always
 
-`git pull upstream`
+`git pull upstream master`
 
 > Make sure your commit messages should be clear not vague e.g "Changes and Updates made"  
 > Work from a branch other than master whenever possible and branch name should be clear  
@@ -139,7 +140,7 @@ Just like in Development mentioned [here](https://github.com/SparkEdUAB/SparkEd#
 #### Requirements
 
 - Nodejs ˆ8.10
-- Latest version of Npm or Yarn
+- Latest version of `npm` or `yarn`
 - Access to a terminal
 
 To get started, install `mup` (meteor-up)  
@@ -201,7 +202,7 @@ Make sure you read more info [here](http://meteor-up.com) on meteor-up
 
 To run the current image built
 
-`docker pull olivierjm/spark` 
+`docker pull olivierjm/spark`
 
 and run it as specified [here](#running-the-image)
 
@@ -232,7 +233,7 @@ In the normal way you would run the image as follows
 
 `docker run imagename:tag`
 
-but we need to provide environment vairables that meteor can pick up and use like _ROOT_URL_, _PORT_, _MONGO_URL_ and any other envs that you might want to pass along.
+but we need to provide environment vairables that meteor can pick up and use like **_ROOT_URL_**, **_PORT_**, **_MONGO_URL_** and any other envs that you might want to pass along.
 
 If you are using an external mongodb then you can provide the link to connect to when running the image.
 
