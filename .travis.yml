@@ -16,7 +16,7 @@ before_install:
 
 deploy:
   provider: script
-  script: chmod +x docker_push && bash docker_push
+  script: chmod +x ./docker_push.sh && ./docker_push.sh
   on:
     branch: master
 
