@@ -29,7 +29,7 @@
     "request": "^2.75.0",
     "simpl-schema": "^1.4.2"
   },
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Software for organizing and presenting educational and training content for delivery on most platforms.",
   "main": "index.js",
   "repository": {
