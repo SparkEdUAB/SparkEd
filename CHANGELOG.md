@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased version]
 
+### New Changes 
+
+- Added launchpad configuration #99
+- Added docker support #99 
+- Courses now list depending on the [i18n](https://github.com/SparkEdUAB/SparkEd/commit/4ccee5650e96ffb76d4431de3023ea716ae0351d) by @abnios @supedplc 
+- Fix sync update [here](https://github.com/BongoHive/SparkEd/pull/4) by @OlivierJM  
+- Server status now shows the connectivity status to the server #83 by @OlivierJM  
+- added backup automation scripts #76 by @OlivierJM 
+
+
+### Bugs Fixed  
+
+- fixed the sidenav conflict  #73 by @OlivierJM 
+- Fixed i18n issue that caused the translation not to work #94 @OlivierJM 
+- Redesigned the notification page  #78 by @OlivierJM 
+
 ### v1.8.2 (February 26, 2019)
 ### changes in this version include
 - Re-designed the notification modal to best fit the dark mode #78 by OlivierJM
