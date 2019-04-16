@@ -30,7 +30,7 @@ export class ImgSlider extends Component {
               Welcome To SparkEd
             </h4>
             <h5 className="light white-text text-lighten-1">
-              Upload Slides images From the Dashboard
+              Upload images From the Dashboard to show as slides here
             </h5>
           </div>
         </li>
