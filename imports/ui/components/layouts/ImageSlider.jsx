@@ -65,8 +65,8 @@ export class ImgSlider extends Component {
 }
 
 ImgSlider.propTypes = {
-  slides: PropTypes.array.isRequired,
-  isDark: PropTypes.bool.isRequired,
+  slides: PropTypes.array,
+  isDark: PropTypes.bool,
 };
 
 export default withTracker(() => {
