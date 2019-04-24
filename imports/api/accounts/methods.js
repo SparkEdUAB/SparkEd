@@ -15,6 +15,9 @@ Meteor.methods({
   'account.check': email => {
     check(email, String);
     const initialUser = Meteor.users.findOne();
+    if (!initialUser) {
+      return null;
+    }
     const userId = initialUser._id;
     const user = Accounts.findUserByEmail(email);
     if (Meteor.users.find().count() === 1) {
