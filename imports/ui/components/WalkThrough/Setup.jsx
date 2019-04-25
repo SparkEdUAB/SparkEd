@@ -19,6 +19,7 @@ export default class SetUp extends Component {
     structure: '',
     error: '',
     server: '',
+    isUploadDisplayed: false,
   };
 
   componentDidMount() {
@@ -137,8 +138,15 @@ export default class SetUp extends Component {
     // open the upload modal
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
+  // show the upload button
+  showUpload = () => {
+    this.setState(prevState => ({
+      isUploadDisplayed: !prevState.isUploadDisplayed,
+    }));
+  };
+
   render() {
-    const { error, name } = this.state;
+    const { error, name, isUploadDisplayed } = this.state;
     const isSet = config.isConfigured;
     return (
       <ThemeContext.Consumer>
@@ -279,8 +287,25 @@ export default class SetUp extends Component {
                 )}
                 {error ? <h6 className="red-text ">{error}</h6> : ''}
               </form>
-              <p>Upload the logo (Not Required)</p>
-              <FileUploadComponent />
+              <div className="switch">
+                <label>
+                  Show upload
+                  <input
+                    type="checkbox"
+                    onChange={this.showUpload}
+                    checked={isUploadDisplayed}
+                  />
+                  <span className="lever" />
+                  Hide Upload
+                </label>
+              </div>
+
+              {isUploadDisplayed && (
+                <Fragment>
+                  <p>Upload logo </p>
+                  <FileUploadComponent />
+                </Fragment>
+              )}
               <Button
                 actionFunc={e => this.saveConfig(e)}
                 title={'Save and Upload the Institution Logo'}
