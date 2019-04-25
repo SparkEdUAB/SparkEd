@@ -14,7 +14,7 @@ export class ImgSlider extends Component {
   componentDidMount() {
     const elem = document.querySelector('.slider');
     const instance = M.Slider.init(elem, {});
-    instance.start();
+    timeOut = Meteor.setTimeout(() => instance.start(), 200);
   }
   renderSlider(slides) {
     if (!slides || !slides.length) {
@@ -43,7 +43,7 @@ export class ImgSlider extends Component {
     ));
   }
   render() {
-    const { isDark } = this.props;
+    const { isDark, slides } = this.props;
     return (
       <div
         className="slider"
@@ -57,7 +57,7 @@ export class ImgSlider extends Component {
             backgroundColor: isDark ? '#0c0c0c' : '#9e9e9e',
           }}
         >
-          {this.renderSlider(this.props.slides)}
+          {this.renderSlider(slides)}
         </ul>
       </div>
     );
