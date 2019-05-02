@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, PureComponent } from 'react';
 import { PropTypes } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import M from 'materialize-css';
@@ -116,7 +116,7 @@ export function setActiveItem(id, items, clas) {
 }
 
 // todo: make a proper component for the floating button and remove jQuery
-export class FloatingButton extends Component {
+export class FloatingButton extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
