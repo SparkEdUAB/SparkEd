@@ -1,12 +1,12 @@
-import { Session } from 'meteor/session';
-import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
-import { withTracker } from 'meteor/react-meteor-data';
+import { Session } from "meteor/session";
+import React, { Component } from "react";
+import { PropTypes } from "prop-types";
+import { withTracker } from "meteor/react-meteor-data";
 
 export class Search extends Component {
   constructor() {
     super();
-    this.COUNT = '_COUNT';
+    this.COUNT = "_COUNT";
   }
 
   render() {
@@ -30,31 +30,33 @@ export function refineSearch(searchData) {
     limit,
     sort,
     skip,
-    fields,
+    fields
   };
 }
 
 export function getSearchCriteria(criteria, data) {
-  if (criteria === 'OR' && Array.isArray(data)) {
+  if (criteria === "OR" && Array.isArray(data)) {
     return { $or: data };
-  } else if (criteria === 'AND' && typeof data === 'object') {
+  } else if (criteria === "AND" && typeof data === "object") {
     return data;
   }
   return {}; // return all fields
 }
 
-export default withTracker((params) => {
+export default withTracker(params => {
   const options = refineSearch(params);
   return {
     searcResults: params.coll
       .find(getSearchCriteria(params.criteria, params.data), options)
       .fetch(),
-    count: params.coll.find(getSearchCriteria(params.criteria, params.data)).count(),
+    count: params.coll
+      .find(getSearchCriteria(params.criteria, params.data))
+      .count()
   };
 })(Search);
 
 Search.propTypes = {
   criteria: PropTypes.string.isRequired,
   coll: PropTypes.object.isRequired,
-  session: PropTypes.string.isRequired, // name of the sessions
+  session: PropTypes.string.isRequired // name of the sessions
 };

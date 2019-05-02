@@ -1,31 +1,31 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-case-declarations */
 /* eslint-disable default-case */
-import { Session } from 'meteor/session';
-import React, { Component, Fragment } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import i18n from 'meteor/universe:i18n';
-import M from 'materialize-css';
-import PropTypes from 'prop-types';
-import { _Courses } from '../../../api/courses/courses';
-import { _Units } from '../../../api/units/units';
-import { Titles } from '../../../api/settings/titles';
+import { Session } from "meteor/session";
+import React, { Component, Fragment } from "react";
+import { withTracker } from "meteor/react-meteor-data";
+import i18n from "meteor/universe:i18n";
+import M from "materialize-css";
+import PropTypes from "prop-types";
+import { _Courses } from "../../../api/courses/courses";
+import { _Units } from "../../../api/units/units";
+import { Titles } from "../../../api/settings/titles";
 import {
   handleCheckboxChange,
   handleCheckAll,
-  getCheckBoxValues,
-} from '../Utilities/CheckBoxHandler.jsx';
+  getCheckBoxValues
+} from "../Utilities/CheckBoxHandler.jsx";
 import Pagination, {
   getPageNumber,
-  getQuery,
-} from '../Utilities/Pagination/Pagination.jsx';
-import { SearchField } from '../Utilities/Utilities.jsx';
-import Search from '../Utilities/Search/Search.jsx';
-import UploadWrapper from '../../../ui/modals/UploadWrapper.jsx';
-import MainModal from '../../../ui/modals/MainModal'; // eslint-disable-line
-import * as config from '../../../../config.json';
-import { formatText } from '../../utils/utils';
-import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
+  getQuery
+} from "../Utilities/Pagination/Pagination.jsx";
+import { SearchField } from "../Utilities/Utilities.jsx";
+import Search from "../Utilities/Search/Search.jsx";
+import UploadWrapper from "../../../ui/modals/UploadWrapper.jsx";
+import MainModal from "../../../ui/modals/MainModal"; // eslint-disable-line
+import * as config from "../../../../config.json";
+import { formatText } from "../../utils/utils";
+import { ThemeContext } from "../../containers/AppWrapper"; // eslint-disable-line
 
 export const T = i18n.createComponent();
 // this lists what a specific course contains
@@ -33,30 +33,30 @@ export const T = i18n.createComponent();
 export class ManageUnits extends Component {
   constructor(props) {
     super(props);
-    this.SESSION_RESULTS = 'UNIT_RESULTS'; //
-    this.SESSION_RESULTS_COUNT = 'UNIT_RESULTS_COUNT'; //
+    this.SESSION_RESULTS = "UNIT_RESULTS"; //
+    this.SESSION_RESULTS_COUNT = "UNIT_RESULTS_COUNT"; //
     this.itemPerPage = 10;
     this.totalResults = 0;
-    this.queryParams = [{ param: 'q' }];
+    this.queryParams = [{ param: "q" }];
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       isOpen: false,
-      modalIdentifier: '', // School Id
-      title: '', // Add School or Edit
-      confirm: '',
-      reject: '',
-      name: '',
+      modalIdentifier: "", // School Id
+      title: "", // Add School or Edit
+      confirm: "",
+      reject: "",
+      name: "",
       ids: [],
-      table_title: '',
-      sub_title: '',
-      description: '',
+      table_title: "",
+      sub_title: "",
+      description: ""
     };
-    this.computation = '';
+    this.computation = "";
   }
 
   static propTypes = {
     titles: PropTypes.object,
-    course: PropTypes.object,
+    course: PropTypes.object
   };
 
   componentDidMount() {
@@ -64,25 +64,25 @@ export class ManageUnits extends Component {
     this.computation = Tracker.autorun(() => {
       if (this._ismounted) {
         this.setState({
-          data: Session.get('UNIT_RESULTS'),
-          resultsCount: Session.get('UNIT_RESULTS_COUNT'),
+          data: Session.get("UNIT_RESULTS"),
+          resultsCount: Session.get("UNIT_RESULTS_COUNT")
         });
       }
     });
     // don't clean the courseId on unmount
-    Session.setPersistent('courseId', FlowRouter.getQueryParam('cs'));
+    Session.setPersistent("courseId", FlowRouter.getQueryParam("cs"));
     window.scrollTo(0, 0);
   }
 
   componentWillUnmount() {
     this.computation.stop();
     Session.set({
-      UNIT_RESULTS: '',
-      UNIT_RESULTS_COUNT: '',
+      UNIT_RESULTS: "",
+      UNIT_RESULTS_COUNT: ""
     });
     this.setState({
-      data: '',
-      resultsCount: '',
+      data: "",
+      resultsCount: ""
     });
     this._ismounted = false;
   }
@@ -91,25 +91,25 @@ export class ManageUnits extends Component {
   closeModal = () => {
     this.setState({
       isOpen: false,
-      modalIdentifier: '', // Topic Id
-      modalType: '', // Add or Edit
-      title: '', // Add Topic or Edit Topic
-      confirm: '',
-      reject: '',
-      name: '',
+      modalIdentifier: "", // Topic Id
+      modalType: "", // Add or Edit
+      title: "", // Add Topic or Edit Topic
+      confirm: "",
+      reject: "",
+      name: ""
     });
   };
 
   getDescription = ({ target: { value } }) => {
     this.setState({
-      description: value,
+      description: value
     });
   };
 
   // ide => modalType, id => schoolId
-  toggleEditModal = (ide, id = '', name = '', desc = '') => {
+  toggleEditModal = (ide, id = "", name = "", desc = "") => {
     // check if the user has full rights
-    if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+    if (!Roles.userIsInRole(Meteor.userId(), ["admin"])) {
       return;
     }
 
@@ -118,56 +118,56 @@ export class ManageUnits extends Component {
     this.desc = desc;
 
     switch (ide) {
-      case 'edit':
+      case "edit":
         this.setState({
           modalIdentifier: this.id,
           modalType: ide,
-          title: `Edit ${Session.get('sub_unit_title')}`,
-          confirm: 'Save',
-          reject: 'Close',
+          title: `Edit ${Session.get("sub_unit_title")}`,
+          confirm: "Save",
+          reject: "Close",
           name: this.name,
-          description: this.desc,
+          description: this.desc
         });
 
         break;
 
-      case 'del':
-        const unit = getCheckBoxValues('chk');
+      case "del":
+        const unit = getCheckBoxValues("chk");
         const count = unit.length;
-        const _name = count > 1 ? 'units' : 'unit';
+        const _name = count > 1 ? "units" : "unit";
         if (count < 1) {
           M.toast({
-            html: '<span>Please check atleast one unit</span>',
-            classes: 'red',
+            html: "<span>Please check atleast one unit</span>",
+            classes: "red"
           });
           return;
         }
         this.setState({
-          modalIdentifier: 'id',
+          modalIdentifier: "id",
           modalType: ide,
           title: `Are you sure to delete ${count} ${_name}`,
-          confirm: 'Yes',
-          reject: 'No',
-          ids: unit,
+          confirm: "Yes",
+          reject: "No",
+          ids: unit
         });
         break;
-      case 'upload':
+      case "upload":
         this.setState({
-          modalIdentifier: '',
+          modalIdentifier: "",
           modalType: ide,
-          title: `Upload resource for ${Session.get('courseName')} `,
-          confirm: 'Save', // this should be out
-          reject: 'Close', // this too should be out
+          title: `Upload resource for ${Session.get("courseName")} `,
+          confirm: "Save", // this should be out
+          reject: "Close" // this too should be out
         });
         break;
-      case 'field':
+      case "field":
         this.setState({
-          title: 'Edit Table titles on this page',
-          confirm: 'Save',
-          reject: 'Close',
+          title: "Edit Table titles on this page",
+          confirm: "Save",
+          reject: "Close",
           modalType: ide,
           table_title: id,
-          sub_title: name,
+          sub_title: name
         });
         break;
     }
@@ -190,10 +190,10 @@ export class ManageUnits extends Component {
           _id: unit._id,
           name: unit.name,
           createdBy: unit.createdBy,
-          createdAt: moment(unit.createdAt).format('YYYY-MM-DD'),
+          createdAt: moment(unit.createdAt).format("YYYY-MM-DD")
         }}
         EditUnit={e =>
-          this.toggleEditModal('edit', unit._id, unit.name, unit.unitDesc, e)
+          this.toggleEditModal("edit", unit._id, unit.name, unit.unitDesc, e)
         }
       />
     ));
@@ -205,66 +205,67 @@ export class ManageUnits extends Component {
     const { modalType, ids, modalIdentifier, description } = this.state;
     const { target } = event;
     switch (modalType) {
-      case 'edit':
+      case "edit":
         const unit = target.unit.value;
-        Meteor.call('unit.update', modalIdentifier, unit, description, err => {
+        Meteor.call("unit.update", modalIdentifier, unit, description, err => {
           err
             ? // eslint-disable-next-line
-              (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
-            Meteor.call(
-              'logger',
-              formatText(err.message, Meteor.userId(), 'unit-edit'),
-              'error',
-            ))
-            : Meteor.call('updateSearch', modalIdentifier, unit, err => {
-              err
-                ? M.toast({
-                  html: `<span>${err.reason}</span>`,
-                  classes: 'red',
-                })
-                : M.toast({
-                  html: `<span>${unit} successfully updated</span>`,
-                });
-            });
+              (M.toast({ html: `<span>${err.reason}</span>`, classes: "red" }),
+              Meteor.call(
+                "logger",
+                formatText(err.message, Meteor.userId(), "unit-edit"),
+                "error"
+              ))
+            : Meteor.call("updateSearch", modalIdentifier, unit, err => {
+                err
+                  ? M.toast({
+                      html: `<span>${err.reason}</span>`,
+                      classes: "red"
+                    })
+                  : M.toast({
+                      html: `<span>${unit} successfully updated</span>`,
+                      classes: "green darken-1"
+                    });
+              });
         });
         break;
 
-      case 'del':
+      case "del":
         let count = 0;
         ids.forEach(id => {
-          Meteor.call('unit.remove', id, err => {
+          Meteor.call("unit.remove", id, err => {
             count += 1;
             err
               ? (M.toast({
-                html: `<span>${err.reason}</span>`,
-                classes: 'red',
-              }),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'unit-remove'),
-                'error',
-              ))
-              : Meteor.call('removeSearchData', id, err => {
-                err
-                  ? M.toast({
-                    html: `<span>${err.reason}</span>`,
-                    classes: 'red',
-                  })
-                  : Meteor.call('insertDeleted', id, err => {
-                    err
-                      ? M.toast({
+                  html: `<span>${err.reason}</span>`,
+                  classes: "red"
+                }),
+                Meteor.call(
+                  "logger",
+                  formatText(err.message, Meteor.userId(), "unit-remove"),
+                  "error"
+                ))
+              : Meteor.call("removeSearchData", id, err => {
+                  err
+                    ? M.toast({
                         html: `<span>${err.reason}</span>`,
-                        classes: 'red',
+                        classes: "red"
                       })
-                      : M.toast({
-                        html: `<span>${unit} successfully Deleted</span>`,
+                    : Meteor.call("insertDeleted", id, err => {
+                        err
+                          ? M.toast({
+                              html: `<span>${err.reason}</span>`,
+                              classes: "red"
+                            })
+                          : M.toast({
+                              html: `<span>${unit} successfully Deleted</span>`
+                            });
                       });
-                  });
-              });
+                });
           });
         });
         break;
-      case 'field':
+      case "field":
         return;
     }
 
@@ -273,9 +274,9 @@ export class ManageUnits extends Component {
   }
 
   getUnits() {
-    const query = getQuery(this.queryParams, true, true, 'q');
+    const query = getQuery(this.queryParams, true, true, "q");
     let searchParams = [{ name: query }];
-    if (query === '') {
+    if (query === "") {
       searchParams = [{}];
     }
     return (
@@ -285,14 +286,14 @@ export class ManageUnits extends Component {
         coll={_Units}
         session={this.SESSION_RESULTS}
         data={searchParams}
-        criteria={'OR'}
+        criteria={"OR"}
       />
     );
   }
 
   routeToCourses = e => {
     e.preventDefault();
-    return FlowRouter.go('/dashboard/course');
+    return FlowRouter.go("/dashboard/course");
   };
 
   render() {
@@ -304,7 +305,7 @@ export class ManageUnits extends Component {
       reject,
       modalType,
       name,
-      description,
+      description
     } = this.state;
     // eslint-disable-next-line
     let courseId,
@@ -316,7 +317,7 @@ export class ManageUnits extends Component {
       courseId = course._id;
       language = course.details.language; // eslint-disable-line
       courseName = course.name;
-      Session.setPersistent('courseName', courseName);
+      Session.setPersistent("courseName", courseName);
     }
     if (titles) {
       newTitle = titles.title;
@@ -324,7 +325,7 @@ export class ManageUnits extends Component {
       Session.setPersistent({
         unit_title_id: titles._id,
         sub_unit_title: newSubTitle,
-        unit_title: newTitle,
+        unit_title: newTitle
       });
     }
 
@@ -334,7 +335,7 @@ export class ManageUnits extends Component {
           <Fragment>
             {this.getUnits()}
 
-            {this.state.modalType === 'upload' ? (
+            {this.state.modalType === "upload" ? (
               <UploadWrapper
                 show={isOpen}
                 close={this.closeModal}
@@ -349,8 +350,8 @@ export class ManageUnits extends Component {
                 confirm={confirm}
                 reject={reject}
               >
-                {modalType === 'del' ? (
-                  ''
+                {modalType === "del" ? (
+                  ""
                 ) : (
                   <Fragment>
                     <div className="input-field">
@@ -360,7 +361,7 @@ export class ManageUnits extends Component {
                         defaultValue={name}
                         className="validate clear"
                         style={{
-                          color: state.isDark ? '#F5FAF8' : '#000000',
+                          color: state.isDark ? "#F5FAF8" : "#000000"
                         }}
                         required
                         name="unit"
@@ -371,7 +372,7 @@ export class ManageUnits extends Component {
                         name="descr"
                         className="unitdesc clear materialize-textarea"
                         style={{
-                          color: state.isDark ? '#F5FAF8' : '#000000',
+                          color: state.isDark ? "#F5FAF8" : "#000000"
                         }}
                         placeholder="Add Unit Description"
                         value={description}
@@ -387,22 +388,22 @@ export class ManageUnits extends Component {
             <div
               className="col m9 s11"
               style={{
-                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
-                color: state.isDark ? '#F5FAF8' : '#000000',
+                backgroundColor: state.isDark ? state.mainDark : "#FFFFFF",
+                color: state.isDark ? "#F5FAF8" : "#000000"
               }}
             >
               <div className="row">
                 <div className="">
                   <h4>
-                    {`${Session.get('sub_unit_title')} for ${courseName}`}{' '}
+                    {`${Session.get("sub_unit_title")} for ${courseName}`}{" "}
                   </h4>
                 </div>
                 <div className="col m8 ">
                   <SearchField
-                    action={'/dashboard/Units/'}
-                    name={'units'}
-                    placeholder={'search unit by name'}
-                    query={'q'}
+                    action={"/dashboard/Units/"}
+                    name={"units"}
+                    placeholder={"search unit by name"}
+                    query={"q"}
                   />
                 </div>
               </div>
@@ -413,7 +414,7 @@ export class ManageUnits extends Component {
                     className="btn grey darken-3 fa fa-angle-left"
                     onClick={e => this.routeToCourses(e)}
                   >
-                    <a href={''} className="white-text">
+                    <a href={""} className="white-text">
                       {` ${newTitle}`}
                     </a>
                   </button>
@@ -421,16 +422,16 @@ export class ManageUnits extends Component {
                 <div className="col m3">
                   <button
                     className="btn red darken-2"
-                    onClick={e => this.toggleEditModal('del', e)}
+                    onClick={e => this.toggleEditModal("del", e)}
                   >
-                    {' '}
+                    {" "}
                     <T>common.actions.delete</T>
                   </button>
                 </div>
                 <div className="col m2">
                   <a href={`/dashboard/unit/${courseId}?y=${language}`}>
                     <button className="btn grey ">
-                      {' Add Unit '}
+                      {" Add Unit "}
                       <T>common.actions.new</T>
                     </button>
                   </a>
@@ -438,9 +439,9 @@ export class ManageUnits extends Component {
                 <div className="col 4">
                   <button
                     className="btn fa fa-upload green darken-4 "
-                    onClick={e => this.toggleEditModal('upload', e)}
+                    onClick={e => this.toggleEditModal("upload", e)}
                   >
-                    {' '}
+                    {" "}
                     <T>common.actions.addreference</T>
                   </button>
                 </div>
@@ -456,7 +457,7 @@ export class ManageUnits extends Component {
                     </th>
                     <th>{`Edit ${newSubTitle}`}</th>
                     <th>{`Manage sub-${newSubTitle}`}</th>
-                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                    <th onClick={handleCheckAll.bind(this, "chk-all", "chk")}>
                       <label>
                         <input type="checkbox" className=" chk-all" readOnly />
                         <T>common.actions.check</T>
@@ -468,7 +469,7 @@ export class ManageUnits extends Component {
               </table>
 
               <Pagination
-                path={'/dashboard/Units'}
+                path={"/dashboard/Units"}
                 itemPerPage={this.itemPerPage}
                 query={getQuery(this.queryParams, true)}
                 totalResults={this.totalResults}
@@ -498,7 +499,7 @@ export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
       <a href="" className="fa fa-pencil" onClick={EditUnit} />
     </td>
     <td>
-      <a href={''} onClick={e => handleUrl(e, _id)} className="fa fa-pencil" />
+      <a href={""} onClick={e => handleUrl(e, _id)} className="fa fa-pencil" />
     </td>
     <td onClick={handleCheckboxChange.bind(this, _id)}>
       <label htmlFor={_id}>
@@ -512,17 +513,17 @@ export const Unit = ({ EditUnit, count, unit: { _id, name, createdAt } }) => (
 Unit.propTypes = {
   EditUnit: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired,
-  unit: PropTypes.object.isRequired,
+  unit: PropTypes.object.isRequired
 };
 
 export default withTracker(() => {
-  Meteor.subscribe('searchUnits', Session.get('courseIde'));
-  Meteor.subscribe('courses');
-  Meteor.subscribe('deleted');
-  Meteor.subscribe('titles');
+  Meteor.subscribe("searchUnits", Session.get("courseIde"));
+  Meteor.subscribe("courses");
+  Meteor.subscribe("deleted");
+  Meteor.subscribe("titles");
   return {
-    course: _Courses.findOne({ _id: Session.get('courseIde') }),
+    course: _Courses.findOne({ _id: Session.get("courseIde") }),
     titles: Titles.findOne({}),
-    Units: [],
+    Units: []
   };
 })(ManageUnits);
