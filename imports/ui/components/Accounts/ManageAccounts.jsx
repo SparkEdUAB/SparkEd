@@ -82,7 +82,7 @@ export class ManageAccounts extends React.Component {
       return;
     }
     if (type !== 'edit' && count < 1) {
-      M.toast({ html: '<span >Please check atleast one user</span>', classes: ' red ' });
+      M.toast({ html: '<span >Please select at least one user</span>', classes: ' red ' });
       return;
     }
 
