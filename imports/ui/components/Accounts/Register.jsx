@@ -48,6 +48,7 @@ export default class Register extends Component {
         } else {
           M.toast({
             html: '<span>Account created successfully</span>',
+            classes: 'green darken-1',
           });
           return FlowRouter.go('/login');
         }
