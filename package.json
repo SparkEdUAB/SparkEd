@@ -62,7 +62,11 @@
       "allowImportExportEverywhere": true
     },
     "plugins": [
+<<<<<<< HEAD
       "meteor"
+=======
+      "meteor",
+>>>>>>> d82cdfc09bb9c56682d45fbffba650168956862e
     ],
     "extends": [
       "airbnb",
