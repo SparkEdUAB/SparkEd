@@ -1,19 +1,19 @@
 /* eslint no-unused-expressions: 0  */
-import React, { Component, Fragment } from 'react';
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
-import PropTypes from 'prop-types';
-import axios from 'axios';
-import M from 'materialize-css';
-import { _ } from 'lodash';
-import { Resources, References } from '../../../api/resources/resources';
-import { _SearchData } from '../../../api/search/search';
-import { _Courses } from '../../../api/courses/courses';
-import { _Units } from '../../../api/units/units';
-import { _Topics } from '../../../api/topics/topics';
-import { formatText } from '../../utils/utils';
-import * as config from '../../../../config.json';
-import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
+import React, { Component, Fragment } from "react";
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
+import PropTypes from "prop-types";
+import axios from "axios";
+import M from "materialize-css";
+import { _ } from "lodash";
+import { Resources, References } from "../../../api/resources/resources";
+import { _SearchData } from "../../../api/search/search";
+import { _Courses } from "../../../api/courses/courses";
+import { _Units } from "../../../api/units/units";
+import { _Topics } from "../../../api/topics/topics";
+import { formatText } from "../../utils/utils";
+import * as config from "../../../../config.json";
+import { ThemeContext } from "../../containers/AppWrapper"; // eslint-disable-line
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms)); // promise to be used for servr calls
 const { server } = config;
@@ -23,11 +23,11 @@ export class SyncUpdates extends Component {
     coursesData: [],
     unitsData: [],
     topicsData: [],
-    error: '',
+    error: "",
     loading: true,
-    status: 'Checking remote data to Sync ...',
+    status: "Checking remote data to Sync ...",
     synced: false,
-    data: null,
+    data: null
   };
 
   _syncContents = async () => {
@@ -36,28 +36,28 @@ export class SyncUpdates extends Component {
       unitsData,
       topicsData,
       searchData,
-      synced,
+      synced
     } = await this.state;
     const { courses, units, topics, search } = await this.props;
 
     if (synced) {
-      Materialize.toast('You have synced already', 2000, 'success toast');
+      Materialize.toast("You have synced already", 2000, "success toast");
       return;
     }
 
     // sync courses
     await this.setState({
       loading: true,
-      status: 'Fetching and Syncing data ...',
+      status: "Fetching and Syncing data ..."
     });
-    const coursesSync = await _.differenceBy(coursesData, courses, '_id');
-    const unitsSync = await _.differenceBy(unitsData, units, '_id');
-    const topicsSync = await _.differenceBy(topicsData, topics, '_id');
-    const searchSync = await _.differenceBy(searchData, search, '_id');
+    const coursesSync = await _.differenceBy(coursesData, courses, "_id");
+    const unitsSync = await _.differenceBy(unitsData, units, "_id");
+    const topicsSync = await _.differenceBy(topicsData, topics, "_id");
+    const searchSync = await _.differenceBy(searchData, search, "_id");
 
     await coursesSync.map(course => {
       Meteor.call(
-        'course.add',
+        "course.add",
         course._id,
         course.name,
         course.code,
@@ -65,18 +65,19 @@ export class SyncUpdates extends Component {
         err => {
           err
             ? (M.toast({
-              html: `<span>${err.reason}</span>`,
-              classes: 'red',
-            }),
-            Meteor.call(
-              'logger',
-              formatText(err.message, Meteor.userId(), 'course'),
-              'error',
-            ))
+                html: `<span>${err.reason}</span>`,
+                classes: "red"
+              }),
+              Meteor.call(
+                "logger",
+                formatText(err.message, Meteor.userId(), "course"),
+                "error"
+              ))
             : M.toast({
-              html: `<span>Successfully synced ${coursesSync.length}</span>`,
-            });
-        },
+                html: `<span>Successfully synced ${coursesSync.length}</span>`,
+                classes: "green darken-1"
+              });
+        }
       );
     });
 
@@ -85,7 +86,7 @@ export class SyncUpdates extends Component {
 
     await unitsSync.map(unit => {
       Meteor.call(
-        'unit.insert',
+        "unit.insert",
         unit._id,
         unit.name,
         unit.topics,
@@ -94,18 +95,19 @@ export class SyncUpdates extends Component {
         err => {
           err
             ? (M.toast({
-              html: `<span>${err.reason}</span>`,
-              classes: 'red',
-            }),
-            Meteor.call(
-              'logger',
-              formatText(err.message, Meteor.userId(), 'units'),
-              'error',
-            ))
+                html: `<span>${err.reason}</span>`,
+                classes: "red"
+              }),
+              Meteor.call(
+                "logger",
+                formatText(err.message, Meteor.userId(), "units"),
+                "error"
+              ))
             : M.toast({
-              html: `<span>Successfully synced ${unitsData.length}</span>`,
-            });
-        },
+                html: `<span>Successfully synced ${unitsData.length}</span>`,
+                classes: "green darken-1"
+              });
+        }
       );
     });
     await wait(2000);
@@ -113,7 +115,7 @@ export class SyncUpdates extends Component {
 
     await topicsSync.map(topic => {
       Meteor.call(
-        'topic.insert',
+        "topic.insert",
         topic._id,
         topic.unitId,
         topic.name,
@@ -121,18 +123,19 @@ export class SyncUpdates extends Component {
         err => {
           err
             ? (M.toast({
-              html: `<span>${err.reason}</span>`,
-              classes: 'red',
-            }),
-            Meteor.call(
-              'logger',
-              formatText(err.message, Meteor.userId(), 'topics'),
-              'error',
-            ))
+                html: `<span>${err.reason}</span>`,
+                classes: "red"
+              }),
+              Meteor.call(
+                "logger",
+                formatText(err.message, Meteor.userId(), "topics"),
+                "error"
+              ))
             : M.toast({
-              html: `<span>Successfully synced ${topicsData.length}</span>`,
-            });
-        },
+                html: `<span>Successfully synced ${topicsData.length}</span>`,
+                classes: "green darken-1"
+              });
+        }
       );
     });
     // insert search Data
@@ -140,7 +143,7 @@ export class SyncUpdates extends Component {
 
     searchSync.map(search => {
       Meteor.call(
-        'insert.search',
+        "insert.search",
         search._id,
         search.ids,
         search.name,
@@ -148,54 +151,54 @@ export class SyncUpdates extends Component {
         err => {
           err
             ? Meteor.call(
-              'logger',
-              formatText(
-                err.message,
-                Meteor.userId(),
-                console.log(err),
-                'search',
-              ),
-              'error',
-            )
-            : '';
-        },
+                "logger",
+                formatText(
+                  err.message,
+                  Meteor.userId(),
+                  console.log(err),
+                  "search"
+                ),
+                "error"
+              )
+            : "";
+        }
       );
     });
 
     if (!coursesSync.length) {
       this.setState({
         loading: true,
-        status: 'No Courses to Sync, Checking Units ...',
+        status: "No Courses to Sync, Checking Units ..."
       });
     }
     await wait(1000);
     if (!unitsSync.length) {
       this.setState({
         loading: true,
-        status: 'No Units to Sync, Checking Topics ...',
+        status: "No Units to Sync, Checking Topics ..."
       });
     }
     await wait(1000);
     if (!unitsSync.length) {
       this.setState({
         loading: true,
-        status: 'No Topics to Sync ...',
+        status: "No Topics to Sync ..."
       });
     }
 
     // When all is done, get the resources and references and sync them to the local
-    Meteor.call('restoreDbChunks');
+    Meteor.call("restoreDbChunks");
     await Meteor.call(
-      'logger',
-      formatText('Data was successfully synced', Meteor.userId(), 'sync'),
-      'info',
+      "logger",
+      formatText("Data was successfully synced", Meteor.userId(), "sync"),
+      "info"
     );
 
     // await wait(2000);
     // write to the file that the sync was successful
     await this.setState({
       loading: false,
-      synced: true,
+      synced: true
     });
   };
 
@@ -208,35 +211,35 @@ export class SyncUpdates extends Component {
 
   getRemoteColls = async () => {
     const {
-      data: { authToken, userId },
+      data: { authToken, userId }
     } = await this.state;
 
     try {
       const coursesPromise = axios(`${server}/api/course/`);
       const unitsPromise = axios(`${server}/api/unit`, {
         headers: {
-          'X-Auth-Token': authToken,
-          'X-User-Id': userId,
-        },
+          "X-Auth-Token": authToken,
+          "X-User-Id": userId
+        }
       });
       const topicsPromise = axios(`${server}/api/topic`, {
         headers: {
-          'X-Auth-Token': authToken,
-          'X-User-Id': userId,
-        },
+          "X-Auth-Token": authToken,
+          "X-User-Id": userId
+        }
       });
       const searchPromise = axios(`${server}/api/search/`, {
         headers: {
-          'X-Auth-Token': authToken,
-          'X-User-Id': userId,
-        },
+          "X-Auth-Token": authToken,
+          "X-User-Id": userId
+        }
       });
 
       const [courses, units, topics, search] = await Promise.all([
         coursesPromise,
         unitsPromise,
         topicsPromise,
-        searchPromise,
+        searchPromise
       ]);
       if (this._isMounted) {
         this.setState({
@@ -244,17 +247,17 @@ export class SyncUpdates extends Component {
           topicsData: topics.data.data,
           unitsData: units.data.data,
           searchData: search.data.data,
-          loading: false,
+          loading: false
         });
       }
     } catch (error) {
       this.setState({
-        error: error.message,
+        error: error.message
       });
       Meteor.call(
-        'logger',
+        "logger",
         formatText(error.message, Meteor.userId()),
-        'error',
+        "error"
       );
     }
   };
@@ -263,17 +266,17 @@ export class SyncUpdates extends Component {
     const user = Meteor.user();
     const { password } = this.state;
     const { address } = user.emails[0];
-    Meteor.call('authenticate', address, password, (err, res) => {
+    Meteor.call("authenticate", address, password, (err, res) => {
       err
         ? (this.setState({ error: err }),
-        Meteor.call(
-          'logger',
-          formatText(err.message, Meteor.userId()),
-          'error',
-        ))
+          Meteor.call(
+            "logger",
+            formatText(err.message, Meteor.userId()),
+            "error"
+          ))
         : this.setState({
-          data: res.data.data,
-        });
+            data: res.data.data
+          });
     });
     await wait(1500);
     this.getRemoteColls();
@@ -281,7 +284,7 @@ export class SyncUpdates extends Component {
   getPassword = ({ target: { value } }) => {
     this.setState({
       password: value,
-      error: '',
+      error: ""
     });
   };
   render() {
@@ -292,7 +295,7 @@ export class SyncUpdates extends Component {
       error,
       loading,
       status,
-      data,
+      data
     } = this.state;
     const { courses, units, topics } = this.props;
     return (
@@ -301,7 +304,7 @@ export class SyncUpdates extends Component {
           <Fragment>
             <div
               className="col m9 s11"
-              style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+              style={{ color: state.isDark ? "#F5FAF8" : "#000000" }}
             >
               <p>
                 The Sync Address is <span className="red-text">{server}</span>
@@ -381,7 +384,7 @@ const InputPassword = props => (
           type="password"
           className="validate"
           required
-          style={{ color: props.isDark ? '#F5FAF8' : '#000000' }}
+          style={{ color: props.isDark ? "#F5FAF8" : "#000000" }}
           onChange={props.onChange}
         />
         <label htmlFor="inst_tag">
@@ -393,7 +396,7 @@ const InputPassword = props => (
       <button
         className="btn "
         onClick={props.authenticateFunc}
-        style={{ backgroundColor: '#006b76' }}
+        style={{ backgroundColor: "#006b76" }}
       >
         Authenticate
       </button>
@@ -406,29 +409,29 @@ const InputPassword = props => (
 SyncUpdates.propTypes = {
   courses: PropTypes.array,
   units: PropTypes.array,
-  topics: PropTypes.array,
+  topics: PropTypes.array
 };
 InputPassword.propTypes = {
   authenticateFunc: PropTypes.func,
   onChange: PropTypes.func,
   error: PropTypes.string,
-  isDark: PropTypes.bool,
+  isDark: PropTypes.bool
 };
 
 // todo: consider making these into server calls
 export default withTracker(() => {
-  Meteor.subscribe('resourcess');
-  Meteor.subscribe('references');
-  Meteor.subscribe('courses');
-  Meteor.subscribe('units');
-  Meteor.subscribe('topics');
-  Meteor.subscribe('syncdata');
+  Meteor.subscribe("resourcess");
+  Meteor.subscribe("references");
+  Meteor.subscribe("courses");
+  Meteor.subscribe("units");
+  Meteor.subscribe("topics");
+  Meteor.subscribe("syncdata");
   return {
     resources: Resources.find().count(),
     references: References.find().count(),
     courses: _Courses.find().fetch(),
     units: _Units.find().fetch(),
     topics: _Topics.find().fetch(),
-    search: _SearchData.find().fetch(),
+    search: _SearchData.find().fetch()
   };
 })(SyncUpdates);
