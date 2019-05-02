@@ -187,7 +187,7 @@ export class ExternalLinks extends Component {
             err
               ? M.toast({ html: `<span>${err.reason}</span>`, classes: "red" })
               : M.toast({
-                  html: `<span>Successfully updated ${externalLinkTitle} </span>`
+                  html: `<span>Successfully updated ${externalLinkTitle} </span>`,
                   classes: 'green darken-1'
                 });
           }
