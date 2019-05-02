@@ -1,24 +1,24 @@
 /* eslint-disable no-unused-expressions */
 // TODO:  properly route back to the programs, can do this by setting the id in session
 /* eslint default-case: 0, no-case-declarations: 0 */
-import React, { Component, Fragment } from 'react';
-import { PropTypes } from 'prop-types';
-import { Session } from 'meteor/session';
-import i18n from 'meteor/universe:i18n';
-import M from 'materialize-css';
-import { withTracker } from 'meteor/react-meteor-data';
-import { _Courses } from '../../../api/courses/courses';
-import { Titles } from '../../../api/settings/titles';
+import React, { Component, Fragment } from "react";
+import { PropTypes } from "prop-types";
+import { Session } from "meteor/session";
+import i18n from "meteor/universe:i18n";
+import M from "materialize-css";
+import { withTracker } from "meteor/react-meteor-data";
+import { _Courses } from "../../../api/courses/courses";
+import { Titles } from "../../../api/settings/titles";
 import {
   handleCheckboxChange,
   handleCheckAll,
-  getCheckBoxValues,
-} from '../Utilities/CheckBoxHandler.jsx';
-import MainModal from '../../../ui/modals/MainModal.jsx';
-import { closeModal } from '../../../ui/modals/methods.js';
-import * as config from '../../../../config.json';
-import { formatText } from '../../utils/utils';
-import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
+  getCheckBoxValues
+} from "../Utilities/CheckBoxHandler.jsx";
+import MainModal from "../../../ui/modals/MainModal.jsx";
+import { closeModal } from "../../../ui/modals/methods.js";
+import * as config from "../../../../config.json";
+import { formatText } from "../../utils/utils";
+import { ThemeContext } from "../../containers/AppWrapper"; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -28,29 +28,29 @@ export class Courses extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       isOpen: false,
-      modalIdentifier: '', // Course Id
-      modalType: '', // Add or Edit
-      title: '', // Add Course or Edit Course
-      confirm: '',
-      reject: '',
-      language: '',
-      name: '',
-      owner: '',
+      modalIdentifier: "", // Course Id
+      modalType: "", // Add or Edit
+      title: "", // Add Course or Edit Course
+      confirm: "",
+      reject: "",
+      language: "",
+      name: "",
+      owner: "",
       ids: [],
-      tableTitle: 'Course',
-      subTitle: 'Unit',
-      lang: 'English',
+      tableTitle: "Course",
+      subTitle: "Unit",
+      lang: "English"
     };
-    Session.set('language', 'english');
+    Session.set("language", "english");
   }
 
   componentDidMount() {
     M.AutoInit();
-    Session.set('course', ' active');
+    Session.set("course", " active");
     window.scrollTo(0, 0);
   }
   componentWillUnmount() {
-    Session.set('course', '');
+    Session.set("course", "");
   }
   // close the modal, close the modal, and clear the states;
   close = () => {
@@ -60,16 +60,16 @@ export class Courses extends Component {
   // ide => modalType, id=> courseId
   toggleEditModal = (
     ide,
-    yr = '',
-    id = '',
-    name = '',
-    code = '',
-    owner = '',
+    yr = "",
+    id = "",
+    name = "",
+    code = "",
+    owner = ""
   ) => {
-    if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'content-manager'])) {
+    if (!Roles.userIsInRole(Meteor.userId(), ["admin", "content-manager"])) {
       M.toast({
-        html: '<span>Only Admins and Content-Manager can edit Courses</span>',
-        classes: 'red',
+        html: "<span>Only Admins and Content-Manager can edit Courses</span>",
+        classes: "red"
       });
       return;
     }
@@ -79,57 +79,57 @@ export class Courses extends Component {
     this.owner = owner;
     // eslint-disable-next-line
     switch (ide) {
-      case 'edit':
+      case "edit":
         this.setState({
           modalIdentifier: id,
           modalType: ide,
-          title: `Edit ${Session.get('course_title')}`,
+          title: `Edit ${Session.get("course_title")}`,
           confirm: <T>common.actions.save</T>,
           reject: <T>common.actions.close</T>,
           name: this.name,
           code: this.code,
           language: this.language,
-          owner: this.owner,
+          owner: this.owner
         });
         break;
-      case 'add':
+      case "add":
         this.setState({
           modalIdentifier: id,
           modalType: ide,
-          title: `Add ${Session.get('course_title')}`,
+          title: `Add ${Session.get("course_title")}`,
           confirm: <T>common.actions.save</T>,
-          reject: <T>common.actions.close</T>,
+          reject: <T>common.actions.close</T>
         });
         break;
       // eslint-disable-next-line
-      case 'del':
-        const course = getCheckBoxValues('chk');
+      case "del":
+        const course = getCheckBoxValues("chk");
         const count = course.length;
-        const name = count > 1 ? 'courses' : 'course';
+        const name = count > 1 ? "courses" : "course";
         if (count < 1) {
           M.toast({
-            html: '<span>Please check atleast one course</span>',
-            classes: 'red',
+            html: "<span>Please check atleast one course</span>",
+            classes: "red"
           });
           return;
         }
         this.setState({
-          modalIdentifier: 'id',
+          modalIdentifier: "id",
           modalType: ide,
           title: `Are you sure to delete ${count} ${name}`,
           confirm: <T>common.actions.yes</T>,
           reject: <T>common.actions.no</T>,
-          ids: course,
+          ids: course
         });
         break;
-      case 'field':
+      case "field":
         this.setState({
-          title: 'Edit Table titles on this page',
+          title: "Edit Table titles on this page",
           confirm: <T>common.actions.save</T>,
           reject: <T>common.actions.close</T>,
           modalType: ide,
           tableTitle: yr,
-          subTitle: id,
+          subTitle: id
         });
         break;
     }
@@ -139,7 +139,7 @@ export class Courses extends Component {
   // route to whats contained in the course
   static handleUrl(id, language, event) {
     event.preventDefault();
-    Session.setPersistent('courseIde', id);
+    Session.setPersistent("courseIde", id);
     FlowRouter.go(`/dashboard/units/${id}?y=${language}`);
   }
 
@@ -158,19 +158,19 @@ export class Courses extends Component {
       owner,
       tableTitle,
       subTitle,
-      language,
+      language
     } = this.state;
 
     switch (modalType) {
-      case 'add':
+      case "add":
         course = target.course.value;
         courseCode = target.courseCode.value;
         // language = target.language.value;
         details = { language };
-        const reference = config.isHighSchool ? 'subject' : 'course';
+        const reference = config.isHighSchool ? "subject" : "course";
         const courseId = new Meteor.Collection.ObjectID().valueOf();
         Meteor.call(
-          'course.add',
+          "course.add",
           courseId,
           course,
           courseCode,
@@ -178,41 +178,42 @@ export class Courses extends Component {
           err => {
             err
               ? (M.toast({
-                html: `<span>${err.reason}</span>`,
-                classes: 'red',
-              }),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'course-add'),
-                'error',
-              ))
+                  html: `<span>${err.reason}</span>`,
+                  classes: "red"
+                }),
+                Meteor.call(
+                  "logger",
+                  formatText(err.message, Meteor.userId(), "course-add"),
+                  "error"
+                ))
               : Meteor.call(
-                'insert.search',
-                courseId,
-                { courseId },
-                course,
-                reference,
-                error => {
-                  error
-                    ? M.toast({
-                      html: `<span>${err.reason}</span>`,
-                      classes: 'red',
-                    })
-                    : M.toast({
-                      html: `<span>Successfully added ${course} </span>`,
-                    });
-                },
-              );
-          },
+                  "insert.search",
+                  courseId,
+                  { courseId },
+                  course,
+                  reference,
+                  error => {
+                    error
+                      ? M.toast({
+                          html: `<span>${err.reason}</span>`,
+                          classes: "red"
+                        })
+                      : M.toast({
+                          html: `<span>Successfully added ${course} </span>`,
+                          classes: "green darken-1"
+                        });
+                  }
+                );
+          }
         );
 
         break;
 
-      case 'edit':
+      case "edit":
         course = target.course.value;
         courseCode = target.courseCode.value;
         Meteor.call(
-          'course.edit',
+          "course.edit",
           modalIdentifier,
           course,
           courseCode,
@@ -221,99 +222,104 @@ export class Courses extends Component {
           err => {
             err
               ? (M.toast({
-                html: `<span>${err.reason}</span>`,
-                classes: 'red',
-              }),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'course-edit'),
-                'error',
-              ))
-              : Meteor.call('updateSearch', modalIdentifier, course, err => {
-                err
-                  ? M.toast({
-                    html: `<span>${err.reason}</span>`,
-                    classes: 'red',
-                  })
-                  : M.toast({
-                    html: `<span>${course} Successfully updated</span>`,
-                  });
-              });
-          },
+                  html: `<span>${err.reason}</span>`,
+                  classes: "red"
+                }),
+                Meteor.call(
+                  "logger",
+                  formatText(err.message, Meteor.userId(), "course-edit"),
+                  "error"
+                ))
+              : Meteor.call("updateSearch", modalIdentifier, course, err => {
+                  err
+                    ? M.toast({
+                        html: `<span>${err.reason}</span>`,
+                        classes: "red"
+                      })
+                    : M.toast({
+                        html: `<span>${course} Successfully updated</span>`,
+                        classes: "green darken-1"
+                      });
+                });
+          }
         );
         break;
 
-      case 'del':
+      case "del":
         let count = 0;
         const courses = ids;
         courses.forEach((v, k, arra) => {
           count += 1;
-          const name = count > 1 ? 'courses' : 'course';
-          Meteor.call('course.remove', v, err => {
+          const name = count > 1 ? "courses" : "course";
+          Meteor.call("course.remove", v, err => {
             err
               ? (M.toast({
-                html: `<span>${err.reason}</span>`,
-                classes: 'red',
-              }),
-              Meteor.call(
-                'logger',
-                formatText(err.message, Meteor.userId(), 'course-remove'),
-                'error',
-              ))
-              : Meteor.call('removeSearchData', v, err => {
+                  html: `<span>${err.reason}</span>`,
+                  classes: "red"
+                }),
+                Meteor.call(
+                  "logger",
+                  formatText(err.message, Meteor.userId(), "course-remove"),
+                  "error"
+                ))
+              : Meteor.call("removeSearchData", v, err => {
                   // eslint-disable-line
-                err
-                  ? M.toast({
-                    html: `<span>${err.reason}</span>`,
-                    classes: 'red',
-                  })
-                  : Meteor.call('insertDeleted', v, err => {
-                    err
-                      ? M.toast({
+                  err
+                    ? M.toast({
                         html: `<span>${err.reason}</span>`,
-                        classes: 'red',
+                        classes: "red"
                       })
-                      : M.toast({
-                        html: `${count} ${name} successfully deleted`,
+                    : Meteor.call("insertDeleted", v, err => {
+                        err
+                          ? M.toast({
+                              html: `<span>${err.reason}</span>`,
+                              classes: "red"
+                            })
+                          : M.toast({
+                              html: `${count} ${name} successfully deleted`,
+                              classes: "green darken-1"
+                            });
                       });
-                  });
-              });
+                });
           });
         });
         break;
       // eslint-disable-next-line
-      case 'field':
+      case "field":
         const name = target.course.value;
-        const title_id = Session.get('title_id');
+        const title_id = Session.get("title_id");
         // update.title'(id, title, sub)
-        Meteor.call('update.title', title_id, tableTitle, subTitle, err => {
+        Meteor.call("update.title", title_id, tableTitle, subTitle, err => {
           err
-            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
-            Meteor.call(
-              'logger',
-              formatText(err.message, Meteor.userId(), 'update-title'),
-              'error',
-            ))
-            : M.toast({ html: '<span>Successfully updated the titles</span>' });
+            ? (M.toast({ html: `<span>${err.reason}</span>`, classes: "red" }),
+              Meteor.call(
+                "logger",
+                formatText(err.message, Meteor.userId(), "update-title"),
+                "error"
+              ))
+            : M.toast({
+                html: "<span>Successfully updated the titles</span>",
+                classes: "green darken-1"
+              });
         });
     }
     // close modal when done;
     this.setState({
-      isOpen: false,
+      isOpen: false
     });
   }
 
   saveTitle = ({ target: { value } }, type) => {
     switch (type) {
-      case 'sub':
+      case "sub":
         this.setState({
-          subTitle: value,
+          subTitle: value
         });
         break;
 
       default:
         this.setState({
-          tableTitle: value,
+          tableTitle: value
         });
         break;
     }
@@ -323,7 +329,7 @@ export class Courses extends Component {
     let count = 1;
     const { courses } = this.props;
     if (!courses) {
-      return '';
+      return "";
     }
     return courses.map(course => (
       <tr key={course._id} className="link-section">
@@ -332,7 +338,7 @@ export class Courses extends Component {
           onClick={Courses.handleUrl.bind(
             this,
             course._id,
-            course.details.language,
+            course.details.language
           )}
         >
           {course.name}
@@ -344,13 +350,13 @@ export class Courses extends Component {
             className="fa fa-pencil"
             onClick={e =>
               this.toggleEditModal(
-                'edit',
+                "edit",
                 course.details.language,
                 course._id,
                 course.name,
                 course.code,
                 course.createdBy,
-                e,
+                e
               )
             }
           />
@@ -385,17 +391,17 @@ export class Courses extends Component {
       name,
       code,
       tableTitle,
-      subTitle,
+      subTitle
     } = this.state;
     const { titles } = this.props;
-    let newTitle = '';
-    let newSubTitle = '';
+    let newTitle = "";
+    let newSubTitle = "";
     if (titles) {
       newTitle = titles.title;
       newSubTitle = titles.sub_title;
       Session.setPersistent({
         title_id: titles._id,
-        course_title: newTitle,
+        course_title: newTitle
       });
     }
     return (
@@ -410,9 +416,9 @@ export class Courses extends Component {
               confirm={confirm}
               reject={reject}
             >
-              {modalType === 'del' ? (
+              {modalType === "del" ? (
                 <span />
-              ) : modalType === 'field' ? (
+              ) : modalType === "field" ? (
                 <div className="row">
                   <div className="row">
                     <div className="input-field col s12 m4">
@@ -420,10 +426,10 @@ export class Courses extends Component {
                         value={tableTitle}
                         placeholder={tableTitle}
                         name="course"
-                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                        style={{ color: state.isDark ? "#F5FAF8" : "#000000" }}
                         type="text"
                         className="validate"
-                        onChange={e => this.saveTitle(e, 'title')}
+                        onChange={e => this.saveTitle(e, "title")}
                       />
                     </div>
                     <div className="input-field col s12 m4">
@@ -432,7 +438,7 @@ export class Courses extends Component {
                         name="edit_course"
                         type="text"
                         className="validate"
-                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                        style={{ color: state.isDark ? "#F5FAF8" : "#000000" }}
                         readOnly
                       />
                     </div>
@@ -442,8 +448,8 @@ export class Courses extends Component {
                         name="edit_course"
                         type="text"
                         className="validate"
-                        style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
-                        onChange={e => this.saveTitle(e, 'sub')}
+                        style={{ color: state.isDark ? "#F5FAF8" : "#000000" }}
+                        onChange={e => this.saveTitle(e, "sub")}
                       />
                     </div>
                   </div>
@@ -455,7 +461,7 @@ export class Courses extends Component {
                     defaultValue={name}
                     type="text"
                     className="validate clear"
-                    style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                    style={{ color: state.isDark ? "#F5FAF8" : "#000000" }}
                     required
                     name="course"
                   />
@@ -464,7 +470,7 @@ export class Courses extends Component {
                     defaultValue={code}
                     type="text"
                     className="validate clear"
-                    style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                    style={{ color: state.isDark ? "#F5FAF8" : "#000000" }}
                     required
                     name="courseCode"
                   />
@@ -492,24 +498,24 @@ export class Courses extends Component {
             <div
               className="col m9 s11"
               style={{
-                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
-                color: state.isDark ? '#F5FAF8' : '#000000',
+                backgroundColor: state.isDark ? state.mainDark : "#FFFFFF",
+                color: state.isDark ? "#F5FAF8" : "#000000"
               }}
             >
               <div className="">
                 <h4>
-                  {' '}
+                  {" "}
                   <T>common.manage.manage</T> {newTitle}
-                </h4>{' '}
+                </h4>{" "}
                 {/* Add */}
               </div>
               <div className="row">
                 <div className="col m2">
                   <button
                     className="btn red darken-4 "
-                    onClick={e => this.toggleEditModal('del', e)}
+                    onClick={e => this.toggleEditModal("del", e)}
                   >
-                    {' '}
+                    {" "}
                     <T>common.actions.delete</T>
                   </button>
                 </div>
@@ -517,9 +523,9 @@ export class Courses extends Component {
                   <a href="">
                     <button
                       className="btn green darken-4 "
-                      onClick={e => this.toggleEditModal('add', e)}
+                      onClick={e => this.toggleEditModal("add", e)}
                     >
-                      {' '}
+                      {" "}
                       <T>common.actions.new</T>
                     </button>
                   </a>
@@ -532,9 +538,9 @@ export class Courses extends Component {
                         <a
                           className="teal-text"
                           href="#test1"
-                          onClick={() => Session.set('language', 'english')}
+                          onClick={() => Session.set("language", "english")}
                         >
-                          {' '}
+                          {" "}
                           English
                         </a>
                       </li>
@@ -542,9 +548,9 @@ export class Courses extends Component {
                         <a
                           className="teal-text"
                           href="#test2"
-                          onClick={() => Session.set('language', 'french')}
+                          onClick={() => Session.set("language", "french")}
                         >
-                          {' '}
+                          {" "}
                           French
                         </a>
                       </li>
@@ -552,9 +558,9 @@ export class Courses extends Component {
                         <a
                           className="teal-text"
                           href="#test4"
-                          onClick={() => Session.set('language', 'ethiopian')}
+                          onClick={() => Session.set("language", "ethiopian")}
                         >
-                          {' '}
+                          {" "}
                           Ethiopia
                         </a>
                       </li>
@@ -570,12 +576,12 @@ export class Courses extends Component {
                     <th>#</th>
                     <th>{newTitle}</th>
                     <th>
-                      {' '}
+                      {" "}
                       <T>common.actions.createdAt</T>
                     </th>
                     <th>{`Edit ${newTitle}`}</th>
                     <th>{newSubTitle}</th>
-                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                    <th onClick={handleCheckAll.bind(this, "chk-all", "chk")}>
                       <label>
                         <input type="checkbox" className=" chk-all" readOnly />
                         <T>common.actions.check</T>
@@ -586,10 +592,10 @@ export class Courses extends Component {
                         href=""
                         onClick={e =>
                           this.toggleEditModal(
-                            'field',
+                            "field",
                             newTitle,
                             newSubTitle,
-                            e,
+                            e
                           )
                         }
                         className="fa fa-pencil"
@@ -609,18 +615,18 @@ export class Courses extends Component {
 
 Courses.propTypes = {
   courses: PropTypes.array.isRequired,
-  titles: PropTypes.object,
+  titles: PropTypes.object
 };
 
 export default withTracker(() => {
-  Meteor.subscribe('searchdata');
-  Meteor.subscribe('deleted');
-  Meteor.subscribe('titles');
-  Meteor.subscribe('courses');
+  Meteor.subscribe("searchdata");
+  Meteor.subscribe("deleted");
+  Meteor.subscribe("titles");
+  Meteor.subscribe("courses");
   return {
     courses: _Courses
-      .find({ 'details.language': Session.get('language') })
+      .find({ "details.language": Session.get("language") })
       .fetch(),
-    titles: Titles.findOne({}),
+    titles: Titles.findOne({})
   };
 })(Courses);

@@ -1,18 +1,18 @@
 /* eslint default-case: 0, no-case-declarations: 0, no-unused-expressions: 0 */
-import React, { Component, Fragment } from 'react';
-import { PropTypes } from 'prop-types';
-import { withTracker } from 'meteor/react-meteor-data';
-import M from 'materialize-css';
-import { Slides } from '../../../../api/settings/slides';
+import React, { Component, Fragment } from "react";
+import { PropTypes } from "prop-types";
+import { withTracker } from "meteor/react-meteor-data";
+import M from "materialize-css";
+import { Slides } from "../../../../api/settings/slides";
 import {
   handleCheckboxChange,
   handleCheckAll,
-  getCheckBoxValues,
-} from '../../Utilities/CheckBoxHandler.jsx';
-import UploadWrapper from '../../../../ui/modals/UploadWrapper'; // eslint-disable-line
-import MainModal from '../../../../ui/modals/MainModal'; // eslint-disable-line
-import { closeModal } from '../../../../ui/modals/methods.js';
-import { ThemeContext } from '../../../containers/AppWrapper'; // eslint-disable-line
+  getCheckBoxValues
+} from "../../Utilities/CheckBoxHandler.jsx";
+import UploadWrapper from "../../../../ui/modals/UploadWrapper"; // eslint-disable-line
+import MainModal from "../../../../ui/modals/MainModal"; // eslint-disable-line
+import { closeModal } from "../../../../ui/modals/methods.js";
+import { ThemeContext } from "../../../containers/AppWrapper"; // eslint-disable-line
 
 export class ManageSlides extends Component {
   constructor(props) {
@@ -20,14 +20,14 @@ export class ManageSlides extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       isOpen: false,
-      modalIdentifier: '',
-      modalType: '',
-      title: '',
-      confirm: '',
-      reject: '',
+      modalIdentifier: "",
+      modalType: "",
+      title: "",
+      confirm: "",
+      reject: "",
       ids: [],
-      name: '',
-      code: '',
+      name: "",
+      code: ""
     };
   }
 
@@ -39,53 +39,59 @@ export class ManageSlides extends Component {
     this.setState(closeModal);
   };
   // ide => modalType, id=> schoolId
-  toggleEditModal = (ide, id = '', name = '') => {
+  toggleEditModal = (ide, id = "", name = "") => {
     // check if the user has full rights
-    if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-      M.toast({ html: '<span>Only Admins can edit the Manage</span>' });
+    if (!Roles.userIsInRole(Meteor.userId(), ["admin"])) {
+      M.toast({
+        html: "<span>Only Admins can edit the Manage</span>",
+        classes: "red"
+      });
       return;
     }
     this.name = name;
     this.id = id;
 
     switch (ide) {
-      case 'edit':
+      case "edit":
         this.setState({
           modalIdentifier: this.id,
           modalType: ide,
-          title: 'Edit Slide',
-          confirm: 'Save',
-          reject: 'Close',
-          name: this.name,
+          title: "Edit Slide",
+          confirm: "Save",
+          reject: "Close",
+          name: this.name
         });
 
         break;
 
-      case 'del':
-        const slides = getCheckBoxValues('chk');
+      case "del":
+        const slides = getCheckBoxValues("chk");
         const count = slides.length;
-        const SlideName = count > 1 ? 'slide' : 'slides';
+        const SlideName = count > 1 ? "slide" : "slides";
 
         if (count < 1) {
-          M.toast({ html: '<span>Please check atleast one resource</span>' });
+          M.toast({
+            html: "<span>Please check atleast one resource</span>",
+            classes: "red"
+          });
           return;
         }
         this.setState({
-          modalIdentifier: 'id',
+          modalIdentifier: "id",
           modalType: ide,
           title: `Are you sure to delete ${count} ${SlideName}`,
-          confirm: 'Yes',
-          reject: 'No',
-          ids: slides,
+          confirm: "Yes",
+          reject: "No",
+          ids: slides
         });
         break;
-      case 'upload':
+      case "upload":
         this.setState({
-          modalIdentifier: '',
+          modalIdentifier: "",
           modalType: ide,
-          title: 'Upload a slide',
-          confirm: 'Save', // this should be out
-          reject: 'Close', // this too should be out
+          title: "Upload a slide",
+          confirm: "Save", // this should be out
+          reject: "Close" // this too should be out
         });
         break;
     }
@@ -97,25 +103,29 @@ export class ManageSlides extends Component {
     const { modalType, ids, modalIdentifier } = this.state;
 
     switch (modalType) {
-      case 'edit':
+      case "edit":
         const name = e.target.slide.value;
-        Meteor.call('editSlides', modalIdentifier, name, err => {
+        Meteor.call("editSlides", modalIdentifier, name, err => {
           err
-            ? M.toast({ html: `<span>${err.reason}</span>` })
-            : M.toast({ html: '<span>Successfully Updated</span>' });
+            ? M.toast({ html: `<span>${err.reason}</span>`, classes: "red" })
+            : M.toast({
+                html: "<span>Successfully Updated</span>",
+                classes: "green darken-1"
+              });
         });
         break;
-      case 'del':
+      case "del":
         let count = 0;
         ids.map(id => {
           count += 1;
-          const sName = count > 1 ? 'slides' : 'slide';
-          Meteor.call('removeSlides', id, err => {
+          const sName = count > 1 ? "slides" : "slide";
+          Meteor.call("removeSlides", id, err => {
             err
-              ? M.toast({ html: `<span>${err.reason}</span>` })
+              ? M.toast({ html: `<span>${err.reason}</span>`, classes: "red" })
               : M.toast({
-                html: `<span>${count} ${sName} successfully deleted</span>`,
-              });
+                  html: `<span>${count} ${sName} successfully deleted</span>`,
+                  classes: "green darken-1"
+                });
           });
         });
         break;
@@ -132,13 +142,13 @@ export class ManageSlides extends Component {
     return this.props.slides.map(slide => (
       <tr className="link-section" key={slide._id}>
         <td>{count++}</td>
-        <td>{slide.name.replace(/\.[^/.]+$/, '')}</td>
+        <td>{slide.name.replace(/\.[^/.]+$/, "")}</td>
         <td>
           <a
             href=""
             className="fa fa-pencil"
             onClick={e =>
-              this.toggleEditModal('edit', slide._id, slide.name, e)
+              this.toggleEditModal("edit", slide._id, slide.name, e)
             }
           />
         </td>
@@ -148,7 +158,7 @@ export class ManageSlides extends Component {
             className="materialboxed"
             style={{ width: 150, height: 100 }}
             src={`/uploads/slides/${slide._id}.${slide.ext}`}
-            data-caption={slide.name.replace(/\.[^/.]+$/, '')}
+            data-caption={slide.name.replace(/\.[^/.]+$/, "")}
           />
         </td>
 
@@ -173,7 +183,7 @@ export class ManageSlides extends Component {
       <ThemeContext.Consumer>
         {({ state }) => (
           <Fragment>
-            {modalType === 'upload' ? (
+            {modalType === "upload" ? (
               <UploadWrapper
                 show={isOpen}
                 close={this.closeModal}
@@ -188,7 +198,7 @@ export class ManageSlides extends Component {
                 confirm={confirm}
                 reject={reject}
               >
-                {modalType === 'del' ? (
+                {modalType === "del" ? (
                   <span />
                 ) : (
                   <div className="input-field">
@@ -197,7 +207,7 @@ export class ManageSlides extends Component {
                       type="text"
                       defaultValue={name}
                       className="validate clear"
-                      style={{ color: state.isDark ? '#F5FAF8' : '#000000' }}
+                      style={{ color: state.isDark ? "#F5FAF8" : "#000000" }}
                       required
                       name="slide"
                     />
@@ -208,8 +218,8 @@ export class ManageSlides extends Component {
             <div
               className="col m9 s11"
               style={{
-                backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
-                color: state.isDark ? '#F5FAF8' : '#000000',
+                backgroundColor: state.isDark ? state.mainDark : "#FFFFFF",
+                color: state.isDark ? "#F5FAF8" : "#000000"
               }}
             >
               <div className="">
@@ -220,7 +230,7 @@ export class ManageSlides extends Component {
                 <div className="col m3">
                   <button
                     className="btn red darken-3 "
-                    onClick={e => this.toggleEditModal('del', e)}
+                    onClick={e => this.toggleEditModal("del", e)}
                   >
                     Delete
                   </button>
@@ -229,9 +239,9 @@ export class ManageSlides extends Component {
                 <div className="col s4 m4">
                   <button
                     className="btn green darken-4 "
-                    onClick={e => this.toggleEditModal('upload', e)}
+                    onClick={e => this.toggleEditModal("upload", e)}
                   >
-                    {' '}
+                    {" "}
                     Upload New Slider
                   </button>
                 </div>
@@ -246,7 +256,7 @@ export class ManageSlides extends Component {
                     <th>Uploaded At</th>
                     <th>Slides Image</th>
 
-                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                    <th onClick={handleCheckAll.bind(this, "chk-all", "chk")}>
                       <label>
                         <input type="checkbox" className=" chk-all" />
                         Check All
@@ -265,14 +275,14 @@ export class ManageSlides extends Component {
 }
 
 Slides.propTypes = {
-  slides: PropTypes.array.isRequired,
+  slides: PropTypes.array.isRequired
 };
 
 export default withTracker(() => {
-  Meteor.subscribe('slides');
-  Meteor.subscribe('deleted');
-  Meteor.subscribe('searchdata');
+  Meteor.subscribe("slides");
+  Meteor.subscribe("deleted");
+  Meteor.subscribe("searchdata");
   return {
-    slides: Slides.find().fetch(),
+    slides: Slides.find().fetch()
   };
 })(ManageSlides);

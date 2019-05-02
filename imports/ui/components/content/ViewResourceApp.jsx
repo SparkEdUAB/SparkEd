@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
@@ -10,7 +10,7 @@ import ErrorBoundary from '../ErrorBoundary'; // eslint-disable-line
 import { Resources } from '../../../api/resources/resources';
 import * as config from '../../../../config.json';
 
-export class ViewResourceApp extends Component {
+export class ViewResourceApp extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,7 +66,9 @@ export class ViewResourceApp extends Component {
       urlLink: resourceObj.link(),
       _id: resources._id,
     };
-    const link = `/cdn/storage/Resources/${resource._id}/original/${resource._id}.${resource.ext}`;
+    const link = `/cdn/storage/Resources/${resource._id}/original/${
+      resource._id
+    }.${resource.ext}`;
 
     return <ResourceRender resource={resource} Link={link} />;
   }

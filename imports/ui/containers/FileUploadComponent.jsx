@@ -1,16 +1,16 @@
 /* eslint-disable one-var */
 /* eslint-disable no-case-declarations */
-import { withTracker } from 'meteor/react-meteor-data';
-import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
-import { Session } from 'meteor/session';
-import M from 'materialize-css';
-import { Resources, References } from '../../api/resources/resources';
-import { _Topics } from '../../api/topics/topics';
-import { _Units } from '../../api/units/units';
-import { Slides } from '../../api/settings/slides';
-import { Institution } from '../../api/settings/institution';
-import * as config from '../../../config.json';
+import { withTracker } from "meteor/react-meteor-data";
+import { Meteor } from "meteor/meteor";
+import React, { Component } from "react";
+import { Session } from "meteor/session";
+import M from "materialize-css";
+import { Resources, References } from "../../api/resources/resources";
+import { _Topics } from "../../api/topics/topics";
+import { _Units } from "../../api/units/units";
+import { Slides } from "../../api/settings/slides";
+import { Institution } from "../../api/settings/institution";
+import * as config from "../../../config.json";
 
 export class FileUploadComponent extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ export class FileUploadComponent extends Component {
       inProgress: false,
       files: [],
       // uploaded: null,
-      uploaded: false,
+      uploaded: false
     };
   }
 
@@ -36,13 +36,13 @@ export class FileUploadComponent extends Component {
         const route = FlowRouter.getRouteName();
 
         switch (route) {
-          case 'EditResources':
+          case "EditResources":
             let unitId, topicId, topic; // eslint-disable-line
             if (config.isHighSchool) {
-              unitId = FlowRouter.getParam('_id');
-              topicId = '';
+              unitId = FlowRouter.getParam("_id");
+              topicId = "";
             } else {
-              topicId = FlowRouter.getParam('_id');
+              topicId = FlowRouter.getParam("_id");
               topic = _Topics.findOne({ _id: topicId });
               unitId = topic.unitId; // eslint-disable-line
             }
@@ -53,18 +53,18 @@ export class FileUploadComponent extends Component {
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
                   topicId,
                   unitId,
-                  createdAt: new Date(),
+                  createdAt: new Date()
                 },
-                streams: 'dynamic',
-                chunkSize: 'dynamic',
-                allowWebWorkers: true, // If you see issues with uploads, change self to false
+                streams: "dynamic",
+                chunkSize: "dynamic",
+                allowWebWorkers: true // If you see issues with uploads, change self to false
               },
-              false,
+              false
             );
             break;
-          case 'ManageUnits':
-            const courseId = FlowRouter.getQueryParam('cs');
-            const programId = FlowRouter.getParam('_id') || 'pId';
+          case "ManageUnits":
+            const courseId = FlowRouter.getQueryParam("cs");
+            const programId = FlowRouter.getParam("_id") || "pId";
             uploadInstance = References.insert(
               {
                 file,
@@ -73,16 +73,16 @@ export class FileUploadComponent extends Component {
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
                   courseId,
                   programId,
-                  createdAt: new Date(),
+                  createdAt: new Date()
                 },
-                streams: 'dynamic',
-                chunkSize: 'dynamic',
-                allowWebWorkers: true, // If you see issues with uploads, change self to false
+                streams: "dynamic",
+                chunkSize: "dynamic",
+                allowWebWorkers: true // If you see issues with uploads, change self to false
               },
-              false,
+              false
             );
             break;
-          case 'Additional':
+          case "Additional":
             uploadInstance = References.insert(
               {
                 file,
@@ -92,35 +92,35 @@ export class FileUploadComponent extends Component {
                   topicId: null,
                   programId: null,
                   courseId: null,
-                  createdAt: new Date(),
+                  createdAt: new Date()
                 },
-                streams: 'dynamic',
-                chunkSize: 'dynamic',
-                allowWebWorkers: true, // If you see issues with uploads, change self to false
+                streams: "dynamic",
+                chunkSize: "dynamic",
+                allowWebWorkers: true // If you see issues with uploads, change self to false
               },
-              false,
+              false
             );
             break;
-          case 'Slides':
+          case "Slides":
             uploadInstance = Slides.insert(
               {
                 file,
                 meta: {
                   locator: this.props.fileLocator,
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
-                  createdAt: new Date(),
+                  createdAt: new Date()
                 },
-                streams: 'dynamic',
-                chunkSize: 'dynamic',
-                allowWebWorkers: true, // If you see issues with uploads, change self to false
+                streams: "dynamic",
+                chunkSize: "dynamic",
+                allowWebWorkers: true // If you see issues with uploads, change self to false
               },
-              false,
+              false
             );
             break;
 
-          case 'WalkThrough':
-            const tagline = Session.get('tag');
-            const name = Session.get('name');
+          case "WalkThrough":
+            const tagline = Session.get("tag");
+            const name = Session.get("name");
             uploadInstance = Institution.insert(
               {
                 file,
@@ -129,13 +129,13 @@ export class FileUploadComponent extends Component {
                   userId: Meteor.userId(), // Optional, used to check on server for file tampering
                   name,
                   tagline,
-                  createdAt: new Date(),
+                  createdAt: new Date()
                 },
-                streams: 'dynamic',
-                chunkSize: 'dynamic',
-                allowWebWorkers: true, // If you see issues with uploads, change self to false
+                streams: "dynamic",
+                chunkSize: "dynamic",
+                allowWebWorkers: true // If you see issues with uploads, change self to false
               },
-              false,
+              false
             );
             break;
           default:
@@ -144,145 +144,150 @@ export class FileUploadComponent extends Component {
 
         this.setState({
           uploading: uploadInstance, // Keep track of self instance to use below
-          inProgress: true, // Show the progress bar now
+          inProgress: true // Show the progress bar now
         });
 
         // These are the event functions on the progress of the upload
-        uploadInstance.on('start', () => {
-          console.log('Starting');
+        uploadInstance.on("start", () => {
+          console.log("Starting");
         });
 
-        uploadInstance.on('end', (error, fileObj) => {
-          console.log('ended upload');
+        uploadInstance.on("end", (error, fileObj) => {
+          console.log("ended upload");
         });
 
-        uploadInstance.on('uploaded', (error, fileObj) => {
+        uploadInstance.on("uploaded", (error, fileObj) => {
           if (error) {
-            M.toast({ html: `<span>${error.reason}</span>`, classes: 'red' });
+            M.toast({ html: `<span>${error.reason}</span>`, classes: "red" });
           } else {
             const title = `new reference material ${name} was uploaded`;
             switch (route) {
-              case 'EditResources':
-                const topic_id = FlowRouter.getParam('_id');
+              case "EditResources":
+                const topic_id = FlowRouter.getParam("_id");
                 const _topic = _Topics.findOne({ _id: topic_id });
                 const unit_id = config.isHighSchool ? topic_id : _topic.unitId;
 
                 const msg = `new resource ${fileObj.name.replace(
                   /\.[^/.]+$/,
-                  '',
+                  ""
                 )} was uploaded`;
-                Session.set('ids', { topic_id, filess: fileObj._id });
+                Session.set("ids", { topic_id, filess: fileObj._id });
                 Meteor.call(
-                  'insert.search',
+                  "insert.search",
                   fileObj._id,
                   { topicId: topic_id },
-                  fileObj.name.replace(/\.[^/.]+$/, ''),
-                  'resource',
+                  fileObj.name.replace(/\.[^/.]+$/, ""),
+                  "resource",
                   err => {
                     err
                       ? M.toast({
-                        html: `<span>${error.reason}</span>`,
-                        classes: 'red',
-                      })
+                          html: `<span>${error.reason}</span>`,
+                          classes: "red"
+                        })
                       : Meteor.call(
-                        'insertNotification',
-                        msg,
-                        'resource',
-                        unit_id,
-                        topic_id,
-                        fileObj._id,
-                        err => {
-                          err
-                            ? M.toast({
-                              html: `<span>${error.reason}</span>`,
-                            })
-                            : M.toast({
-                              html:
-                                    '<span>Successfully uploaded a resource</span>',
-                            });
-                        },
-                      );
-                  },
+                          "insertNotification",
+                          msg,
+                          "resource",
+                          unit_id,
+                          topic_id,
+                          fileObj._id,
+                          err => {
+                            err
+                              ? M.toast({
+                                  html: `<span>${error.reason}</span>`,
+                                  classes: "red"
+                                })
+                              : M.toast({
+                                  html:
+                                    "<span>Successfully uploaded a resource</span>",
+                                  classes: "green darken-1"
+                                });
+                          }
+                        );
+                  }
                 );
                 break;
-              case 'ManageUnits':
-                const course_Id = FlowRouter.getQueryParam('cs');
+              case "ManageUnits":
+                const course_Id = FlowRouter.getQueryParam("cs");
                 Meteor.call(
-                  'insert.search',
+                  "insert.search",
                   fileObj._id,
                   { courseId: course_Id },
-                  fileObj.name.replace(/\.[^/.]+$/, ''),
-                  'reference',
+                  fileObj.name.replace(/\.[^/.]+$/, ""),
+                  "reference",
                   err => {
                     err
                       ? M.toast({
-                        html: `<span>${error.reason}</span>`,
-                        classes: 'red',
-                      })
+                          html: `<span>${error.reason}</span>`,
+                          classes: "red"
+                        })
                       : Meteor.call(
-                        'insertNotification',
-                        title,
-                        'reference',
-                        '',
-                        '',
-                        fileObj._id,
-                        err => {
-                          err
-                            ? M.toast({
-                              html: `<span>${error.reason}</span>`,
-                              classes: 'red',
-                            })
-                            : M.toast({
-                              html:
-                                    '<span>Successfuly uploaded a reference</span>',
-                            });
-                        },
-                      );
-                  },
+                          "insertNotification",
+                          title,
+                          "reference",
+                          "",
+                          "",
+                          fileObj._id,
+                          err => {
+                            err
+                              ? M.toast({
+                                  html: `<span>${error.reason}</span>`,
+                                  classes: "red"
+                                })
+                              : M.toast({
+                                  html:
+                                    "<span>Successfuly uploaded a reference</span>",
+                                  classes: "green darken-1"
+                                });
+                          }
+                        );
+                  }
                 );
                 break;
-              case 'Additional':
+              case "Additional":
                 Meteor.call(
-                  'insert.search',
+                  "insert.search",
                   fileObj._id,
                   { resourceId: fileObj._id },
-                  fileObj.name.replace(/\.[^/.]+$/, ''),
-                  'reference',
+                  fileObj.name.replace(/\.[^/.]+$/, ""),
+                  "reference",
                   err => {
                     err
                       ? M.toast({
-                        html: `<span>${error.reason}</span>`,
-                        classes: 'red',
-                      })
+                          html: `<span>${error.reason}</span>`,
+                          classes: "red"
+                        })
                       : Meteor.call(
-                        'insertNotification',
-                        title,
-                        'reference',
-                        '',
-                        '',
-                        fileObj._id,
-                        err => {
-                          err
-                            ? M.toast({
-                              html: `<span>${error.reason}</span>`,
-                              classes: 'red',
-                            })
-                            : M.toast({
-                              html:
-                                    '<span>Successfuly uploaded a reference</span>',
-                            });
-                        },
-                      );
-                  },
+                          "insertNotification",
+                          title,
+                          "reference",
+                          "",
+                          "",
+                          fileObj._id,
+                          err => {
+                            err
+                              ? M.toast({
+                                  html: `<span>${error.reason}</span>`,
+                                  classes: "red"
+                                })
+                              : M.toast({
+                                  html:
+                                    "<span>Successfuly uploaded a reference</span>",
+                                  classes: "green darken-1"
+                                });
+                          }
+                        );
+                  }
                 );
                 break;
-              case 'Slides':
+              case "Slides":
                 M.toast({
-                  html: '<span>Successfuly uploaded a slide image</span>',
+                  html: "<span>Successfuly uploaded a slide image</span>",
+                  classes: "green darken-1"
                 });
                 break;
 
-              case 'WalkThrough':
+              case "WalkThrough":
                 // const instName = Session.get('name');
                 // const tag = Session.get('tag');
                 // const auth = Session.get('auth');
@@ -306,26 +311,26 @@ export class FileUploadComponent extends Component {
             }
 
             // Remove the filename from the upload box
-            this.refs.fileinput.value = '';
+            this.refs.fileinput.value = "";
 
             // Reset our state for the next file
             this.setState({
               uploading: [],
               progress: 0,
               inProgress: false,
-              uploaded: true,
+              uploaded: true
             });
           }
         });
 
-        uploadInstance.on('error', error => {
-          M.toast({ html: `<span>${error.reason}</span>`, classes: 'red' });
+        uploadInstance.on("error", error => {
+          M.toast({ html: `<span>${error.reason}</span>`, classes: "red" });
         });
 
-        uploadInstance.on('progress', progress => {
+        uploadInstance.on("progress", progress => {
           // Update our progress bar
           this.setState({
-            progress,
+            progress
           });
         });
 
@@ -370,15 +375,13 @@ export class FileUploadComponent extends Component {
     const sum = all_size.reduce((a, b) => a + b, 0); // adds all values in the all_sizes array
     this.setState({
       files,
-      files_size: convertUploadSize(sum),
+      files_size: convertUploadSize(sum)
     });
   };
 
   render() {
-    const {
-      files, progress, files_size, uploaded,
-    } = this.state;
-    files.length <= 1 ? (name = 'file') : (name = 'files');
+    const { files, progress, files_size, uploaded } = this.state;
+    files.length <= 1 ? (name = "file") : (name = "files");
     const routeName = FlowRouter.getRouteName();
     return (
       <div>
@@ -386,11 +389,11 @@ export class FileUploadComponent extends Component {
           <div className="col s12">
             <form onSubmit={this.uploadIt}>
               <div className="file-field input-field">
-                <div className="btn" style={{ backgroundColor: '#006b76' }}>
+                <div className="btn" style={{ backgroundColor: "#006b76" }}>
                   <span>
                     {files.length >= 1
                       ? `${files.length} ${name} selected (${files_size})`
-                      : 'Pick Files'}
+                      : "Pick Files"}
                   </span>
                   <input
                     type="file"
@@ -413,15 +416,15 @@ export class FileUploadComponent extends Component {
               <button
                 role="submit"
                 className="btn fa fa-upload"
-                style={{ marginLeft: '42%', backgroundColor: '#006b76' }}
+                style={{ marginLeft: "42%", backgroundColor: "#006b76" }}
               >
-                {uploaded ? ' Done Uploading' : ' Upload'}
+                {uploaded ? " Done Uploading" : " Upload"}
               </button>
             </form>
-            {routeName === 'ManageUnits' && uploaded ? (
+            {routeName === "ManageUnits" && uploaded ? (
               <p>
-                You can find the uploaded {name} in the{' '}
-                <a href="/dashboard/extra">Reference library here</a>{' '}
+                You can find the uploaded {name} in the{" "}
+                <a href="/dashboard/extra">Reference library here</a>{" "}
               </p>
             ) : (
               <span />
@@ -442,13 +445,13 @@ export class FileUploadComponent extends Component {
 // in a separate file to provide separation of concerns.
 //
 export default withTracker(() => {
-  Meteor.subscribe('files.all');
-  Meteor.subscribe('resourcess');
-  Meteor.subscribe('references');
-  const filesHandle = Meteor.subscribe('files.all');
+  Meteor.subscribe("files.all");
+  Meteor.subscribe("resourcess");
+  Meteor.subscribe("references");
+  const filesHandle = Meteor.subscribe("files.all");
   const docsReadyYet = filesHandle.ready();
   return {
-    docsReadyYet,
+    docsReadyYet
     // files,
   };
 })(FileUploadComponent);
@@ -460,9 +463,9 @@ export default withTracker(() => {
  *
  */
 export function convertUploadSize(bytes) {
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
   if (bytes === 0) {
-    return 'n/a';
+    return "n/a";
   }
   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
   if (i === 0) {

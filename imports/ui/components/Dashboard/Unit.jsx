@@ -1,26 +1,26 @@
 /* eslint no-shadow: 0, no-plusplus: 0 */
-import React, { Component, Fragment } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
-import M from 'materialize-css';
-import { _Units } from '../../../api/units/units';
-import * as config from '../../../../config.json';
-import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
+import React, { Component, Fragment } from "react";
+import { withTracker } from "meteor/react-meteor-data";
+import { Meteor } from "meteor/meteor";
+import { Session } from "meteor/session";
+import M from "materialize-css";
+import { _Units } from "../../../api/units/units";
+import * as config from "../../../../config.json";
+import { ThemeContext } from "../../containers/AppWrapper"; // eslint-disable-line
 
 export class Unit extends Component {
   constructor() {
     super();
     this.state = {
-      topics: [{ name: '' }],
-      description: '',
-      unitName: '',
+      topics: [{ name: "" }],
+      description: "",
+      unitName: ""
     };
   }
 
   addTopic = () => {
     this.setState({
-      topics: this.state.topics.concat([{ name: '' }]),
+      topics: this.state.topics.concat([{ name: "" }])
     });
   };
 
@@ -29,7 +29,7 @@ export class Unit extends Component {
       return false;
     }
     this.setState({
-      topics: this.state.topics.filter((s, sidx) => index !== sidx),
+      topics: this.state.topics.filter((s, sidx) => index !== sidx)
     });
   };
 
@@ -40,27 +40,27 @@ export class Unit extends Component {
     });
 
     this.setState({
-      topics: newTopics,
+      topics: newTopics
     });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    const courseId = FlowRouter.getParam('_id');
-    const language = FlowRouter.getQueryParam('y');
+    const courseId = FlowRouter.getParam("_id");
+    const language = FlowRouter.getQueryParam("y");
     const unitId = new Meteor.Collection.ObjectID().valueOf();
     let count = 0;
     let details = {};
     const { topics, description, unitName } = this.state;
     details = {
       language,
-      courseId,
+      courseId
     };
     // insert topic in collection from here 1 * 1
 
     const msg = `new course unit named ${unitName} has been added with ${count} topics`;
     Meteor.call(
-      'unit.insert',
+      "unit.insert",
       unitId,
       unitName,
       count,
@@ -68,37 +68,38 @@ export class Unit extends Component {
       details,
       err => {
         err
-          ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
-          : Meteor.call('insert.search', unitId, {}, unitName, 'unit', err => {
-            err
-              ? M.toast({
-                html: `<span>${err.reason}</span>`,
-                classes: 'red',
-              })
-              : Meteor.call(
-                'insertNotification',
-                msg,
-                'unit',
-                unitId,
-                err => {
-                  // eslint-disable-next-line
+          ? M.toast({ html: `<span>${err.reason}</span>`, classes: "red" })
+          : Meteor.call("insert.search", unitId, {}, unitName, "unit", err => {
+              err
+                ? M.toast({
+                    html: `<span>${err.reason}</span>`,
+                    classes: "red"
+                  })
+                : Meteor.call(
+                    "insertNotification",
+                    msg,
+                    "unit",
+                    unitId,
+                    err => {
+                      // eslint-disable-next-line
                       err
-                    ? M.toast({
-                      html: `<span>${err.reason}</span>`,
-                      classes: 'red',
-                    })
-                    : (this.setState({
-                      topics: [{ name: '' }],
-                      description: '',
-                      unitName: '',
-                    }),
-                    M.toast({
-                      html: `<span>Added ${unitName} successfully and ${count} topics</span>`,
-                    }));
-                },
-              );
-          });
-      },
+                        ? M.toast({
+                            html: `<span>${err.reason}</span>`,
+                            classes: "red"
+                          })
+                        : (this.setState({
+                            topics: [{ name: "" }],
+                            description: "",
+                            unitName: ""
+                          }),
+                          M.toast({
+                            html: `<span>Added ${unitName} successfully and ${count} topics</span>`,
+                            classes: "green darken-1"
+                          }));
+                    }
+                  );
+            });
+      }
     );
     if (!topics.length) {
       return;
@@ -111,7 +112,7 @@ export class Unit extends Component {
         const _id = new Meteor.Collection.ObjectID().valueOf();
 
         Meteor.call(
-          'topic.insert',
+          "topic.insert",
           _id,
           unitId,
           name,
@@ -119,24 +120,24 @@ export class Unit extends Component {
           // details, this is temporaly removed
           err => {
             err
-              ? M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' })
+              ? M.toast({ html: `<span>${err.reason}</span>`, classes: "red" })
               : Meteor.call(
-                'insert.search',
-                _id,
-                { unitId },
-                name,
-                'topic',
-                err => {
-                  // eslint-disable-next-line
+                  "insert.search",
+                  _id,
+                  { unitId },
+                  name,
+                  "topic",
+                  err => {
+                    // eslint-disable-next-line
                     err
-                    ? M.toast({
-                      html: `<span>${err.reason}</span>`,
-                      classes: 'red',
-                    })
-                    : '';
-                },
-              );
-          },
+                      ? M.toast({
+                          html: `<span>${err.reason}</span>`,
+                          classes: "red"
+                        })
+                      : "";
+                  }
+                );
+          }
         );
         count++;
       }
@@ -145,21 +146,21 @@ export class Unit extends Component {
 
   getUnitName = ({ target: { value } }) => {
     this.setState({
-      unitName: value,
+      unitName: value
     });
   };
   getDescription = ({ target: { value } }) => {
     this.setState({
-      description: value,
+      description: value
     });
   };
   backToUnits = e => {
     e.preventDefault();
-    return FlowRouter.go(`/dashboard/units/${FlowRouter.getParam('_id')}`);
+    return FlowRouter.go(`/dashboard/units/${FlowRouter.getParam("_id")}`);
   };
   render() {
     const { topics, description, unitName } = this.state;
-    const name = Session.get('sub_unit_title');
+    const name = Session.get("sub_unit_title");
     return (
       <ThemeContext.Consumer>
         {({ state }) => (
@@ -168,12 +169,12 @@ export class Unit extends Component {
             <div
               className="col m9 s11 "
               style={{
-                color: state.isDark ? '#F5FAF8' : '#000000',
+                color: state.isDark ? "#F5FAF8" : "#000000"
               }}
             >
               <div className="card ">
                 <div
-                  className={`card-panel ${state.isDark && 'grey darken-4'}`}
+                  className={`card-panel ${state.isDark && "grey darken-4"}`}
                 >
                   <div className="">
                     <button
@@ -220,7 +221,7 @@ export class Unit extends Component {
                           <input
                             type="text"
                             id={index}
-                            placeholder={'Add Topic'}
+                            placeholder={"Add Topic"}
                             value={topic.name}
                             onChange={this.handleTopicChange(index)}
                             className={`${index}`}
@@ -237,8 +238,8 @@ export class Unit extends Component {
                             className="btn fa fa-floppy-o pull-right s12"
                             role="submit"
                           >
-                            {' '}
-                            Save{' '}
+                            {" "}
+                            Save{" "}
                           </button>
                         </span>
                       </div>
@@ -263,8 +264,8 @@ export class Unit extends Component {
                             className="btn fa fa-floppy-o pull-right s12"
                             role="submit"
                           >
-                            {' '}
-                            Save{' '}
+                            {" "}
+                            Save{" "}
                           </button>
                         </span>
                       </div>
@@ -281,6 +282,6 @@ export class Unit extends Component {
 }
 
 export default withTracker(() => {
-  Meteor.subscribe('topics');
+  Meteor.subscribe("topics");
   return { units: _Units.find({}).fetch() };
 })(Unit);
