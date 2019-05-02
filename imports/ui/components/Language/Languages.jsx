@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import i18n from 'meteor/universe:i18n';
 import { Session } from 'meteor/session';
 
 export const T = i18n.createComponent();
 
-export default class Languages extends Component {
+export default class Languages extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

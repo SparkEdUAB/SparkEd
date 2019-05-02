@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import i18n from 'meteor/universe:i18n';
 import ViewResource from './ViewResource'; // eslint-disable-line
@@ -6,7 +6,7 @@ import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-li
 
 export const T = i18n.createComponent();
 
-export default class ViewFrame extends Component {
+export default class ViewFrame extends PureComponent {
   renderResources(color) {
     const { resources } = this.props;
     let index = 0;

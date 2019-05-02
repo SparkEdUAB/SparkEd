@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import PropTypes from 'prop-types';
@@ -24,7 +24,7 @@ const logUserOut = () => {
     }
   });
 };
-class UserInfo extends Component {
+class UserInfo extends PureComponent {
   state = {
     isVisible: false,
     title: 'Change Password',

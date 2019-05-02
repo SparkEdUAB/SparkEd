@@ -1,11 +1,13 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-import { Button } from '../utils/Buttons';
-import { ThemeContext } from '../containers/AppWrapper';
+import React from "react";
+import { PropTypes } from "prop-types";
+import { Button } from "../utils/Buttons";
+import { ThemeContext } from "../containers/AppWrapper";
 
 /**
  * @prop { subFunc } a callback function for different modals
  */
+
+// const Component = useMemo(() => {});
 const MainModal = props => {
   if (!props.show) {
     return null;
@@ -18,8 +20,8 @@ const MainModal = props => {
             id="notificationsStyle"
             className="main_modal"
             style={{
-              backgroundColor: state.isDark ? state.mainDark : '#ffffff',
-              color: state.isDark ? '#F5FAF8' : '#000000',
+              backgroundColor: state.isDark ? state.mainDark : "#ffffff",
+              color: state.isDark ? "#F5FAF8" : "#000000"
             }}
           >
             <h5>{props.title}</h5>
@@ -38,7 +40,7 @@ const MainModal = props => {
                       onClick={props.onClose}
                       className="btn grey darken-3 right"
                     >
-                      {' '}
+                      {" "}
                       {props.reject}
                     </a>
                   </div>
@@ -58,7 +60,7 @@ MainModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   confirm: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  reject: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  reject: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
 
 export default MainModal;
