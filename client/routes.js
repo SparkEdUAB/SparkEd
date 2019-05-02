@@ -23,7 +23,6 @@ import Feedback from '../imports/ui/components/Dashboard/Feedback.jsx';
 import Additional from '../imports/ui/components/Dashboard/Additional.jsx';
 import Courses from '../imports/ui/components/Dashboard/Courses.jsx';
 import DisplayResource from '../imports/ui/components/Dashboard/DisplayResource.jsx';
-import Institution from '../imports/ui/components/Dashboard/Settings/Institution.jsx';
 import Notifications from '../imports/ui/components/Notifications/Notifications.jsx';
 import ManageSlides from '../imports/ui/components/Dashboard/Settings/ManageSlides.jsx';
 import ReferenceLibrary from '../imports/ui/components/content/ReferenceLibrary.jsx';
@@ -256,12 +255,7 @@ adminRoutes.route('/dashboard/course', {
   },
 });
 
-adminRoutes.route('/dashboard/settings', {
-  name: 'Institution',
-  action() {
-    mount(WrappedSidenav, { yield: <Institution />, isAtSettings: true });
-  },
-});
+
 adminRoutes.route('/dashboard/stats', {
   name: 'Stats',
   action() {

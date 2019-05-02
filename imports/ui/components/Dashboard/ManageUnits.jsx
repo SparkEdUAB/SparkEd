@@ -258,7 +258,8 @@ export class ManageUnits extends Component {
                               classes: "red"
                             })
                           : M.toast({
-                              html: `<span>${unit} successfully Deleted</span>`
+                              html: `<span>${unit} successfully Deleted</span>`,
+                              classes: "green darken-1"
                             });
                       });
                 });
