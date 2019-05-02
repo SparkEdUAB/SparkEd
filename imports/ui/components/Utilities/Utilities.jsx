@@ -1,6 +1,8 @@
+/* eslint-disable no-case-declarations */
 import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
+import M from 'materialize-css';
 import MainModal from '../../modals/MainModal';
 import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 
@@ -94,7 +96,7 @@ SearchField.propTypes = {
 
 export function initInput() {
   $(document).ready(() => {
-    Materialize.updateTextFields();
+    M.updateTextFields();
   });
 }
 export function filterUrl(filter) {
@@ -125,24 +127,15 @@ export class FloatingButton extends Component {
       confirm: '',
       reject: '',
       value: '',
-      feed_desc: '',
-      feed_title: '',
-      book_title: '',
-      book_desc: '',
+      feedDesc: '',
+      feedTitle: '',
+      bookTitle: '',
+      bookDesc: '',
     };
   }
 
   componentDidMount() {
-    $('.plus-icon').mouseover(() => {
-      $('.more-items')
-        .removeClass('fa-plus')
-        .addClass('fa-times');
-    });
-    $('.plus-icon').mouseout(() => {
-      $('.more-items')
-        .removeClass('fa-times')
-        .addClass('fa-plus');
-    });
+    M.AutoInit();
   }
   handleSubmit = e => {
     e.preventDefault();
@@ -150,43 +143,33 @@ export class FloatingButton extends Component {
       ? 'anonymous'
       : `${Meteor.user().profile.name} `;
 
-    const {
-      modalType,
-      feed_desc,
-      feed_title,
-      book_title,
-      book_desc,
-    } = this.state;
+    const { modalType, feedDesc, feedTitle, bookTitle, bookDesc } = this.state;
 
+    const { pathname, href } = window.location;
     switch (modalType) {
       case 'feedback':
-        const _id = new Meteor.Collection.ObjectID().valueOf();
-        const link = window.location.href;
-        const feedlink = '/feedback';
+        // const { href } = window.location;
         Meteor.call(
           'feedback.insert',
-          feed_title,
-          feed_desc,
-          link,
+          feedTitle,
+          feedDesc,
+          href,
           userName,
           err => {
             if (err) {
-              Materialize.toast(err.reason, 3000, 'error-toast');
+              M.toast({ html: err.reason, classes: 'error-toast' });
             } else {
-              Materialize.toast(
-                'Your feedback has successfully been submitted',
-                3000,
-                'success-toast',
-              );
+              M.toast({
+                html: 'Your feedback has successfully been submitted',
+                classes: 'success-toast',
+              });
             }
           },
         );
         break;
       case 'bookmark':
-        const { book_color } = this.state;
-        const url = window.location.href;
-        const path = window.location.pathname;
-        const bookmarkData = _Bookmark.findOne({ url });
+        const { bookColor } = this.state;
+        const bookmarkData = _Bookmark.findOne({ href });
         let bookmark = null;
         if (
           typeof bookmarkData === 'object' &&
@@ -197,15 +180,15 @@ export class FloatingButton extends Component {
         Meteor.call(
           'updateBookmark',
           bookmark,
-          book_title,
-          book_desc,
-          url,
-          book_color,
-          path,
+          bookTitle,
+          bookDesc,
+          href,
+          bookColor,
+          pathname,
           err => {
             err
-              ? Materialize.toast(err.reason, 3000, 'error-toast')
-              : Materialize.toast('Updated Bookmark', 3000, 'success-toast');
+              ? M.toast({ html: err.reason, classes: 'error-toast' })
+              : M.toast({ html: 'Updated Bookmark', classes: 'success-toast' });
           },
         );
         break;
@@ -245,7 +228,7 @@ export class FloatingButton extends Component {
     event.preventDefault();
     this.color = color;
     this.setState({
-      book_color: this.color,
+      bookColor: this.color,
     });
   }
 
@@ -253,22 +236,22 @@ export class FloatingButton extends Component {
     switch (field) {
       case 'feedTitle':
         this.setState({
-          feed_title: value,
+          feedTitle: value,
         });
         break;
       case 'feedDesc':
         this.setState({
-          feed_desc: value,
+          feedDesc: value,
         });
         break;
       case 'bookTitle':
         this.setState({
-          book_title: value,
+          bookTitle: value,
         });
         break;
       case 'bookDesc':
         this.setState({
-          book_desc: value,
+          bookDesc: value,
         });
         break;
       default:

@@ -102,7 +102,8 @@ export default class Login extends Component {
           >
             <i className="fa fa-sign-in" />
           </a>
-          <a href="/register">Register here </a> if you don't have an account
+          <a href="/register">Register here </a> if you don&apos;t have an
+          account
         </div>
       </div>
     );

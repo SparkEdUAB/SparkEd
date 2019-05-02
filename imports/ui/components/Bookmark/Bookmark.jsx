@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import M from 'materialize-css';
 import { _Bookmark } from '../../../api/bookmarks/bookmarks';
 
 export class Bookmark extends React.Component {
@@ -9,6 +10,9 @@ export class Bookmark extends React.Component {
     this.isDelete = false;
   }
 
+  componentDidMount() {
+    M.AutoInit();
+  }
   showBookMark = (e, path) => {
     e.preventDefault();
     return FlowRouter.go(path);
@@ -17,8 +21,8 @@ export class Bookmark extends React.Component {
     this.isDelete = true;
     Meteor.call('removeBookmark', id, err => {
       err
-        ? Materialize.toast(err.reason, 3000, 'error-toast')
-        : Materialize.toast('Deleted Bookmark', 4000, 'success-toast');
+        ? M.toast({ html: err.reason, classes: 'error-toast' })
+        : M.toast({ html: 'Deleted Bookmark', classes: 'success-toast' });
     });
   }
 
@@ -51,22 +55,20 @@ export class Bookmark extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div className="row">
-          <div className="col">
-            <table className="highlight">
-              <thead>
-                <tr>
-                  <th />
-                  <th />
-                  <th />
-                  <th />
-                </tr>
-              </thead>
+      <div className="row">
+        <div className="col">
+          <table className="highlight">
+            <thead>
+              <tr>
+                <th />
+                <th />
+                <th />
+                <th />
+              </tr>
+            </thead>
 
-              <tbody>{this.renderPageData()}</tbody>
-            </table>
-          </div>
+            <tbody>{this.renderPageData()}</tbody>
+          </table>
         </div>
       </div>
     );
@@ -80,7 +82,11 @@ export default withTracker(() => {
   Meteor.subscribe('bookmarks');
   Meteor.subscribe('allUsers');
   return {
-    bookmarks: _Bookmark.find({ user: Meteor.userId() }, { sort: { color: 1 } }).fetch(),
-    bookmarksCount: _Bookmark.find({ user: Meteor.userId() }, { sort: { color: 1 } }).count(),
+    bookmarks: _Bookmark
+      .find({ user: Meteor.userId() }, { sort: { color: 1 } })
+      .fetch(),
+    bookmarksCount: _Bookmark
+      .find({ user: Meteor.userId() }, { sort: { color: 1 } })
+      .count(),
   };
 })(Bookmark);

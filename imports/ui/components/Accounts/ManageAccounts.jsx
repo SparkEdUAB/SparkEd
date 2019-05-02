@@ -11,7 +11,10 @@ import {
   handleCheckAll,
   getCheckBoxValues,
 } from '../Utilities/CheckBoxHandler.jsx';
-import Pagination, { getPageNumber, getQuery } from '../Utilities/Pagination/Pagination.jsx';
+import Pagination, {
+  getPageNumber,
+  getQuery,
+} from '../Utilities/Pagination/Pagination.jsx';
 import { SearchField } from '../Utilities/Utilities.jsx';
 import AccountEditModal from '../Utilities/Modal/EditAccounts.jsx';
 import { UserRoles } from '../Utilities/Modal/UserRoles.jsx';
@@ -21,7 +24,7 @@ import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
 import PasswordEdit from '../Utilities/Modal/PasswordEdit.jsx';
 import { checkPassword } from './AccountFunction';
-import { ThemeContext } from '../../containers/AppWrapper'
+import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
 
 const T = i18n.createComponent();
 
@@ -67,7 +70,15 @@ export class ManageAccounts extends React.Component {
   };
 
   // open modals
-  openModal = (type, id = '', email = '', fname = '', password = '', passwordConfirm = '', e) => {
+  openModal = (
+    type,
+    id = '',
+    email = '',
+    fname = '',
+    password = '',
+    passwordConfirm = '',
+    e,
+  ) => {
     const users = getCheckBoxValues('chk');
     const count = users.length;
     const name = count > 1 ? 'users' : 'user';
@@ -78,11 +89,17 @@ export class ManageAccounts extends React.Component {
     this.passConfirm = passwordConfirm;
 
     if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-      M.toast({ html: '<span >Only Admins can delete a user</span>', classes: ' red ' });
+      M.toast({
+        html: '<span >Only Admins can delete a user</span>',
+        classes: ' red ',
+      });
       return;
     }
     if (type !== 'edit' && count < 1) {
-      M.toast({ html: '<span >Please check atleast one user</span>', classes: ' red ' });
+      M.toast({
+        html: '<span >Please select at least one user</span>',
+        classes: ' red ',
+      });
       return;
     }
 
@@ -137,7 +154,7 @@ export class ManageAccounts extends React.Component {
         });
         break;
       default:
-        console.log(type) // eslint-disable-line
+        break;
     }
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
@@ -146,35 +163,53 @@ export class ManageAccounts extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const {
-      modalType, ids, count, name, password, passwordConfirm, userID,
+      modalType,
+      ids,
+      count,
+      name,
+      password,
+      passwordConfirm,
+      userID,
     } = this.state;
     const { target } = e;
 
     switch (modalType) {
       case 'delete':
-        ids.forEach((v) => {
+        ids.forEach(v => {
           if (v === Meteor.userId()) {
-            M.toast({ html: '<span >You can\'t delete yourself</span>', classes: 'red' });
+            M.toast({
+              html: "<span >You can't delete yourself</span>",
+              classes: 'red',
+            });
             return;
           } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-            M.toast({ html: '<span >You can not delete the admin</span>', classes: 'red' });
+            M.toast({
+              html: '<span >You can not delete the admin</span>',
+              classes: 'red',
+            });
             return;
           }
           Meteor.call('removeUser', v, err => {
             // eslint-disable-next-line
             err
-              // ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
-              ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              ? // ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
+              (M.toast({
+                html: `<span>${err.reason}</span>`,
+                classes: 'red',
+              }),
               Meteor.call(
                 'logger',
                 formatText(err.reason, Meteor.userId(), 'user-remove'),
                 'error',
               ))
-              : M.toast({ html: `<span>${count} ${name} successfully deleted</span>` });
+              : M.toast({
+                html: `<span>${count} ${name} successfully deleted</span>`,
+                classes: 'green darken-1',
+              });
           });
         });
         break;
-        // eslint-disable-next-line
+      // eslint-disable-next-line
       case 'edit':
         const fname = target.fname.value;
         Meteor.call('user.update', ids, fname, err => {
@@ -186,7 +221,10 @@ export class ManageAccounts extends React.Component {
               formatText(err.reason, Meteor.userId(), 'user-update'),
               'error',
             ))
-            : M.toast({ html: '<span>Successfully updated</span>' });
+            : M.toast({
+              html: '<span>Successfully updated</span>',
+              classes: 'green darken-1',
+            });
         });
         break;
       // eslint-disable-next-line
@@ -204,7 +242,7 @@ export class ManageAccounts extends React.Component {
             : M.toast({ html: '<span>Successfully updated user roles</span>' });
         });
         break;
-        // eslint-disable-next-line
+      // eslint-disable-next-line
       case 'pass':
         const response = checkPassword(password, passwordConfirm);
         if (!response.status) {
@@ -222,13 +260,15 @@ export class ManageAccounts extends React.Component {
               formatText(err.reason, Meteor.userId(), 'pass-change'),
               'error',
             ))
-            : M.toast({ html: '<span>Successfully created user password</span>' });
+            : M.toast({
+              html: '<span>Successfully created user password</span>',
+              classes: 'green darken-1',
+            });
         });
         break;
 
-
       default:
-        console.log(type) // eslint-disable-line
+        break;
     }
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
@@ -237,212 +277,240 @@ export class ManageAccounts extends React.Component {
     this.setState({
       password: value,
     });
-  }
+  };
   confirmPassword = ({ target: { value } }) => {
     this.setState({
       passwordConfirm: value,
     });
-  }
+  };
 
   render() {
     let count = 1;
     const { users } = this.props;
     const {
-      error, email, fname, title, confirm, reject, isOpen, modalType, password, passwordConfirm,
+      error,
+      email,
+      fname,
+      title,
+      confirm,
+      reject,
+      isOpen,
+      modalType,
+      password,
+      passwordConfirm,
     } = this.state;
 
     return (
       <ThemeContext.Consumer>
-        {
-          ({ state }) => (
-      <div>
-        <MainModal
-          show={isOpen}
-          onClose={this.close}
-          subFunc={this.handleSubmit}
-          title={title}
-          confirm={confirm}
-          reject={reject}
-          >
-          {modalType === 'edit' ? (
-            <AccountEditModal email={email} fname={fname} color={ state.isDark ? '#F5FAF8' : '#000000' } />
-            ) : modalType === 'roles' ? (
-              <div className="input-field">
-              <UserRoles value={this.state.role}
-                color={ state.isDark ? '#F5FAF8' : '#000000' } />
-            </div>
-          ) :
-            modalType === 'pass' ? (
-              <PasswordEdit password={password}
-              passwordConfirm={passwordConfirm}
-              validatePassword={this.validatePassword}
-              confirmPassword={this.confirmPassword}
-              error={error}
-              color={ state.isDark ? '#F5FAF8' : '#000000' }
-              />
-              ) :
-            <span />
-          }
-        </MainModal>
-        <div className='m1' />
-        <div className="col m9 s11"
+        {({ state }) => (
+          <div>
+            <MainModal
+              show={isOpen}
+              onClose={this.close}
+              subFunc={this.handleSubmit}
+              title={title}
+              confirm={confirm}
+              reject={reject}
+            >
+              {modalType === 'edit' ? (
+                <AccountEditModal
+                  email={email}
+                  fname={fname}
+                  color={state.isDark ? '#F5FAF8' : '#000000'}
+                />
+              ) : modalType === 'roles' ? (
+                <div className="input-field">
+                  <UserRoles
+                    value={this.state.role}
+                    color={state.isDark ? '#F5FAF8' : '#000000'}
+                  />
+                </div>
+              ) : modalType === 'pass' ? (
+                <PasswordEdit
+                  password={password}
+                  passwordConfirm={passwordConfirm}
+                  validatePassword={this.validatePassword}
+                  confirmPassword={this.confirmPassword}
+                  error={error}
+                  color={state.isDark ? '#F5FAF8' : '#000000'}
+                />
+              ) : (
+                <span />
+              )}
+            </MainModal>
+            <div className="m1" />
+            <div
+              className="col m9 s11"
               style={{
                 backgroundColor: state.isDark ? state.mainDark : '#FFFFFF',
                 color: state.isDark ? '#F5FAF8' : '#000000',
               }}
-        >
-          <div className="row">
-            <div>
-              <h4>
-                Manage <T>common.manage.accounts</T>
-              </h4>
-            </div>
-            <div className="col m8">
-              <SearchField
-                action={'/dashboard/accounts'}
-                name={'accounts'}
-                color={ state.isDark ? '#F5FAF8' : '#000000' }
-                placeholder={'search user by name,email'}
-                query={'q'}
-                />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col m3 s3">
-              <button
-                className="btn red darken-3"
-                onClick={e => this.openModal('delete', e)}
-                >
-                {' '}
-                <T>common.actions.delete</T>
-              </button>
-            </div>
-            {isUserAuth ? (
-              <Fragment>
+            >
+              <div className="row">
+                <div>
+                  <h4>
+                    Manage <T>common.manage.accounts</T>
+                  </h4>
+                </div>
+                <div className="col m8">
+                  <SearchField
+                    action={'/dashboard/accounts'}
+                    name={'accounts'}
+                    color={state.isDark ? '#F5FAF8' : '#000000'}
+                    placeholder={'search user by name,email'}
+                    query={'q'}
+                  />
+                </div>
+              </div>
+              <div className="row">
                 <div className="col m3 s3">
-                  <button className="btn " onClick={e => this.openModal('approve', e)}>
+                  <button
+                    className="btn red darken-3"
+                    onClick={e => this.openModal('delete', e)}
+                  >
                     {' '}
-                    Approve
+                    <T>common.actions.delete</T>
                   </button>
                 </div>
+                {isUserAuth ? (
+                  <Fragment>
+                    <div className="col m3 s3">
+                      <button
+                        className="btn "
+                        onClick={e => this.openModal('approve', e)}
+                      >
+                        {' '}
+                        Approve
+                      </button>
+                    </div>
+
+                    <div className="col m3 s3">
+                      <button
+                        className="btn grey darken-3"
+                        onClick={e => this.openModal('suspend', e)}
+                      >
+                        {' '}
+                        Suspend
+                      </button>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <span />
+                )}
 
                 <div className="col m3 s3">
                   <button
-                    className="btn grey darken-3"
-                    onClick={e => this.openModal('suspend', e)}
-                    >
+                    className="btn green darken-3"
+                    onClick={e => this.openModal('roles', e)}
+                  >
                     {' '}
-                    Suspend
+                    <T>common.actions.changeRole</T>
                   </button>
                 </div>
-              </Fragment>
-            ) : (
-              <span />
-            )}
+                <div className="col m3 s3">
+                  <button
+                    className="btn teal "
+                    onClick={e => this.openModal('pass', e)}
+                  >
+                    {' '}
+                    <T>Change Password</T>
+                  </button>
+                </div>
+              </div>
+              <table className="highlight">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>
+                      <T>common.accounts.name</T>
+                    </th>
+                    <th>
+                      <T>common.accounts.Role</T>
+                    </th>
+                    <th>
+                      <T>common.accounts.Email</T>
+                    </th>
+                    <th>
+                      <T>common.accounts.Gender</T>
+                    </th>
+                    {isUserAuth ? <th>Status</th> : null}
+                    <th>
+                      <T>common.actions.edit</T>
+                    </th>
+                    <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
+                      <label>
+                        <input type="checkbox" className=" chk-all" readOnly />
+                        <T>common.actions.check</T>
+                      </label>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map(user => {
+                    const { status } = user.profile;
+                    let statusIcon = 'fa-clock-o  ';
+                    let chkboxStatus = 'chk-appr  ';
+                    let email = user.emails; // eslint-disable-line
+                    email = email === undefined ? 'null' : email[0].address;
+                    if (status === 1) {
+                      statusIcon = 'fa-check-circle ';
+                      chkboxStatus = 'chk-ban ';
+                    } else if (status === 2) {
+                      statusIcon = 'fa-ban ';
+                    }
 
-            <div className="col m3 s3">
-              <button
-                className="btn green darken-3"
-                onClick={e => this.openModal('roles', e)}
-                >
-                {' '}
-                <T>common.actions.changeRole</T>
-              </button>
-            </div>
-            <div className="col m3 s3">
-              <button
-                className="btn teal "
-                onClick={e => this.openModal('pass', e)}
-                >
-                {' '}
-                <T>Change Password</T>
-              </button>
+                    return (
+                      <tr key={user._id}>
+                        <td>{count++}</td>
+                        <td>{`${user.profile.name}`}</td>
+                        <td>{!user.roles ? 'student' : user.roles}</td>
+                        <td>{email}</td>
+                        <td>{user.profile.gender}</td>
+                        {isUserAuth ? (
+                          <td>
+                            <i className={`fa-2x fa ${statusIcon}`} />
+                          </td>
+                        ) : null}
+                        <td>
+                          <a
+                            href=""
+                            onClick={e =>
+                              this.openModal(
+                                'edit',
+                                user._id,
+                                email,
+                                user.profile.name,
+                                e,
+                              )
+                            }
+                            className="fa fa-pencil"
+                          />
+                        </td>
+                        <td onClick={handleCheckboxChange.bind(this, user._id)}>
+                          <label htmlFor={user._id}>
+                            <input
+                              type="checkbox"
+                              id={user._id}
+                              className={`${chkboxStatus} chk chk${user._id}`}
+                            />
+                            <span />
+                          </label>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <Pagination
+                path={'/dashboard/accounts'}
+                itemPerPage={limit}
+                query={getQuery(queryParams, true)}
+                totalResults={this.props.count}
+              />{' '}
             </div>
           </div>
-          <table className="highlight">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>
-                  <T>common.accounts.name</T>
-                </th>
-                <th>
-                  <T>common.accounts.Role</T>
-                </th>
-                <th>
-                  <T>common.accounts.Email</T>
-                </th>
-                <th>
-                  <T>common.accounts.Gender</T>
-                </th>
-                {isUserAuth ? <th>Status</th> : null}
-                <th>
-                  <T>common.actions.edit</T>
-                </th>
-                <th onClick={handleCheckAll.bind(this, 'chk-all', 'chk')}>
-                  <label>
-                  <input type="checkbox" className=" chk-all" readOnly />
-                    <T>common.actions.check</T>
-                  </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map(user => {
-                const { status } = user.profile;
-                let statusIcon = 'fa-clock-o  ';
-                let chkboxStatus = 'chk-appr  ';
-                let email = user.emails; // eslint-disable-line
-                email = email === undefined ? 'null' : email[0].address;
-                if (status === 1) {
-                  statusIcon = 'fa-check-circle ';
-                  chkboxStatus = 'chk-ban ';
-                } else if (status === 2) {
-                  statusIcon = 'fa-ban ';
-                }
-                
-                return (
-                  <tr key={user._id}>
-                    <td>{count++}</td>
-                    <td>{`${user.profile.name}`}</td>
-                    <td>{!user.roles ? 'student' : user.roles}</td>
-                    <td>{email}</td>
-                    <td>{user.profile.gender}</td>
-                    {isUserAuth ? (
-                      <td>
-                        <i className={`fa-2x fa ${statusIcon}`} />
-                      </td>
-                    ) : null}
-                    <td>
-                      <a
-                        href=""
-                        onClick={e => this.openModal('edit', user._id, email, user.profile.name, e)}
-                        className="fa fa-pencil"
-                        />
-                    </td>
-                    <td onClick={handleCheckboxChange.bind(this, user._id)}>
-                    <label htmlFor={user._id}>
-                      <input type="checkbox" id={user._id} className={`${chkboxStatus} chk chk${user._id}`} />
-                      <span/>
-                    </label>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <Pagination
-            path={'/dashboard/accounts'}
-            itemPerPage={limit}
-            query={getQuery(queryParams, true)}
-            totalResults={this.props.count}
-            />{' '}
-        </div>
-        {/* </div> */}
-      </div>
-    )
-  }
-</ThemeContext.Consumer>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
@@ -514,6 +582,8 @@ export default withTracker(() => {
         },
       )
       .fetch(),
-    count: Meteor.users.find({ $or: search() }, { sort: { 'profile.status': 1 } }).count(),
+    count: Meteor.users
+      .find({ $or: search() }, { sort: { 'profile.status': 1 } })
+      .count(),
   };
 })(ManageAccounts);
