@@ -32,7 +32,7 @@ Before pushing anything to your fork, always
 
 Set up the remote version
 
-`git remote add upstream https://github.com/OlivierJM/learn-js` 
+`git remote add upstream https://github.com/SparkEdUAB/SparkEd` 
 
 verify that you have added and you have 2 remotes
 
