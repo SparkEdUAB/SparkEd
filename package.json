@@ -24,7 +24,7 @@
     "react-countup": "^4.0.0",
     "react-dom": "^16.7.0",
     "react-mounter": "^1.2.0",
-    "react-paginate": "^5.2.4",
+    "react-paginate": "^6.3.0",
     "react-player": "^1.6.6",
     "request": "^2.75.0",
     "simpl-schema": "^1.4.2"
