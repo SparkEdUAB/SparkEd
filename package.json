@@ -44,7 +44,7 @@
   "homepage": "https://github.com/SparkEdUAB/SparkEd#readme",
   "devDependencies": {
     "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-env": "^7.6.0",
     "@meteorjs/eslint-config-meteor": "^1.0.5",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
