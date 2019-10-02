@@ -25,7 +25,7 @@
     "react-dom": "^16.10.1",
     "react-mounter": "^1.2.0",
     "react-paginate": "^6.3.0",
-    "react-player": "^1.11.1",
+    "react-player": "^1.13.0",
     "request": "^2.75.0",
     "simpl-schema": "^1.4.2"
   },
