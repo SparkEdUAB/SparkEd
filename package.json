@@ -21,7 +21,7 @@
     "prop-types": "^15.6.0",
     "react": "^16.11.0",
     "react-color": "^2.17.3",
-    "react-countup": "^4.2.2",
+    "react-countup": "^4.2.3",
     "react-dom": "^16.11.0",
     "react-mounter": "^1.2.0",
     "react-paginate": "^6.3.2",
