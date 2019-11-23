@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { mount } from "react-mounter";
 import React from "react";
 import Home from "../imports/ui/components/Home.jsx";
@@ -6,18 +5,18 @@ import Unit from "../imports/ui/components/Dashboard/Unit.jsx";
 import AutoSync from "../imports/ui/components/Sync/AutoSync.jsx";
 import ManageUnits from "../imports/ui/components/Dashboard/ManageUnits.jsx";
 import ViewResourceApp from "../imports/ui/components/content/ViewResourceApp.jsx";
-import Register from "../imports/ui/components/Accounts/Register";
-import Login from "../imports/ui/components/Accounts/Login";
+import Register from "../imports/ui/components/Accounts/Register.jsx";
+import Login from "../imports/ui/components/Accounts/Login.jsx";
 import ContentsApp from "../imports/ui/components/content/ContentsApp.jsx";
 import CourseContent from "../imports/ui/components/content/CourseContent.jsx";
 import SearchResults from "../imports/ui/components/Search/SearchResults.jsx";
 import ManageAccounts from "../imports/ui/components/Accounts/ManageAccounts.jsx";
 import EditUnit from "../imports/ui/components/Dashboard/EditUnit.jsx";
 import EditResources from "../imports/ui/components/Dashboard/EditResources.jsx";
-import NotFound from "../imports/ui/components/layouts/NotFound";
+import NotFound from "../imports/ui/components/layouts/NotFound.jsx";
 import OverView from "../imports/ui/components/Dashboard/Statistics/Overview.jsx";
-import UserStatistics from "../imports/ui/components/Dashboard/Statistics/UserStatistics";
-import Stats from "../imports/ui/components/Dashboard/Statistics/Stats";
+import UserStatistics from "../imports/ui/components/Dashboard/Statistics/UserStatistics.jsx";
+import Stats from "../imports/ui/components/Dashboard/Statistics/Stats.jsx";
 import AllTopics from "../imports/ui/components/Dashboard/AllTopics.jsx";
 import Feedback from "../imports/ui/components/Dashboard/Feedback.jsx";
 import Additional from "../imports/ui/components/Dashboard/Additional.jsx";
@@ -27,14 +26,16 @@ import Notifications from "../imports/ui/components/Notifications/Notifications.
 import ManageSlides from "../imports/ui/components/Dashboard/Settings/ManageSlides.jsx";
 import ReferenceLibrary from "../imports/ui/components/content/ReferenceLibrary.jsx";
 import Landing from "../imports/ui/components/Landing.jsx";
-import AppWrapper from "../imports/ui/containers/AppWrapper";
-import FileUploadComponent from "../imports/ui/containers/FileUploadComponent";
-import WrappedSidenav from "../imports/ui/components/Dashboard/Sidenav";
-import SetUp from "../imports/ui/components/WalkThrough/Setup";
+import AppWrapper from "../imports/ui/containers/AppWrapper.jsx";
+import FileUploadComponent from "../imports/ui/containers/FileUploadComponent.jsx";
+import WrappedSidenav from "../imports/ui/components/Dashboard/Sidenav.jsx";
+import SetUp from "../imports/ui/components/WalkThrough/Setup.jsx";
 import ExternalLinks from "../imports/ui/components/ExternalLink/ExternalLinks.jsx";
 import ExternalLinksPage from "../imports/ui/components/ExternalLink/ListExternalLinkPage.jsx";
-import SyncUpdates from "../imports/ui/components/Sync/SyncUpdates";
+import SyncUpdates from "../imports/ui/components/Sync/SyncUpdates.jsx";
 import Backup from "../imports/ui/components/Dashboard/Backup/Backup.jsx";
+import UnitsTopics from "../imports/ui/components/content/UnitsTopics.jsx";
+
 const config = require("../config.json");
 
 const exposed = FlowRouter.group({});
@@ -100,21 +101,21 @@ exposed.route("/login", {
 
 isAuthRequired().route("/view_resource/:_id", {
   name: "Home",
-  action(params, queryParams) {
+  action() {
     mount(AppWrapper, { children: <ViewResourceApp /> });
   }
 });
 
 isAuthRequired().route("/extra/view_resource/:_id", {
   name: "ViewExtraResource",
-  action(queryParams) {
+  action() {
     mount(AppWrapper, { children: <DisplayResource /> });
   }
 });
 
 isAuthRequired().route("/contents/:_id", {
   name: "Contents",
-  action(params, queryParams) {
+  action() {
     mount(AppWrapper, { children: <ContentsApp /> });
     // console.log("This is my blog post:", params);
   }
@@ -122,21 +123,21 @@ isAuthRequired().route("/contents/:_id", {
 
 isAuthRequired().route("/contents/", {
   name: "Contents",
-  action(params, queryParams) {
+  action() {
     mount(AppWrapper, { children: <ContentsApp /> });
   }
 });
 
 isAuthRequired().route("/course_content/:_id", {
   name: "CourseContent",
-  action(params, queryParams) {
+  action() {
     mount(AppWrapper, { children: <CourseContent /> });
   }
 });
 
 isAuthRequired().route("/course_content/", {
   name: "CourseContent",
-  action(params, queryParams) {
+  action() {
     mount(AppWrapper, { children: <CourseContent /> });
   }
 });
@@ -163,13 +164,13 @@ isAuthRequired().route("/request", {
 });
 adminRoutes.route("/dashboard/edit_resources/:_id", {
   name: "EditResources",
-  action(params, queryParams) {
+  action() {
     mount(WrappedSidenav, { yield: <EditResources />, isAtCourse: true });
   }
 });
 adminRoutes.route("/dashboard/isHighSchool/edit_unit/:_id", {
   name: "EditResources",
-  action(params, queryParams) {
+  action() {
     mount(WrappedSidenav, { yield: <EditResources />, isAtCourse: true });
   }
 });
@@ -183,27 +184,27 @@ adminRoutes.route("/dashboard/edit_unit/:_id", {
 
 adminRoutes.route("/dashboard/units/:_id", {
   name: "ManageUnits",
-  action(params, queryParams) {
+  action() {
     mount(WrappedSidenav, { yield: <ManageUnits />, isAtCourse: true });
   }
 });
 
 adminRoutes.route("/dashboard/units/prog/:_id", {
   name: "SearchUnits",
-  action(params, queryParams) {
+  action() {
     mount(WrappedSidenav, { yield: <ManageUnits />, isAtCourse: true });
   }
 });
 
 isAuthRequired().route("/dashboard/units/", {
   name: "SearchUnits",
-  action(params, queryParams) {
+  action() {
     mount(WrappedSidenav, { yield: <ManageUnits />, isAtCourse: true });
   }
 });
 adminRoutes.route("/dashboard/unit/:_id", {
   name: "New Unit",
-  action(params, queryParams) {
+  action() {
     mount(WrappedSidenav, { yield: <Unit />, isAtCourse: true });
   }
 });
@@ -243,14 +244,14 @@ adminRoutes.route("/dashboard/list_topics", {
 
 adminRoutes.route("/dashboard/course/:_id", {
   name: "Courses",
-  action(params, queryParams) {
+  action() {
     mount(WrappedSidenav, { yield: <Courses />, isAtCourse: true });
   }
 });
 
 adminRoutes.route("/dashboard/course", {
   name: "Courses",
-  action(params) {
+  action() {
     mount(WrappedSidenav, { yield: <Courses />, isAtCourse: true });
   }
 });
@@ -264,7 +265,7 @@ adminRoutes.route("/dashboard/stats", {
 
 adminRoutes.route("/dashboard/view_resource/:_id", {
   name: "DisplayResource",
-  action(queryParams) {
+  action() {
     mount(WrappedSidenav, { yield: <DisplayResource />, isAtExtra: true });
   }
 });
@@ -329,7 +330,7 @@ loggedIn.route("/externallinkpages", {
 
 isAuthRequired().route("/reference/:_id", {
   name: "ReferenceLibrary",
-  action(queryParams) {
+  action() {
     mount(AppWrapper, { children: <ReferenceLibrary /> });
   }
 });
@@ -354,5 +355,11 @@ isAuthRequired().route("/dashboard/backup", {
   name: "Backup",
   action() {
     mount(WrappedSidenav, { yield: <Backup />, isAtBackup: true });
+  }
+});
+isAuthRequired().route("/testunits", {
+  name: "TestUnits",
+  action() {
+    mount(UnitsTopics);
   }
 });
