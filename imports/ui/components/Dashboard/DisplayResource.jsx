@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { References } from '../../../api/resources/resources';
 import { _Courses } from '../../../api/courses/courses';
 import ResourceRender from '../content/ResourceRender.jsx';
-import { courseName } from '../content/CourseContent.jsx';
+// import { courseName } from '../content/CourseContent.jsx';
 import { SideMenu } from '../content/ReferenceLibrary.jsx';
-import ErrorBoundary from '../ErrorBoundary';
+import ErrorBoundary from '../ErrorBoundary.jsx';
 
+export const courseName = coll => (!coll ? null : coll.name);
 export class DisplayResource extends Component {
   static extractFileType(data) {
     const fileTypeData = data.split('/');
@@ -29,7 +30,7 @@ export class DisplayResource extends Component {
   }
 
   renderResource() {
-    let resource = this.fetchResource();
+    const resource = this.fetchResource();
     if (!resource) {
       return null;
     }
@@ -77,16 +78,21 @@ export class DisplayResource extends Component {
 
             <div className="">{this.renderResource()}</div>
           </div>
-          <>
+          <Fragment>
             {// if the admin is viewing the resource from the dashboard, keep them there
             FlowRouter.getRouteName() === 'DisplayResource' ? (
               <span />
             ) : (
-              <>
+              <Fragment>
                 <div className="col m2 s12 menu_simple">
                   <ul className="item-container">
                     <li className="">
-                      <a disabled={true} id="dashtweek" href="" className="center">
+                      <a
+                        disabled={true}
+                        id="dashtweek"
+                        href=""
+                        className="center"
+                      >
                         {courseName(this.props.courseName) || 'Anonymous'}
                       </a>
                     </li>
@@ -98,9 +104,9 @@ export class DisplayResource extends Component {
                     {this.renderResources()}
                   </ul>
                 </div>
-              </>
+              </Fragment>
             )}
-          </>
+          </Fragment>
         </div>
       </ErrorBoundary>
     );
@@ -110,6 +116,7 @@ export class DisplayResource extends Component {
 DisplayResource.propTypes = {
   resource: PropTypes.object,
   courseName: PropTypes.object,
+  resources: PropTypes.Array,
 };
 
 // show references that don't belong to any course but they are extra
@@ -137,6 +144,9 @@ export default withTracker(() => {
   return {
     resources: References.find({ courseId: getCourseId() }).fetch(),
     resource: References.findOne({ _id: getResourceId() }),
-    courseName: _Courses.findOne({ _id: getCourseId() }, { fields: { name: 1 } }),
+    courseName: _Courses.findOne(
+      { _id: getCourseId() },
+      { fields: { name: 1 } },
+    ),
   };
 })(DisplayResource);
