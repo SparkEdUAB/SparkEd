@@ -1,29 +1,26 @@
-import { Meteor } from 'meteor/meteor';
-import { PropTypes } from 'prop-types';
-import React, { PureComponent, Fragment } from 'react';
-import { Session } from 'meteor/session';
-import M from 'materialize-css';
-import { withTracker } from 'meteor/react-meteor-data';
-import { _Courses } from '../../api/courses/courses';
-import { _Units } from '../../api/units/units';
-import Courses from './content/Courses.jsx';
-import { FloatingButton } from './Utilities/Utilities.jsx';
+import { Meteor } from "meteor/meteor";
+import { PropTypes } from "prop-types";
+import React, { PureComponent, Fragment } from "react";
+import { Session } from "meteor/session";
+import M from "materialize-css";
+import { withTracker } from "meteor/react-meteor-data";
+import { _Courses } from "../../api/courses/courses";
+import { _Units } from "../../api/units/units";
+import Courses from "./content/Courses.jsx";
+import { FloatingButton } from "./Utilities/Utilities.jsx";
 import ImgSlider from "../components/layouts/ImageSlider"; // eslint-disable-line
-import * as Config from '../../../config.json';
+import * as Config from "../../../config.json";
 import { Loader } from "./Loader"; // eslint-disable-line
 import ErrorBoundary from "./ErrorBoundary"; // eslint-disable-line
 import { ThemeContext } from "../containers/AppWrapper"; // eslint-disable-line
-import { Mongo } from 'meteor/mongo';
-
-const Topics = new Mongo.Collection('aggregatedTopics');
 
 export class Home extends PureComponent {
   componentDidMount() {
     if (!Config.isConfigured) {
-      FlowRouter.go('/setup');
+      FlowRouter.go("/setup");
     }
     M.AutoInit();
-    Session.set('language', 'english');
+    Session.set("language", "english");
   }
 
   renderCourses() {
@@ -58,7 +55,7 @@ export class Home extends PureComponent {
                   <div className="input-field col s12">
                     <select
                       onChange={e => {
-                        Session.set('language', e.target.value);
+                        Session.set("language", e.target.value);
                       }}
                     >
                       <option value="" disabled defaultValue>
@@ -88,28 +85,28 @@ Home.propTypes = {
   unit: PropTypes.array,
   courses: PropTypes.array,
   subsReady: PropTypes.bool,
-  courseReady: PropTypes.bool,
+  courseReady: PropTypes.bool
 };
 
 export default withTracker(() => {
-  const handle = Meteor.subscribe('courses');
-  Meteor.subscribe('slides');
-  Meteor.subscribe('topics');
-  Meteor.subscribe('units');
+  const handle = Meteor.subscribe("courses");
+  Meteor.subscribe("slides");
+  Meteor.subscribe("topics");
+  Meteor.subscribe("units");
 
   return {
     courseReady: handle.ready(),
     unit: _Units.find().fetch(),
     courses: _Courses
       .find(
-        { 'details.language': Session.get('language') },
+        { "details.language": Session.get("language") },
         {
           fields: {
             name: 1,
-            details: 1,
-          },
-        },
+            details: 1
+          }
+        }
       )
-      .fetch(),
+      .fetch()
   };
 })(Home);
