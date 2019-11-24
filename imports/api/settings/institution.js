@@ -13,6 +13,7 @@ export const Institution = new FilesCollection({
   },
   onAfterUpload(file) {
     if (Meteor.isServer) {
+      // eslint-disable-next-line no-console
       console.log(file);
     }
   },
