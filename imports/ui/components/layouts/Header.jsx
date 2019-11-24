@@ -279,7 +279,7 @@ export class Header extends PureComponent {
                   <div className="col s12 m2 hide-on-small-only">
                     <SearchView
                       action={'/results'}
-                      placeholder={'Search'}
+                      placeholder={'search here '}
                       query={'q'}
                       sClass={'searchAnim'}
                     />

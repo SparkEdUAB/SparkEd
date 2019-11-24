@@ -379,7 +379,7 @@ nav ul a:hover {
 }
 /*Search input field*/
 #search {
-  /* background-color: #00bcd4; */
+  background-color: #f8fbfb;
   padding-left: 8px;
   border: none;
   border-radius: 4px;
