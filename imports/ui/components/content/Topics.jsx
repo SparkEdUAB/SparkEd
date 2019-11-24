@@ -65,17 +65,19 @@ export class Topics extends Component {
   componentDidMount() {
     M.AutoInit();
     setActiveItem(Session.get('activetopic'), 'topic', 'cardListItem');
-    Meteor.call('aggregateTopics', (error, data) => {
-      if (!error) {
-        //  self.resources.set(r);
-        // console.log();
-        this.setState({
-          units: data,
-        });
-      } else {
-        console.log(error);
-      }
-    });
+    Meteor.call(
+      'aggregateTopics',
+      FlowRouter.getParam('_id'),
+      (error, data) => {
+        if (!error) {
+          this.setState({
+            units: data,
+          });
+        } else {
+          console.log(error);
+        }
+      },
+    );
   }
 
   saveUsage(id, name, url) {

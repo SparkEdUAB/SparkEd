@@ -55,13 +55,16 @@ Meteor.methods({
       throw new Meteor.Error("oops", "You are not allowed to not make changes");
     }
   },
-  async aggregateTopics() {
+  async aggregateTopics(id) {
+    check(id, String);
     return await _Units
       .rawCollection()
       .aggregate([
+        { $match: { "details.courseId": id } },
         {
           $lookup: {
             from: "topic",
+
             localField: "_id",
             foreignField: "unitId",
             as: "topics"
