@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import M from 'materialize-css';
 import ReactPaginate from 'react-paginate';
 import { Session } from 'meteor/session';
 import { _Topics } from '../../../api/topics/topics';
@@ -14,6 +15,7 @@ export class Topics extends Component {
     super(props);
     this.state = {
       topicName: '',
+      units: [],
     };
     Session.set('limit', 15);
   }
@@ -61,7 +63,19 @@ export class Topics extends Component {
   }
 
   componentDidMount() {
+    M.AutoInit();
     setActiveItem(Session.get('activetopic'), 'topic', 'cardListItem');
+    Meteor.call('aggregateTopics', (error, data) => {
+      if (!error) {
+        //  self.resources.set(r);
+        // console.log();
+        this.setState({
+          units: data,
+        });
+      } else {
+        console.log(error);
+      }
+    });
   }
 
   saveUsage(id, name, url) {
@@ -83,31 +97,40 @@ export class Topics extends Component {
     FlowRouter.go(url);
   }
   renderTopic() {
-    let index = 0;
+    const index = 0;
     const { topics, unitId } = this.props;
-    if (!topics) {
+    const { units } = this.state;
+    if (!topics || !units) {
       return null;
     }
-    return topics.map(topic => (
-      <li
-        key={index++}
-        onClick={this.saveUsage.bind(
-          this,
-          topic._id,
-          topic.name,
-          `/contents/${unitId}?rs=${topic._id}`,
-        )}
-        id={topic._id}
-        className={'link topic cardListItem'}
-      >
-        <div id="selectedTopic"> {topic.name}</div>
+    return units.map(unit => (
+      <li key={unit._id}>
+        <div className="collapsible-header">{unit.name}</div>
+        <div className="collapsible-body">
+          <ul className="collection">
+            {unit.topics.map(topic => (
+              <li
+                key={topic._id}
+                className="collection-item"
+                onClick={this.saveUsage.bind(
+                  this,
+                  topic._id,
+                  topic.name,
+                  `/contents/${unit._id}?rs=${topic._id}`,
+                )}
+              >
+                {topic.name}
+              </li>
+            ))}
+          </ul>
+        </div>
       </li>
     ));
   }
   render() {
     return (
       <ul className="topic-item-container">
-        {this.renderTopic()}
+        <ul className="collapsible">{this.renderTopic()}</ul>
         {this.renderPagination()}
       </ul>
     );
@@ -121,8 +144,10 @@ Topics.propTypes = {
 };
 
 export default withTracker(param => {
+  Meteor.subscribe('courseUnits', param.unitId);
   if (config.isHighSchool) {
-    Meteor.subscribe('units');
+    // Meteor.subscribe('units');
+
     return {
       topics: _Units
         .find(

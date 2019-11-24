@@ -39,14 +39,14 @@ export class Home extends PureComponent {
 
   render() {
     const { courseReady } = this.props;
-    Meteor.call('aggregateTopics', (error, data) => {
-      if (!error) {
-        //  self.resources.set(r);
-        console.log(data);
-      } else {
-        console.log(error);
-      }
-    });
+    // Meteor.call('aggregateTopics', (error, data) => {
+    //   if (!error) {
+    //     //  self.resources.set(r);
+    //     console.log(data);
+    //   } else {
+    //     console.log(error);
+    //   }
+    // });
     return (
       <ErrorBoundary>
         <ThemeContext.Consumer>
