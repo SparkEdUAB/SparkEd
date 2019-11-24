@@ -13,6 +13,9 @@ import * as Config from '../../../config.json';
 import { Loader } from "./Loader"; // eslint-disable-line
 import ErrorBoundary from "./ErrorBoundary"; // eslint-disable-line
 import { ThemeContext } from "../containers/AppWrapper"; // eslint-disable-line
+import { Mongo } from 'meteor/mongo';
+
+const Topics = new Mongo.Collection('aggregatedTopics');
 
 export class Home extends PureComponent {
   componentDidMount() {
@@ -36,6 +39,14 @@ export class Home extends PureComponent {
 
   render() {
     const { courseReady } = this.props;
+    Meteor.call('aggregateTopics', (error, data) => {
+      if (!error) {
+        //  self.resources.set(r);
+        console.log(data);
+      } else {
+        console.log(error);
+      }
+    });
     return (
       <ErrorBoundary>
         <ThemeContext.Consumer>
@@ -46,7 +57,9 @@ export class Home extends PureComponent {
                 <div className="row ">
                   <div className="input-field col s12">
                     <select
-                      onChange={e => Session.set('language', e.target.value)}
+                      onChange={e => {
+                        Session.set('language', e.target.value);
+                      }}
                     >
                       <option value="" disabled defaultValue>
                         Choose your Language
@@ -81,7 +94,9 @@ Home.propTypes = {
 export default withTracker(() => {
   const handle = Meteor.subscribe('courses');
   Meteor.subscribe('slides');
-  Meteor.subscribe('titles');
+  Meteor.subscribe('topics');
+  Meteor.subscribe('units');
+
   return {
     courseReady: handle.ready(),
     unit: _Units.find().fetch(),

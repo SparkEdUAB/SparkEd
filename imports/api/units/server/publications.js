@@ -27,19 +27,3 @@ Meteor.publish('isHighSchool.units', function getSecUnit(id) {
   }
   return _Units.find({ _id: id }, { fields: { name: 1 } });
 });
-
-Meteor.publish('aggregate', () => {
-  const aggregatedTopics = _Units.rawCollection().aggregate([
-    {
-      $lookup: {
-        from: 'topic',
-        localField: '_id',
-        foreignField: 'unitId',
-        as: 'topics',
-      },
-    },
-  ]);
-  console.log(aggregatedTopics);
-  return aggregatedTopics;
-});
-// console.log(,);

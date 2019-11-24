@@ -54,19 +54,20 @@ Meteor.methods({
     } else {
       throw new Meteor.Error("oops", "You are not allowed to not make changes");
     }
+  },
+  async aggregateTopics() {
+    return await _Units
+      .rawCollection()
+      .aggregate([
+        {
+          $lookup: {
+            from: "topic",
+            localField: "_id",
+            foreignField: "unitId",
+            as: "topics"
+          }
+        }
+      ])
+      .toArray();
   }
-  // "aggregate.topics"() {
-  //   const aggregatedTopics = _Units.rawCollection().aggregate([
-  //     {
-  //       $lookup: {
-  //         from: "topic",
-  //         localField: "_id",
-  //         foreignField: "unitId",
-  //         as: "topics"
-  //       }
-  //     }
-  //   ]);
-  //   // console.log(aggregatedTopics);
-  //   return aggregatedTopics;
-  // }
 });
