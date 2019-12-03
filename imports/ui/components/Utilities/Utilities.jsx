@@ -1,10 +1,10 @@
 /* eslint-disable no-case-declarations */
-import React, { Component, Fragment, PureComponent } from 'react';
-import { PropTypes } from 'prop-types';
-import { Meteor } from 'meteor/meteor';
-import M from 'materialize-css';
-import MainModal from '../../modals/MainModal';
-import { _Bookmark } from '../../../api/bookmarks/bookmarks';
+import React, { Component, Fragment, PureComponent } from "react";
+import { PropTypes } from "prop-types";
+import { Meteor } from "meteor/meteor";
+import M from "materialize-css";
+import MainModal from "../../modals/MainModal.jsx";
+import { _Bookmark } from "../../../api/bookmarks/bookmarks";
 
 export class SearchView extends Component {
   getQuery() {
@@ -14,7 +14,7 @@ export class SearchView extends Component {
   }
   submit = e => {
     e.preventDefault();
-    const value = e.target.g_search.value;
+    const { value } = e.target.g_search;
     return FlowRouter.go(`${this.props.action}?q=${value}`);
   };
   render() {
@@ -28,7 +28,7 @@ export class SearchView extends Component {
         <div className="row">
           <input
             className={`col input ${this.props.sClass}`}
-            name={'g_search'}
+            name={"g_search"}
             type="search"
             defaultValue={this.getQuery()}
             id="search"
@@ -47,7 +47,7 @@ SearchView.propTypes = {
   query: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   sClass: PropTypes.string,
-  formName: PropTypes.string,
+  formName: PropTypes.string
 };
 
 export class SearchField extends Component {
@@ -72,7 +72,7 @@ export class SearchField extends Component {
         <div className="row">
           <input
             className={this.props.query}
-            name={'search'}
+            name={"search"}
             type="search"
             defaultValue={this.getQuery()}
             style={{ color: this.props.color }}
@@ -91,7 +91,7 @@ SearchField.propTypes = {
   query: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   formName: PropTypes.string,
-  color: PropTypes.string,
+  color: PropTypes.string
 };
 
 export function initInput() {
@@ -107,11 +107,11 @@ export function filterUrl(filter) {
 export function setActiveItem(id, items, clas) {
   $(`.${items}`).each((k, v) => {
     $(v)
-      .removeClass('active-item')
+      .removeClass("active-item")
       .addClass(clas);
   });
   $(`#${id}`)
-    .addClass('active-item')
+    .addClass("active-item")
     .removeClass(clas);
 }
 
@@ -121,16 +121,16 @@ export class FloatingButton extends PureComponent {
     super(props);
     this.state = {
       isOpen: false,
-      modalIdentifier: '',
-      modalType: '',
-      title: '',
-      confirm: '',
-      reject: '',
-      value: '',
-      feedDesc: '',
-      feedTitle: '',
-      bookTitle: '',
-      bookDesc: '',
+      modalIdentifier: "",
+      modalType: "",
+      title: "",
+      confirm: "",
+      reject: "",
+      value: "",
+      feedDesc: "",
+      feedTitle: "",
+      bookTitle: "",
+      bookDesc: ""
     };
   }
 
@@ -140,45 +140,45 @@ export class FloatingButton extends PureComponent {
   handleSubmit = e => {
     e.preventDefault();
     const userName = !Meteor.user()
-      ? 'anonymous'
+      ? "anonymous"
       : `${Meteor.user().profile.name} `;
 
     const { modalType, feedDesc, feedTitle, bookTitle, bookDesc } = this.state;
 
     const { pathname, href } = window.location;
     switch (modalType) {
-      case 'feedback':
+      case "feedback":
         // const { href } = window.location;
         Meteor.call(
-          'feedback.insert',
+          "feedback.insert",
           feedTitle,
           feedDesc,
           href,
           userName,
           err => {
             if (err) {
-              M.toast({ html: err.reason, classes: 'error-toast' });
+              M.toast({ html: err.reason, classes: "error-toast" });
             } else {
               M.toast({
-                html: 'Your feedback has successfully been submitted',
-                classes: 'success-toast',
+                html: "Your feedback has successfully been submitted",
+                classes: "success-toast"
               });
             }
-          },
+          }
         );
         break;
-      case 'bookmark':
+      case "bookmark":
         const { bookColor } = this.state;
         const bookmarkData = _Bookmark.findOne({ href });
         let bookmark = null;
         if (
-          typeof bookmarkData === 'object' &&
+          typeof bookmarkData === "object" &&
           Meteor.userId() === bookmarkData.user
         ) {
           bookmark = bookmarkData._id;
         }
         Meteor.call(
-          'updateBookmark',
+          "updateBookmark",
           bookmark,
           bookTitle,
           bookDesc,
@@ -187,9 +187,9 @@ export class FloatingButton extends PureComponent {
           pathname,
           err => {
             err
-              ? M.toast({ html: err.reason, classes: 'error-toast' })
-              : M.toast({ html: 'Updated Bookmark', classes: 'success-toast' });
-          },
+              ? M.toast({ html: err.reason, classes: "error-toast" })
+              : M.toast({ html: "Updated Bookmark", classes: "success-toast" });
+          }
         );
         break;
       default:
@@ -202,20 +202,20 @@ export class FloatingButton extends PureComponent {
   toggleEditModal = (e, type) => {
     e.preventDefault();
     switch (type) {
-      case 'feedback':
+      case "feedback":
         this.setState({
           modalType: type,
-          title: 'Submit Feedback',
-          confirm: 'Save',
-          reject: 'Close',
+          title: "Submit Feedback",
+          confirm: "Save",
+          reject: "Close"
         });
         break;
-      case 'bookmark':
+      case "bookmark":
         this.setState({
           modalType: type,
-          title: 'Add Bookmarks',
-          confirm: 'Save',
-          reject: 'Close',
+          title: "Add Bookmarks",
+          confirm: "Save",
+          reject: "Close"
         });
         break;
       default:
@@ -228,30 +228,30 @@ export class FloatingButton extends PureComponent {
     event.preventDefault();
     this.color = color;
     this.setState({
-      bookColor: this.color,
+      bookColor: this.color
     });
   }
 
   grabText = ({ target: { value } }, field) => {
     switch (field) {
-      case 'feedTitle':
+      case "feedTitle":
         this.setState({
-          feedTitle: value,
+          feedTitle: value
         });
         break;
-      case 'feedDesc':
+      case "feedDesc":
         this.setState({
-          feedDesc: value,
+          feedDesc: value
         });
         break;
-      case 'bookTitle':
+      case "bookTitle":
         this.setState({
-          bookTitle: value,
+          bookTitle: value
         });
         break;
-      case 'bookDesc':
+      case "bookDesc":
         this.setState({
-          bookDesc: value,
+          bookDesc: value
         });
         break;
       default:
@@ -271,7 +271,7 @@ export class FloatingButton extends PureComponent {
           reject={reject}
         >
           <div className="container-fluid">
-            {modalType === 'feedback' ? (
+            {modalType === "feedback" ? (
               <Fragment>
                 <div className="row">
                   <div className="input-field col s12">
@@ -282,7 +282,7 @@ export class FloatingButton extends PureComponent {
                       placeholder="Title"
                       required
                       name="feedback_title"
-                      onChange={e => this.grabText(e, 'feedTitle')}
+                      onChange={e => this.grabText(e, "feedTitle")}
                     />
                   </div>
                 </div>
@@ -294,7 +294,7 @@ export class FloatingButton extends PureComponent {
                       required
                       placeholder="Your FeedBack"
                       name="feedback_content"
-                      onChange={e => this.grabText(e, 'feedDesc')}
+                      onChange={e => this.grabText(e, "feedDesc")}
                     />
                   </div>
                 </div>
@@ -311,30 +311,30 @@ export class FloatingButton extends PureComponent {
                       className="clear validate"
                       placeholder="Title"
                       required
-                      onChange={e => this.grabText(e, 'bookTitle')}
+                      onChange={e => this.grabText(e, "bookTitle")}
                     />
                     <input
                       type="color"
                       defaultValue="#008000"
-                      onClick={this.setColor.bind(this, '#008000')}
+                      onClick={this.setColor.bind(this, "#008000")}
                       id="bmk-color-green"
                     />
                     <input
                       type="color"
                       defaultValue="#ffeb3b"
-                      onClick={this.setColor.bind(this, '#ffeb3b')}
+                      onClick={this.setColor.bind(this, "#ffeb3b")}
                       id="bmk-color-yellow"
                     />
                     <input
                       type="color"
                       defaultValue="#f44336"
-                      onClick={this.setColor.bind(this, '#f44336')}
+                      onClick={this.setColor.bind(this, "#f44336")}
                       id="bmk-color-red"
                     />
                     <input
                       type="color"
                       defaultValue="#9c27b0"
-                      onClick={this.setColor.bind(this, '#9c27b0')}
+                      onClick={this.setColor.bind(this, "#9c27b0")}
                       id="bmk-color-purple"
                     />
                     <input
@@ -354,7 +354,7 @@ export class FloatingButton extends PureComponent {
                       className="clear materialize-textarea"
                       maxLength="70"
                       placeholder="short description"
-                      onChange={e => this.grabText(e, 'bookDesc')}
+                      onChange={e => this.grabText(e, "bookDesc")}
                     />
                   </div>
                 </div>
@@ -376,14 +376,14 @@ export class FloatingButton extends PureComponent {
                 href="#"
                 title="Provide feedback"
                 className="btn-floating  waves-effect waves-light teal darken-1"
-                onClick={e => this.toggleEditModal(e, 'feedback')}
+                onClick={e => this.toggleEditModal(e, "feedback")}
               >
                 <i className="fa fa-comments center" />
               </a>
             </li>
             <li>
               <a
-                onClick={e => this.toggleEditModal(e, 'bookmark')}
+                onClick={e => this.toggleEditModal(e, "bookmark")}
                 title="Bookmark"
                 href="#"
                 target="_blank"

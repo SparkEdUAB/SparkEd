@@ -27,3 +27,8 @@ Meteor.publish('isHighSchool.units', function getSecUnit(id) {
   }
   return _Units.find({ _id: id }, { fields: { name: 1 } });
 });
+
+Meteor.publish('courseUnits', courseId => {
+  check(courseId, String);
+  return _Units.find({ 'details.courseId': courseId });
+});

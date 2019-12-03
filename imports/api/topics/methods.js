@@ -5,7 +5,7 @@ import { Resources } from '../resources/resources';
 
 Meteor.methods({
   // eslint-disable-next-line
-  'topic.insert'(id, unitId, name, unit) {
+  "topic.insert"(id, unitId, name, unit) {
     check(id, String);
     check(unitId, String);
     check(unit, String);
@@ -23,11 +23,11 @@ Meteor.methods({
         createdBy: this.userId,
       });
     } else {
-      throw new Meteor.Error('oops', 'You are not allowed to not make changes');
+      throw new Meteor.Error('oops', 'You are not allowed to make changes');
     }
   },
   // eslint-disable-next-line
-  'topic.update'(id, topic) {
+  "topic.update"(id, topic) {
     check(id, String);
     check(topic, String);
     if (Roles.userIsInRole(this.userId, ['admin', 'content-manager'])) {
@@ -46,7 +46,7 @@ Meteor.methods({
     }
   },
   // eslint-disable-next-line
-  'topic.remove'(id) {
+  "topic.remove"(id) {
     check(id, String);
     const resources = Resources.find({ 'meta.topicId': id }).fetch();
     if (Roles.userIsInRole(this.userId, ['admin']) && !resources.length) {
@@ -61,7 +61,7 @@ Meteor.methods({
     }
   },
   // eslint-disable-next-line
-  'singletopic.insert': function(_id, unitId, name, unit) {
+  "singletopic.insert": function(_id, unitId, name, unit) {
     check(_id, String);
     check(unitId, String);
     check(name, String);

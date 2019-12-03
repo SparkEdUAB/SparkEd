@@ -276,10 +276,10 @@ export class Header extends PureComponent {
                   />
                 </div>
                 <div className="m6 offset-m6">
-                  <div className="col s12 m2 hide-on-small-only">
+                  <div className="col s12 m2 ">
                     <SearchView
                       action={"/results"}
-                      placeholder={"Search"}
+                      placeholder={"search here "}
                       query={"q"}
                       sClass={"searchAnim"}
                     />

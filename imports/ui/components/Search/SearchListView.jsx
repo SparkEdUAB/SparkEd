@@ -17,10 +17,7 @@ export default class SearchListView extends Component {
       url = `/view_resource/${topicId}?rs=${_id}`;
     } else if (category === 'reference') {
       url = `/extra/view_resource/extra?rs=${_id}`;
-    } else if (category === 'course') {
-      const { courseId } = ids;
-      url = `/course_content/${courseId}?ref=home`;
-    } else if (category === 'subject') {
+    } else if (category === 'subject' || category === 'course') {
       const { courseId } = ids;
       url = `/contents/${courseId}?ref=home`;
     }

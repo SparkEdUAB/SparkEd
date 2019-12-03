@@ -75,3 +75,4 @@ typings/
 settings.json
 # config.json
 .deploy/
+.vscode/
