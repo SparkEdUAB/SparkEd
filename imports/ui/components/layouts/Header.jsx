@@ -1,15 +1,15 @@
-import React, { Component, Fragment, PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import { withTracker } from "meteor/react-meteor-data";
-import { Meteor } from "meteor/meteor";
-import M from "materialize-css";
-import { SearchView } from "../Utilities/Utilities.jsx";
-import { _Bookmark } from "../../../api/bookmarks/bookmarks";
-import { _Notifications } from "../../../api/notifications/notifications";
-import { Institution } from "../../../api/settings/institution";
-import { _ExternalLink } from "../../../api/externallink/externallink";
-import { _Settings } from "../../../api/settings/settings";
-import Bookmark from "../Bookmark/Bookmark.jsx";
+import React, { Component, Fragment, PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
+import M from 'materialize-css';
+import { SearchView } from '../Utilities/Utilities.jsx';
+import { _Bookmark } from '../../../api/bookmarks/bookmarks';
+import { _Notifications } from '../../../api/notifications/notifications';
+import { Institution } from '../../../api/settings/institution';
+import { _ExternalLink } from '../../../api/externallink/externallink';
+import { _Settings } from '../../../api/settings/settings';
+import Bookmark from '../Bookmark/Bookmark.jsx';
 import MainModal from "../../modals/MainModal"; // eslint-disable-line
 import UserInfo from "./UserInfo"; // eslint-disable-line
 import ExternalLinksView from "../ExternalLink/ExternalLinksView"; // eslint-disable-line
@@ -22,12 +22,12 @@ export class Header extends PureComponent {
     super(props);
     this.state = {
       isOpen: false,
-      modalIdentifier: "",
-      modalType: "",
-      title: "",
-      confirm: "",
-      reject: "",
-      value: ""
+      modalIdentifier: '',
+      modalType: '',
+      title: '',
+      confirm: '',
+      reject: '',
+      value: '',
     };
   }
 
@@ -36,14 +36,14 @@ export class Header extends PureComponent {
     const { modalType, value } = this.state;
 
     switch (modalType) {
-      case "note":
-        FlowRouter.go("/notifications");
+      case 'note':
+        FlowRouter.go('/notifications');
         break;
-      case "bookmarks":
+      case 'bookmarks':
         break;
-      case "link":
+      case 'link':
         break;
-      case "search":
+      case 'search':
         FlowRouter.go(`/results?q=${value}`);
         break;
       default:
@@ -58,17 +58,21 @@ export class Header extends PureComponent {
     if (!notificationsCount) {
       return (
         <a
+          data-position="bottom"
+          data-tooltip="You don't have notifications"
           href="#"
-          className="fa fa-bell fa-2x inst-link"
-          onClick={e => this.toggleEditModal(e, "note")}
+          className="fa fa-bell fa-2x inst-link tooltipped"
+          onClick={e => this.toggleEditModal(e, 'note')}
         />
       );
     }
     return (
       <a
         href="#"
-        onClick={e => this.toggleEditModal(e, "note")}
-        className="inst-link"
+        onClick={e => this.toggleEditModal(e, 'note')}
+        className="inst-link tooltipped"
+        data-position="bottom"
+        data-tooltip="See all your notifications"
       >
         <div id="notificationBellContainer">
           <i className="fa fa-bell fa-2x block" id="usrIcon" />
@@ -81,15 +85,15 @@ export class Header extends PureComponent {
   handleUrl = (event, unitId, id, cat, topicId, fileId) => {
     // event.preventDefault();
     const read = true;
-    Meteor.call("markRead", id, read);
+    Meteor.call('markRead', id, read);
     switch (cat) {
-      case "resource":
+      case 'resource':
         FlowRouter.go(`/view_resource/${topicId}?rs=${fileId}&scid=${unitId}`);
         break;
-      case "unit":
+      case 'unit':
         FlowRouter.go(`/contents/${unitId}?ref=home`);
         break;
-      case "reference":
+      case 'reference':
         FlowRouter.go(`/extra/view_resource/extra?rs=${fileId}`);
         break;
       default:
@@ -103,7 +107,7 @@ export class Header extends PureComponent {
     if (!notifications || !notifications.length) {
       return (
         <span className={`collection-item ${nameClass}`}>
-          {" "}
+          {' '}
           No new notifications!
         </span>
       );
@@ -114,7 +118,7 @@ export class Header extends PureComponent {
         {notification.read ? (
           <div>
             <span
-              style={{ padding: "1px 10px 5px", cursor: "pointer", color }}
+              style={{ padding: '1px 10px 5px', cursor: 'pointer', color }}
               onClick={() =>
                 this.handleUrl(
                   this,
@@ -122,45 +126,45 @@ export class Header extends PureComponent {
                   notification._id,
                   notification.category,
                   notification.topicId,
-                  notification.fileId
+                  notification.fileId,
                 )
               }
             >
               {notification.title} <br />
               <span
                 className="fa fa-clock-o fa-2x"
-                style={{ fontSize: "12px", color, marginLeft: 10 }}
+                style={{ fontSize: '12px', color, marginLeft: 10 }}
               >
                 <b> {moment(notification.createdAt).fromNow()}</b>
               </span>
             </span>
           </div>
         ) : (
-          <div>
-            <span
-              style={{ padding: "1px 10px 5px", cursor: "pointer", color }}
-              onClick={() =>
-                this.handleUrl(
-                  this,
-                  notification.unitId,
-                  notification._id,
-                  notification.category,
-                  notification.topicId,
-                  notification.fileId
-                )
-              }
-            >
-              <span className="center-align">{notification.title} </span>
-              <br />
+            <div>
               <span
-                className="fa fa-clock-o fa-2x"
-                style={{ fontSize: "12px", color, marginLeft: 10 }}
+                style={{ padding: '1px 10px 5px', cursor: 'pointer', color }}
+                onClick={() =>
+                  this.handleUrl(
+                    this,
+                    notification.unitId,
+                    notification._id,
+                    notification.category,
+                    notification.topicId,
+                    notification.fileId,
+                  )
+                }
               >
-                <b> {moment(notification.createdAt).fromNow()}</b>
+                <span className="center-align">{notification.title} </span>
+                <br />
+                <span
+                  className="fa fa-clock-o fa-2x"
+                  style={{ fontSize: '12px', color, marginLeft: 10 }}
+                >
+                  <b> {moment(notification.createdAt).fromNow()}</b>
+                </span>
               </span>
-            </span>
-          </div>
-        )}
+            </div>
+          )}
         <hr />
       </div>
     ));
@@ -169,22 +173,22 @@ export class Header extends PureComponent {
   // update the notification collection on the click
   readAll = event => {
     event.preventDefault();
-    FlowRouter.go("/notifications");
+    FlowRouter.go('/notifications');
   };
 
   componentDidMount() {
     M.AutoInit();
     // used var intentionally
     var elems = document.querySelector(".sidenav"); // eslint-disable-line
-    const instances = M.Sidenav.init(elems, {
+    const instances = M.Sidenav.init(elems, { // eslint-disable-line
       // eslint-disable-line
-      edge: "left"
+      edge: 'left',
     });
     if (!Meteor.status().connected) {
       M.toast({
-        html: "<span>You have been disconnected from the server</span>",
-        classes: "red",
-        displayLength: 10000
+        html: '<span>You have been disconnected from the server</span>',
+        classes: 'red',
+        displayLength: 10000,
       });
     }
   }
@@ -193,7 +197,7 @@ export class Header extends PureComponent {
     const { notifications } = this.props;
     return notifications.map(notification => {
       const id = notification._id;
-      return Meteor.call("markRead", id, bool);
+      return Meteor.call('markRead', id, bool);
     });
   };
 
@@ -202,36 +206,36 @@ export class Header extends PureComponent {
 
   toggleEditModal = (e, type) => {
     switch (type) {
-      case "note":
+      case 'note':
         this.setState({
           modalType: type,
           title: <T>common.titles.notifications</T>,
-          confirm: "More",
-          reject: <T>common.actions.close</T>
+          confirm: 'More',
+          reject: <T>common.actions.close</T>,
         });
         break;
-      case "bookmark":
+      case 'bookmark':
         this.setState({
           modalType: type,
           title: <T>common.titles.bookmarks</T>,
-          confirm: "See",
-          reject: <T>common.actions.close</T>
+          confirm: 'See',
+          reject: <T>common.actions.close</T>,
         });
         break;
-      case "link":
+      case 'link':
         this.setState({
           modalType: type,
           title: <T>common.sidenav.externalLinks</T>,
-          confirm: "See",
-          reject: <T>common.actions.close</T>
+          confirm: 'See',
+          reject: <T>common.actions.close</T>,
         });
         break;
-      case "search":
+      case 'search':
         this.setState({
           modalType: type,
-          title: "Search",
-          confirm: "",
-          reject: ""
+          title: 'Search',
+          confirm: '',
+          reject: '',
         });
         break;
       default:
@@ -247,7 +251,7 @@ export class Header extends PureComponent {
   }
   grabText = ({ target: { value } }) => {
     this.setState({
-      value
+      value,
     });
   };
   render() {
@@ -263,12 +267,27 @@ export class Header extends PureComponent {
                 backgroundColor: state.isDark
                   ? state.mainDark
                   : Meteor.status().connected
-                  ? state.main
-                  : "#757575"
+                    ? state.main
+                    : '#757575',
               }}
             >
               <div className="row ">
+                <div className="col s2 m1 tooltipped"
+                  style={{
+                    marginTop: 19,
+                  }}
+                  data-position="bottom"
+                  data-tooltip="Open menu"
+                >
+
+                  <span
+                    data-target="slide-out"
+                    id="usrIcon"
+                    className="white-text sidenav-trigger fa fa-bars fa-2x"
+                  />
+                </div>
                 <div className="col s12 m5">
+
                   <InstitutionDetail
                     institution={institution}
                     name={details.name}
@@ -276,72 +295,81 @@ export class Header extends PureComponent {
                   />
                 </div>
                 <div className="m6 offset-m6">
-                  <div className="col s12 m2 ">
+                  <div className="col s12 m2 tooltipped "
+                    data-position="bottom"
+                    data-tooltip="Type your search query here"
+                  >
                     <SearchView
-                      action={"/results"}
-                      placeholder={"search here "}
-                      query={"q"}
-                      sClass={"searchAnim"}
+                      action={'/results'}
+                      placeholder={'search here '}
+                      query={'q'}
+                      sClass={'searchAnim'}
                     />
                   </div>
-                  <div className="row ">
+                  <div className="row"
+                  >
                     {Meteor.userId() && (
                       <div className="col s2 m1 head-icons ">
                         {this.countNotifications()}
                       </div>
                     )}
 
-                    <div className="col s2 m1 head-icons ">
+                    <div className="col s2 m1 head-icons tooltipped "
+                      data-position="bottom"
+                      data-tooltip="Go to references"
+                    >
                       <a
                         href="/reference"
                         className="fa fa-book fa-2x inst-link"
                       />
                     </div>
 
-                    <div className="col s2 m1 head-icons hide-on-med-and-up">
+                    <div className="col s12 m1 head-icons center-align hide-on-med-and-up tooltipped"
+                      data-position="bottom"
+                      data-tooltip="Click to search "
+                    >
                       <a
                         href=""
                         className="inst-link fa fa-search"
-                        onClick={e => this.toggleEditModal(e, "search")}
+                        onClick={e => this.toggleEditModal(e, 'search')}
                       />
                     </div>
                     {Meteor.userId() && (
-                      <div className="col s2 m1 head-icons">
+                      <div className="col s2 m1 head-icons tooltipped"
+                        data-position="bottom"
+                        data-tooltip="Bookmark"
+                      >
                         <a
                           href="#"
                           className={
                             this.props.count > 0
-                              ? "fa fa-star fa-2x inst-link"
-                              : "fa fa-star-o fa-2x inst-link"
+                              ? 'fa fa-star fa-2x inst-link'
+                              : 'fa fa-star-o fa-2x inst-link'
                           }
                           data-activates="slide-out"
-                          onClick={e => this.toggleEditModal(e, "bookmark")}
+                          onClick={e => this.toggleEditModal(e, 'bookmark')}
                         >
                           <span className="new" />
                         </a>
                       </div>
                     )}
-                    <div className="col s2 m1 head-icons ">
+                    <div className="col s2 m1 head-icons tooltipped "
+                      data-position="bottom"
+                      data-tooltip="External links"
+                    >
                       <span
                         className="fa fa-link fa-2x white-text dropdown-trigger "
                         data-target="dropdown1"
                       />
                     </div>
                     <div id="dropdown1" className="dropdown-content">
-                      {/* <li className="collection-header">
-                    </li> */}
+
                       <h6 className="center">External links</h6>
                       <ul className="collection">
                         <ExternalLinksView externallinks={externallinks} />
                       </ul>
                     </div>
-                    <div className="col s2 m1 head-icons ">
-                      <span
-                        data-target="slide-out"
-                        id="usrIcon"
-                        className="white-text sidenav-trigger fa fa-user fa-2x"
-                      />
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -355,13 +383,13 @@ export class Header extends PureComponent {
               confirm={confirm}
               reject={reject}
             >
-              {modalType === "note" ? (
+              {modalType === 'note' ? (
                 <div className="row">
                   <div className="">
                     <a
                       href=""
                       className=" blue-text "
-                      style={{ fontSize: "11px" }}
+                      style={{ fontSize: '11px' }}
                       onClick={() => this.markAllAsVisited(true)}
                     >
                       <u> Mark opened as read</u>
@@ -369,30 +397,30 @@ export class Header extends PureComponent {
                   </div>
                   <br />
                   {this.renderNotifications(
-                    "",
-                    state.isDark && "#ffffff",
-                    state.isDark && state.mainDark
+                    '',
+                    state.isDark && '#ffffff',
+                    state.isDark && state.mainDark,
                   )}
                 </div>
-              ) : modalType === "bookmark" ? (
+              ) : modalType === 'bookmark' ? (
                 <Bookmark />
-              ) : modalType === "link" ? (
+              ) : modalType === 'link' ? (
                 <div className="row" />
-              ) : modalType === "search" ? (
+              ) : modalType === 'search' ? (
                 <div className="searchbox-wrapper">
                   <input
-                    className={""}
-                    name={"search"}
+                    className={''}
+                    name={'search'}
                     type="search"
                     defaultValue={this.getQuery()}
                     id="searchField"
-                    placeholder={"Search"}
+                    placeholder={'Search'}
                     onChange={this.grabText}
                   />
                 </div>
               ) : (
-                ""
-              )}
+                        ''
+                      )}
             </MainModal>
             <UserInfo handleNightMode={toggle} checked={state.isDark} />
           </Fragment>
@@ -409,15 +437,15 @@ Header.propTypes = {
   notifications: PropTypes.array,
   externallinks: PropTypes.array,
   details: PropTypes.object,
-  query: PropTypes.string
+  query: PropTypes.string,
 };
 
 export default withTracker(() => {
-  Meteor.subscribe("notifications");
-  Meteor.subscribe("externallinks");
-  Meteor.subscribe("institution");
-  Meteor.subscribe("bookmarks");
-  Meteor.subscribe("logo");
+  Meteor.subscribe('notifications');
+  Meteor.subscribe('externallinks');
+  Meteor.subscribe('institution');
+  Meteor.subscribe('bookmarks');
+  Meteor.subscribe('logo');
   return {
     notificationsCount: _Notifications
       .find({ read: false, userId: Meteor.userId() })
@@ -425,14 +453,14 @@ export default withTracker(() => {
     notifications: _Notifications
       .find(
         { read: false, userId: Meteor.userId() },
-        { sort: { createdAt: -1 } }
+        { sort: { createdAt: -1 } },
       )
       .fetch(),
     externallinks: _ExternalLink.find({}).fetch(),
     details: _Settings.findOne({}),
-    institution: Institution.findOne({}, { sort: { "meta.createdAt": -1 } }),
+    institution: Institution.findOne({}, { sort: { 'meta.createdAt': -1 } }),
     count: _Bookmark
       .find({ user: Meteor.userId() }, { sort: { color: 1 } })
-      .count()
+      .count(),
   };
 })(Header);
