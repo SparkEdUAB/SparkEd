@@ -7,25 +7,25 @@
     "test": "jest"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
+    "@babel/runtime": "^7.7.4",
     "axios": "^0.19.0",
     "babel-runtime": "^6.26.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
-    "core-js": "^3.4.0",
+    "core-js": "^3.4.7",
     "fs-extra": "^8.1.0",
     "gridfs-stream": "^1.1.1",
     "lodash": "^4.17.15",
     "materialize-css": "^1.0.0",
     "meteor-node-stubs": "^0.4.1",
     "prop-types": "^15.6.0",
-    "react": "^16.11.0",
+    "react": "^16.12.0",
     "react-color": "^2.17.3",
     "react-countup": "^4.2.3",
-    "react-dom": "^16.11.0",
+    "react-dom": "^16.12.0",
     "react-mounter": "^1.2.0",
     "react-paginate": "^6.3.2",
-    "react-player": "^1.14.0",
+    "react-player": "^1.14.2",
     "request": "^2.75.0",
     "simpl-schema": "^1.5.6"
   },
@@ -43,8 +43,8 @@
   },
   "homepage": "https://github.com/SparkEdUAB/SparkEd#readme",
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
     "@meteorjs/eslint-config-meteor": "^1.0.5",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
@@ -54,7 +54,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-meteor": "^6.0.0",
-    "eslint-plugin-react": "^7.16.0"
+    "eslint-plugin-react": "^7.17.0"
   },
   "eslintConfig": {
     "parser": "babel-eslint",

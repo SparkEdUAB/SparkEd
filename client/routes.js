@@ -8,7 +8,6 @@ import ViewResourceApp from '../imports/ui/components/content/ViewResourceApp.js
 import Register from '../imports/ui/components/Accounts/Register.jsx';
 import Login from '../imports/ui/components/Accounts/Login.jsx';
 import ContentsApp from '../imports/ui/components/content/ContentsApp.jsx';
-import CourseContent from '../imports/ui/components/content/CourseContent.jsx';
 import SearchResults from '../imports/ui/components/Search/SearchResults.jsx';
 import ManageAccounts from '../imports/ui/components/Accounts/ManageAccounts.jsx';
 import EditUnit from '../imports/ui/components/Dashboard/EditUnit.jsx';
@@ -124,20 +123,6 @@ isAuthRequired().route('/contents/', {
   name: 'Contents',
   action() {
     mount(AppWrapper, { children: <ContentsApp /> });
-  },
-});
-
-isAuthRequired().route('/course_content/:_id', {
-  name: 'CourseContent',
-  action() {
-    mount(AppWrapper, { children: <CourseContent /> });
-  },
-});
-
-isAuthRequired().route('/course_content/', {
-  name: 'CourseContent',
-  action() {
-    mount(AppWrapper, { children: <CourseContent /> });
   },
 });
 

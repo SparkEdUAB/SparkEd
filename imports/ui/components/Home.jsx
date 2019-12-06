@@ -36,6 +36,7 @@ export class Home extends PureComponent {
 
   render() {
     const { courseReady } = this.props;
+
     return (
       <ErrorBoundary>
         <ThemeContext.Consumer>
@@ -46,7 +47,9 @@ export class Home extends PureComponent {
                 <div className="row ">
                   <div className="input-field col s12">
                     <select
-                      onChange={e => Session.set('language', e.target.value)}
+                      onChange={e => {
+                        Session.set('language', e.target.value);
+                      }}
                     >
                       <option value="" disabled defaultValue>
                         Choose your Language
@@ -81,7 +84,9 @@ Home.propTypes = {
 export default withTracker(() => {
   const handle = Meteor.subscribe('courses');
   Meteor.subscribe('slides');
-  Meteor.subscribe('titles');
+  Meteor.subscribe('topics');
+  Meteor.subscribe('units');
+
   return {
     courseReady: handle.ready(),
     unit: _Units.find().fetch(),

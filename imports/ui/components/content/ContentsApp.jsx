@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { Tracker } from 'meteor/tracker';
@@ -12,7 +13,7 @@ import { insertStatistics } from '../Statistics/Statistics.jsx';
 import { FloatingButton } from '../Utilities/Utilities.jsx';
 import * as config from '../../../../config.json';
 import { Titles } from '../../../api/settings/titles';
-import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
+import { ThemeContext } from "../../containers/AppWrapper"; // eslint-disable-line
 
 export const T = i18n.createComponent();
 
@@ -72,13 +73,7 @@ export class ContentsApp extends Component {
     window.scrollTo(0, 0);
   }
 
-  getBack = () => {
-    const courseId = Session.get('courseId');
-    if (config.isHighSchool) {
-      return FlowRouter.go('/');
-    }
-    return FlowRouter.go(`/course_content/${courseId}?ref=home`);
-  };
+  getBack = () => FlowRouter.go("/");
 
   render() {
     let unitName = '';
@@ -97,7 +92,12 @@ export class ContentsApp extends Component {
         {color => (
           <Fragment>
             <div className="row">
-              <div className=" unit-container" style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}>
+              <div
+                className=" unit-container"
+                style={{
+                  backgroundColor: color.isDark ? color.mainDark : color.main,
+                }}
+              >
                 <h4 className="center unit-name">{unitName}</h4>
                 <div className="container">
                   <p className="center">{desc}</p>
@@ -105,8 +105,11 @@ export class ContentsApp extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col s12 m4 l3 topics-container"
-                style={{ backgroundColor: color.isDark ? color.mainDark : color.main }}
+              <div
+                className="col s12 m4 l3 topics-container"
+                style={{
+                  backgroundColor: color.isDark ? color.mainDark : color.main,
+                }}
               >
                 <div className="sideNavHeadingUnderline">
                   <a
@@ -115,10 +118,13 @@ export class ContentsApp extends Component {
                     href={''}
                     onClick={e => this.getBack(e)}
                   >
-                    <i className={`fa fa-chevron-circle-left fa-lg ${color.isDark && 'white-text'}`} />
+                    <i
+                      className={`fa fa-chevron-circle-left fa-lg ${color.isDark &&
+                        'white-text'}`}
+                    />
                   </a>
                   <p className="sideNavHeading">
-                    {config.isHighSchool ? title : <T>common.manage.topics</T>}
+                    {<T>common.manage.topics</T>}
                   </p>
                 </div>
                 <Topics unitId={getUnitId()} />
@@ -128,7 +134,7 @@ export class ContentsApp extends Component {
                 <Resourcesss topicId={getTopicId()} />
               </div>
             </div>
-            <>'             '<FloatingButton />'           '</>
+            <FloatingButton />
           </Fragment>
         )}
       </ThemeContext.Consumer>
