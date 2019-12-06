@@ -39,7 +39,9 @@ export default class Languages extends PureComponent {
 
   render() {
     return (
-      <div className="row">
+      <div className="row" style={{
+        marginLeft: '1em',
+      }} >
         <a href="" onClick={e => this.changeLangauge(e, 'en')}>
           <T>common.language.enUS</T>
         </a>

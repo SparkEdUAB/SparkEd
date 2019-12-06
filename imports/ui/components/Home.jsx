@@ -29,7 +29,7 @@ export class Home extends PureComponent {
     if (!courses) {
       return <span> No Courses </span>;
     } else if (courses.length === 0) {
-      return <p className="center"> There are no contents yet </p>;
+      return <p className="center"> There is no content as yet </p>;
     }
     return courses.map(cours => <Courses key={index++} course={cours} />);
   }
