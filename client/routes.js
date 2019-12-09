@@ -34,6 +34,7 @@ import ExternalLinksPage from '../imports/ui/components/ExternalLink/ListExterna
 import SyncUpdates from '../imports/ui/components/Sync/SyncUpdates.jsx';
 import Backup from '../imports/ui/components/Dashboard/Backup/Backup.jsx';
 import UnitsTopics from '../imports/ui/components/content/UnitsTopics.jsx';
+import SearchPage from '../imports/ui/components/Search/SearchPage.jsx';
 
 const config = require('../config.json');
 
@@ -339,5 +340,12 @@ isAuthRequired().route('/testunits', {
   name: 'TestUnits',
   action() {
     mount(UnitsTopics);
+  },
+});
+
+FlowRouter.route('/search', {
+  name: 'SearchPage',
+  action() {
+    mount(SearchPage);
   },
 });
