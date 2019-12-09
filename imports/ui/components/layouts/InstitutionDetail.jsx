@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const InstitutionDetail = ({ institution, name, tagline }) => {
   if (!institution) {
     return (
-      <div className="logo-container" style={{ pointer: 'cursor' }}>
+      <div className="logo-container" style={{ pointer: 'cursor', marginLeft: -52 }}>
         <span onClick={() => FlowRouter.go('/')} className="inst-link">
           <h5>{name}</h5>
           <h6>{tagline}</h6>
@@ -13,7 +13,10 @@ const InstitutionDetail = ({ institution, name, tagline }) => {
     );
   }
   return (
-    <div className="logo-container">
+    <div className="logo-container"
+      style={{
+        marginLeft: -52,
+      }} >
       <span
         style={{ pointer: 'cursor' }}
         onClick={() => FlowRouter.go('/')}
