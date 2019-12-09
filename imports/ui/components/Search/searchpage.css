@@ -9,5 +9,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 3px;
+  font-size: 30px;
+}
+input[type="text"] {
+  font-size: 30px;
 }
