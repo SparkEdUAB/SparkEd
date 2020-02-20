@@ -27,7 +27,7 @@
     "react-paginate": "^6.3.2",
     "react-player": "^1.14.2",
     "request": "^2.75.0",
-    "simpl-schema": "^1.5.6"
+    "simpl-schema": "^1.5.7"
   },
   "version": "2.0.0",
   "description": "Software for organizing and presenting educational and training content for delivery on most platforms.",
