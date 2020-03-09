@@ -17,7 +17,7 @@
     "gridfs-stream": "^1.1.1",
     "lodash": "^4.17.15",
     "materialize-css": "^1.0.0",
-    "meteor-node-stubs": "^0.4.1",
+    "meteor-node-stubs": "^1.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.13.0",
     "react-color": "^2.18.0",
