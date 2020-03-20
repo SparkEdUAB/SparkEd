@@ -19,7 +19,7 @@
     "materialize-css": "^1.0.0",
     "meteor-node-stubs": "^1.0.0",
     "prop-types": "^15.6.0",
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-color": "^2.18.0",
     "react-countup": "^4.3.3",
     "react-dom": "^16.13.0",
