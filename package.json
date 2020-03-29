@@ -22,7 +22,7 @@
     "react": "^16.13.1",
     "react-color": "^2.18.0",
     "react-countup": "^4.3.3",
-    "react-dom": "^16.13.0",
+    "react-dom": "^16.13.1",
     "react-mounter": "^1.2.0",
     "react-paginate": "^6.3.2",
     "react-player": "^1.15.3",
