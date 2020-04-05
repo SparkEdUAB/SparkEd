@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
+    "@olivierjm/react-mounter": "^1.2.1",
     "axios": "^0.19.2",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^4.0.1",
@@ -23,7 +24,6 @@
     "react-color": "^2.18.0",
     "react-countup": "^4.3.3",
     "react-dom": "^16.13.1",
-    "react-mounter": "^1.2.0",
     "react-paginate": "^6.3.2",
     "react-player": "^1.15.3",
     "request": "^2.88.2",

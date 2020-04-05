@@ -1,4 +1,4 @@
-import { mount } from 'react-mounter';
+import { mount } from '@olivierjm/react-mounter';
 import React from 'react';
 import Home from '../imports/ui/components/Home.jsx';
 import Unit from '../imports/ui/components/Dashboard/Unit.jsx';
