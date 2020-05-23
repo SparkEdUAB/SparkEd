@@ -24,7 +24,7 @@ import * as config from '../../../../config.json';
 import { formatText } from '../../utils/utils';
 import PasswordEdit from '../Utilities/Modal/PasswordEdit.jsx';
 import { checkPassword } from './AccountFunction';
-import { ThemeContext } from '../../containers/AppWrapper'; // eslint-disable-line
+import { ThemeContext } from "../../containers/AppWrapper"; // eslint-disable-line
 
 const T = i18n.createComponent();
 
@@ -156,7 +156,7 @@ export class ManageAccounts extends React.Component {
       default:
         break;
     }
-    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
 
   // actions for buttons
@@ -175,7 +175,7 @@ export class ManageAccounts extends React.Component {
 
     switch (modalType) {
       case 'delete':
-        ids.forEach(v => {
+        ids.forEach((v) => {
           if (v === Meteor.userId()) {
             M.toast({
               html: "<span >You can't delete yourself</span>",
@@ -189,7 +189,7 @@ export class ManageAccounts extends React.Component {
             });
             return;
           }
-          Meteor.call('removeUser', v, err => {
+          Meteor.call('removeUser', v, (err) => {
             // eslint-disable-next-line
             err
               ? // ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
@@ -210,9 +210,9 @@ export class ManageAccounts extends React.Component {
         });
         break;
       // eslint-disable-next-line
-      case 'edit':
+      case "edit":
         const fname = target.fname.value;
-        Meteor.call('user.update', ids, fname, err => {
+        Meteor.call('user.update', ids, fname, (err) => {
           // eslint-disable-next-line
           err
             ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
@@ -228,9 +228,9 @@ export class ManageAccounts extends React.Component {
         });
         break;
       // eslint-disable-next-line
-      case 'roles':
+      case "roles":
         const roles = target.roles.value;
-        Meteor.call('promoteUser', ids[0], roles, err => {
+        Meteor.call('promoteUser', ids[0], roles, (err) => {
           // eslint-disable-next-line
           err
             ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
@@ -243,7 +243,7 @@ export class ManageAccounts extends React.Component {
         });
         break;
       // eslint-disable-next-line
-      case 'pass':
+      case "pass":
         const response = checkPassword(password, passwordConfirm);
         if (!response.status) {
           this.setState({
@@ -251,7 +251,7 @@ export class ManageAccounts extends React.Component {
           });
           return false;
         }
-        Meteor.call('changeUserPassword', userID, password, err => {
+        Meteor.call('changeUserPassword', userID, password, (err) => {
           // eslint-disable-next-line
           err
             ? (M.toast({ html: `<span>${err.reason}</span>`, classes: 'red' }),
@@ -270,7 +270,7 @@ export class ManageAccounts extends React.Component {
       default:
         break;
     }
-    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   }
 
   validatePassword = ({ target: { value } }) => {
@@ -363,10 +363,10 @@ export class ManageAccounts extends React.Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col m3 s3">
+                <div className="col m2 s2">
                   <button
                     className="btn red darken-3"
-                    onClick={e => this.openModal('delete', e)}
+                    onClick={(e) => this.openModal('delete', e)}
                   >
                     {' '}
                     <T>common.actions.delete</T>
@@ -374,20 +374,20 @@ export class ManageAccounts extends React.Component {
                 </div>
                 {isUserAuth ? (
                   <Fragment>
-                    <div className="col m3 s3">
+                    <div className="col m2 s2">
                       <button
                         className="btn "
-                        onClick={e => this.openModal('approve', e)}
+                        onClick={(e) => this.openModal('approve', e)}
                       >
                         {' '}
                         Approve
                       </button>
                     </div>
 
-                    <div className="col m3 s3">
+                    <div className="col m2 s2">
                       <button
                         className="btn grey darken-3"
-                        onClick={e => this.openModal('suspend', e)}
+                        onClick={(e) => this.openModal('suspend', e)}
                       >
                         {' '}
                         Suspend
@@ -398,22 +398,21 @@ export class ManageAccounts extends React.Component {
                   <span />
                 )}
 
-                <div className="col m3 s3">
+                <div className="col m2 s2">
                   <button
                     className="btn green darken-3"
-                    onClick={e => this.openModal('roles', e)}
+                    onClick={(e) => this.openModal('roles', e)}
                   >
                     {' '}
                     <T>common.actions.changeRole</T>
                   </button>
                 </div>
-                <div className="col m3 s3">
+                <div className="col m2 s2">
                   <button
                     className="btn teal "
-                    onClick={e => this.openModal('pass', e)}
+                    onClick={(e) => this.openModal('pass', e)}
                   >
-                    {' '}
-                    <T>Change Password</T>
+                    Change Password
                   </button>
                 </div>
               </div>
@@ -446,7 +445,7 @@ export class ManageAccounts extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map(user => {
+                  {users.map((user) => {
                     const { status } = user.profile;
                     let statusIcon = 'fa-clock-o  ';
                     let chkboxStatus = 'chk-appr  ';
@@ -474,7 +473,7 @@ export class ManageAccounts extends React.Component {
                         <td>
                           <a
                             href=""
-                            onClick={e =>
+                            onClick={(e) =>
                               this.openModal(
                                 'edit',
                                 user._id,

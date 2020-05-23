@@ -1,8 +1,8 @@
 {
   "name": "SparkEd Institute",
-  "tag": "Education ",
-  "isUserAuth": false,
+  "tag": "Education",
+  "isUserAuth": true,
   "isHighSchool": false,
   "isConfigured": true,
-  "server": "http://localhost:3000/setup"
+  "server": "http://localhost:3000"
 }
