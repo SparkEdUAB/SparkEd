@@ -25,7 +25,7 @@
     "react-countup": "^4.3.3",
     "react-dom": "^16.13.1",
     "react-paginate": "^6.3.2",
-    "react-player": "^2.1.0",
+    "react-player": "^2.3.0",
     "request": "^2.88.2",
     "simpl-schema": "^1.7.3"
   },
