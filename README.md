@@ -99,14 +99,15 @@ Before you make commit, make sure that the linting are passing, check with the e
 - Resources  
 
   The above are all stored in MongoDB GridFS that means there is no need to access the filesystem to get images or videos, mongodb chunks them down.
-  ⇒ The move was to facilitate the easy of moving files across servers.
-  ⇒ Having One database for files and Data.
-  ⇒ Easy Syncing
+  
+  ⇒ The move was to facilitate the easy of moving files across servers.  
+  ⇒ Having One database for files and Data.  
+  ⇒ Easy Syncing  
 
 We have 2 scripts,
 
-> one exports the specified database collection from the main server, it will be checking every 24 hours.
-> The other scripts downloads the exported database collection from the main server, and merges the local server with new data.
+> one exports the specified database collection from the main server, it will be checking every 24 hours.  
+> The other scripts downloads the exported database collection from the main server, and merges the local server with new data.  
 
 Example of the script (exports chunks)
 
