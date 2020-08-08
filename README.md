@@ -132,6 +132,34 @@ tar cvzf /var/www/sparked/bundle/public/dump.tar.gz dump/
 
 ```
 
+### Authenticating via REST Endpoint
+
+Meteor's standard is to use the DDP between the server and client and this gives realtime that no other framework offers, but there are times when you don't need this magic and you just want to have your own client using different technologies.
+We have REST endpoint implemented for critical routes and in case you want to login here is an example  
+
+```
+// Here you can use either username or email for authentication
+const data = { email: 'a@abc.com', password: '34rnf322{#998!!' };
+
+  fetch('https://localhost:3000/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    // you will get the userId and authToken that you can use for other server calls
+    console.log('Success:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+```
+
+
 ### Deployment
 
 **SparkEd** was meant to run in an offline environment but you are initially required to have internet to have it deployed, you can check [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki) for more info on setting up a proper server.
