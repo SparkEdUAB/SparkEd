@@ -96,7 +96,8 @@ Before you make commit, make sure that the linting are passing, check with the e
 ## Sync
 
 - References
-- Resources
+- Resources  
+
   The above are all stored in MongoDB GridFS that means there is no need to access the filesystem to get images or videos, mongodb chunks them down.
   ⇒ The move was to facilitate the easy of moving files across servers.
   ⇒ Having One database for files and Data.
