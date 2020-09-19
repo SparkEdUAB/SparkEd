@@ -8,11 +8,9 @@ import { _Courses } from '../../api/courses/courses';
 import { _Units } from '../../api/units/units';
 import Courses from './content/Courses.jsx';
 import { FloatingButton } from './Utilities/Utilities.jsx';
-import ImgSlider from "../components/layouts/ImageSlider"; // eslint-disable-line
 import * as Config from '../../../config.json';
 import { Loader } from "./Loader"; // eslint-disable-line
 import ErrorBoundary from "./ErrorBoundary"; // eslint-disable-line
-import { ThemeContext } from "../containers/AppWrapper"; // eslint-disable-line
 
 export class Home extends PureComponent {
   componentDidMount() {
@@ -24,14 +22,13 @@ export class Home extends PureComponent {
   }
 
   renderCourses() {
-    let index = 0;
     const { courses } = this.props;
     if (!courses) {
       return <span> No Courses </span>;
     } else if (courses.length === 0) {
       return <p className="center"> There is no content as yet </p>;
     }
-    return courses.map(cours => <Courses key={index++} course={cours} />);
+    return courses.map(cours => <Courses key={cours._id} course={cours} />);
   }
 
   render() {
@@ -39,10 +36,7 @@ export class Home extends PureComponent {
 
     return (
       <ErrorBoundary>
-        <ThemeContext.Consumer>
-          {({ state }) => (
             <Fragment>
-              <ImgSlider isDark={state.isDark} />
               <div className="container ">
                 <div className="row ">
                   <div className="input-field col s12">
@@ -67,8 +61,6 @@ export class Home extends PureComponent {
                 <FloatingButton />
               </div>
             </Fragment>
-          )}
-        </ThemeContext.Consumer>
       </ErrorBoundary>
     );
   }

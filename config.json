@@ -1,7 +1,7 @@
 {
-  "name": "SparkEd Institute",
-  "tag": "Education",
-  "isUserAuth": true,
+  "name": "Inspired",
+  "tag": "To Inspire",
+  "isUserAuth": false,
   "isHighSchool": false,
   "isConfigured": true,
   "server": "http://localhost:3000"

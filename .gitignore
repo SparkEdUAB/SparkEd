@@ -76,3 +76,4 @@ settings.json
 # config.json
 .deploy/
 .vscode/
+config.json
