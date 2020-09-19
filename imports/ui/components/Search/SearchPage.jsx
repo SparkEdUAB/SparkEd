@@ -7,7 +7,7 @@ export default function SearchPage() {
     return FlowRouter.go(`/results?q=${value}`);
   }
   return (
-        <div className="search-page">
+        <div className="center-page">
             <form
                 action={'/results'}
                 onSubmit={handleSubmit}

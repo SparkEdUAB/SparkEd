@@ -32,18 +32,15 @@ export class Home extends PureComponent {
   }
 
   render() {
-    const { courseReady } = this.props;
-
+    const { courseReady, courses } = this.props;
     return (
       <ErrorBoundary>
             <Fragment>
-              <div className="container ">
+              <div className={`container ${!courseReady || !courses.length ? 'center-page' : ''}`}>
                 <div className="row ">
-                  <div className="input-field col s12">
+                  <div className={`input-field col s12`}>
                     <select
-                      onChange={e => {
-                        Session.set('language', e.target.value);
-                      }}
+                      onChange={e => Session.set('language', e.target.value)}
                     >
                       <option value="" disabled defaultValue>
                         Choose your Language
@@ -58,8 +55,8 @@ export class Home extends PureComponent {
                 <div className="row ">
                   {courseReady ? this.renderCourses() : <Loader />}
                 </div>
-                <FloatingButton />
               </div>
+                <FloatingButton />
             </Fragment>
       </ErrorBoundary>
     );
