@@ -8,11 +8,9 @@ import { _Courses } from '../../api/courses/courses';
 import { _Units } from '../../api/units/units';
 import Courses from './content/Courses.jsx';
 import { FloatingButton } from './Utilities/Utilities.jsx';
-import ImgSlider from "../components/layouts/ImageSlider"; // eslint-disable-line
 import * as Config from '../../../config.json';
 import { Loader } from "./Loader"; // eslint-disable-line
 import ErrorBoundary from "./ErrorBoundary"; // eslint-disable-line
-import { ThemeContext } from "../containers/AppWrapper"; // eslint-disable-line
 
 export class Home extends PureComponent {
   componentDidMount() {
@@ -24,32 +22,25 @@ export class Home extends PureComponent {
   }
 
   renderCourses() {
-    let index = 0;
     const { courses } = this.props;
     if (!courses) {
       return <span> No Courses </span>;
     } else if (courses.length === 0) {
       return <p className="center"> There is no content as yet </p>;
     }
-    return courses.map(cours => <Courses key={index++} course={cours} />);
+    return courses.map(cours => <Courses key={cours._id} course={cours} />);
   }
 
   render() {
-    const { courseReady } = this.props;
-
+    const { courseReady, courses } = this.props;
     return (
       <ErrorBoundary>
-        <ThemeContext.Consumer>
-          {({ state }) => (
             <Fragment>
-              <ImgSlider isDark={state.isDark} />
-              <div className="container ">
+              <div className={`container ${!courseReady || !courses.length ? 'center-page' : ''}`}>
                 <div className="row ">
-                  <div className="input-field col s12">
+                  <div className={`input-field col s12`}>
                     <select
-                      onChange={e => {
-                        Session.set('language', e.target.value);
-                      }}
+                      onChange={e => Session.set('language', e.target.value)}
                     >
                       <option value="" disabled defaultValue>
                         Choose your Language
@@ -64,11 +55,9 @@ export class Home extends PureComponent {
                 <div className="row ">
                   {courseReady ? this.renderCourses() : <Loader />}
                 </div>
-                <FloatingButton />
               </div>
+                <FloatingButton />
             </Fragment>
-          )}
-        </ThemeContext.Consumer>
       </ErrorBoundary>
     );
   }

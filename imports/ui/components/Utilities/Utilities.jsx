@@ -117,21 +117,18 @@ export function setActiveItem(id, items, clas) {
 
 // todo: make a proper component for the floating button and remove jQuery
 export class FloatingButton extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-      modalIdentifier: '',
-      modalType: '',
-      title: '',
-      confirm: '',
-      reject: '',
-      value: '',
-      feedDesc: '',
-      feedTitle: '',
-      bookTitle: '',
-      bookDesc: '',
-    };
+  state = {
+    isOpen: false,
+    modalIdentifier: '',
+    modalType: '',
+    title: '',
+    confirm: '',
+    reject: '',
+    value: '',
+    feedDesc: '',
+    feedTitle: '',
+    bookTitle: '',
+    bookDesc: '',
   }
 
   componentDidMount() {
@@ -148,7 +145,6 @@ export class FloatingButton extends PureComponent {
     const { pathname, href } = window.location;
     switch (modalType) {
       case 'feedback':
-        // const { href } = window.location;
         Meteor.call(
           'feedback.insert',
           feedTitle,
@@ -232,6 +228,7 @@ export class FloatingButton extends PureComponent {
     });
   }
 
+  // refactor this
   grabText = ({ target: { value } }, field) => {
     switch (field) {
       case 'feedTitle':
@@ -364,12 +361,11 @@ export class FloatingButton extends PureComponent {
         </MainModal>
 
         <div className="fixed-action-btn plus-icon">
-          <a
-            href=""
+          <span
             className="btn-floating btn-large waves-effect waves-light teal darken-1"
           >
             <i className="fa fa-plus center more-items" />
-          </a>
+          </span>
           <ul>
             <li>
               <a
