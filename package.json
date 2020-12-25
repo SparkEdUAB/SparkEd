@@ -24,7 +24,7 @@
     "react-color": "^2.19.3",
     "react-countup": "^4.3.3",
     "react-dom": "^16.14.0",
-    "react-paginate": "^6.5.0",
+    "react-paginate": "^7.0.0",
     "react-player": "^2.7.2",
     "request": "^2.88.2",
     "simpl-schema": "^1.10.2"
