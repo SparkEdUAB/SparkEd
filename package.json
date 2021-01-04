@@ -13,7 +13,7 @@
     "babel-runtime": "^6.26.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
-    "core-js": "^3.8.1",
+    "core-js": "^3.8.2",
     "fs-extra": "^9.0.1",
     "gridfs-stream": "^1.1.1",
     "lodash": "^4.17.20",
