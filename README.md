@@ -13,6 +13,8 @@ To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 
 [Check here](https://sparkeduab.github.io/sparked-manual/) for the online documentation how to use this project.
 
+**Note**: We only support Node^10  
+
 # For Contributors
 
 > Read the Code of Conduct [here](https://github.com/SparkEdUAB/SparkEd/blob/master/CODE_OF_CONDUCT.md)
@@ -171,7 +173,7 @@ Just like in Development mentioned [here](https://github.com/SparkEdUAB/SparkEd#
 
 #### Requirements
 
-- Nodejs ˆ8.10
+- Nodejs ˆ10
 - Latest version of `npm` or `yarn`
 - Access to a terminal
 
