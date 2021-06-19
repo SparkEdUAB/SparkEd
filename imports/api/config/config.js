@@ -2,7 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import * as Config from '../../../config.json';
 
-export const Conf = new Mongo.Collection('config', { idGeneration: 'STRING' });
+const _Config = new Mongo.Collection('config', { idGeneration: 'STRING' });
+
+export default _Config;
 
 const { isUserAuth } = Config;
 

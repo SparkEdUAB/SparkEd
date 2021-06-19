@@ -8,4 +8,3 @@ Meteor.publish('all.users', function allUsers() {
 });
 
 Meteor.publish(null, () => Meteor.roles.find({}));
-

@@ -35,8 +35,8 @@ Meteor.methods({
   getAllCollections: (token, userId) => {
     check(token, String);
     check(userId, String);
-    collections.map(coll =>
-      HTTP.get(
+    collections.map((coll) => { // eslint-disable-line
+      return HTTP.get(
         `${server}/api/${coll}/`,
         {
           headers: {
@@ -74,7 +74,8 @@ Meteor.methods({
             );
           }
         },
-      ));
+      );
+    });
   },
   // restore the dumped files from the server
   restoreDbChunks: () => {

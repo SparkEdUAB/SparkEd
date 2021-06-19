@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: 'off' */
 import { Meteor } from 'meteor/meteor';
-import { _Statistics } from '../../api/statistics/statistics';
+import { _Statistics } from './statistics';
 
 const db = { statistics: _Statistics };
 

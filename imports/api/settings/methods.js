@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { _Settings } from './settings';
-import { _Slides, Slides } from './slides';
+import { Slides } from './slides';
 import { Institution } from './institution';
 import { Titles } from './titles';
 
@@ -11,7 +11,7 @@ Meteor.methods({
     check(sku, String);
     check(file, Object);
     if (Roles.userIsInRole(this.userId, ['admin'])) {
-      _Slides.insert({
+      Slides.insert({
         name: sku,
         file,
         createdAt: new Date(),

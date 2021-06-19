@@ -3,9 +3,9 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { PropTypes } from 'prop-types';
 import { Session } from 'meteor/session';
 import ReactPaginate from 'react-paginate';
+import Materialize from 'materialize-css';
 import { _Notifications } from '../../../api/notifications/notifications';
 import MainModal from '../../../ui/modals/MainModal.jsx';
-import { relative } from 'path';
 
 export class Notifications extends Component {
   constructor(props) {
@@ -295,17 +295,17 @@ export class Notifications extends Component {
 }
 
 export function getuserId() {
-  let user = Meteor.user();
+  const user = Meteor.user();
   if (user) {
     return user._id;
-  } 
-    return '';
-  
+  }
+  return '';
 }
 
 Notifications.propTypes = {
   notifications: PropTypes.array,
   notificationsCount: PropTypes.number,
+  count: PropTypes.number,
 };
 
 export default withTracker(() => {

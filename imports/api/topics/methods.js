@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { _Topics } from '../topics/topics';
+import { _Topics } from './topics';
 import { Resources } from '../resources/resources';
 
 Meteor.methods({

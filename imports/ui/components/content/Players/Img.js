@@ -6,6 +6,7 @@ export default class IMG extends Component {
   componentDidMount() {
     $('.materialboxed').materialbox();
   }
+
   render() {
     return (
       <div className="">
