@@ -1,0 +1,30 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: core-js
+    versions:
+    - 3.10.2
+    - 3.9.0
+  - dependency-name: "@babel/core"
+    versions:
+    - 7.12.16
+    - 7.12.17
+    - 7.13.10
+    - 7.13.13
+  - dependency-name: react-paginate
+    versions:
+    - 7.1.1
+  - dependency-name: "@babel/runtime"
+    versions:
+    - 7.12.18
+    - 7.13.6
+    - 7.13.8
+  - dependency-name: "@babel/preset-env"
+    versions:
+    - 7.12.17
+    - 7.13.8
