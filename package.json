@@ -47,7 +47,7 @@
     "@babel/preset-env": "^7.14.5",
     "@meteorjs/eslint-config-meteor": "^1.0.5",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^27.0.2",
+    "babel-jest": "^27.0.6",
     "eslint": "^7.30.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-import-resolver-meteor": "^0.4.0",
