@@ -11,7 +11,7 @@ SparkEd was deployed on a server and it loaded more than 1,500 resources. It wor
 
 To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 
-[Check here](https://sparkeduab.github.io/sparked-manual/) for the online documentation how to use this project.
+[Check here](https://sparkeduab.github.io/sparked-manual/) for the online documentation how to use this project and a small demo here https://sparkedv2.herokuapp.com/ accessible on big screens.
 
 **Note**: We only support Node^10  
 
