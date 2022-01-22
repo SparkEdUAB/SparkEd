@@ -11,7 +11,9 @@ SparkEd was deployed on a server and it loaded more than 1,500 resources. It wor
 
 To get started check out [our wiki](https://github.com/SparkEdUAB/SparkEd/wiki)
 
-[Check here](https://sparkeduab.github.io/sparked-manual/) for the online documentation how to use this project.
+[Check here](https://sparkeduab.github.io/sparked-manual/) for the online documentation how to use this project and a small demo here https://sparkedv2.herokuapp.com/ accessible on big screens.
+
+**Note**: We only support Node^10  
 
 # For Contributors
 
@@ -171,7 +173,7 @@ Just like in Development mentioned [here](https://github.com/SparkEdUAB/SparkEd#
 
 #### Requirements
 
-- Nodejs ˆ8.10
+- Nodejs ˆ10
 - Latest version of `npm` or `yarn`
 - Access to a terminal
 
