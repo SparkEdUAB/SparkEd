@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Restivus } from 'meteor/mrest:restivus';
+import { Restivus } from 'meteor/maka:rest';
 import { Resources, References } from '../resources/resources';
 import { _Courses } from '../courses/courses';
 import { _SearchData } from '../search/search';
