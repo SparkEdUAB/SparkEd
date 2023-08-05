@@ -19,7 +19,7 @@ const User = new SimpleSchema({
   'emails.$': Object,
   'emails.$.address': {
     type: String,
-    regEx: SimpleSchema.RegEx.Email,
+    // regEx: SimpleSchema.RegEx.Email,
   },
   'emails.$.verified': Boolean,
   profile: UserProfile,
