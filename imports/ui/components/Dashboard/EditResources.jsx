@@ -244,7 +244,7 @@ export class EditResources extends Component {
     const { topic, unit } = this.props;
     // let nam
     if (topic) {
-      Session.setPersistent({
+      Session.set({
         unitId: topic.unitId,
         unitName: topic.name
       });

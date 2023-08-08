@@ -70,7 +70,7 @@ export class ManageUnits extends Component {
       }
     });
     // don't clean the courseId on unmount
-    Session.setPersistent("courseId", FlowRouter.getQueryParam("cs"));
+    Session.set("courseId", FlowRouter.getQueryParam("cs"));
     window.scrollTo(0, 0);
   }
 
@@ -318,12 +318,12 @@ export class ManageUnits extends Component {
       courseId = course._id;
       language = course.details.language; // eslint-disable-line
       courseName = course.name;
-      Session.setPersistent("courseName", courseName);
+      Session.set("courseName", courseName);
     }
     if (titles) {
       newTitle = titles.title;
       newSubTitle = titles.sub_title;
-      Session.setPersistent({
+      Session.set({
         unit_title_id: titles._id,
         sub_unit_title: newSubTitle,
         unit_title: newTitle

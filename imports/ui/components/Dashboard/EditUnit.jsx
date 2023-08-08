@@ -113,7 +113,7 @@ export class EditUnits extends Component {
   };
 
   handleUrl(id) {
-    Session.setPersistent("topicId", id);
+    Session.set("topicId", id);
     FlowRouter.go(`/dashboard/edit_resources/${id}`);
   }
 

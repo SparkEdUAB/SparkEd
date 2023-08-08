@@ -20,7 +20,7 @@ import '../i18n/fr.i18n.json';
 // import { La }
 
 Meteor.startup(() => {
-  Session.setPersistent({
+  Session.set({
     main: '#005555',
     isDark: false,
     mainDark: '#212121',
