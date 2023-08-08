@@ -107,7 +107,7 @@ export default class SetUp extends Component {
       return;
     }
     // save to session for later, when uploading the logo
-    Session.setPersistent({
+    Session.set({
       name,
       tag,
       auth,

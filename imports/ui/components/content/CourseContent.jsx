@@ -17,7 +17,7 @@ export class CourseContent extends Component {
   // eslint-disable-next-line
   componentDidMount() {
     window.scrollTo(0, 0);
-    Session.setPersistent("courseId", FlowRouter.getParam("_id"));
+    Session.set("courseId", FlowRouter.getParam("_id"));
   }
   renderUnits(name) {
     let index = 0;
